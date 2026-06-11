@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Patrik Sättermon — Co-founder &amp; Chief Gaming Officer, Fnatic</title>
+<meta name="description" content="Patrik 'cArn' Sättermon — esports pioneer, co-founder and Chief Gaming Officer at Fnatic. Based in Stockholm, Sweden." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #15171a;
+    --ink-soft: #5a6068;
+    --paper: #fbfbfa;
+    --line: #e6e6e2;
+    --accent: #ff5900; /* a nod to two decades in orange & black */
+    --mono: "JetBrains Mono", monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Inter", -apple-system, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  header {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  header .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .site-mark {
+    font-family: var(--mono);
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .site-mark span { color: var(--accent); }
+  nav a {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    margin-left: 24px;
+  }
+  nav a:hover, nav a:focus-visible { color: var(--accent); }
+
+  /* Hero */
+  .hero { padding: 96px 0 72px; }
+  .handle {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    display: block;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(38px, 7vw, 60px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .role {
+    margin-top: 20px;
+    font-size: 19px;
+    color: var(--ink-soft);
+    max-width: 540px;
+  }
+  .role strong { color: var(--ink); font-weight: 500; }
+
+  /* Sections */
+  section { padding: 56px 0; border-top: 1px solid var(--line); }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+  }
+  .about p + p { margin-top: 16px; }
+  .about p { max-width: 600px; }
+
+  /* Timeline */
+  .timeline { list-style: none; }
+  .timeline li {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 20px;
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .timeline li:last-child { border-bottom: none; }
+  .timeline .year {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--accent);
+    padding-top: 2px;
+  }
+  .timeline .what { color: var(--ink); }
+  .timeline .what em { color: var(--ink-soft); font-style: normal; font-size: 15px; display: block; }
+
+  /* Contact */
+  .contact a {
+    font-family: var(--mono);
+    font-size: 16px;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 2px;
+  }
+  .contact a:hover, .contact a:focus-visible { color: var(--accent); }
+  .contact p { margin-bottom: 12px; max-width: 540px; }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 32px 0 48px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 540px) {
+    .timeline li { grid-template-columns: 1fr; gap: 4px; }
+    nav a { margin-left: 16px; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero > * { animation: rise 0.6s ease both; }
+    .hero > *:nth-child(2) { animation-delay: 0.08s; }
+    .hero > *:nth-child(3) { animation-delay: 0.16s; }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: none; }
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="site-mark" href="/">2easy<span>.gg</span></a>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#career">Career</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="hero wrap">
+    <span class="handle">// cArn</span>
+    <h1>Patrik Sättermon</h1>
+    <p class="role">Co-founder &amp; Chief Gaming Officer at <strong>Fnatic</strong> — building winning teams in esports for over two decades. Based in Stockholm, Sweden.</p>
+  </div>
+
+  <section id="about">
+    <div class="wrap about">
+      <p class="eyebrow">About</p>
+      <p>I've spent my career at the intersection of competition and business. First as a professional Counter-Strike player — captaining Fnatic to world championships — and since then as Chief Gaming Officer, responsible for sporting performance, financial sustainability, and player care across one of the most decorated organisations in esports.</p>
+      <p>Two decades in this industry have taught me that sustained success comes from the same fundamentals in any sport: rigorous talent identification, honest performance culture, and an organisation built to support the people who compete under its banner.</p>
+    </div>
+  </section>
+
+  <section id="career">
+    <div class="wrap">
+      <p class="eyebrow">Career</p>
+      <ul class="timeline">
+        <li>
+          <span class="year">2004 —</span>
+          <span class="what">Co-founded Fnatic<em>From a handful of players to a global esports organisation</em></span>
+        </li>
+        <li>
+          <span class="year">2004–2012</span>
+          <span class="what">Professional Counter-Strike player &amp; team captain<em>Multiple world championship titles as "cArn"</em></span>
+        </li>
+        <li>
+          <span class="year">2012 —</span>
+          <span class="what">Chief Gaming Officer, Fnatic<em>Sporting performance · financial sustainability · player care</em></span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap contact">
+      <p class="eyebrow">Contact</p>
+      <p>For professional enquiries, the quickest way to reach me:</p>
+      <a href="mailto:patrik@2easy.gg">patrik@2easy.gg</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 Patrik Sättermon · 2easy.gg</div>
+</footer>
+
+</body>
+</html>
