@@ -145,8 +145,7 @@ async function main() {
     news: allNews,
   };
 
-  const outPath = path.join(__dirname, '..', 'public', 'briefing.json');
-  fs.mkdirSync(path.dirname(outPath), { recursive: true });
+  const outPath = path.join(__dirname, '..', 'briefing.json');
   fs.writeFileSync(outPath, JSON.stringify(briefing, null, 2));
   console.log(`Written to ${outPath}`);
 }
