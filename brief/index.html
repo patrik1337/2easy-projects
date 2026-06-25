@@ -390,7 +390,8 @@
   // ── State ────────────────────────────────────────────────────────────────
 
   let allTransfers = [];
-  let selectedGames = new Set();
+  // null = show all; Set = explicit include list (empty Set = show none)
+  let selectedGames = null;
   let activeDateRange = 'all'; // 'today' | '5days' | 'all'
 
   // ── Filter logic ─────────────────────────────────────────────────────────
@@ -403,7 +404,7 @@
         : null;
 
     return allTransfers.filter(t => {
-      if (selectedGames.size && !selectedGames.has(t.game)) return false;
+      if (selectedGames !== null && !selectedGames.has(t.game)) return false;
       if (cutoff) {
         const d = toDateStr(t.date);
         if (!d || d < cutoff) return false;
@@ -448,15 +449,14 @@
 
   function renderGamePills(games) {
     return games.map(g => {
-      const active = selectedGames.size === 0 || selectedGames.has(g) ? 'active' : '';
+      const active = selectedGames === null || selectedGames.has(g) ? 'active' : '';
       return `<button class="game-pill ${active}" data-game="${esc(g)}">${esc(g)}</button>`;
     }).join('');
   }
 
   function refreshPills() {
     document.querySelectorAll('.game-pill').forEach(btn => {
-      const g = btn.dataset.game;
-      btn.classList.toggle('active', selectedGames.size === 0 || selectedGames.has(g));
+      btn.classList.toggle('active', selectedGames === null || selectedGames.has(btn.dataset.game));
     });
   }
 
@@ -467,8 +467,7 @@
 
     allTransfers = data.transfers ?? [];
     const games = [...new Set(allTransfers.map(t => t.game))].sort();
-    // Start with all games selected (selectedGames empty = show all)
-    selectedGames = new Set();
+    selectedGames = null; // null = show all
 
     const industry = (data.news ?? []).filter(n => n.section === 'industry');
     const headlines = (data.news ?? []).filter(n => n.section === 'headlines');
@@ -542,18 +541,16 @@
       if (!pill) return;
       const game = pill.dataset.game;
 
-      if (selectedGames.size === 0) {
-        // All currently shown — start exclusive selection with just this one
+      if (selectedGames === null) {
+        // Currently showing all — deselect just this one
         selectedGames = new Set(games.filter(g => g !== game));
       } else if (selectedGames.has(game)) {
         selectedGames.delete(game);
-        // If nothing excluded, revert to "all"
-        if (selectedGames.size === 0 || selectedGames.size === games.length) {
-          selectedGames = new Set();
-        }
+        // If all games are now selected, collapse back to null (show all)
+        if (selectedGames.size === games.length) selectedGames = null;
       } else {
         selectedGames.add(game);
-        if (selectedGames.size === games.length) selectedGames = new Set();
+        if (selectedGames.size === games.length) selectedGames = null;
       }
 
       refreshPills();
@@ -562,13 +559,13 @@
 
     // Select all / none
     document.getElementById('btn-all').addEventListener('click', () => {
-      selectedGames = new Set();
+      selectedGames = null;
       refreshPills();
       renderTransferList();
     });
 
     document.getElementById('btn-none').addEventListener('click', () => {
-      selectedGames = new Set(games);
+      selectedGames = new Set(); // empty Set = show nothing
       refreshPills();
       renderTransferList();
     });
