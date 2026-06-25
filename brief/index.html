@@ -573,7 +573,7 @@
 
   // ── Fetch ────────────────────────────────────────────────────────────────
 
-  fetch('/briefing.json')
+  fetch('/public/briefing.json')
     .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(render)
     .catch(err => {
