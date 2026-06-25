@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Esports Briefing — 2easy.gg</title>
+<meta name="description" content="Daily esports briefing: roster moves, industry news, and headlines. Updated automatically every day." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #15171a;
+    --ink-soft: #5a6068;
+    --paper: #fbfbfa;
+    --line: #e6e6e2;
+    --accent: #ff5900;
+    --mono: "JetBrains Mono", monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Inter", -apple-system, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Header ── */
+  header { padding: 28px 0; border-bottom: 1px solid var(--line); }
+  header .wrap { display: flex; justify-content: space-between; align-items: baseline; }
+  .site-mark {
+    font-family: var(--mono);
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .site-mark span { color: var(--accent); }
+  nav a {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    margin-left: 24px;
+  }
+  nav a:hover, nav a:focus-visible { color: var(--accent); }
+  nav a.active { color: var(--accent); }
+
+  /* ── Page title ── */
+  .page-title { padding: 56px 0 40px; }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+  }
+  .page-title h1 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .updated-at {
+    margin-top: 10px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  /* ── Sections ── */
+  .section { padding: 40px 0; border-top: 1px solid var(--line); }
+  .section-label {
+    font-family: var(--mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-soft);
+    margin-bottom: 20px;
+  }
+
+  /* ── Roster moves ── */
+  .transfer-list { list-style: none; }
+  .transfer-item {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .transfer-item:last-child { border-bottom: none; }
+  .transfer-date {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    padding-top: 2px;
+  }
+  .transfer-detail { color: var(--ink); font-size: 15px; }
+  .transfer-player { font-weight: 500; }
+  .transfer-move { color: var(--ink-soft); font-size: 14px; margin-top: 2px; }
+  .transfer-game {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    background: var(--line);
+    border-radius: 3px;
+    padding: 1px 6px;
+    margin-top: 4px;
+  }
+
+  /* ── News items ── */
+  .news-list { list-style: none; }
+  .news-item {
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .news-item:last-child { border-bottom: none; }
+  .news-headline a {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+    line-height: 1.4;
+  }
+  .news-headline a:hover, .news-headline a:focus-visible {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+  .news-meta {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+  .news-source { color: var(--accent); }
+
+  /* ── States ── */
+  .state {
+    padding: 48px 0;
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+  .state.error { color: #c0392b; }
+
+  /* ── Footer ── */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 32px 0 48px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 540px) {
+    .transfer-item { grid-template-columns: 1fr; gap: 2px; }
+    nav a { margin-left: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="site-mark" href="/">2easy<span>.gg</span></a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/brief" class="active">Briefing</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="page-title wrap">
+    <p class="eyebrow">Daily digest</p>
+    <h1>Esports Briefing</h1>
+    <p class="updated-at" id="updated-at">Loading…</p>
+  </div>
+
+  <div id="content">
+    <div class="section wrap state" id="loading-state">Fetching the latest from the scene…</div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 Patrik Sättermon · <a href="/" style="color:inherit;text-decoration:none">2easy.gg</a></div>
+</footer>
+
+<script>
+(function () {
+  function relativeTime(iso) {
+    if (!iso) return '';
+    const diff = Date.now() - new Date(iso).getTime();
+    const m = Math.floor(diff / 60000);
+    if (m < 1) return 'just now';
+    if (m < 60) return m + 'm ago';
+    const h = Math.floor(m / 60);
+    if (h < 24) return h + 'h ago';
+    const d = Math.floor(h / 24);
+    return d + 'd ago';
+  }
+
+  function formatUpdated(iso) {
+    if (!iso) return '';
+    return new Date(iso).toLocaleString('en-GB', {
+      day: 'numeric', month: 'short', year: 'numeric',
+      hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
+    });
+  }
+
+  function escHtml(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function renderTransfers(transfers) {
+    if (!transfers.length) return '<p class="state">No roster moves available right now.</p>';
+    const rows = transfers.map(t => `
+      <li class="transfer-item">
+        <span class="transfer-date">${escHtml(t.date)}</span>
+        <span class="transfer-detail">
+          <span class="transfer-player">${escHtml(t.player)}</span>
+          <div class="transfer-move">${escHtml(t.from || '—')} → ${escHtml(t.to || '—')}</div>
+          <span class="transfer-game">${escHtml(t.game)}</span>
+        </span>
+      </li>`).join('');
+    return `<ul class="transfer-list">${rows}</ul>`;
+  }
+
+  function renderNews(items) {
+    if (!items.length) return '<p class="state">No news items available right now.</p>';
+    const rows = items.map(i => `
+      <li class="news-item">
+        <div class="news-headline">
+          <a href="${escHtml(i.link)}" target="_blank" rel="noopener noreferrer">${escHtml(i.title)}</a>
+        </div>
+        <div class="news-meta">
+          <span class="news-source">${escHtml(i.source)}</span>
+          ${i.pubDate ? ' · ' + relativeTime(i.pubDate) : ''}
+        </div>
+      </li>`).join('');
+    return `<ul class="news-list">${rows}</ul>`;
+  }
+
+  function render(data) {
+    const industry = data.news.filter(n => n.section === 'industry');
+    const headlines = data.news.filter(n => n.section === 'headlines');
+
+    document.getElementById('updated-at').textContent =
+      'Last updated: ' + formatUpdated(data.generatedAt);
+
+    const sections = [
+      { id: 'roster-moves', label: 'Roster Moves', html: renderTransfers(data.transfers) },
+      { id: 'industry-news', label: 'Industry News', html: renderNews(industry) },
+      { id: 'headlines', label: 'Headlines', html: renderNews(headlines) },
+    ];
+
+    document.getElementById('content').innerHTML = sections.map(s => `
+      <section class="section" id="${s.id}">
+        <div class="wrap">
+          <p class="section-label">${s.label}</p>
+          ${s.html}
+        </div>
+      </section>`).join('');
+  }
+
+  fetch('/api/refresh')
+    .then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(render)
+    .catch(err => {
+      document.getElementById('loading-state').className = 'state error';
+      document.getElementById('loading-state').textContent =
+        'Could not load briefing. Please try again later.';
+      document.getElementById('updated-at').textContent = '';
+      console.error(err);
+    });
+})();
+</script>
+
+</body>
+</html>

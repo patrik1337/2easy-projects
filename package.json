@@ -1,0 +1,11 @@
+{
+  "name": "2easy-gg",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "fast-xml-parser": "^4.3.6"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
