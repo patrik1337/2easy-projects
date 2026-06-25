@@ -1,0 +1,33 @@
+name: Refresh briefing data
+
+on:
+  schedule:
+    - cron: '0 12 * * *'   # daily at 12:00 UTC
+  workflow_dispatch:         # allow manual trigger from GitHub UI
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write        # needed to push the updated briefing.json
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Fetch briefing data
+        run: node scripts/fetch-briefing.js
+
+      - name: Commit and push if changed
+        run: |
+          git config user.email "action@github.com"
+          git config user.name "GitHub Actions"
+          git add public/briefing.json
+          git diff --staged --quiet && echo "No changes to commit." || \
+            git commit -m "chore: refresh briefing data [skip ci]" && git push
