@@ -3,7 +3,7 @@ const FEEDS = require('../config/feeds');
 
 const xmlParser = new XMLParser({ ignoreAttributes: false, isArray: (name) => name === 'item' });
 const UA = 'esports-briefing/1.0 (2easy.gg daily briefing; contact patrik@2easy.gg)';
-const LIQUIPEDIA_DELAY_MS = 2200; // Liquipedia ToS: >= 2 s between requests
+const LIQUIPEDIA_MIN_GAP_MS = 2100; // Liquipedia ToS: >= 2 s between request starts
 
 // ── RSS ──────────────────────────────────────────────────────────────────────
 
@@ -124,13 +124,18 @@ module.exports = async (req, res) => {
     .sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
     .slice(0, 60);
 
-  // Liquipedia — sequential, min 2.2 s apart per their rate-limit policy
+  // Liquipedia — sequential, min 2.1 s between request *starts* per their rate-limit policy.
+  // We subtract actual fetch time so we only sleep the remainder, keeping total runtime low.
   const transfers = [];
   for (let i = 0; i < FEEDS.liquipedia.length; i++) {
+    const t0 = Date.now();
     const { wiki, game, page } = FEEDS.liquipedia[i];
     const items = await fetchLiquipediaTransfers(wiki, game, page);
     transfers.push(...items);
-    if (i < FEEDS.liquipedia.length - 1) await sleep(LIQUIPEDIA_DELAY_MS);
+    if (i < FEEDS.liquipedia.length - 1) {
+      const gap = LIQUIPEDIA_MIN_GAP_MS - (Date.now() - t0);
+      if (gap > 0) await sleep(gap);
+    }
   }
 
   res.status(200).json({
