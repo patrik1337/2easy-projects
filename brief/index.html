@@ -16,6 +16,7 @@
     --line: #e6e6e2;
     --accent: #ff5900;
     --mono: "JetBrains Mono", monospace;
+    --col-gap: 40px;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -23,15 +24,18 @@
     background: var(--paper);
     color: var(--ink);
     font-family: "Inter", -apple-system, sans-serif;
-    font-size: 17px;
+    font-size: 16px;
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Layout ── */
+  .wrap-wide { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+  .wrap-narrow { max-width: 720px; margin: 0 auto; padding: 0 28px; }
 
   /* ── Header ── */
   header { padding: 28px 0; border-bottom: 1px solid var(--line); }
-  header .wrap { display: flex; justify-content: space-between; align-items: baseline; }
+  header .wrap-wide { display: flex; justify-content: space-between; align-items: baseline; }
   .site-mark {
     font-family: var(--mono);
     font-size: 14px;
@@ -51,81 +55,92 @@
   nav a.active { color: var(--accent); }
 
   /* ── Page title ── */
-  .page-title { padding: 56px 0 40px; }
+  .page-title {
+    padding: 44px 0 36px;
+    border-bottom: 1px solid var(--line);
+  }
+  .page-title-inner {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
   .eyebrow {
     font-family: var(--mono);
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.14em;
     color: var(--ink-soft);
-    margin-bottom: 12px;
+    margin-bottom: 8px;
   }
   .page-title h1 {
     font-family: "Space Grotesk", sans-serif;
-    font-size: clamp(28px, 5vw, 40px);
+    font-size: clamp(24px, 4vw, 36px);
     font-weight: 700;
     line-height: 1.1;
     letter-spacing: -0.02em;
   }
   .updated-at {
-    margin-top: 10px;
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--ink-soft);
-  }
-
-  /* ── Sections ── */
-  .section { padding: 40px 0; border-top: 1px solid var(--line); }
-  .section-label {
     font-family: var(--mono);
     font-size: 12px;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+
+  /* ── Two-column grid ── */
+  .briefing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 var(--col-gap);
+    align-items: start;
+    padding: 0 0 64px;
+  }
+
+  .col-news {
+    border-right: 1px solid var(--line);
+    padding-right: var(--col-gap);
+    padding-top: 36px;
+  }
+
+  .col-transfers {
+    padding-top: 36px;
+  }
+
+  /* ── Column headers ── */
+  .col-label {
+    font-family: var(--mono);
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.14em;
     color: var(--ink-soft);
     margin-bottom: 20px;
   }
 
-  /* ── Roster moves ── */
-  .transfer-list { list-style: none; }
-  .transfer-item {
-    display: grid;
-    grid-template-columns: 90px 1fr;
-    gap: 16px;
-    padding: 12px 0;
-    border-bottom: 1px dashed var(--line);
-  }
-  .transfer-item:last-child { border-bottom: none; }
-  .transfer-date {
+  /* ── News sub-sections ── */
+  .news-section + .news-section { margin-top: 32px; }
+  .news-sublabel {
     font-family: var(--mono);
-    font-size: 13px;
-    color: var(--accent);
-    padding-top: 2px;
-  }
-  .transfer-detail { color: var(--ink); font-size: 15px; }
-  .transfer-player { font-weight: 500; }
-  .transfer-move { color: var(--ink-soft); font-size: 14px; margin-top: 2px; }
-  .transfer-game {
-    display: inline-block;
-    font-family: var(--mono);
-    font-size: 11px;
+    font-size: 10px;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--ink-soft);
-    background: var(--line);
-    border-radius: 3px;
-    padding: 1px 6px;
-    margin-top: 4px;
+    letter-spacing: 0.12em;
+    color: var(--line);
+    background: var(--ink-soft);
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 2px;
+    margin-bottom: 14px;
   }
 
   /* ── News items ── */
   .news-list { list-style: none; }
   .news-item {
-    padding: 14px 0;
+    padding: 11px 0;
     border-bottom: 1px dashed var(--line);
   }
   .news-item:last-child { border-bottom: none; }
   .news-headline a {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     color: var(--ink);
     text-decoration: none;
@@ -137,32 +152,155 @@
   }
   .news-meta {
     font-family: var(--mono);
-    font-size: 12px;
+    font-size: 11px;
     color: var(--ink-soft);
-    margin-top: 4px;
+    margin-top: 3px;
   }
   .news-source { color: var(--accent); }
 
-  /* ── States ── */
-  .state {
-    padding: 48px 0;
+  /* ── Transfer controls ── */
+  .transfer-controls { margin-bottom: 20px; }
+
+  .date-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+  }
+  .date-tab {
     font-family: var(--mono);
-    font-size: 14px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 5px 12px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    cursor: pointer;
+    background: var(--paper);
+    color: var(--ink-soft);
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
+  }
+  .date-tab:hover { border-color: var(--ink-soft); color: var(--ink); }
+  .date-tab.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+
+  .game-filters-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .filter-toggles {
+    font-family: var(--mono);
+    font-size: 10px;
     color: var(--ink-soft);
   }
-  .state.error { color: #c0392b; }
+  .filter-toggles button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 0;
+    text-decoration: underline;
+  }
+  .filter-toggles button + button { margin-left: 8px; }
+
+  .game-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .game-pill {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 4px 9px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    cursor: pointer;
+    background: var(--paper);
+    color: var(--ink-soft);
+    transition: background 0.1s, color 0.1s, border-color 0.1s;
+    user-select: none;
+  }
+  .game-pill:hover { border-color: var(--ink-soft); color: var(--ink); }
+  .game-pill.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  /* ── Transfer list ── */
+  .transfer-list { list-style: none; margin-top: 20px; }
+  .transfer-item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .transfer-item:last-child { border-bottom: none; }
+  .transfer-date {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    padding-top: 1px;
+  }
+  .transfer-detail { color: var(--ink); font-size: 14px; }
+  .transfer-player { font-weight: 500; }
+  .transfer-move { color: var(--ink-soft); font-size: 13px; margin-top: 1px; }
+  .transfer-game-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    background: var(--line);
+    border-radius: 2px;
+    padding: 1px 5px;
+    margin-top: 3px;
+  }
+
+  /* ── Empty / loading / error ── */
+  .state-msg {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-soft);
+    padding: 32px 0;
+  }
+  .state-msg.error { color: #c0392b; }
 
   /* ── Footer ── */
   footer {
     border-top: 1px solid var(--line);
-    padding: 32px 0 48px;
+    padding: 28px 0 48px;
     font-family: var(--mono);
     font-size: 12px;
     color: var(--ink-soft);
   }
 
-  @media (max-width: 540px) {
-    .transfer-item { grid-template-columns: 1fr; gap: 2px; }
+  /* ── Mobile ── */
+  @media (max-width: 800px) {
+    .briefing-grid {
+      grid-template-columns: 1fr;
+    }
+    .col-news {
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+      padding-right: 0;
+      padding-bottom: 36px;
+    }
     nav a { margin-left: 16px; }
   }
 </style>
@@ -170,7 +308,7 @@
 <body>
 
 <header>
-  <div class="wrap">
+  <div class="wrap-wide">
     <a class="site-mark" href="/">2easy<span>.gg</span></a>
     <nav>
       <a href="/">Home</a>
@@ -180,23 +318,29 @@
 </header>
 
 <main>
-  <div class="page-title wrap">
-    <p class="eyebrow">Daily digest</p>
-    <h1>Esports Briefing</h1>
-    <p class="updated-at" id="updated-at">Loading…</p>
+  <div class="page-title wrap-wide">
+    <div class="page-title-inner">
+      <div>
+        <p class="eyebrow">Daily digest</p>
+        <h1>Esports Briefing</h1>
+      </div>
+      <p class="updated-at" id="updated-at">Loading…</p>
+    </div>
   </div>
 
-  <div id="content">
-    <div class="section wrap state" id="loading-state">Fetching the latest from the scene…</div>
+  <div id="content" class="wrap-wide">
+    <p class="state-msg" id="loading-state">Fetching the latest from the scene…</p>
   </div>
 </main>
 
 <footer>
-  <div class="wrap">© 2026 Patrik Sättermon · <a href="/" style="color:inherit;text-decoration:none">2easy.gg</a></div>
+  <div class="wrap-wide">© 2026 Patrik Sättermon · <a href="/" style="color:inherit;text-decoration:none">2easy.gg</a></div>
 </footer>
 
 <script>
 (function () {
+  // ── Helpers ──────────────────────────────────────────────────────────────
+
   function relativeTime(iso) {
     if (!iso) return '';
     const diff = Date.now() - new Date(iso).getTime();
@@ -206,84 +350,237 @@
     const h = Math.floor(m / 60);
     if (h < 24) return h + 'h ago';
     const d = Math.floor(h / 24);
-    return d + 'd ago';
+    return d === 1 ? '1d ago' : d + 'd ago';
   }
 
   function formatUpdated(iso) {
     if (!iso) return '';
-    return new Date(iso).toLocaleString('en-GB', {
+    return 'Last updated: ' + new Date(iso).toLocaleString('en-GB', {
       day: 'numeric', month: 'short', year: 'numeric',
       hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
     });
   }
 
-  function escHtml(s) {
+  function esc(s) {
     return String(s)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
-  function renderTransfers(transfers) {
-    if (!transfers.length) return '<p class="state">No roster moves available right now.</p>';
-    const rows = transfers.map(t => `
-      <li class="transfer-item">
-        <span class="transfer-date">${escHtml(t.date)}</span>
-        <span class="transfer-detail">
-          <span class="transfer-player">${escHtml(t.player)}</span>
-          <div class="transfer-move">${escHtml(t.from || '—')} → ${escHtml(t.to || '—')}</div>
-          <span class="transfer-game">${escHtml(t.game)}</span>
-        </span>
-      </li>`).join('');
-    return `<ul class="transfer-list">${rows}</ul>`;
+  // Parse "YYYY-MM-DD" or ISO string to local date string "YYYY-MM-DD"
+  function toDateStr(raw) {
+    if (!raw) return '';
+    // already YYYY-MM-DD
+    if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) return raw;
+    const d = new Date(raw);
+    if (isNaN(d)) return '';
+    return d.toLocaleDateString('en-CA'); // "YYYY-MM-DD"
   }
+
+  function todayStr() {
+    return new Date().toLocaleDateString('en-CA');
+  }
+
+  function daysAgoStr(n) {
+    const d = new Date();
+    d.setDate(d.getDate() - n);
+    return d.toLocaleDateString('en-CA');
+  }
+
+  // ── State ────────────────────────────────────────────────────────────────
+
+  let allTransfers = [];
+  let selectedGames = new Set();
+  let activeDateRange = 'all'; // 'today' | '5days' | 'all'
+
+  // ── Filter logic ─────────────────────────────────────────────────────────
+
+  function filteredTransfers() {
+    const cutoff = activeDateRange === 'today'
+      ? todayStr()
+      : activeDateRange === '5days'
+        ? daysAgoStr(4)
+        : null;
+
+    return allTransfers.filter(t => {
+      if (selectedGames.size && !selectedGames.has(t.game)) return false;
+      if (cutoff) {
+        const d = toDateStr(t.date);
+        if (!d || d < cutoff) return false;
+      }
+      return true;
+    });
+  }
+
+  // ── Renderers ────────────────────────────────────────────────────────────
 
   function renderNews(items) {
-    if (!items.length) return '<p class="state">No news items available right now.</p>';
-    const rows = items.map(i => `
+    if (!items.length) return '<p class="state-msg">No items available.</p>';
+    return '<ul class="news-list">' + items.map(i => `
       <li class="news-item">
         <div class="news-headline">
-          <a href="${escHtml(i.link)}" target="_blank" rel="noopener noreferrer">${escHtml(i.title)}</a>
+          <a href="${esc(i.link)}" target="_blank" rel="noopener noreferrer">${esc(i.title)}</a>
         </div>
         <div class="news-meta">
-          <span class="news-source">${escHtml(i.source)}</span>
-          ${i.pubDate ? ' · ' + relativeTime(i.pubDate) : ''}
+          <span class="news-source">${esc(i.source)}</span>${i.pubDate ? ' · ' + relativeTime(i.pubDate) : ''}
         </div>
-      </li>`).join('');
-    return `<ul class="news-list">${rows}</ul>`;
+      </li>`).join('') + '</ul>';
   }
+
+  function renderTransferList() {
+    const items = filteredTransfers();
+    const el = document.getElementById('transfer-list');
+    if (!el) return;
+    if (!items.length) {
+      el.innerHTML = '<p class="state-msg">No transfers match the current filters.</p>';
+      return;
+    }
+    el.innerHTML = '<ul class="transfer-list">' + items.map(t => `
+      <li class="transfer-item">
+        <span class="transfer-date">${esc(t.date)}</span>
+        <span class="transfer-detail">
+          <span class="transfer-player">${esc(t.player)}</span>
+          <div class="transfer-move">${esc(t.from || '—')} → ${esc(t.to || '—')}</div>
+          <span class="transfer-game-tag">${esc(t.game)}</span>
+        </span>
+      </li>`).join('') + '</ul>';
+  }
+
+  function renderGamePills(games) {
+    return games.map(g => {
+      const active = selectedGames.size === 0 || selectedGames.has(g) ? 'active' : '';
+      return `<button class="game-pill ${active}" data-game="${esc(g)}">${esc(g)}</button>`;
+    }).join('');
+  }
+
+  function refreshPills() {
+    document.querySelectorAll('.game-pill').forEach(btn => {
+      const g = btn.dataset.game;
+      btn.classList.toggle('active', selectedGames.size === 0 || selectedGames.has(g));
+    });
+  }
+
+  // ── Full render after data loads ─────────────────────────────────────────
 
   function render(data) {
-    const industry = data.news.filter(n => n.section === 'industry');
-    const headlines = data.news.filter(n => n.section === 'headlines');
+    document.getElementById('updated-at').textContent = formatUpdated(data.generatedAt);
 
-    document.getElementById('updated-at').textContent =
-      'Last updated: ' + formatUpdated(data.generatedAt);
+    allTransfers = data.transfers ?? [];
+    const games = [...new Set(allTransfers.map(t => t.game))].sort();
+    // Start with all games selected (selectedGames empty = show all)
+    selectedGames = new Set();
 
-    const sections = [
-      { id: 'roster-moves', label: 'Roster Moves', html: renderTransfers(data.transfers) },
-      { id: 'industry-news', label: 'Industry News', html: renderNews(industry) },
-      { id: 'headlines', label: 'Headlines', html: renderNews(headlines) },
-    ];
+    const industry = (data.news ?? []).filter(n => n.section === 'industry');
+    const headlines = (data.news ?? []).filter(n => n.section === 'headlines');
 
-    document.getElementById('content').innerHTML = sections.map(s => `
-      <section class="section" id="${s.id}">
-        <div class="wrap">
-          <p class="section-label">${s.label}</p>
-          ${s.html}
+    document.getElementById('content').innerHTML = `
+      <div class="briefing-grid">
+
+        <!-- ── Left: News ── -->
+        <div class="col-news">
+          <p class="col-label">Esports News</p>
+
+          <div class="news-section">
+            <span class="news-sublabel">Industry</span>
+            ${renderNews(industry)}
+          </div>
+
+          <div class="news-section">
+            <span class="news-sublabel">Headlines</span>
+            ${renderNews(headlines)}
+          </div>
         </div>
-      </section>`).join('');
+
+        <!-- ── Right: Transfers ── -->
+        <div class="col-transfers">
+          <p class="col-label">Roster Transfers</p>
+
+          <div class="transfer-controls">
+            <div class="date-tabs">
+              <button class="date-tab" data-range="today">Today</button>
+              <button class="date-tab" data-range="5days">Last 5 days</button>
+              <button class="date-tab active" data-range="all">All</button>
+            </div>
+
+            <div class="game-filters-label">
+              <span>Filter by title</span>
+              <span class="filter-toggles">
+                <button id="btn-all">All</button>
+                <button id="btn-none">None</button>
+              </span>
+            </div>
+            <div class="game-pills" id="game-pills">
+              ${renderGamePills(games)}
+            </div>
+          </div>
+
+          <div id="transfer-list"></div>
+        </div>
+
+      </div>`;
+
+    renderTransferList();
+    bindEvents(games);
   }
 
+  // ── Event binding ─────────────────────────────────────────────────────────
+
+  function bindEvents(games) {
+    // Date tabs
+    document.querySelectorAll('.date-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeDateRange = btn.dataset.range;
+        document.querySelectorAll('.date-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderTransferList();
+      });
+    });
+
+    // Game pills
+    document.getElementById('game-pills').addEventListener('click', e => {
+      const pill = e.target.closest('.game-pill');
+      if (!pill) return;
+      const game = pill.dataset.game;
+
+      if (selectedGames.size === 0) {
+        // All currently shown — start exclusive selection with just this one
+        selectedGames = new Set(games.filter(g => g !== game));
+      } else if (selectedGames.has(game)) {
+        selectedGames.delete(game);
+        // If nothing excluded, revert to "all"
+        if (selectedGames.size === 0 || selectedGames.size === games.length) {
+          selectedGames = new Set();
+        }
+      } else {
+        selectedGames.add(game);
+        if (selectedGames.size === games.length) selectedGames = new Set();
+      }
+
+      refreshPills();
+      renderTransferList();
+    });
+
+    // Select all / none
+    document.getElementById('btn-all').addEventListener('click', () => {
+      selectedGames = new Set();
+      refreshPills();
+      renderTransferList();
+    });
+
+    document.getElementById('btn-none').addEventListener('click', () => {
+      selectedGames = new Set(games);
+      refreshPills();
+      renderTransferList();
+    });
+  }
+
+  // ── Fetch ────────────────────────────────────────────────────────────────
+
   fetch('/api/refresh')
-    .then(r => {
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      return r.json();
-    })
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(render)
     .catch(err => {
-      document.getElementById('loading-state').className = 'state error';
+      document.getElementById('loading-state').className = 'state-msg error';
       document.getElementById('loading-state').textContent =
         'Could not load briefing. Please try again later.';
       document.getElementById('updated-at').textContent = '';
