@@ -1,4 +1,5 @@
 {
+  "outputDirectory": ".",
   "functions": {
     "api/refresh.js": {
       "maxDuration": 60
