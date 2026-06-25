@@ -53,37 +53,41 @@ async function fetchFeed(feed) {
 
 // ── Liquipedia ────────────────────────────────────────────────────────────────
 
+function extractDivCell(chunk, cellClass) {
+  // Split on divRow boundaries means divCell divs are at the top level of chunk.
+  // Non-greedy match to first </div> gives us the cell contents even if nested divs exist
+  // inside — stripHtml handles the remaining tags.
+  const re = new RegExp(
+    `<div[^>]*class="[^"]*divCell[^"]*\\b${cellClass}\\b[^"]*"[^>]*>([\\s\\S]*?)</div>`,
+    'i'
+  );
+  const m = chunk.match(re);
+  return m ? stripHtml(m[1]) : '';
+}
+
 function parseTransferTable(html, game) {
+  // Split on divRow opening tags — avoids nested-div regex issues entirely.
+  // parts[0] is preamble; parts[1..n] each start just after a divRow opening tag.
+  const parts = html.split(/<div[^>]*class="[^"]*\bdivRow\b[^"]*"[^>]*>/i);
   const transfers = [];
-  const rowRegex = /<tr(?:\s[^>]*)?>(?![\s\S]*?<th)([\s\S]*?)<\/tr>/gi;
-  let rowMatch;
-  while ((rowMatch = rowRegex.exec(html)) !== null) {
-    const rowHtml = rowMatch[1];
-    const cells = [];
-    const tdRegex = /<td(?:\s[^>]*)?>(?:<[^>]+>)*([\s\S]*?)<\/td>/gi;
-    let td;
-    while ((td = tdRegex.exec(rowHtml)) !== null) {
-      cells.push(stripHtml(td[1]));
+  for (let i = 1; i < parts.length && transfers.length < 15; i++) {
+    const chunk = parts[i];
+    const date = extractDivCell(chunk, 'Date');
+    const player = extractDivCell(chunk, 'Name');
+    const from = extractDivCell(chunk, 'OldTeam');
+    const to = extractDivCell(chunk, 'NewTeam');
+    if (player) {
+      transfers.push({ date, player, from: from || 'None', to: to || 'None', game });
     }
-    if (cells.length >= 2 && cells[1]) {
-      transfers.push({
-        date: cells[0] ?? '',
-        player: cells[1],
-        from: cells[2] ?? '',
-        to: cells[3] ?? '',
-        game,
-      });
-    }
-    if (transfers.length >= 15) break; // cap per game
   }
   return transfers;
 }
 
-async function fetchLiquipediaTransfers(wiki, game) {
+async function fetchLiquipediaTransfers(wiki, game, page) {
   try {
     const url =
       `https://liquipedia.net/${wiki}/api.php` +
-      `?action=parse&page=Portal:Transfers&prop=text&format=json`;
+      `?action=parse&page=${encodeURIComponent(page)}&prop=text&format=json`;
     const res = await fetch(url, {
       headers: {
         'User-Agent': UA,
@@ -123,8 +127,8 @@ module.exports = async (req, res) => {
   // Liquipedia — sequential, min 2.2 s apart per their rate-limit policy
   const transfers = [];
   for (let i = 0; i < FEEDS.liquipedia.length; i++) {
-    const { wiki, game } = FEEDS.liquipedia[i];
-    const items = await fetchLiquipediaTransfers(wiki, game);
+    const { wiki, game, page } = FEEDS.liquipedia[i];
+    const items = await fetchLiquipediaTransfers(wiki, game, page);
     transfers.push(...items);
     if (i < FEEDS.liquipedia.length - 1) await sleep(LIQUIPEDIA_DELAY_MS);
   }

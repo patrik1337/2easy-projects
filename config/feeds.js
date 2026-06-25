@@ -29,8 +29,8 @@ module.exports = {
   ],
 
   liquipedia: [
-    { wiki: 'valorant', game: 'Valorant' },
-    { wiki: 'leagueoflegends', game: 'League of Legends' },
-    { wiki: 'counterstrike', game: 'Counter-Strike' },
+    { wiki: 'valorant', game: 'Valorant', page: 'Portal:Transfers' },
+    { wiki: 'leagueoflegends', game: 'League of Legends', page: 'Player_Transfers' },
+    { wiki: 'counterstrike', game: 'Counter-Strike', page: 'Portal:Transfers' },
   ],
 };
