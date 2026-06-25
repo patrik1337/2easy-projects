@@ -15,11 +15,14 @@ const LIQUIPEDIA_MIN_GAP_MS = 2100;
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function stripHtml(str = '') {
-  return str
+  const text = str
     .replace(/<[^>]+>/g, '')
     .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
     .replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+    .replace(/&#160;/g, ' ').replace(/&nbsp;/g, ' ')
     .replace(/\s+/g, ' ').trim();
+  // Liquipedia uses "None" as a placeholder when a player has no team
+  return text === 'None' ? '' : text;
 }
 
 function parsePubDate(raw) {
