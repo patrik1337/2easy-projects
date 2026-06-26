@@ -376,14 +376,16 @@ function shake(r) {
 }
 
 // ── Name modal ───────────────────────────────────────────────────────────────
-const nameInput = document.getElementById('name-input');
 function submitName() {
-  const name = nameInput.value.trim();
-  if (!name) { nameInput.focus(); return; }
+  const inp = document.getElementById('name-input');
+  const name = inp ? inp.value.trim() : '';
+  if (!name) { if (inp) inp.focus(); return; }
   player = savePlayer(name);
   document.getElementById('name-modal').classList.add('hidden');
 }
 document.getElementById('name-form').addEventListener('submit', e => { e.preventDefault(); submitName(); });
+document.getElementById('name-btn').addEventListener('click', submitName);
+document.getElementById('name-input').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); submitName(); } });
 
 // ── Stats modal ──────────────────────────────────────────────────────────────
 document.getElementById('stats-btn').addEventListener('click', () => {
