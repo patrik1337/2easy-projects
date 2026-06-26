@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spel – 2easy.gg</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--green:#538d4e;--bg:#121213;--surface:#1a1a1b;--text:#fff;--border:#3a3a3c;--muted:#818384}
+body{background:var(--bg);color:var(--text);font-family:'Helvetica Neue',Arial,sans-serif;min-height:100dvh;min-height:100vh}
+header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);max-width:600px;margin:0 auto;width:100%}
+header h1{font-size:1.1rem;font-weight:700;letter-spacing:.05em}
+.back-link{color:var(--text);text-decoration:none;font-size:.85rem;opacity:.7}
+.logo{font-weight:800;font-size:1.1rem;letter-spacing:-.01em}
+.logo span{color:var(--green)}
+main{max-width:600px;margin:0 auto;padding:32px 20px}
+.intro{margin-bottom:32px}
+.intro h2{font-size:1.5rem;font-weight:700;margin-bottom:6px}
+.intro p{color:var(--muted);font-size:.95rem;line-height:1.5}
+.games-grid{display:grid;gap:12px}
+.game-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;text-decoration:none;color:var(--text);display:flex;align-items:center;gap:16px;transition:border-color .15s,transform .1s}
+.game-card:hover{border-color:#555;transform:translateY(-1px)}
+.game-card:active{transform:translateY(0)}
+.game-icon{font-size:2.2rem;width:52px;height:52px;display:flex;align-items:center;justify-content:center;background:var(--bg);border-radius:10px;flex-shrink:0}
+.game-info{flex:1}
+.game-name{font-size:1.05rem;font-weight:700;margin-bottom:3px}
+.game-desc{font-size:.82rem;color:var(--muted);line-height:1.4}
+.game-badge{font-size:.72rem;font-weight:700;padding:3px 8px;border-radius:4px;white-space:nowrap}
+.badge-today{background:var(--green);color:#fff}
+.badge-soon{background:var(--border);color:var(--muted)}
+.day-label{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:24px;margin-bottom:8px}
+footer{text-align:center;padding:32px 20px;color:var(--muted);font-size:.8rem}
+footer a{color:var(--muted);text-decoration:none}
+</style>
+</head>
+<body>
+<header>
+  <a href="/" class="back-link">← 2easy.gg</a>
+  <div class="logo">2easy<span>.gg</span> Spel</div>
+</header>
+<main>
+  <div class="intro">
+    <h2>Dagens spel</h2>
+    <p>Ett nytt spel varje dag. Tävla mot vänner och se vem som är bäst på topplistan.</p>
+  </div>
+
+  <div id="games-grid" class="games-grid"></div>
+</main>
+<footer>
+  <a href="/">2easy.gg</a>
+</footer>
+
+<script>
+// Game rotation: indexed by day-of-week (0=Sunday, 1=Monday, …)
+// Extend this array as you add more games
+const GAME_ROTATION = [
+  { day: 'Måndag',    slug: 'wordle', name: 'Ordel',       icon: '🟩', desc: 'Gissa det svenska 5-bokstavsordet på 6 försök.' },
+  { day: 'Tisdag',   slug: 'wordle', name: 'Ordel',        icon: '🟩', desc: 'Gissa det svenska 5-bokstavsordet på 6 försök.' },
+  { day: 'Onsdag',   slug: 'wordle', name: 'Ordel',        icon: '🟩', desc: 'Gissa det svenska 5-bokstavsordet på 6 försök.' },
+  { day: 'Torsdag',  slug: 'wordle', name: 'Ordel',        icon: '🟩', desc: 'Gissa det svenska 5-bokstavsordet på 6 försök.' },
+  { day: 'Fredag',   slug: 'wordle', name: 'Ordel',        icon: '🟩', desc: 'Gissa det svenska 5-bokstavsordet på 6 försök.' },
+  { day: 'Lördag',   slug: 'wordle', name: 'Ordel',        icon: '🟩', desc: 'Gissa det svenska 5-bokstavsordet på 6 försök.' },
+  { day: 'Söndag',   slug: 'wordle', name: 'Ordel',        icon: '🟩', desc: 'Gissa det svenska 5-bokstavsordet på 6 försök.' },
+  // Future games – add here:
+  // { day: 'Tisdag', slug: 'siffror', name: 'Siffror', icon: '🔢', desc: 'Gissa talföljden.' },
+];
+
+// Days 0=Sun 1=Mon ... 6=Sat
+const DAY_ORDER = [1,2,3,4,5,6,0]; // Mon–Sun display order
+
+function getSwedishDate() {
+  const now = new Date();
+  const sto = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Stockholm' }));
+  return { dayOfWeek: sto.getDay() }; // 0=Sun
+}
+
+const { dayOfWeek } = getSwedishDate();
+// Map JS day (0=Sun) to rotation index (0=Mon)
+const rotIdx = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+
+const grid = document.getElementById('games-grid');
+
+// Check if user has already played today's game
+function hasPlayed(slug) {
+  const today = new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Stockholm' });
+  const stateKey = `wp2_state_${today}`;
+  try {
+    const s = JSON.parse(localStorage.getItem(stateKey));
+    return s && s.done;
+  } catch { return false; }
+}
+
+// Show today's game prominently, then the rest of the week
+const todayGame = GAME_ROTATION[rotIdx];
+
+// Today card
+const todayCard = document.createElement('a');
+todayCard.href = `/spel/${todayGame.slug}/`;
+todayCard.className = 'game-card';
+const played = hasPlayed(todayGame.slug);
+todayCard.innerHTML = `
+  <div class="game-icon">${todayGame.icon}</div>
+  <div class="game-info">
+    <div class="game-name">${todayGame.name}</div>
+    <div class="game-desc">${todayGame.desc}</div>
+  </div>
+  <span class="game-badge badge-today">${played ? '✓ Spelat' : 'Spela nu'}</span>
+`;
+grid.appendChild(todayCard);
+
+// Coming up (next 6 days)
+const upcomingLabel = document.createElement('div');
+upcomingLabel.className = 'day-label';
+upcomingLabel.textContent = 'Resten av veckan';
+grid.appendChild(upcomingLabel);
+
+for (let i = 1; i < 7; i++) {
+  const idx = (rotIdx + i) % GAME_ROTATION.length;
+  const game = GAME_ROTATION[idx];
+  const div = document.createElement('div');
+  div.className = 'game-card';
+  div.style.opacity = '.55';
+  div.style.cursor = 'default';
+  div.innerHTML = `
+    <div class="game-icon" style="opacity:.5">${game.icon}</div>
+    <div class="game-info">
+      <div class="game-name">${game.name}</div>
+      <div class="game-desc">${game.day} – ${game.desc}</div>
+    </div>
+    <span class="game-badge badge-soon">Snart</span>
+  `;
+  grid.appendChild(div);
+}
+</script>
+</body>
+</html>

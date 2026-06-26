@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Ordel – 2easy Spel</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#538d4e;--yellow:#b59f3b;--dark:#3a3a3c;
+  --bg:#121213;--surface:#1a1a1b;--text:#fff;--border:#3a3a3c;
+  --key-bg:#818384;--tile:62px;--gap:5px;
+}
+body{background:var(--bg);color:var(--text);font-family:'Helvetica Neue',Arial,sans-serif;display:flex;flex-direction:column;min-height:100dvh;min-height:100vh;-webkit-tap-highlight-color:transparent;user-select:none;overflow-x:hidden}
+header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);width:100%}
+header h1{font-size:1.4rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;position:absolute;left:50%;transform:translateX(-50%)}
+.back-link{color:var(--text);text-decoration:none;font-size:.85rem;opacity:.7;z-index:1}
+#stats-btn{background:none;border:none;color:var(--text);font-size:1.3rem;cursor:pointer;padding:4px 8px;z-index:1}
+#toast{position:fixed;top:68px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:10px 20px;border-radius:8px;font-weight:700;font-size:.9rem;opacity:0;transition:opacity .2s;z-index:300;pointer-events:none;white-space:nowrap}
+#toast.show{opacity:1}
+main{flex:1;display:flex;flex-direction:column;align-items:center;padding:12px 8px 8px;width:100%;max-width:500px;margin:0 auto}
+#board{display:grid;grid-template-rows:repeat(6,var(--tile));gap:var(--gap);margin-bottom:20px}
+.row{display:grid;grid-template-columns:repeat(5,var(--tile));gap:var(--gap)}
+.tile{width:var(--tile);height:var(--tile);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:700;text-transform:uppercase;position:relative;transition:border-color .1s}
+.tile.filled{border-color:#565758;animation:pop .1s ease}
+.tile.revealed{border:none;animation:flip .5s ease forwards}
+.tile.correct{--c:var(--green)}.tile.present{--c:var(--yellow)}.tile.absent{--c:var(--dark)}
+@keyframes pop{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+@keyframes flip{0%{transform:rotateX(0);background:transparent}49%{transform:rotateX(-90deg);background:transparent}50%{transform:rotateX(-90deg);background:var(--c)}100%{transform:rotateX(0);background:var(--c)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}40%{transform:translateY(-20px)}60%{transform:translateY(-10px)}}
+.row.shake{animation:shake .4s ease}
+.tile.bounce{animation:bounce .6s ease}
+#keyboard{width:100%;padding:0 4px}
+.kb-row{display:flex;justify-content:center;gap:5px;margin-bottom:7px}
+.key{background:var(--key-bg);color:var(--text);border:none;border-radius:4px;font-size:.85rem;font-weight:700;height:56px;flex:1;max-width:40px;cursor:pointer;text-transform:uppercase;transition:background .15s;touch-action:manipulation}
+.key.wide{max-width:62px;font-size:.72rem}
+.key.correct{background:var(--green)}.key.present{background:var(--yellow)}.key.absent{background:var(--dark)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;z-index:200;padding:16px}
+.modal-overlay.hidden{display:none}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;width:100%;max-width:340px;text-align:center}
+.modal h2{font-size:1.2rem;margin-bottom:8px}
+.modal p{color:#818384;font-size:.9rem;margin-bottom:16px;line-height:1.4}
+.modal input{width:100%;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:1rem;margin-bottom:12px;text-align:center;outline:none}
+.modal input:focus{border-color:var(--green)}
+.btn{width:100%;padding:12px;background:var(--green);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:.05em}
+.btn:disabled{opacity:.4;cursor:default}
+.btn-secondary{background:var(--dark);margin-top:8px}
+#result-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;width:100%;max-width:360px;margin-bottom:16px;display:none}
+#result-panel.show{display:block}
+.result-hdr{text-align:center;margin-bottom:14px}
+.result-hdr h2{font-size:1.25rem;margin-bottom:4px}
+.result-word{font-size:1rem;color:#aaa}
+.result-word strong{color:var(--green);font-size:1.2rem;letter-spacing:.1em}
+.next-game{text-align:center;color:#818384;font-size:.82rem;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+#countdown{font-weight:700;color:var(--text)}
+#leaderboard h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:#818384;margin-bottom:8px}
+.lb-row{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;margin-bottom:3px;background:var(--bg)}
+.lb-rank{font-size:.8rem;color:#818384;width:18px;text-align:right}
+.lb-name{flex:1;font-weight:600;font-size:.9rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-score{font-size:.8rem;background:var(--green);padding:2px 8px;border-radius:4px;font-weight:700;white-space:nowrap}
+.lb-score.loss{background:var(--dark)}
+.lb-you{border:1px solid var(--green)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.stat-box{text-align:center}
+.stat-num{font-size:1.9rem;font-weight:700}
+.stat-label{font-size:.7rem;color:#818384;margin-top:2px;line-height:1.2}
+@media(max-width:370px){
+  :root{--tile:54px;--gap:4px}
+  .key{height:50px;font-size:.75rem}
+  .key.wide{max-width:54px;font-size:.65rem}
+}
+@media(min-height:800px){main{padding-top:20px}}
+</style>
+</head>
+<body>
+<header>
+  <a href="/spel" class="back-link">← Spel</a>
+  <h1>Ordel</h1>
+  <button id="stats-btn" title="Statistik">📊</button>
+</header>
+
+<div id="toast"></div>
+
+<div class="modal-overlay" id="name-modal">
+  <div class="modal">
+    <h2>Välkommen till Ordel!</h2>
+    <p>Gissa det svenska 5-bokstavsordet på 6 försök. Välj ett smeknamn för topplistan.</p>
+    <input type="text" id="name-input" placeholder="Ditt smeknamn" maxlength="20" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+    <button class="btn" id="name-btn">Kör igång!</button>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="stats-modal">
+  <div class="modal">
+    <h2>Din statistik</h2>
+    <div id="stats-content"></div>
+    <button class="btn btn-secondary" onclick="document.getElementById('stats-modal').classList.add('hidden')">Stäng</button>
+  </div>
+</div>
+
+<main>
+  <div id="result-panel">
+    <div class="result-hdr">
+      <h2 id="result-title"></h2>
+      <div class="result-word">Ordet var <strong id="result-word"></strong></div>
+    </div>
+    <div id="leaderboard"></div>
+    <div class="next-game">Nästa ord om <span id="countdown">--:--:--</span></div>
+  </div>
+  <div id="board"></div>
+  <div id="keyboard"></div>
+</main>
+
+<script>
+// ── Word list ────────────────────────────────────────────────────────────────
+// ~250 common Swedish 5-letter words used as both answers and valid guesses
+const WORDS = [
+  'SKOLA','HUSET','DAGEN','LIVET','VÄGEN','TAKET','HAVET','DALEN','STUGA','SOFFA',
+  'LAMPA','MATTA','TÄCKE','KUDDE','TIMME','MINUT','VECKA','MÅNAD','KAFFE','MJÖLK',
+  'KAKAN','PIZZA','PASTA','SUSHI','STEKA','LAGAR','SOVER','VAKNA','DANSA','GRÅTA',
+  'TÄNKA','MINNS','GLÖMT','SÖKER','RESTE','FLYTT','BETYG','LÄXAN','PENNA','SVART',
+  'GRÖNT','BLÅTT','SNABB','SAKER','MÖBEL','BYRÅN','HYLLA','GRYTA','GJORT','TAGIT',
+  'GIVIT','APRIL','HALVA','MUSIK','PIANO','RADIO','SPORT','MATCH','POÄNG','SPELA',
+  'VINNA','FÖRRA','NÄSTA','SISTA','ANDRA','FEMTE','ANTAL','MASSA','GRUPP','LAGET',
+  'KLASS','VÄRLD','ÄPPLE','PÄRON','DRUVA','MELON','MANGO','BANAN','MOROT','TOMAT',
+  'GURKA','BÖNOR','FLÄSK','LAXEN','RÄKOR','GOUDA','KVARG','DEGEN','BAKAD','KEBAB',
+  'KYRKA','ÅKERN','ROSOR','KANEL','JUICE','BOKEN','MICRO','SKÄMT','STOLT','TRÖTT',
+  'SNÄLL','ROLIG','SMART','VARMT','KALLT','TORRT','SPRIT','VODKA','KARTA','BJÖRN',
+  'RÄVEN','ÄLGEN','HJORT','ÖRNEN','ZEBRA','LEJON','TIGER','SÖDER','ÖSTER','HÖRNA',
+  'KNAPP','JACKA','MÖSSA','BILEN','BÅTEN','TÅGET','CYKEL','BUTIK','AFFÄR','GATAN',
+  'SJÖAR','FIKET','PUBEN','STORM','DIMMA','FROST','ÅSKAN','ELDEN','SOLEN','NACKE',
+  'ARMEN','FOTEN','KNÄET','NÄSAN','MAGEN','LEVER','KROPP','HUDEN','HÅRET','LYXIG',
+  'FIKON','BJÖRK','PILEN','LÖVET','BLOGG','VIDEO','SERIE','PRESS','ROMAN','KONST',
+  'TAVLA','OPERA','LÅTEN','ALBUM','TANKE','MÅLET','LYCKA','ILSKA','PANIK','VILAT',
+  'LUGNT','MÖRKT','AFTON','LUNCH','KALAS','PARTY','BÄSTA','HEMMA','BORTA','LÅNGT',
+  'BAKOM','NEDRE','UNDER','INUTI','BLAND','LÄSER','JAGAR','FIXAR','MÅLAR','LEKER',
+  'MÖTER','DELAR','KÄRNA','GRUND','KRAFT','REGEL','VÄRDE','SYFTE','FELET','ÄRLIG',
+  'FALSK','PRINS','SLOTT','MUREN','SVÄRD','BÅGEN','KANON','GEVÄR','RUGBY','POKER',
+  'KRONA','RÄNTA','SKULD','ÄMNET','GRÅTT','BRUNT','BEIGE','KLART','MULEN','SNÖAR',
+  'TORKA','SYNEN','JOBBA','HOPPA','GISSA','TRÄFF','TUNGA','MÄRKE','LOGGA','SKYLT',
+  'SNART','VISST','LÄRDE','KÖREN','LILAN','SOLEN','HEMMA','NORSK','DANSK','FINSK',
+  'STARK','MJUKT','HÅRT','LJUST','MÖRK','LITEN','STORA','SMALT','BRETT','TUNNA',
+].filter((w,i,a) => [...w].length === 5 && a.indexOf(w) === i);
+
+const VALID = new Set(WORDS);
+
+// ── Daily word (deterministic by Stockholm date) ─────────────────────────────
+function getSwedishDate() {
+  return new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Stockholm' });
+}
+
+function getTodayWord() {
+  const d = getSwedishDate();
+  const n = d.split('-').reduce((a, b) => a * 31 + parseInt(b, 10), 7);
+  return { word: WORDS[((n % WORDS.length) + WORDS.length) % WORDS.length], date: d };
+}
+
+// ── Player identity ──────────────────────────────────────────────────────────
+function getPlayer() {
+  try { return JSON.parse(localStorage.getItem('wp2_player')); } catch { return null; }
+}
+function savePlayer(name) {
+  const p = { id: crypto.randomUUID(), name: name.trim().slice(0, 20) };
+  localStorage.setItem('wp2_player', JSON.stringify(p));
+  return p;
+}
+
+// ── Game state ───────────────────────────────────────────────────────────────
+const { word: TARGET, date: TODAY } = getTodayWord();
+const STATE_KEY = `wp2_state_${TODAY}`;
+const STATS_KEY = 'wp2_stats';
+
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(STATE_KEY)); } catch {}
+  return { guesses: [], done: false, won: false };
+}
+function saveState(s) { localStorage.setItem(STATE_KEY, JSON.stringify(s)); }
+
+function getStats() {
+  try { return { played:0, won:0, streak:0, maxStreak:0, dist:{1:0,2:0,3:0,4:0,5:0,6:0}, ...JSON.parse(localStorage.getItem(STATS_KEY)) }; } catch {}
+  return { played:0, won:0, streak:0, maxStreak:0, dist:{1:0,2:0,3:0,4:0,5:0,6:0} };
+}
+function saveStats(s) { localStorage.setItem(STATS_KEY, JSON.stringify(s)); }
+function recordStats(won, attempts) {
+  const s = getStats();
+  s.played++;
+  if (won) { s.won++; s.streak++; s.maxStreak = Math.max(s.maxStreak, s.streak); s.dist[attempts] = (s.dist[attempts] || 0) + 1; }
+  else { s.streak = 0; }
+  saveStats(s);
+}
+
+// ── DOM setup ────────────────────────────────────────────────────────────────
+let state = loadState();
+let player = getPlayer();
+let curRow = state.guesses.length;
+let curInput = [];
+let busy = false;
+
+// Board
+const boardEl = document.getElementById('board');
+const tiles = [];
+for (let r = 0; r < 6; r++) {
+  const row = document.createElement('div');
+  row.className = 'row';
+  const rowTiles = [];
+  for (let c = 0; c < 5; c++) {
+    const t = document.createElement('div');
+    t.className = 'tile';
+    row.appendChild(t);
+    rowTiles.push(t);
+  }
+  boardEl.appendChild(row);
+  tiles.push(rowTiles);
+}
+
+// Keyboard – Swedish layout
+const KB = [
+  ['Q','W','E','R','T','Y','U','I','O','P','Å'],
+  ['A','S','D','F','G','H','J','K','L','Ö','Ä'],
+  ['ENTER','Z','X','C','V','B','N','M','⌫'],
+];
+const kbEl = document.getElementById('keyboard');
+const keyMap = {};
+KB.forEach(row => {
+  const div = document.createElement('div');
+  div.className = 'kb-row';
+  row.forEach(k => {
+    const btn = document.createElement('button');
+    btn.className = 'key' + (k.length > 1 ? ' wide' : '');
+    btn.textContent = k;
+    btn.dataset.key = k;
+    btn.addEventListener('pointerdown', e => { e.preventDefault(); handleKey(k); });
+    div.appendChild(btn);
+    if (k.length === 1) keyMap[k] = btn;
+  });
+  kbEl.appendChild(div);
+});
+
+// Restore completed rows
+state.guesses.forEach((g, r) => {
+  const res = score(g.join(''));
+  res.forEach((cls, c) => {
+    tiles[r][c].textContent = g[c];
+    tiles[r][c].className = `tile revealed ${cls}`;
+  });
+  applyKeyColors(g, res);
+});
+
+if (state.done) {
+  showResult(false);
+} else if (!player) {
+  document.getElementById('name-modal').classList.remove('hidden');
+}
+
+// ── Input ────────────────────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (!player || state.done || busy) return;
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.key === 'Enter') handleKey('ENTER');
+  else if (e.key === 'Backspace') handleKey('⌫');
+  else if (/^[a-zA-ZåäöÅÄÖ]$/.test(e.key)) handleKey(e.key.toUpperCase());
+});
+
+function handleKey(k) {
+  if (!player || state.done || busy) return;
+  if (k === '⌫') {
+    if (curInput.length > 0) {
+      curInput.pop();
+      const t = tiles[curRow][curInput.length];
+      t.textContent = '';
+      t.classList.remove('filled');
+    }
+  } else if (k === 'ENTER') {
+    submit();
+  } else if (curInput.length < 5 && /^[A-ZÅÄÖ]$/.test(k)) {
+    curInput.push(k);
+    const t = tiles[curRow][curInput.length - 1];
+    t.textContent = k;
+    t.classList.add('filled');
+  }
+}
+
+function submit() {
+  if (curInput.length < 5) { toast('För kort!'); shake(curRow); return; }
+  const guess = curInput.join('');
+  if (!VALID.has(guess)) { toast('Okänt ord'); shake(curRow); return; }
+
+  const res = score(guess);
+  busy = true;
+
+  res.forEach((cls, c) => {
+    setTimeout(() => {
+      tiles[curRow][c].classList.remove('filled');
+      tiles[curRow][c].classList.add('revealed', cls);
+    }, c * 300);
+  });
+
+  setTimeout(() => {
+    applyKeyColors(curInput, res);
+    state.guesses.push([...curInput]);
+    const won = guess === TARGET;
+
+    if (won || state.guesses.length >= 6) {
+      state.done = true;
+      state.won = won;
+      saveState(state);
+      recordStats(won, state.guesses.length);
+      if (won) {
+        tiles[curRow].forEach((t, i) => setTimeout(() => t.classList.add('bounce'), i * 100));
+        setTimeout(() => toast(WIN_MSG[state.guesses.length - 1] || 'Bra jobbat!'), 400);
+      } else {
+        setTimeout(() => toast(TARGET, 3000), 400);
+      }
+      setTimeout(() => { submitScore(); showResult(true); busy = false; }, 2000);
+    } else {
+      saveState(state);
+      curRow++;
+      curInput = [];
+      busy = false;
+    }
+  }, 5 * 300 + 200);
+}
+
+const WIN_MSG = ['Geni!','Häpnadsväckande!','Imponerande!','Snyggt!','Bra jobbat!','Puh, precis!'];
+
+// ── Scoring ──────────────────────────────────────────────────────────────────
+function score(guess) {
+  const res = Array(5).fill('absent');
+  const tgt = [...TARGET];
+  const g = [...guess];
+  g.forEach((l, i) => { if (l === tgt[i]) { res[i] = 'correct'; tgt[i] = null; g[i] = null; } });
+  g.forEach((l, i) => {
+    if (!l) return;
+    const j = tgt.indexOf(l);
+    if (j !== -1) { res[i] = 'present'; tgt[j] = null; }
+  });
+  return res;
+}
+
+function applyKeyColors(letters, res) {
+  letters.forEach((l, i) => {
+    const btn = keyMap[l];
+    if (!btn) return;
+    const has = cls => btn.classList.contains(cls);
+    if (res[i] === 'correct') { btn.classList.remove('present','absent'); btn.classList.add('correct'); }
+    else if (res[i] === 'present' && !has('correct')) { btn.classList.remove('absent'); btn.classList.add('present'); }
+    else if (!has('correct') && !has('present')) btn.classList.add('absent');
+  });
+}
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+let toastTimer;
+function toast(msg, ms = 1600) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), ms);
+}
+
+function shake(r) {
+  const row = boardEl.children[r];
+  row.classList.add('shake');
+  setTimeout(() => row.classList.remove('shake'), 500);
+}
+
+// ── Name modal ───────────────────────────────────────────────────────────────
+const nameInput = document.getElementById('name-input');
+document.getElementById('name-btn').addEventListener('click', () => {
+  const name = nameInput.value.trim();
+  if (!name) { nameInput.focus(); return; }
+  player = savePlayer(name);
+  document.getElementById('name-modal').classList.add('hidden');
+});
+nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('name-btn').click(); });
+
+// ── Stats modal ──────────────────────────────────────────────────────────────
+document.getElementById('stats-btn').addEventListener('click', () => {
+  const s = getStats();
+  const pct = s.played ? Math.round(s.won / s.played * 100) : 0;
+  const maxDist = Math.max(1, ...Object.values(s.dist));
+  document.getElementById('stats-content').innerHTML = `
+    <div class="stats-grid">
+      <div class="stat-box"><div class="stat-num">${s.played}</div><div class="stat-label">Spelade</div></div>
+      <div class="stat-box"><div class="stat-num">${pct}</div><div class="stat-label">Vunna %</div></div>
+      <div class="stat-box"><div class="stat-num">${s.streak}</div><div class="stat-label">Nuvarande rad</div></div>
+      <div class="stat-box"><div class="stat-num">${s.maxStreak}</div><div class="stat-label">Bästa rad</div></div>
+    </div>
+    <div style="text-align:left">
+      <div style="font-size:.8rem;color:#818384;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Gissningsfördelning</div>
+      ${[1,2,3,4,5,6].map(n => `
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;font-size:.85rem">
+          <span style="width:12px;text-align:right">${n}</span>
+          <div style="flex:1;background:var(--bg);border-radius:2px">
+            <div style="background:${state.won && state.guesses.length===n?'var(--green)':'var(--dark)'};width:${Math.max(8, Math.round(((s.dist[n]||0)/maxDist)*100))}%;padding:3px 8px;border-radius:2px;font-weight:700;font-size:.8rem;min-width:24px;text-align:right">${s.dist[n]||0}</div>
+          </div>
+        </div>`).join('')}
+    </div>`;
+  document.getElementById('stats-modal').classList.remove('hidden');
+});
+
+// ── Submit score to server ───────────────────────────────────────────────────
+async function submitScore() {
+  if (!player) return;
+  try {
+    await fetch('/api/wordle-submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        playerID: player.id,
+        playerName: player.name,
+        attempts: state.guesses.length,
+        won: state.won,
+        date: TODAY,
+      }),
+    });
+  } catch {}
+}
+
+// ── Result panel ─────────────────────────────────────────────────────────────
+function showResult(animate) {
+  const panel = document.getElementById('result-panel');
+  panel.classList.add('show');
+  document.getElementById('result-title').textContent = state.won
+    ? (WIN_MSG[state.guesses.length - 1] || 'Bra jobbat!')
+    : 'Bättre lycka imorgon!';
+  document.getElementById('result-word').textContent = TARGET;
+  startCountdown();
+  loadLeaderboard();
+}
+
+function startCountdown() {
+  function tick() {
+    const now = new Date();
+    // Time until midnight Stockholm
+    const sto = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Stockholm' }));
+    const midnight = new Date(sto);
+    midnight.setHours(24, 0, 0, 0);
+    const ms = midnight - sto;
+    const h = Math.floor(ms / 3600000);
+    const m = Math.floor((ms % 3600000) / 60000);
+    const s = Math.floor((ms % 60000) / 1000);
+    document.getElementById('countdown').textContent =
+      `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  }
+  tick();
+  setInterval(tick, 1000);
+}
+
+async function loadLeaderboard() {
+  const el = document.getElementById('leaderboard');
+  el.innerHTML = '<div style="color:#818384;font-size:.85rem;text-align:center;padding:8px">Laddar topplista…</div>';
+  try {
+    const r = await fetch(`/api/wordle-leaderboard?date=${TODAY}`);
+    const { scores } = await r.json();
+    if (!scores || !scores.length) {
+      el.innerHTML = '<div style="color:#818384;font-size:.85rem;text-align:center;padding:8px">Ingen annan har spelat än – du är först!</div>';
+      return;
+    }
+    el.innerHTML = '<h3>Dagens topplista</h3>' + scores.map((s, i) => {
+      const isYou = player && s.id === player.id;
+      const scoreLabel = s.won ? `${s.attempts}/6` : 'X/6';
+      return `<div class="lb-row${isYou ? ' lb-you' : ''}">
+        <span class="lb-rank">${i + 1}</span>
+        <span class="lb-name">${esc(s.name)}${isYou ? ' 👈' : ''}</span>
+        <span class="lb-score${!s.won ? ' loss' : ''}">${scoreLabel}</span>
+      </div>`;
+    }).join('');
+  } catch {
+    el.innerHTML = '<div style="color:#818384;font-size:.85rem;text-align:center">Kunde inte ladda topplista</div>';
+  }
+}
+
+function esc(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+</script>
+</body>
+</html>

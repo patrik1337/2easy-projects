@@ -1,7 +1,11 @@
 {
-"functions": {
-    "api/refresh.js": {
-      "maxDuration": 60
-    }
-  }
+  "functions": {
+    "api/refresh.js": { "maxDuration": 60 },
+    "api/wordle-submit.js": { "maxDuration": 10 },
+    "api/wordle-leaderboard.js": { "maxDuration": 10 }
+  },
+  "rewrites": [
+    { "source": "/spel", "destination": "/spel/index.html" },
+    { "source": "/spel/wordle", "destination": "/spel/wordle/index.html" }
+  ]
 }
