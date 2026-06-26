@@ -41,6 +41,7 @@ main{flex:1;display:flex;flex-direction:column;align-items:center;padding:12px 8
 .modal{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;width:100%;max-width:340px;text-align:center}
 .modal h2{font-size:1.2rem;margin-bottom:8px}
 .modal p{color:#818384;font-size:.9rem;margin-bottom:16px;line-height:1.4}
+#name-form{display:contents}
 .modal input{width:100%;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:1rem;margin-bottom:12px;text-align:center;outline:none}
 .modal input:focus{border-color:var(--green)}
 .btn{width:100%;padding:12px;background:var(--green);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:.05em}
@@ -86,8 +87,10 @@ main{flex:1;display:flex;flex-direction:column;align-items:center;padding:12px 8
   <div class="modal">
     <h2>Välkommen till Ordel!</h2>
     <p>Gissa det svenska 5-bokstavsordet på 6 försök. Välj ett smeknamn för topplistan.</p>
-    <input type="text" id="name-input" placeholder="Ditt smeknamn" maxlength="20" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-    <button class="btn" id="name-btn">Kör igång!</button>
+    <form id="name-form" onsubmit="return false;">
+      <input type="text" id="name-input" placeholder="Ditt smeknamn" maxlength="20" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false">
+      <button type="submit" class="btn" id="name-btn">Kör igång!</button>
+    </form>
   </div>
 </div>
 
@@ -380,9 +383,7 @@ function submitName() {
   player = savePlayer(name);
   document.getElementById('name-modal').classList.add('hidden');
 }
-document.getElementById('name-btn').addEventListener('click', submitName);
-document.getElementById('name-btn').addEventListener('touchend', e => { e.preventDefault(); submitName(); });
-nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') submitName(); });
+document.getElementById('name-form').addEventListener('submit', e => { e.preventDefault(); submitName(); });
 
 // ── Stats modal ──────────────────────────────────────────────────────────────
 document.getElementById('stats-btn').addEventListener('click', () => {
