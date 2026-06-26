@@ -1,6 +1,27 @@
 {
-  "generatedAt": "2026-06-26T09:05:20.664Z",
+  "generatedAt": "2026-06-26T13:58:19.202Z",
   "transfers": [
+    {
+      "date": "2026-06-26",
+      "player": "Louboutin",
+      "from": "None",
+      "to": "(Inactive)",
+      "game": "Valorant"
+    },
+    {
+      "date": "2026-06-26",
+      "player": "trexx",
+      "from": "None",
+      "to": "None",
+      "game": "Valorant"
+    },
+    {
+      "date": "2026-06-26",
+      "player": "Kicks",
+      "from": "None",
+      "to": "None",
+      "game": "Valorant"
+    },
     {
       "date": "2026-06-25",
       "player": "CyvOph",
@@ -86,25 +107,60 @@
       "game": "Valorant"
     },
     {
-      "date": "2026-06-24",
-      "player": "thykuza",
-      "from": "None",
-      "to": "None",
-      "game": "Valorant"
+      "date": "2026-06-26",
+      "player": "Time",
+      "from": "MKF",
+      "to": "GXP",
+      "game": "League of Legends"
     },
     {
-      "date": "2026-06-23",
-      "player": "Art",
+      "date": "2026-06-26",
+      "player": "Driver",
       "from": "None",
-      "to": "(Coach)",
-      "game": "Valorant"
+      "to": "SSG",
+      "game": "League of Legends"
     },
     {
-      "date": "2026-06-23",
-      "player": "Xlele",
+      "date": "2026-06-25",
+      "player": "Loki",
+      "from": "BRO",
+      "to": "C9",
+      "game": "League of Legends"
+    },
+    {
+      "date": "2026-06-25",
+      "player": "Tactical",
+      "from": "CNV",
+      "to": "C9",
+      "game": "League of Legends"
+    },
+    {
+      "date": "2026-06-25",
+      "player": "Arrow",
       "from": "None",
+      "to": "C9",
+      "game": "League of Legends"
+    },
+    {
+      "date": "2026-06-25",
+      "player": "YamatoCannon",
+      "from": "WC",
+      "to": "C9",
+      "game": "League of Legends"
+    },
+    {
+      "date": "2026-06-25",
+      "player": "IWillDominate",
+      "from": "C9",
+      "to": "C9",
+      "game": "League of Legends"
+    },
+    {
+      "date": "2026-06-25",
+      "player": "Inero",
+      "from": "C9",
       "to": "None",
-      "game": "Valorant"
+      "game": "League of Legends"
     },
     {
       "date": "2026-06-25",
@@ -142,10 +198,10 @@
       "game": "League of Legends"
     },
     {
-      "date": "2026-06-25",
-      "player": "Loki",
-      "from": "BRO",
-      "to": "None",
+      "date": "2026-06-24",
+      "player": "1116",
+      "from": "None",
+      "to": "SSG",
       "game": "League of Legends"
     },
     {
@@ -153,62 +209,6 @@
       "player": "rovex",
       "from": "BLUE",
       "to": "None",
-      "game": "League of Legends"
-    },
-    {
-      "date": "2026-06-24",
-      "player": "Aithusa",
-      "from": "None",
-      "to": "Retired",
-      "game": "League of Legends"
-    },
-    {
-      "date": "2026-06-24",
-      "player": "Mitohara",
-      "from": "INTZ",
-      "to": "Retired",
-      "game": "League of Legends"
-    },
-    {
-      "date": "2026-06-24",
-      "player": "Virtuosa",
-      "from": "BO.EMEA",
-      "to": "None",
-      "game": "League of Legends"
-    },
-    {
-      "date": "2026-06-24",
-      "player": "Th3Antonio",
-      "from": "GXP",
-      "to": "GXP",
-      "game": "League of Legends"
-    },
-    {
-      "date": "2026-06-24",
-      "player": "Loading",
-      "from": "GSMC",
-      "to": "TPX",
-      "game": "League of Legends"
-    },
-    {
-      "date": "2026-06-24",
-      "player": "Septico1",
-      "from": "SEU",
-      "to": "GSMC",
-      "game": "League of Legends"
-    },
-    {
-      "date": "2026-06-24",
-      "player": "Évangelyne",
-      "from": "LIL",
-      "to": "TP",
-      "game": "League of Legends"
-    },
-    {
-      "date": "2026-06-24",
-      "player": "Secrett",
-      "from": "None",
-      "to": "TP",
       "game": "League of Legends"
     },
     {
@@ -422,6 +422,41 @@
       "game": "Dota 2"
     },
     {
+      "date": "2026-06-26",
+      "player": "MayKo",
+      "from": "None",
+      "to": "PMR",
+      "game": "Rocket League"
+    },
+    {
+      "date": "2026-06-26",
+      "player": "Reijin",
+      "from": "None",
+      "to": "PMR(Manager)",
+      "game": "Rocket League"
+    },
+    {
+      "date": "2026-06-25",
+      "player": "dayyshift",
+      "from": "None",
+      "to": "N2N(Stand-in)",
+      "game": "Rocket League"
+    },
+    {
+      "date": "2026-06-25",
+      "player": "Tyzuko",
+      "from": "None",
+      "to": "N2N(Stand-in Coach)",
+      "game": "Rocket League"
+    },
+    {
+      "date": "2026-06-25",
+      "player": "revenge",
+      "from": "None",
+      "to": "N2N(Stand-in Analyst)",
+      "game": "Rocket League"
+    },
+    {
       "date": "2026-06-24",
       "player": "Alpha54",
       "from": "None",
@@ -489,41 +524,6 @@
       "player": "osaft",
       "from": "KALO",
       "to": "POP",
-      "game": "Rocket League"
-    },
-    {
-      "date": "2026-06-18",
-      "player": "bibbaba",
-      "from": "GG",
-      "to": "POP",
-      "game": "Rocket League"
-    },
-    {
-      "date": "2026-06-18",
-      "player": "Pierrette",
-      "from": "GG (Manager)",
-      "to": "100%(Manager)",
-      "game": "Rocket League"
-    },
-    {
-      "date": "2026-06-18",
-      "player": "Kasper",
-      "from": "GG (Coach)",
-      "to": "100%(Coach)",
-      "game": "Rocket League"
-    },
-    {
-      "date": "2026-06-18",
-      "player": "Crispy",
-      "from": "SB",
-      "to": "100%",
-      "game": "Rocket League"
-    },
-    {
-      "date": "2026-06-18",
-      "player": "Growlii",
-      "from": "BSK (Inactive)",
-      "to": "100%",
       "game": "Rocket League"
     },
     {
@@ -632,6 +632,13 @@
       "game": "Overwatch"
     },
     {
+      "date": "2026-06-25",
+      "player": "Souzaa",
+      "from": "None",
+      "to": "Retired",
+      "game": "Rainbow Six Siege"
+    },
+    {
       "date": "2026-06-23",
       "player": "Falc0",
       "from": "None",
@@ -725,13 +732,6 @@
     {
       "date": "2026-06-13",
       "player": "JoyStiCK",
-      "from": "None",
-      "to": "None",
-      "game": "Rainbow Six Siege"
-    },
-    {
-      "date": "2026-06-13",
-      "player": "Croqson",
       "from": "None",
       "to": "None",
       "game": "Rainbow Six Siege"
@@ -1474,6 +1474,27 @@
   ],
   "news": [
     {
+      "title": "Best AN-94 loadout in Black Ops 7 for solid recoil control and handling",
+      "link": "https://dotesports.com/call-of-duty/guides/best-an-94-loadout-bo7",
+      "pubDate": "2026-06-26T13:02:11.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "When is TennoCon 2026? Start time, schedule, rewards,what to expect",
+      "link": "https://dotesports.com/warframe/guides/tennocon-2026-dates-start-time-rewards",
+      "pubDate": "2026-06-26T11:55:02.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "CDL Major 4 2026: Schedule, results, bracket, and how to watch",
+      "link": "https://dotesports.com/call-of-duty/guides/cdl-major-4-2026-schedule-results-bracket",
+      "pubDate": "2026-06-26T10:38:43.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
       "title": "All BO7 Warzone camo challenges and how to complete them (updated for Season 4)",
       "link": "https://dotesports.com/call-of-duty/news/bo7-warzone-camo-challenges",
       "pubDate": "2026-06-26T08:39:09.000Z",
@@ -1526,27 +1547,6 @@
       "title": "Why Dead or Alive 6 Last Round has poor reviews",
       "link": "https://dotesports.com/fgc/guides/dead-or-alive-6-lr-poor-reviews",
       "pubDate": "2026-06-25T23:46:04.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "Fortnite players are split over Olivia Rodrigo&#8217;s new Icon Series skin",
-      "link": "https://dotesports.com/fortnite/news/olivia-rodrigo-fortnite-skin-fans-not-sold",
-      "pubDate": "2026-06-25T23:01:47.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "FaZe bench broky, loan 20-year-old JBOEN from BIG",
-      "link": "https://dotesports.com/counter-strike/news/faze-jboen-broky",
-      "pubDate": "2026-06-25T20:49:54.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "XBOX hikes console prices by up to $150, 2TB model discontinued",
-      "link": "https://dotesports.com/hardware/news/xbox-price-hike-2026",
-      "pubDate": "2026-06-25T18:56:07.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
