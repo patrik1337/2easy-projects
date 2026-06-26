@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VM-Tips Admin</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--green:#538d4e;--red:#a33;--bg:#121213;--surface:#1a1a1b;--text:#fff;--border:#3a3a3c;--muted:#818384}
+body{background:var(--bg);color:var(--text);font-family:'Helvetica Neue',Arial,sans-serif;min-height:100dvh;padding:16px}
+.wrap{max-width:460px;margin:0 auto}
+h1{font-size:1.2rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.sub{color:var(--muted);font-size:.82rem;margin-bottom:18px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:14px}
+.card h2{font-size:.95rem;margin-bottom:12px}
+label{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:10px 0 4px}
+input,select{width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.95rem;outline:none}
+input:focus,select:focus{border-color:var(--green)}
+.row{display:flex;gap:10px}
+.row>div{flex:1}
+button{width:100%;padding:12px;background:var(--green);color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:12px;text-transform:uppercase;letter-spacing:.04em}
+button.sec{background:var(--border)}
+button.danger{background:var(--red)}
+.msg{font-size:.84rem;margin-top:10px;padding:8px 10px;border-radius:8px;display:none}
+.msg.ok{display:block;background:#1f3a1d;color:#bfe6ba}
+.msg.err{display:block;background:#3a1d1d;color:#e6bcbc}
+.hint{font-size:.74rem;color:var(--muted);margin-top:6px;line-height:1.4}
+.hidden{display:none}
+.fixrow{font-size:.85rem;padding:6px 0;border-bottom:1px solid #2b2b2c}
+.divider{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;margin:14px 0}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>VM-Tips · Admin</h1>
+  <div class="sub">Sätt dagens match och mata in resultat. Feed:en fyller gruppspelets matcher — slutspel och alla resultat sätter du här.</div>
+
+  <div class="card" id="auth-card">
+    <h2>Logga in</h2>
+    <label>Admin-token</label>
+    <input type="password" id="token" placeholder="ADMIN_TOKEN" autocomplete="off">
+    <button onclick="saveToken()">Spara token</button>
+    <div class="hint">Token sparas lokalt i din webbläsare och skickas med varje admin-anrop.</div>
+  </div>
+
+  <div id="panel" class="hidden">
+    <div class="card">
+      <h2>1 · Dagens match</h2>
+      <label>Datum (Stockholm, ÅÅÅÅ-MM-DD)</label>
+      <input type="date" id="date">
+      <button class="sec" onclick="listFixtures()">Hämta feed-matcher för datumet</button>
+      <div id="fixtures"></div>
+
+      <label>Välj feed-match</label>
+      <select id="fixture-select"><option value="">— hämta först —</option></select>
+      <button onclick="setFromFeed()">Sätt vald feed-match</button>
+
+      <div class="divider">eller egen match (slutspel)</div>
+      <div class="row">
+        <div><label>Hemmalag</label><input id="c-home" placeholder="Sverige"></div>
+        <div><label>Bortalag</label><input id="c-away" placeholder="Brasilien"></div>
+      </div>
+      <div class="row">
+        <div><label>Hemma-flagga (emoji/URL)</label><input id="c-hflag" placeholder="🇸🇪"></div>
+        <div><label>Borta-flagga (emoji/URL)</label><input id="c-aflag" placeholder="🇧🇷"></div>
+      </div>
+      <label>Avspark (Stockholm-tid)</label>
+      <input type="datetime-local" id="c-kick">
+      <label>Skede</label>
+      <select id="c-stage">
+        <option value="r32">16-delsfinal</option>
+        <option value="r16">Åttondelsfinal</option>
+        <option value="qf">Kvartsfinal</option>
+        <option value="sf">Semifinal</option>
+        <option value="third">Bronsmatch</option>
+        <option value="final">Final</option>
+        <option value="group">Gruppspel</option>
+      </select>
+      <button onclick="setCustom()">Sätt egen match</button>
+      <button class="sec" onclick="clearMatch()">Ta bort override för datumet</button>
+      <div class="msg" id="m-match"></div>
+    </div>
+
+    <div class="card">
+      <h2>2 · Resultat &amp; rättning</h2>
+      <label>Match-ID</label>
+      <input id="r-matchid" placeholder="t.ex. m62 eller c-2026-06-28">
+      <div class="hint">Feed-matcher: <code>m</code> + feed-id (visas ovan). Egen match: <code>c-DATUM</code>.</div>
+      <div class="row">
+        <div><label>Hemmamål</label><input type="number" id="r-hs" min="0" max="30" value="0"></div>
+        <div><label>Bortamål</label><input type="number" id="r-as" min="0" max="30" value="0"></div>
+      </div>
+      <button onclick="setResult()">Spara resultat &amp; dela ut poäng</button>
+      <button class="danger" onclick="regrade()">Rätta om (skriv över tidigare poäng)</button>
+      <div class="msg" id="m-result"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function token(){ return localStorage.getItem('x2_admin_token')||''; }
+function saveToken(){ const t=document.getElementById('token').value.trim(); if(!t) return; localStorage.setItem('x2_admin_token',t); showPanel(); }
+function showPanel(){ if(token()){ document.getElementById('panel').classList.remove('hidden'); document.getElementById('auth-card').classList.add('hidden'); } }
+
+function todaySthlm(){ return new Date().toLocaleDateString('sv-SE',{timeZone:'Europe/Stockholm'}); }
+
+async function api(body){
+  const r = await fetch('/api/1x2-admin',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token()},body:JSON.stringify(body)});
+  const j = await r.json().catch(()=>({error:'Svar kunde inte läsas'}));
+  return {ok:r.ok,status:r.status,j};
+}
+function msg(id,ok,text){ const el=document.getElementById(id); el.className='msg '+(ok?'ok':'err'); el.textContent=text; }
+
+async function listFixtures(){
+  const date=document.getElementById('date').value; if(!date){ msg('m-match',false,'Välj datum först'); return; }
+  const {ok,j}=await api({action:'listFixtures',date});
+  if(!ok){ msg('m-match',false,j.error||'Fel'); return; }
+  const box=document.getElementById('fixtures'); const sel=document.getElementById('fixture-select');
+  if(!j.fixtures.length){ box.innerHTML='<div class="hint">Inga feed-matcher detta datum (troligen slutspel — använd egen match).</div>'; sel.innerHTML='<option value="">—</option>'; return; }
+  box.innerHTML = j.fixtures.map(f=>`<div class="fixrow">${f.real?(f.home.name+' – '+f.away.name):'(lag ej satta)'} <span style="color:#818384">· ${f.matchId} · ${f.stage}</span></div>`).join('');
+  sel.innerHTML = j.fixtures.filter(f=>f.real).map(f=>`<option value="${f.refId}">${f.home.name} – ${f.away.name} (${f.matchId})</option>`).join('') || '<option value="">— inga med lag —</option>';
+}
+
+async function setFromFeed(){
+  const date=document.getElementById('date').value, refId=document.getElementById('fixture-select').value;
+  if(!date||!refId){ msg('m-match',false,'Välj datum och feed-match'); return; }
+  const {ok,j}=await api({action:'setMatch',date,refId});
+  if(ok){ msg('m-match',true,'Satt: '+(j.match.home.name)+' – '+(j.match.away.name)+' ('+j.match.matchId+')'); document.getElementById('r-matchid').value=j.match.matchId; }
+  else msg('m-match',false,j.error||'Fel');
+}
+
+async function setCustom(){
+  const date=document.getElementById('date').value;
+  const home={name:document.getElementById('c-home').value.trim(),flag:document.getElementById('c-hflag').value.trim()};
+  const away={name:document.getElementById('c-away').value.trim(),flag:document.getElementById('c-aflag').value.trim()};
+  const kickoff=document.getElementById('c-kick').value; // YYYY-MM-DDTHH:MM
+  const stage=document.getElementById('c-stage').value;
+  if(!date||!home.name||!away.name||!kickoff){ msg('m-match',false,'Fyll i datum, båda lagen och avspark'); return; }
+  const {ok,j}=await api({action:'setMatch',date,custom:{home,away,kickoff,stage}});
+  if(ok){ msg('m-match',true,'Egen match satt: '+home.name+' – '+away.name+' ('+j.match.matchId+')'); document.getElementById('r-matchid').value=j.match.matchId; }
+  else msg('m-match',false,j.error||'Fel');
+}
+
+async function clearMatch(){
+  const date=document.getElementById('date').value; if(!date){ msg('m-match',false,'Välj datum'); return; }
+  const {ok,j}=await api({action:'clearMatch',date});
+  msg('m-match',ok,ok?'Override borttagen — feed-val gäller igen.':(j.error||'Fel'));
+}
+
+async function setResult(){
+  const matchId=document.getElementById('r-matchid').value.trim();
+  const hs=Number(document.getElementById('r-hs').value), as=Number(document.getElementById('r-as').value);
+  if(!matchId){ msg('m-result',false,'Ange match-ID'); return; }
+  const {ok,j}=await api({action:'setResult',matchId,hs,as});
+  msg('m-result',ok,ok?(j.note||'Klart'):(j.error||'Fel'));
+}
+async function regrade(){
+  const matchId=document.getElementById('r-matchid').value.trim();
+  const hs=Number(document.getElementById('r-hs').value), as=Number(document.getElementById('r-as').value);
+  if(!matchId){ msg('m-result',false,'Ange match-ID'); return; }
+  if(!confirm('Rätta om '+matchId+' till '+hs+'–'+as+'? Detta skriver över tidigare poäng.')) return;
+  const {ok,j}=await api({action:'regrade',matchId,hs,as});
+  msg('m-result',ok,ok?'Omräknat till '+hs+'–'+as+'.':(j.error||'Fel'));
+}
+
+document.getElementById('date').value=todaySthlm();
+showPanel();
+</script>
+</body>
+</html>

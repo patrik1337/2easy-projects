@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>VM-Tips – 2easy Spel</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--green:#538d4e;--yellow:#b59f3b;--bg:#121213;--surface:#1a1a1b;--text:#fff;--border:#3a3a3c;--muted:#818384}
+body{background:var(--bg);color:var(--text);font-family:'Helvetica Neue',Arial,sans-serif;display:flex;flex-direction:column;min-height:100dvh;min-height:100vh;-webkit-tap-highlight-color:transparent}
+header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);width:100%;position:relative}
+header h1{font-size:1.25rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;position:absolute;left:50%;transform:translateX(-50%)}
+.back-link{color:var(--text);text-decoration:none;font-size:.85rem;opacity:.7;z-index:1}
+#trophy-btn{background:none;border:none;color:var(--text);font-size:1.2rem;cursor:pointer;padding:4px 8px;z-index:1}
+main{flex:1;width:100%;max-width:460px;margin:0 auto;padding:18px 16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px}
+.chip{display:inline-block;font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);background:var(--bg);border:1px solid var(--border);padding:3px 9px;border-radius:20px}
+.matchup{display:flex;align-items:center;justify-content:center;gap:12px;margin:14px 0 6px}
+.team{flex:1;text-align:center;min-width:0}
+.team .flag{font-size:2rem;line-height:1}
+.team .flag img{width:46px;height:auto;border-radius:3px;vertical-align:middle}
+.team .tname{font-size:.82rem;font-weight:600;margin-top:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vs{font-size:.8rem;color:var(--muted);font-weight:700}
+.center{text-align:center}
+.muted{color:var(--muted)}
+.kick{text-align:center;font-size:.82rem;color:var(--muted);margin-top:4px}
+.kick b{color:var(--text)}
+.section-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:0 0 10px}
+.toggle{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
+.toggle button{background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:12px 4px;font-weight:700;cursor:pointer;font-size:.9rem;transition:.12s}
+.toggle button small{display:block;font-size:.62rem;font-weight:400;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:.04em}
+.toggle button.sel{background:var(--green);border-color:var(--green)}
+.toggle button.sel small{color:#dfeede}
+.scores{display:flex;gap:12px;margin-bottom:18px}
+.stepper{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px}
+.stepper .lbl{font-size:.7rem;color:var(--muted);text-align:center;text-transform:uppercase;letter-spacing:.05em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stepper .ctrls{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+.stepper button{width:40px;height:40px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:1.4rem;cursor:pointer;line-height:1}
+.stepper .val{font-size:1.6rem;font-weight:700;min-width:28px;text-align:center}
+.btn{width:100%;padding:14px;background:var(--green);color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:.05em}
+.btn:disabled{opacity:.4;cursor:default}
+.btn-secondary{background:var(--border)}
+.tip-summary{display:flex;align-items:center;justify-content:center;gap:10px;font-size:1.5rem;font-weight:700;margin:8px 0}
+.tip-summary .pk{font-size:.8rem;color:var(--muted);font-weight:600}
+.breakdown{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:4px 14px;margin:14px 0}
+.brow{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #2b2b2c;font-size:.86rem}
+.brow:last-child{border-bottom:none}
+.brow .ic{margin-right:8px;font-weight:700}
+.brow.win .ic{color:var(--green)}
+.brow.lose{color:#9b9b9c}
+.brow .pts{font-size:.78rem;font-weight:700;padding:2px 9px;border-radius:5px;background:var(--green);color:#fff}
+.brow.lose .pts{background:var(--border);color:#9b9b9c}
+.total{display:flex;align-items:center;justify-content:space-between;padding:4px 2px 2px}
+.total .n{font-size:1.5rem;font-weight:700}
+.total .n small{font-size:.85rem;color:var(--muted);font-weight:400}
+.lb-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;margin-bottom:3px;background:var(--bg)}
+.lb-rank{font-size:.8rem;color:var(--muted);width:18px;text-align:right}
+.lb-name{flex:1;font-weight:600;font-size:.9rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-score{font-size:.78rem;background:var(--green);padding:2px 9px;border-radius:5px;font-weight:700;white-space:nowrap}
+.lb-you{border:1px solid var(--green)}
+.next-line{text-align:center;color:var(--muted);font-size:.82rem;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.next-line b{color:var(--text)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;z-index:200;padding:16px}
+.modal-overlay.hidden{display:none}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;width:100%;max-width:340px;text-align:center}
+.modal h2{font-size:1.2rem;margin-bottom:8px}
+.modal p{color:var(--muted);font-size:.9rem;margin-bottom:16px;line-height:1.4}
+.modal input{width:100%;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:1rem;margin-bottom:12px;text-align:center;outline:none}
+.modal input:focus{border-color:var(--green)}
+#toast{position:fixed;top:64px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:10px 18px;border-radius:8px;font-weight:700;font-size:.88rem;opacity:0;transition:opacity .2s;z-index:300;pointer-events:none}
+#toast.show{opacity:1}
+</style>
+</head>
+<body>
+<header>
+  <a href="/spel" class="back-link">← Spel</a>
+  <h1>VM-Tips</h1>
+  <button id="trophy-btn" title="Totalställning" aria-label="Totalställning">🏆</button>
+</header>
+
+<div id="toast"></div>
+
+<div class="modal-overlay hidden" id="name-modal">
+  <div class="modal">
+    <h2>Välkommen till VM-Tips!</h2>
+    <p>Tippa dagens match. Rätt utgång ger 3 p, rätt hemmamål 1 p, rätt bortamål 1 p — max 5 p. Välj ett smeknamn för topplistan.</p>
+    <form id="name-form" onsubmit="return false;">
+      <input type="text" id="name-input" placeholder="Ditt smeknamn" maxlength="20" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false">
+      <button type="submit" class="btn" id="name-btn">Kör igång!</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="lb-modal">
+  <div class="modal" style="max-width:360px;text-align:left">
+    <h2 style="text-align:center;margin-bottom:14px">Totalställning</h2>
+    <div id="lb-modal-body"><div class="center muted" style="font-size:.85rem">Laddar…</div></div>
+    <button class="btn btn-secondary" style="margin-top:14px" onclick="document.getElementById('lb-modal').classList.add('hidden')">Stäng</button>
+  </div>
+</div>
+
+<main id="app">
+  <div class="card center muted" style="font-size:.9rem">Laddar dagens match…</div>
+</main>
+
+<script>
+// ── Identity (shared with Ordel) ──────────────────────────────────────────────
+function getPlayer(){ try{ return JSON.parse(localStorage.getItem('wp2_player')); }catch{ return null; } }
+function uuid(){ try{ return crypto.randomUUID(); }catch{} return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0;return (c==='x'?r:(r&0x3|0x8)).toString(16);}); }
+function savePlayer(name){ const p={id:uuid(),name:name.trim().slice(0,20)}; localStorage.setItem('wp2_player',JSON.stringify(p)); return p; }
+
+let player = getPlayer();
+let DATA = null;          // /api/1x2-match response
+let pick = null;          // '1' | 'X' | '2'
+let hs = 0, as = 0;
+let localPred = null;     // saved submitted prediction for this match
+let cdTimer = null;
+
+const app = document.getElementById('app');
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+function flagHTML(team){
+  if(!team) return '<span class="flag">🏳️</span>';
+  const f = team.flag || '';
+  if(/^https?:/.test(f)) return `<span class="flag"><img src="${esc(f)}" alt="${esc(team.name)}"></span>`;
+  return `<span class="flag">${esc(f||'🏳️')}</span>`;
+}
+function stageLabel(s){
+  return ({group:'Gruppspel',r32:'16-delsfinal',r16:'Åttondelsfinal',qf:'Kvartsfinal',sf:'Semifinal',third:'Bronsmatch',final:'FINAL',knockout:'Slutspel'})[s] || 'Match';
+}
+function pickLabel(p, m){
+  if(p==='1') return '1 · ' + (m.home?m.home.name:'Hemma');
+  if(p==='2') return '2 · ' + (m.away?m.away.name:'Borta');
+  return 'X · Oavgjort';
+}
+
+let toastTimer;
+function toast(msg, ms=1800){ const el=document.getElementById('toast'); el.textContent=msg; el.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove('show'),ms); }
+
+function fmtCountdown(ms){
+  if(ms<=0) return '00:00:00';
+  const d=Math.floor(ms/86400000); ms-=d*86400000;
+  const h=Math.floor(ms/3600000); ms-=h*3600000;
+  const mn=Math.floor(ms/60000); ms-=mn*60000;
+  const s=Math.floor(ms/1000);
+  const p=n=>String(n).padStart(2,'0');
+  return (d>0?d+'d ':'')+`${p(h)}:${p(mn)}:${p(s)}`;
+}
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+async function boot(){
+  if(!player) document.getElementById('name-modal').classList.remove('hidden');
+  try{
+    const r = await fetch('/api/1x2-match');
+    DATA = await r.json();
+  }catch{ app.innerHTML = '<div class="card center muted">Kunde inte ladda matchen. Försök igen.</div>'; return; }
+  render();
+}
+
+function predKey(){ return DATA && DATA.match ? '1x2_pred_'+DATA.match.matchId : null; }
+function loadLocalPred(){ const k=predKey(); if(!k) return null; try{ return JSON.parse(localStorage.getItem(k)); }catch{ return null; } }
+
+function render(){
+  if(cdTimer){ clearInterval(cdTimer); cdTimer=null; }
+
+  if(!DATA || (!DATA.match && !DATA.next)){ app.innerHTML='<div class="card center muted">Inget VM-tips tillgängligt just nu.</div>'; return; }
+
+  if(!DATA.match){
+    const n = DATA.next;
+    app.innerHTML = `<div class="card center">
+      <span class="chip">Inget tips idag</span>
+      <p class="muted" style="margin:16px 0 6px;font-size:.9rem">Nästa match:</p>
+      <div class="matchup">
+        <div class="team">${flagHTML(n.home)}<div class="tname">${esc(n.home?n.home.name:'')}</div></div>
+        <div class="vs">VS</div>
+        <div class="team">${flagHTML(n.away)}<div class="tname">${esc(n.away?n.away.name:'')}</div></div>
+      </div>
+      <div class="kick">Sparkar igång om <b id="cd">--:--:--</b></div>
+    </div>`;
+    startCd(n.kickoffMs);
+    return;
+  }
+
+  const m = DATA.match;
+  localPred = loadLocalPred();
+  const finished = DATA.result != null;
+  const locked = m.locked;
+
+  if(finished){ renderResult(m); return; }
+  if(locked || localPred){ renderLocked(m); return; }
+  renderForm(m);
+}
+
+// ── State: open prediction form ───────────────────────────────────────────────
+function renderForm(m){
+  pick = pick || null; // keep selection across re-renders
+  app.innerHTML = `
+    <div class="card">
+      <div class="center"><span class="chip">${stageLabel(m.stage)}${m.group?' · Grupp '+esc(m.group):''}</span></div>
+      <div class="matchup">
+        <div class="team">${flagHTML(m.home)}<div class="tname">${esc(m.home.name)}</div></div>
+        <div class="vs">VS</div>
+        <div class="team">${flagHTML(m.away)}<div class="tname">${esc(m.away.name)}</div></div>
+      </div>
+      <div class="kick">Lås in före avspark om <b id="cd">--:--:--</b></div>
+    </div>
+    <div class="card">
+      <div class="section-label">Vem vinner? (3 p)</div>
+      <div class="toggle" id="tg">
+        <button data-p="1">1<small>${esc(m.home.name)}</small></button>
+        <button data-p="X">X<small>Oavgjort</small></button>
+        <button data-p="2">2<small>${esc(m.away.name)}</small></button>
+      </div>
+      <div class="section-label">Exakt resultat (1 p + 1 p)</div>
+      <div class="scores">
+        <div class="stepper">
+          <div class="lbl">${esc(m.home.name)}</div>
+          <div class="ctrls"><button data-s="h" data-d="-1">−</button><span class="val" id="vh">${hs}</span><button data-s="h" data-d="1">+</button></div>
+        </div>
+        <div class="stepper">
+          <div class="lbl">${esc(m.away.name)}</div>
+          <div class="ctrls"><button data-s="a" data-d="-1">−</button><span class="val" id="va">${as}</span><button data-s="a" data-d="1">+</button></div>
+        </div>
+      </div>
+      <button class="btn" id="submit-btn" ${pick?'':'disabled'}>Lås in tips</button>
+    </div>`;
+
+  document.getElementById('tg').querySelectorAll('button').forEach(b=>{
+    if(b.dataset.p===pick) b.classList.add('sel');
+    b.addEventListener('click',()=>{ pick=b.dataset.p; document.querySelectorAll('#tg button').forEach(x=>x.classList.toggle('sel',x.dataset.p===pick)); document.getElementById('submit-btn').disabled=false; });
+  });
+  app.querySelectorAll('.stepper button').forEach(b=>b.addEventListener('click',()=>{
+    const d=Number(b.dataset.d);
+    if(b.dataset.s==='h'){ hs=Math.max(0,Math.min(20,hs+d)); document.getElementById('vh').textContent=hs; }
+    else { as=Math.max(0,Math.min(20,as+d)); document.getElementById('va').textContent=as; }
+  }));
+  document.getElementById('submit-btn').addEventListener('click',submitTip);
+  startCd(m.kickoffMs);
+}
+
+async function submitTip(){
+  if(!player){ document.getElementById('name-modal').classList.remove('hidden'); return; }
+  if(!pick){ toast('Välj 1, X eller 2'); return; }
+  const m = DATA.match;
+  const btn=document.getElementById('submit-btn'); btn.disabled=true; btn.textContent='Låser in…';
+  try{
+    const r = await fetch('/api/1x2-submit',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({playerID:player.id,playerName:player.name,matchId:m.matchId,p:pick,hs,as})});
+    const j = await r.json().catch(()=>({}));
+    if(r.ok || j.already){
+      localStorage.setItem(predKey(), JSON.stringify({p:pick,hs,as}));
+      toast(j.already?'Du har redan tippat':'Tips inlåst! 🔒');
+      render();
+    } else if(j.locked){ toast('För sent – matchen har startat'); render(); }
+    else { toast(j.error||'Något gick fel'); btn.disabled=false; btn.textContent='Lås in tips'; }
+  }catch{ toast('Nätverksfel'); btn.disabled=false; btn.textContent='Lås in tips'; }
+}
+
+// ── State: locked (awaiting kickoff or result) ────────────────────────────────
+function renderLocked(m){
+  const p = localPred;
+  const awaiting = m.locked; // kickoff passed but no result yet
+  app.innerHTML = `
+    <div class="card">
+      <div class="center"><span class="chip">${stageLabel(m.stage)}${m.group?' · Grupp '+esc(m.group):''}</span></div>
+      <div class="matchup">
+        <div class="team">${flagHTML(m.home)}<div class="tname">${esc(m.home.name)}</div></div>
+        <div class="vs">VS</div>
+        <div class="team">${flagHTML(m.away)}<div class="tname">${esc(m.away.name)}</div></div>
+      </div>
+      ${p?`<div class="center" style="margin-top:12px"><div class="muted" style="font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Ditt tips 🔒</div>
+        <div class="tip-summary">${p.hs} – ${p.as}<span class="pk">(${esc(pickLabel(p.p,m))})</span></div></div>`
+        :'<div class="center muted" style="margin-top:12px;font-size:.85rem">Du tippade inte den här matchen.</div>'}
+      <div class="kick">${awaiting?'Matchen pågår – inväntar resultat…':'Avspark om <b id="cd">--:--:--</b>'}</div>
+    </div>
+    <div class="card"><div class="section-label">Totalställning</div><div id="lb-season"><div class="center muted" style="font-size:.85rem">Laddar…</div></div></div>`;
+  if(!awaiting) startCd(m.kickoffMs);
+  loadBoards(m.matchId, 'lb-season', false);
+}
+
+// ── State: finished (result + breakdown) ──────────────────────────────────────
+async function renderResult(m){
+  const res = DATA.result;
+  let your=localPred, breakdown=null, daily=[], season=[];
+  try{
+    const q = new URLSearchParams({matchId:m.matchId}); if(player) q.set('playerID',player.id);
+    const r = await fetch('/api/1x2-leaderboard?'+q.toString());
+    const j = await r.json();
+    your = j.your || localPred; breakdown=j.breakdown; daily=j.daily||[]; season=j.season||[];
+  }catch{}
+
+  const bRow=(cls,label,pts)=>`<div class="brow ${cls?'win':'lose'}"><span><span class="ic">${cls?'✓':'✗'}</span>${label}</span><span class="pts">+${pts}</span></div>`;
+  let breakdownHTML='';
+  if(your){
+    const bd = breakdown || (function(){const a=res.hs>res.as?'1':res.hs<res.as?'2':'X';return{r1x2:your.p===a,rh:Number(your.hs)===res.hs,ra:Number(your.as)===res.as,pts:(your.p===a?3:0)+(Number(your.hs)===res.hs?1:0)+(Number(your.as)===res.as?1:0)};})();
+    breakdownHTML = `<div class="breakdown">
+        ${bRow(bd.r1x2,'Utgång (1X2) · '+esc(pickLabel(your.p,m)),bd.r1x2?3:0)}
+        ${bRow(bd.rh,'Hemmamål · tippade '+your.hs,bd.rh?1:0)}
+        ${bRow(bd.ra,'Bortamål · tippade '+your.as,bd.ra?1:0)}
+      </div>
+      <div class="total"><span style="font-weight:700;letter-spacing:.03em">Dina poäng</span><span class="n">${bd.pts} <small>/ 5</small></span></div>`;
+  } else {
+    breakdownHTML = '<div class="center muted" style="font-size:.85rem;margin:10px 0">Du tippade inte den här matchen.</div>';
+  }
+
+  app.innerHTML = `
+    <div class="card">
+      <div class="center"><span class="chip">${stageLabel(m.stage)}${m.group?' · Grupp '+esc(m.group):''} · Slutresultat</span></div>
+      <div class="matchup">
+        <div class="team">${flagHTML(m.home)}<div class="tname">${esc(m.home.name)}</div></div>
+        <div class="vs" style="font-size:1.6rem;color:var(--text)">${res.hs} – ${res.as}</div>
+        <div class="team">${flagHTML(m.away)}<div class="tname">${esc(m.away.name)}</div></div>
+      </div>
+      ${breakdownHTML}
+    </div>
+    <div class="card">
+      <div class="section-label">Dagens topplista</div><div id="lb-daily"></div>
+      <div class="section-label" style="margin-top:16px">Totalställning</div><div id="lb-season"></div>
+      <div class="next-line">Nästa match snart – kom tillbaka imorgon!</div>
+    </div>`;
+  renderBoard('lb-daily', daily);
+  renderBoard('lb-season', season);
+}
+
+// ── Leaderboards ──────────────────────────────────────────────────────────────
+function renderBoard(elId, rows){
+  const el=document.getElementById(elId); if(!el) return;
+  if(!rows || !rows.length){ el.innerHTML='<div class="center muted" style="font-size:.84rem;padding:6px">Inga poäng än.</div>'; return; }
+  el.innerHTML = rows.map((s,i)=>{
+    const you = player && s.id===player.id;
+    return `<div class="lb-row${you?' lb-you':''}"><span class="lb-rank">${i+1}</span><span class="lb-name">${esc(s.name)}${you?' 👈':''}</span><span class="lb-score">${s.pts} p</span></div>`;
+  }).join('');
+}
+async function loadBoards(matchId, seasonElId){
+  try{
+    const q=new URLSearchParams({matchId}); if(player) q.set('playerID',player.id);
+    const r=await fetch('/api/1x2-leaderboard?'+q.toString()); const j=await r.json();
+    renderBoard(seasonElId, j.season||[]);
+  }catch{ const el=document.getElementById(seasonElId); if(el) el.innerHTML='<div class="center muted" style="font-size:.84rem">Kunde inte ladda.</div>'; }
+}
+
+// ── Countdown ─────────────────────────────────────────────────────────────────
+function startCd(targetMs){
+  if(cdTimer){ clearInterval(cdTimer); cdTimer=null; }
+  if(targetMs==null){ const el=document.getElementById('cd'); if(el) el.textContent='—'; return; }
+  function tick(){
+    const el=document.getElementById('cd'); if(!el){ clearInterval(cdTimer); return; }
+    const left=targetMs-Date.now();
+    if(left<=0){ clearInterval(cdTimer); fetch('/api/1x2-match').then(r=>r.json()).then(d=>{DATA=d;render();}).catch(()=>{}); return; }
+    el.textContent=fmtCountdown(left);
+  }
+  tick(); cdTimer=setInterval(tick,1000);
+}
+
+// ── Name modal + trophy ───────────────────────────────────────────────────────
+function submitName(){ const inp=document.getElementById('name-input'); const name=inp?inp.value.trim():''; if(!name){ if(inp) inp.focus(); return; } player=savePlayer(name); document.getElementById('name-modal').classList.add('hidden'); render(); }
+document.getElementById('name-form').addEventListener('submit',e=>{e.preventDefault();submitName();});
+document.getElementById('name-btn').addEventListener('click',submitName);
+
+document.getElementById('trophy-btn').addEventListener('click',async()=>{
+  document.getElementById('lb-modal').classList.remove('hidden');
+  const body=document.getElementById('lb-modal-body'); body.innerHTML='<div class="center muted" style="font-size:.85rem">Laddar…</div>';
+  try{
+    const mid = DATA && DATA.match ? DATA.match.matchId : 'season';
+    const q=new URLSearchParams({matchId:mid}); if(player) q.set('playerID',player.id);
+    const r=await fetch('/api/1x2-leaderboard?'+q.toString()); const j=await r.json();
+    const rows=j.season||[];
+    body.innerHTML = rows.length ? rows.map((s,i)=>{const you=player&&s.id===player.id;return `<div class="lb-row${you?' lb-you':''}"><span class="lb-rank">${i+1}</span><span class="lb-name">${esc(s.name)}${you?' 👈':''}</span><span class="lb-score">${s.pts} p</span></div>`;}).join('') : '<div class="center muted" style="font-size:.85rem">Inga poäng än – var först!</div>';
+  }catch{ body.innerHTML='<div class="center muted" style="font-size:.85rem">Kunde inte ladda.</div>'; }
+});
+document.getElementById('lb-modal').addEventListener('click',e=>{ if(e.target.id==='lb-modal') e.currentTarget.classList.add('hidden'); });
+
+boot();
+</script>
+</body>
+</html>

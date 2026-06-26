@@ -2,10 +2,17 @@
   "functions": {
     "api/refresh.js": { "maxDuration": 60 },
     "api/wordle-submit.js": { "maxDuration": 10 },
-    "api/wordle-leaderboard.js": { "maxDuration": 10 }
+    "api/wordle-leaderboard.js": { "maxDuration": 10 },
+    "api/1x2-match.js": { "maxDuration": 10 },
+    "api/1x2-submit.js": { "maxDuration": 10 },
+    "api/1x2-leaderboard.js": { "maxDuration": 10 },
+    "api/1x2-admin.js": { "maxDuration": 10 }
   },
   "rewrites": [
     { "source": "/spel", "destination": "/spel/index.html" },
-    { "source": "/spel/wordle", "destination": "/spel/wordle/index.html" }
+    { "source": "/spel/wordle", "destination": "/spel/wordle/index.html" },
+    { "source": "/spel/ordle", "destination": "/spel/wordle/index.html" },
+    { "source": "/spel/1x2", "destination": "/spel/1x2/index.html" },
+    { "source": "/spel/1x2/admin", "destination": "/spel/1x2/admin/index.html" }
   ]
 }
