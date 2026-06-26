@@ -182,7 +182,7 @@ const STATE_KEY = `wp2_state_${TODAY}`;
 const STATS_KEY = 'wp2_stats';
 
 function loadState() {
-  try { return JSON.parse(localStorage.getItem(STATE_KEY)); } catch {}
+  try { return JSON.parse(localStorage.getItem(STATE_KEY)) || { guesses: [], done: false, won: false }; } catch {}
   return { guesses: [], done: false, won: false };
 }
 function saveState(s) { localStorage.setItem(STATE_KEY, JSON.stringify(s)); }
