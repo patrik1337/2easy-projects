@@ -160,8 +160,15 @@ function getTodayWord() {
 function getPlayer() {
   try { return JSON.parse(localStorage.getItem('wp2_player')); } catch { return null; }
 }
+function uuid() {
+  try { return crypto.randomUUID(); } catch {}
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = Math.random() * 16 | 0;
+    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+}
 function savePlayer(name) {
-  const p = { id: crypto.randomUUID(), name: name.trim().slice(0, 20) };
+  const p = { id: uuid(), name: name.trim().slice(0, 20) };
   localStorage.setItem('wp2_player', JSON.stringify(p));
   return p;
 }
@@ -367,13 +374,15 @@ function shake(r) {
 
 // ── Name modal ───────────────────────────────────────────────────────────────
 const nameInput = document.getElementById('name-input');
-document.getElementById('name-btn').addEventListener('click', () => {
+function submitName() {
   const name = nameInput.value.trim();
   if (!name) { nameInput.focus(); return; }
   player = savePlayer(name);
   document.getElementById('name-modal').classList.add('hidden');
-});
-nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('name-btn').click(); });
+}
+document.getElementById('name-btn').addEventListener('click', submitName);
+document.getElementById('name-btn').addEventListener('touchend', e => { e.preventDefault(); submitName(); });
+nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') submitName(); });
 
 // ── Stats modal ──────────────────────────────────────────────────────────────
 document.getElementById('stats-btn').addEventListener('click', () => {
