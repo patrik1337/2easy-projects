@@ -1,4 +1,4 @@
-const { kv, kvReady, getResult, getData, gradeMatch, computePoints, zTop, attachNames } = require('./_wc');
+const { kv, kvReady, getResult, getData, gradeMatch, computePoints, zTop, attachNames, getPredictions } = require('./_wc');
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -23,16 +23,27 @@ module.exports = async (req, res) => {
     if (result) await gradeMatch(matchId, result.hs, result.as); // idempotent
 
     const playerID = req.query.playerID;
-    let your = null;
-    if (playerID) {
-      const [pj] = await kv([['HGET', `1x2:pred:${matchId}`, playerID]]);
-      if (pj) { try { your = JSON.parse(pj); } catch (_) {} }
-    }
+    const allPreds = await getPredictions(matchId);
+    const your = (playerID && allPreds.find((p) => p.id === playerID)) || null;
     const breakdown = your && result ? computePoints(your, result.hs, result.as) : null;
 
-    const daily = await attachNames(await zTop(`1x2:daily:${matchId}`, 50));
+    // Friends' picks are visible to everyone, even before you've tipped yourself.
+    const revealed = true;
+    let predictions;
+    if (revealed) {
+      predictions = allPreds.map((p) => {
+        const o = { id: p.id, name: p.name, p: p.p, hs: p.hs, as: p.as };
+        if (result) o.pts = computePoints(p, result.hs, result.as).pts;
+        return o;
+      });
+      if (result) predictions.sort((a, b) => b.pts - a.pts);
+      else predictions.sort((a, b) => String(a.name).localeCompare(String(b.name)));
+    } else {
+      predictions = allPreds.map((p) => ({ id: p.id, name: p.name }));
+    }
+
     const season = await attachNames(await zTop('1x2:season', 50));
-    return res.status(200).json({ result, your, breakdown, daily, season });
+    return res.status(200).json({ result, your, breakdown, predictions, revealed, season });
   } catch (e) {
     return res.status(500).json({ error: 'leaderboard failed', detail: String((e && e.message) || e) });
   }

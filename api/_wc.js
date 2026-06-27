@@ -217,6 +217,20 @@ async function zTop(key, n) {
   return out;
 }
 
+// All predictions for a match, with player names resolved.
+async function getPredictions(matchId) {
+  const [raw] = await kv([['HGETALL', `1x2:pred:${matchId}`]]);
+  const obj = hashToObj(raw);
+  const ids = Object.keys(obj);
+  if (!ids.length) return [];
+  const [names] = await kv([['HMGET', '1x2:names', ...ids]]);
+  return ids.map((id, i) => {
+    let pr = {};
+    try { pr = JSON.parse(obj[id]); } catch (_) {}
+    return { id, name: (Array.isArray(names) && names[i]) || 'Anonym', p: pr.p, hs: pr.hs, as: pr.as };
+  });
+}
+
 async function attachNames(rows) {
   if (!rows.length) return rows;
   const [names] = await kv([['HMGET', '1x2:names', ...rows.map((r) => r.id)]]);
@@ -227,5 +241,5 @@ async function attachNames(rows) {
 module.exports = {
   kv, kvReady, getData, todayStockholm, stockholmDateStr, venueDateStr, kickoffMs,
   normalizeFeedMatch, pickMatchOfDay, nextMatch, resolveMatch, getOverride,
-  getResult, computePoints, gradeMatch, regradeMatch, zTop, attachNames,
+  getResult, computePoints, gradeMatch, regradeMatch, zTop, attachNames, getPredictions,
 };

@@ -223,7 +223,9 @@ function renderForm(m){
         </div>
       </div>
       <button class="btn" id="submit-btn" ${pick?'':'disabled'}>Lås in tips</button>
-    </div>`;
+    </div>
+    <div class="card"><div class="section-label">Vännernas tips</div><div id="friends"><div class="center muted" style="font-size:.84rem;padding:6px">Laddar…</div></div></div>
+    <div class="card"><div class="section-label">Totalställning</div><div id="lb-season"><div class="center muted" style="font-size:.84rem;padding:6px">Laddar…</div></div></div>`;
 
   document.getElementById('tg').querySelectorAll('button').forEach(b=>{
     if(b.dataset.p===pick) b.classList.add('sel');
@@ -236,6 +238,7 @@ function renderForm(m){
   }));
   document.getElementById('submit-btn').addEventListener('click',submitTip);
   startCd(m.kickoffMs);
+  loadSocial(m);
 }
 
 async function submitTip(){
@@ -273,26 +276,22 @@ function renderLocked(m){
         :'<div class="center muted" style="margin-top:12px;font-size:.85rem">Du tippade inte den här matchen.</div>'}
       <div class="kick">${awaiting?'Matchen pågår – inväntar resultat…':'Avspark om <b id="cd">--:--:--</b>'}</div>
     </div>
-    <div class="card"><div class="section-label">Totalställning</div><div id="lb-season"><div class="center muted" style="font-size:.85rem">Laddar…</div></div></div>`;
+    <div class="card"><div class="section-label">Vännernas tips</div><div id="friends"><div class="center muted" style="font-size:.84rem;padding:6px">Laddar…</div></div></div>
+    <div class="card"><div class="section-label">Totalställning</div><div id="lb-season"><div class="center muted" style="font-size:.84rem;padding:6px">Laddar…</div></div></div>`;
   if(!awaiting) startCd(m.kickoffMs);
-  loadBoards(m.matchId, 'lb-season', false);
+  loadSocial(m);
 }
 
 // ── State: finished (result + breakdown) ──────────────────────────────────────
 async function renderResult(m){
   const res = DATA.result;
-  let your=localPred, breakdown=null, daily=[], season=[];
-  try{
-    const q = new URLSearchParams({matchId:m.matchId}); if(player) q.set('playerID',player.id);
-    const r = await fetch('/api/1x2-leaderboard?'+q.toString());
-    const j = await r.json();
-    your = j.your || localPred; breakdown=j.breakdown; daily=j.daily||[]; season=j.season||[];
-  }catch{}
+  const your=localPred;
 
   const bRow=(cls,label,pts)=>`<div class="brow ${cls?'win':'lose'}"><span><span class="ic">${cls?'✓':'✗'}</span>${label}</span><span class="pts">+${pts}</span></div>`;
   let breakdownHTML='';
   if(your){
-    const bd = breakdown || (function(){const a=res.hs>res.as?'1':res.hs<res.as?'2':'X';return{r1x2:your.p===a,rh:Number(your.hs)===res.hs,ra:Number(your.as)===res.as,pts:(your.p===a?3:0)+(Number(your.hs)===res.hs?1:0)+(Number(your.as)===res.as?1:0)};})();
+    const a=res.hs>res.as?'1':res.hs<res.as?'2':'X';
+    const bd={r1x2:your.p===a,rh:Number(your.hs)===res.hs,ra:Number(your.as)===res.as,pts:(your.p===a?3:0)+(Number(your.hs)===res.hs?1:0)+(Number(your.as)===res.as?1:0)};
     breakdownHTML = `<div class="breakdown">
         ${bRow(bd.r1x2,'Utgång (1X2) · '+esc(pickLabel(your.p,m)),bd.r1x2?3:0)}
         ${bRow(bd.rh,'Hemmamål · tippade '+your.hs,bd.rh?1:0)}
@@ -313,13 +312,10 @@ async function renderResult(m){
       </div>
       ${breakdownHTML}
     </div>
-    <div class="card">
-      <div class="section-label">Dagens topplista</div><div id="lb-daily"></div>
-      <div class="section-label" style="margin-top:16px">Totalställning</div><div id="lb-season"></div>
-      <div class="next-line">Nästa match snart – kom tillbaka imorgon!</div>
-    </div>`;
-  renderBoard('lb-daily', daily);
-  renderBoard('lb-season', season);
+    <div class="card"><div class="section-label">Allas tips &amp; poäng</div><div id="friends"><div class="center muted" style="font-size:.84rem;padding:6px">Laddar…</div></div></div>
+    <div class="card"><div class="section-label">Totalställning</div><div id="lb-season"><div class="center muted" style="font-size:.84rem;padding:6px">Laddar…</div></div>
+      <div class="next-line">Nästa match snart – kom tillbaka imorgon!</div></div>`;
+  loadSocial(m);
 }
 
 // ── Leaderboards ──────────────────────────────────────────────────────────────
@@ -331,12 +327,35 @@ function renderBoard(elId, rows){
     return `<div class="lb-row${you?' lb-you':''}"><span class="lb-rank">${i+1}</span><span class="lb-name">${esc(s.name)}${you?' 👈':''}</span><span class="lb-score">${s.pts} p</span></div>`;
   }).join('');
 }
-async function loadBoards(matchId, seasonElId){
+// Fetch once, fill the friends' predictions + season highscore on the current page.
+async function loadSocial(m){
+  let data={};
   try{
-    const q=new URLSearchParams({matchId}); if(player) q.set('playerID',player.id);
-    const r=await fetch('/api/1x2-leaderboard?'+q.toString()); const j=await r.json();
-    renderBoard(seasonElId, j.season||[]);
-  }catch{ const el=document.getElementById(seasonElId); if(el) el.innerHTML='<div class="center muted" style="font-size:.84rem">Kunde inte ladda.</div>'; }
+    const q=new URLSearchParams({matchId:m.matchId}); if(player) q.set('playerID',player.id);
+    const r=await fetch('/api/1x2-leaderboard?'+q.toString()); data=await r.json();
+  }catch{}
+  const fEl=document.getElementById('friends'); if(fEl) renderFriends(fEl, data.predictions||[], data.revealed, data.result, m);
+  const sEl=document.getElementById('lb-season'); if(sEl) renderBoard('lb-season', data.season||[]);
+  return data;
+}
+
+function renderFriends(el, preds, revealed, result, m){
+  if(!preds.length){ el.innerHTML='<div class="center muted" style="font-size:.84rem;padding:6px">Ingen vän har tippat än.</div>'; return; }
+  if(!revealed){
+    el.innerHTML = `<div class="muted" style="font-size:.83rem;margin-bottom:8px">${preds.length} ${preds.length===1?'vän har':'vänner har'} tippat. Lås in ditt tips för att se deras.</div>`
+      + preds.map(p=>`<div class="lb-row"><span class="lb-name">${esc(p.name)}</span><span class="lb-score loss">🔒</span></div>`).join('');
+    return;
+  }
+  el.innerHTML = preds.map((p,i)=>{
+    const you=player&&p.id===player.id;
+    const tip = `${p.p} · ${p.hs}–${p.as}`;
+    const right = result
+      ? `<span class="lb-score${p.pts>0?'':' loss'}">${p.pts} p</span>`
+      : `<span class="lb-score" style="background:var(--border);color:#fff">${tip}</span>`;
+    const mid = result ? `<span style="color:var(--muted);font-size:.8rem;margin-right:8px;white-space:nowrap">${tip}</span>` : '';
+    const rank = result ? `<span class="lb-rank">${i+1}</span>` : '';
+    return `<div class="lb-row${you?' lb-you':''}">${rank}<span class="lb-name">${esc(p.name)}${you?' 👈':''}</span>${mid}${right}</div>`;
+  }).join('');
 }
 
 // ── Countdown ─────────────────────────────────────────────────────────────────
