@@ -12,6 +12,7 @@
     { "source": "/spel", "destination": "/spel/index.html" },
     { "source": "/spel/wordle", "destination": "/spel/wordle/index.html" },
     { "source": "/spel/ordle", "destination": "/spel/wordle/index.html" },
+    { "source": "/spel/ordle/", "destination": "/spel/wordle/index.html" },
     { "source": "/spel/1x2", "destination": "/spel/1x2/index.html" },
     { "source": "/spel/1x2/admin", "destination": "/spel/1x2/admin/index.html" }
   ]

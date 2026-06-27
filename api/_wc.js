@@ -23,8 +23,10 @@ const RANK = {
 };
 const rankOf = (code) => RANK[code] ?? 99;
 
-const KV_URL = process.env.KV_REST_API_URL;
-const KV_TOKEN = process.env.KV_REST_TOKEN;
+// Accept the common Upstash/Vercel-KV env var names so this works regardless of
+// which integration created them (KV_REST_API_TOKEN is the Vercel default).
+const KV_URL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+const KV_TOKEN = process.env.KV_REST_API_TOKEN || process.env.KV_REST_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
 const kvReady = () => Boolean(KV_URL && KV_TOKEN);
 
 // Upstash REST pipeline. Returns an array of results (one per command). When KV is
@@ -58,6 +60,13 @@ function todayStockholm() {
 function stockholmDateStr(ms) {
   return new Date(ms).toLocaleDateString('sv-SE', { timeZone: 'Europe/Stockholm' });
 }
+// "MM/DD/YYYY HH:MM" → "YYYY-MM-DD" using the match's own venue-local calendar date.
+// We bucket the daily match by venue-local date so "today's game" is one that actually
+// plays during the Swedish day, instead of a US-evening game that lands at ~01:00 Stockholm.
+function venueDateStr(localDate) {
+  const m = /^(\d{2})\/(\d{2})\/(\d{4})/.exec(String(localDate || '').trim());
+  return m ? `${m[3]}-${m[1]}-${m[2]}` : null;
+}
 // "MM/DD/YYYY HH:MM" venue-local → epoch ms (UTC), via the venue's fixed summer offset.
 function kickoffMs(localDate, stadiumId) {
   const m = /^(\d{2})\/(\d{2})\/(\d{4})\s+(\d{1,2}):(\d{2})$/.exec(String(localDate || '').trim());
@@ -90,7 +99,7 @@ function normalizeFeedMatch(fm, teamById, dateStr) {
   return {
     matchId: `m${fm.id}`,
     feedId: String(fm.id),
-    dateStr: dateStr || (ko != null ? stockholmDateStr(ko) : null),
+    dateStr: dateStr || venueDateStr(fm.local_date),
     kickoffMs: ko,
     home: teamView(teamById[String(fm.home_team_id)]),
     away: teamView(teamById[String(fm.away_team_id)]),
@@ -107,7 +116,7 @@ const hasRealTeams = (fm, teamById) =>
 function pickMatchOfDay(matches, teamById, dateStr) {
   const todays = matches
     .map((fm) => ({ fm, ko: kickoffMs(fm.local_date, fm.stadium_id) }))
-    .filter((x) => x.ko != null && stockholmDateStr(x.ko) === dateStr && hasRealTeams(x.fm, teamById));
+    .filter((x) => venueDateStr(x.fm.local_date) === dateStr && hasRealTeams(x.fm, teamById));
   if (!todays.length) return null;
   const swe = todays.find((x) => x.fm.home_team_id === '23' || x.fm.away_team_id === '23');
   if (swe) return swe.fm;
@@ -216,7 +225,7 @@ async function attachNames(rows) {
 }
 
 module.exports = {
-  kv, kvReady, getData, todayStockholm, stockholmDateStr, kickoffMs,
+  kv, kvReady, getData, todayStockholm, stockholmDateStr, venueDateStr, kickoffMs,
   normalizeFeedMatch, pickMatchOfDay, nextMatch, resolveMatch, getOverride,
   getResult, computePoints, gradeMatch, regradeMatch, zTop, attachNames,
 };

@@ -1,6 +1,6 @@
 const {
   kv, kvReady, getData, normalizeFeedMatch, gradeMatch, regradeMatch,
-  stockholmDateStr, kickoffMs,
+  venueDateStr, kickoffMs,
 } = require('./_wc');
 
 module.exports = async (req, res) => {
@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
       const { matches, teamById } = await getData();
       const fixtures = matches
         .map((fm) => ({ fm, ko: kickoffMs(fm.local_date, fm.stadium_id) }))
-        .filter((x) => x.ko != null && stockholmDateStr(x.ko) === date)
+        .filter((x) => venueDateStr(x.fm.local_date) === date)
         .sort((a, b) => a.ko - b.ko)
         .map((x) => {
           const nm = normalizeFeedMatch(x.fm, teamById, date);
