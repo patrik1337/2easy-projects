@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Pricken – 2easy Spel</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--green:#538d4e;--accent:#4a90d9;--bg:#121213;--surface:#1a1a1b;--text:#fff;--border:#3a3a3c;--muted:#818384}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font-family:'Helvetica Neue',Arial,sans-serif;display:flex;flex-direction:column;min-height:100dvh;min-height:100vh;-webkit-tap-highlight-color:transparent;overflow-x:hidden}
+header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);position:relative;flex:0 0 auto}
+header h1{font-size:1.25rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;position:absolute;left:50%;transform:translateX(-50%)}
+.back-link{color:var(--text);text-decoration:none;font-size:.85rem;opacity:.7;z-index:1}
+#trophy-btn{background:none;border:none;color:var(--text);font-size:1.2rem;cursor:pointer;padding:4px 8px;z-index:1}
+main{flex:1 1 auto;display:flex;flex-direction:column;width:100%;max-width:560px;margin:0 auto;padding:12px}
+.bar{display:flex;align-items:center;gap:10px;margin-bottom:10px;min-height:30px}
+#city-name{font-size:1.25rem;font-weight:700}
+#city-name small{font-weight:400;color:var(--muted);font-size:.85rem}
+#timer-wrap{flex:1;height:10px;background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;display:none}
+#timer-fill{height:100%;width:100%;background:var(--green);transition:width .25s linear}
+#timer-fill.warn{background:#b59f3b}#timer-fill.danger{background:#c0392b}
+#timer-num{font-weight:700;font-variant-numeric:tabular-nums;min-width:34px;text-align:right;display:none}
+#map{flex:1 1 auto;min-height:320px;border-radius:12px;border:1px solid var(--border);background:#0d1b2a;touch-action:none}
+.leaflet-container{background:#0d1b2a}
+.action{padding:12px 0 4px;flex:0 0 auto}
+.btn{width:100%;padding:15px;background:var(--green);color:#fff;border:none;border-radius:10px;font-size:1.05rem;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:.05em}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.accent{background:var(--accent)}
+.hint{text-align:center;color:var(--muted);font-size:.85rem;margin-top:8px;line-height:1.4}
+.result-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-top:10px;text-align:center}
+.result-box .dist{font-size:1.6rem;font-weight:700}
+.result-box .pts{display:inline-block;margin-top:6px;font-size:1rem;font-weight:700;background:var(--green);color:#fff;padding:3px 12px;border-radius:6px}
+.result-box .pts.zero{background:var(--border);color:var(--muted)}
+.section-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:14px 0 8px}
+.lb-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;margin-bottom:3px;background:var(--surface)}
+.lb-rank{font-size:.8rem;color:var(--muted);width:18px;text-align:right}
+.lb-name{flex:1;font-weight:600;font-size:.9rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-score{font-size:.78rem;background:var(--green);padding:2px 9px;border-radius:5px;font-weight:700;white-space:nowrap}
+.lb-you{border:1px solid var(--green)}
+.next-line{text-align:center;color:var(--muted);font-size:.82rem;margin-top:12px}
+.next-line b{color:var(--text)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:1000;padding:16px}
+.modal-overlay.hidden{display:none}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;width:100%;max-width:340px;text-align:center}
+.modal h2{font-size:1.2rem;margin-bottom:8px}
+.modal p{color:var(--muted);font-size:.9rem;margin-bottom:16px;line-height:1.45}
+.modal input{width:100%;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:1rem;margin-bottom:12px;text-align:center;outline:none}
+.modal input:focus{border-color:var(--green)}
+</style>
+</head>
+<body>
+<header>
+  <a href="/spel" class="back-link">← Spel</a>
+  <h1>Pricken</h1>
+  <button id="trophy-btn" title="Totalställning" aria-label="Totalställning">🏆</button>
+</header>
+
+<div class="modal-overlay hidden" id="name-modal">
+  <div class="modal">
+    <h2>Välkommen till Pricken!</h2>
+    <p>Varje dag en ny stad någonstans i världen. Tryck Start – då visas stadens namn och du har <b>15 sekunder</b> på dig att sätta din prick på kartan. Närmare = mer poäng (max 5).</p>
+    <form id="name-form" onsubmit="return false;">
+      <input type="text" id="name-input" placeholder="Ditt smeknamn" maxlength="20" autocomplete="off" autocapitalize="words" spellcheck="false">
+      <button type="submit" class="btn" id="name-btn">Kör igång!</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="lb-modal">
+  <div class="modal" style="max-width:360px;text-align:left">
+    <h2 style="text-align:center;margin-bottom:14px">Totalställning</h2>
+    <div id="lb-modal-body"></div>
+    <button class="btn" style="margin-top:14px;background:var(--border)" onclick="document.getElementById('lb-modal').classList.add('hidden')">Stäng</button>
+  </div>
+</div>
+
+<main>
+  <div class="bar">
+    <div id="city-name">&nbsp;</div>
+    <div id="timer-wrap"><div id="timer-fill"></div></div>
+    <div id="timer-num"></div>
+  </div>
+  <div id="map"></div>
+  <div class="action" id="action"></div>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script>
+// ── Identity (shared with Ordel/1x2 for now) ──────────────────────────────────
+function getPlayer(){ try{ return JSON.parse(localStorage.getItem('wp2_player')); }catch{ return null; } }
+function uuid(){ try{ return crypto.randomUUID(); }catch{} return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0;return (c==='x'?r:(r&0x3|0x8)).toString(16);}); }
+function savePlayer(name){ const p={id:uuid(),name:name.trim().slice(0,20)}; localStorage.setItem('wp2_player',JSON.stringify(p)); return p; }
+let player=getPlayer();
+
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const $=id=>document.getElementById(id);
+
+// ── Map ───────────────────────────────────────────────────────────────────────
+let map, guessMarker=null, trueMarker=null, line=null, mapClickOn=false;
+function initMap(){
+  map=L.map('map',{worldCopyJump:true,minZoom:1,zoomControl:true,attributionControl:true}).setView([20,0],1);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    maxZoom:18, attribution:'© OpenStreetMap'
+  }).addTo(map);
+  map.on('click',e=>{ if(!mapClickOn) return; placeGuess(e.latlng.lat,e.latlng.lng); });
+}
+function placeGuess(lat,lng){
+  if(guessMarker) guessMarker.setLatLng([lat,lng]);
+  else guessMarker=L.circleMarker([lat,lng],{radius:8,color:'#fff',weight:2,fillColor:'#4a90d9',fillOpacity:1}).addTo(map);
+  const c=$('confirm-btn'); if(c) c.disabled=false;
+}
+function resetMapLayers(){ [guessMarker,trueMarker,line].forEach(l=>{ if(l) map.removeLayer(l); }); guessMarker=trueMarker=line=null; }
+
+// ── Game state ────────────────────────────────────────────────────────────────
+let startTs=null, timer=null, ended=false;
+const PLAY_MS=15000;
+
+async function api(path,opts){ const r=await fetch(path,opts); return r.json().catch(()=>({})); }
+
+async function boot(){
+  initMap();
+  if(!player) $('name-modal').classList.remove('hidden');
+  await loadState();
+}
+
+async function loadState(){
+  let st={};
+  try{ const q=new URLSearchParams(); if(player) q.set('playerID',player.id); st=await api('/api/plats-state?'+q.toString()); }catch{}
+  window.__season=st.season||[];
+  if(st.played && st.result){ showResult(st.result); return; }
+  if(st.hasStarted && !st.played){ beginPlay(true); return; } // resume an in-progress attempt
+  showLanding();
+}
+
+function showLanding(){
+  $('city-name').innerHTML='&nbsp;';
+  $('timer-wrap').style.display='none'; $('timer-num').style.display='none';
+  resetMapLayers(); map.setView([20,0],1); setTimeout(()=>map.invalidateSize(),50);
+  $('action').innerHTML='<button class="btn" id="start-btn">Start</button><div class="hint">Stadens namn visas när du trycker Start – sen tickar 15 sekunder.</div>';
+  $('start-btn').addEventListener('click',()=>{ if(!player){ $('name-modal').classList.remove('hidden'); return; } beginPlay(false); });
+}
+
+async function beginPlay(resume){
+  const st=await api('/api/plats-start',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({playerID:player.id,playerName:player.name})});
+  if(st.already||st.played){ return loadState(); }
+  if(!st.city){ showLanding(); return; }
+  startTs=st.startTs||Date.now();
+  ended=false;
+  $('city-name').innerHTML=`Hitta: <b>${esc(st.city.name)}</b> <small>${esc(st.city.country)}</small>`;
+  $('timer-wrap').style.display='block'; $('timer-num').style.display='block';
+  mapClickOn=true;
+  $('action').innerHTML='<button class="btn accent" id="confirm-btn" disabled>Bekräfta pricken</button><div class="hint">Tryck på kartan för att placera din prick, justera fritt, bekräfta sedan.</div>';
+  $('confirm-btn').addEventListener('click',()=>finish());
+  setTimeout(()=>map.invalidateSize(),50);
+  runTimer();
+}
+
+function runTimer(){
+  if(timer) clearInterval(timer);
+  function tick(){
+    const left=Math.max(0, PLAY_MS-(Date.now()-startTs));
+    const pct=(left/PLAY_MS)*100;
+    const fill=$('timer-fill'); if(fill){ fill.style.width=pct+'%'; fill.className=left<=3000?'danger':left<=7000?'warn':''; }
+    const num=$('timer-num'); if(num) num.textContent=(left/1000).toFixed(1);
+    if(left<=0){ clearInterval(timer); finish(); }
+  }
+  tick(); timer=setInterval(tick,100);
+}
+
+async function finish(){
+  if(ended) return; ended=true;
+  if(timer) clearInterval(timer);
+  mapClickOn=false;
+  const cb=$('confirm-btn'); if(cb){ cb.disabled=true; cb.textContent='Skickar…'; }
+  const body={playerID:player.id,playerName:player.name};
+  if(guessMarker){ const ll=guessMarker.getLatLng(); body.lat=ll.lat; body.lng=ll.lng; }
+  const result=await api('/api/plats-submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  await loadStateThen(()=>showResult(result));
+}
+async function loadStateThen(cb){ try{ const q=new URLSearchParams(); if(player) q.set('playerID',player.id); const st=await api('/api/plats-state?'+q.toString()); window.__season=st.season||[]; }catch{} cb(); }
+
+function showResult(r){
+  if(timer) clearInterval(timer);
+  $('timer-wrap').style.display='none'; $('timer-num').style.display='none';
+  $('city-name').innerHTML=`<b>${esc(r.city)}</b> <small>${esc(r.country)}</small>`;
+  mapClickOn=false; resetMapLayers();
+
+  const truePt=[r.trueLat,r.trueLng];
+  trueMarker=L.circleMarker(truePt,{radius:9,color:'#fff',weight:2,fillColor:'#538d4e',fillOpacity:1}).addTo(map).bindPopup(esc(r.city));
+  if(r.guessLat!=null){
+    const gp=[r.guessLat,r.guessLng];
+    guessMarker=L.circleMarker(gp,{radius:8,color:'#fff',weight:2,fillColor:'#4a90d9',fillOpacity:1}).addTo(map);
+    line=L.polyline([gp,truePt],{color:'#fff',weight:2,dashArray:'5,6',opacity:.8}).addTo(map);
+    map.fitBounds(L.latLngBounds([gp,truePt]).pad(0.4));
+  } else {
+    map.setView(truePt,3);
+  }
+  setTimeout(()=>map.invalidateSize(),50);
+
+  const distHTML = r.guessLat!=null ? `<div class="dist">${r.distanceKm} km</div>` : `<div class="dist">Ingen prick i tid</div>`;
+  const ptsCls = r.points>0?'':' zero';
+  $('action').innerHTML=`
+    <div class="result-box">
+      ${distHTML}
+      <span class="pts${ptsCls}">+${r.points} poäng</span>
+    </div>
+    <div class="section-label">Totalställning (alla spel)</div>
+    <div id="lb-season"></div>
+    <div class="next-line">Ny stad om <b id="cd">--:--:--</b></div>`;
+  renderBoard('lb-season', window.__season||[]);
+  startMidnightCountdown();
+}
+
+// ── Leaderboard + countdown ────────────────────────────────────────────────────
+function renderBoard(elId, rows){
+  const el=$(elId); if(!el) return;
+  if(!rows.length){ el.innerHTML='<div class="hint">Inga poäng än – var först!</div>'; return; }
+  el.innerHTML=rows.map((s,i)=>{ const you=player&&s.id===player.id;
+    return `<div class="lb-row${you?' lb-you':''}"><span class="lb-rank">${i+1}</span><span class="lb-name">${esc(s.name)}${you?' 👈':''}</span><span class="lb-score">${s.pts} p</span></div>`;
+  }).join('');
+}
+function startMidnightCountdown(){
+  function tick(){
+    const el=$('cd'); if(!el) return;
+    const now=new Date(); const sto=new Date(now.toLocaleString('en-US',{timeZone:'Europe/Stockholm'}));
+    const mid=new Date(sto); mid.setHours(24,0,0,0); const ms=mid-sto;
+    const h=Math.floor(ms/3600000),m=Math.floor(ms%3600000/60000),s=Math.floor(ms%60000/1000);
+    const p=n=>String(n).padStart(2,'0'); el.textContent=`${p(h)}:${p(m)}:${p(s)}`;
+  }
+  tick(); setInterval(tick,1000);
+}
+
+// ── Name modal + trophy ─────────────────────────────────────────────────────────
+function submitName(){ const inp=$('name-input'); const name=inp?inp.value.trim():''; if(!name){ if(inp) inp.focus(); return; } player=savePlayer(name); $('name-modal').classList.add('hidden'); }
+$('name-form').addEventListener('submit',e=>{e.preventDefault();submitName();});
+$('name-btn').addEventListener('click',submitName);
+$('trophy-btn').addEventListener('click',async()=>{
+  $('lb-modal').classList.remove('hidden');
+  const body=$('lb-modal-body'); body.innerHTML='<div class="hint">Laddar…</div>';
+  let rows=window.__season;
+  if(!rows){ try{ const st=await api('/api/plats-state'); rows=st.season||[]; }catch{ rows=[]; } }
+  body.innerHTML = rows.length ? rows.map((s,i)=>{const you=player&&s.id===player.id;return `<div class="lb-row${you?' lb-you':''}"><span class="lb-rank">${i+1}</span><span class="lb-name">${esc(s.name)}${you?' 👈':''}</span><span class="lb-score">${s.pts} p</span></div>`;}).join('') : '<div class="hint">Inga poäng än – var först!</div>';
+});
+$('lb-modal').addEventListener('click',e=>{ if(e.target.id==='lb-modal') e.currentTarget.classList.add('hidden'); });
+
+boot();
+</script>
+</body>
+</html>
