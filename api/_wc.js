@@ -143,10 +143,21 @@ async function getOverride(dateStr) {
   try { return JSON.parse(v); } catch { return null; }
 }
 
+// The admin-pinned "current" match (used for knockouts the feed can't supply). It
+// persists across days until the admin replaces it — so a playoff game stays the
+// active match right up until it's played and graded.
+async function getCurrent() {
+  const [v] = await kv([['GET', '1x2:current']]);
+  if (!v) return null;
+  try { return JSON.parse(v); } catch { return null; }
+}
+
 async function resolveMatch(dateStr) {
-  const override = await getOverride(dateStr);
+  const override = await getOverride(dateStr);   // explicit per-day pin (highest priority)
   if (override) return override;
-  const { matches, teamById } = await getData();
+  const current = await getCurrent();            // admin-set match, persists until replaced
+  if (current) return current;
+  const { matches, teamById } = await getData(); // feed auto-select (group stage)
   const fm = pickMatchOfDay(matches, teamById, dateStr);
   return fm ? normalizeFeedMatch(fm, teamById, dateStr) : null;
 }

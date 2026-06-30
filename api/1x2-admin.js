@@ -60,13 +60,18 @@ module.exports = async (req, res) => {
       } else {
         return res.status(400).json({ error: 'provide refId or a full custom match' });
       }
-      await kv([['SET', `1x2:override:${date}`, JSON.stringify(match)]]);
+      // Pin for the chosen date AND set it as the persistent "current" match
+      // (stays the active game across days until replaced — ideal for knockouts).
+      await kv([
+        ['SET', `1x2:override:${date}`, JSON.stringify(match)],
+        ['SET', '1x2:current', JSON.stringify(match)],
+      ]);
       return res.status(200).json({ ok: true, match });
     }
 
     if (action === 'clearMatch') {
       if (!body.date) return res.status(400).json({ error: 'date required' });
-      await kv([['DEL', `1x2:override:${body.date}`]]);
+      await kv([['DEL', `1x2:override:${body.date}`], ['DEL', '1x2:current']]);
       return res.status(200).json({ ok: true });
     }
 
