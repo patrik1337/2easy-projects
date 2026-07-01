@@ -140,7 +140,7 @@ function nextMatch(matches, teamById, nowMs) {
 async function getOverride(dateStr) {
   const [v] = await kv([['GET', `1x2:override:${dateStr}`]]);
   if (!v) return null;
-  try { return JSON.parse(v); } catch { return null; }
+  try { return withBonus(JSON.parse(v)); } catch { return null; }
 }
 
 // The admin-pinned "current" match (used for knockouts the feed can't supply). It
@@ -149,21 +149,25 @@ async function getOverride(dateStr) {
 async function getCurrent() {
   const [v] = await kv([['GET', '1x2:current']]);
   if (!v) return null;
-  try { return JSON.parse(v); } catch { return null; }
+  try { return withBonus(JSON.parse(v)); } catch { return null; }
 }
 
+// Every match — admin-pinned or feed-selected — always carries the 5 bonus questions
+// (10 p total possible per match, every game, going forward). getOverride/getCurrent
+// backfill it centrally (see withBonus) so this file is the single source of truth;
+// the feed-auto-select path attaches it directly below for the same guarantee.
 async function resolveMatch(dateStr) {
-  const override = await getOverride(dateStr);   // explicit per-day pin (highest priority)
-  if (override) return withBonus(override);
-  const current = await getCurrent();            // admin-set match, persists until replaced
-  if (current) return withBonus(current);
+  const override = await getOverride(dateStr);   // explicit per-day pin (highest priority) — already carries .bonus
+  if (override) return override;
+  const current = await getCurrent();            // admin-set match, persists until replaced — already carries .bonus
+  if (current) return current;
   const { matches, teamById } = await getData(); // feed auto-select (group stage)
   const fm = pickMatchOfDay(matches, teamById, dateStr);
-  return fm ? normalizeFeedMatch(fm, teamById, dateStr) : null;
+  if (!fm) return null;
+  return withBonus(normalizeFeedMatch(fm, teamById, dateStr));
 }
-// Backfill .bonus on admin matches saved before the bonus feature existed, so an
-// already-pinned match (e.g. one set via the admin panel earlier) picks it up
-// automatically without needing to be re-entered.
+// Backfill .bonus on any match missing it (e.g. one pinned before the bonus feature
+// existed, or a fresh feed pick) — deterministic and idempotent, safe to call always.
 function withBonus(match) {
   if (!Array.isArray(match.bonus) || !match.bonus.length) match.bonus = buildBonus(match);
   return match;

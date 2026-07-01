@@ -58,6 +58,10 @@ button.danger{background:var(--red)}
 
       <div class="divider">eller egen match (slutspel)</div>
       <div class="row">
+        <div><label>Hemmalag (välj för att fylla i namn + flagga)</label><select id="c-home-pick"><option value="">— välj land —</option></select></div>
+        <div><label>Bortalag (välj för att fylla i namn + flagga)</label><select id="c-away-pick"><option value="">— välj land —</option></select></div>
+      </div>
+      <div class="row">
         <div><label>Hemmalag</label><input id="c-home" placeholder="Sverige"></div>
         <div><label>Bortalag</label><input id="c-away" placeholder="Brasilien"></div>
       </div>
@@ -123,6 +127,39 @@ button.danger{background:var(--red)}
 </div>
 
 <script>
+// All 48 World Cup 2026 teams — Swedish name + correct flag emoji + FIFA code,
+// sourced from openfootball/worldcup.json (verified against their live teams file).
+// Used to auto-fill the custom-match name+flag fields so you never have to hunt for
+// the right flag emoji by hand. Grouped in tournament group order (A–L).
+const WC_TEAMS = [
+  {name:'Mexiko',code:'MEX',flag:'🇲🇽'},{name:'Sydafrika',code:'RSA',flag:'🇿🇦'},{name:'Sydkorea',code:'KOR',flag:'🇰🇷'},{name:'Tjeckien',code:'CZE',flag:'🇨🇿'},
+  {name:'Kanada',code:'CAN',flag:'🇨🇦'},{name:'Bosnien och Hercegovina',code:'BIH',flag:'🇧🇦'},{name:'Qatar',code:'QAT',flag:'🇶🇦'},{name:'Schweiz',code:'SUI',flag:'🇨🇭'},
+  {name:'Brasilien',code:'BRA',flag:'🇧🇷'},{name:'Marocko',code:'MAR',flag:'🇲🇦'},{name:'Haiti',code:'HAI',flag:'🇭🇹'},{name:'Skottland',code:'SCO',flag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿'},
+  {name:'USA',code:'USA',flag:'🇺🇸'},{name:'Paraguay',code:'PAR',flag:'🇵🇾'},{name:'Australien',code:'AUS',flag:'🇦🇺'},{name:'Turkiet',code:'TUR',flag:'🇹🇷'},
+  {name:'Tyskland',code:'GER',flag:'🇩🇪'},{name:'Curaçao',code:'CUW',flag:'🇨🇼'},{name:'Elfenbenskusten',code:'CIV',flag:'🇨🇮'},{name:'Ecuador',code:'ECU',flag:'🇪🇨'},
+  {name:'Nederländerna',code:'NED',flag:'🇳🇱'},{name:'Japan',code:'JPN',flag:'🇯🇵'},{name:'Sverige',code:'SWE',flag:'🇸🇪'},{name:'Tunisien',code:'TUN',flag:'🇹🇳'},
+  {name:'Belgien',code:'BEL',flag:'🇧🇪'},{name:'Egypten',code:'EGY',flag:'🇪🇬'},{name:'Iran',code:'IRN',flag:'🇮🇷'},{name:'Nya Zeeland',code:'NZL',flag:'🇳🇿'},
+  {name:'Spanien',code:'ESP',flag:'🇪🇸'},{name:'Kap Verde',code:'CPV',flag:'🇨🇻'},{name:'Saudiarabien',code:'KSA',flag:'🇸🇦'},{name:'Uruguay',code:'URU',flag:'🇺🇾'},
+  {name:'Frankrike',code:'FRA',flag:'🇫🇷'},{name:'Senegal',code:'SEN',flag:'🇸🇳'},{name:'Irak',code:'IRQ',flag:'🇮🇶'},{name:'Norge',code:'NOR',flag:'🇳🇴'},
+  {name:'Argentina',code:'ARG',flag:'🇦🇷'},{name:'Algeriet',code:'ALG',flag:'🇩🇿'},{name:'Österrike',code:'AUT',flag:'🇦🇹'},{name:'Jordanien',code:'JOR',flag:'🇯🇴'},
+  {name:'Portugal',code:'POR',flag:'🇵🇹'},{name:'Kongo-Kinshasa',code:'COD',flag:'🇨🇩'},{name:'Uzbekistan',code:'UZB',flag:'🇺🇿'},{name:'Colombia',code:'COL',flag:'🇨🇴'},
+  {name:'England',code:'ENG',flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿'},{name:'Kroatien',code:'CRO',flag:'🇭🇷'},{name:'Ghana',code:'GHA',flag:'🇬🇭'},{name:'Panama',code:'PAN',flag:'🇵🇦'},
+];
+function fillTeamPickers(){
+  const opts = '<option value="">— välj land —</option>' + WC_TEAMS.map((t,i)=>`<option value="${i}">${t.flag} ${t.name}</option>`).join('');
+  ['c-home-pick','c-away-pick'].forEach(id=>{ document.getElementById(id).innerHTML = opts; });
+}
+function wireTeamPickers(){
+  document.getElementById('c-home-pick').addEventListener('change',e=>{
+    const t=WC_TEAMS[e.target.value]; if(!t) return;
+    document.getElementById('c-home').value=t.name; document.getElementById('c-hflag').value=t.flag;
+  });
+  document.getElementById('c-away-pick').addEventListener('change',e=>{
+    const t=WC_TEAMS[e.target.value]; if(!t) return;
+    document.getElementById('c-away').value=t.name; document.getElementById('c-aflag').value=t.flag;
+  });
+}
+
 function token(){ return localStorage.getItem('x2_admin_token')||''; }
 function saveToken(){ const t=document.getElementById('token').value.trim(); if(!t) return; localStorage.setItem('x2_admin_token',t); showPanel(); }
 function showPanel(){ if(token()){ document.getElementById('panel').classList.remove('hidden'); document.getElementById('auth-card').classList.add('hidden'); } }
@@ -222,6 +259,8 @@ async function fixPrediction(){
 }
 
 document.getElementById('date').value=todaySthlm();
+fillTeamPickers();
+wireTeamPickers();
 showPanel();
 </script>
 </body>
