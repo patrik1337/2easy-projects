@@ -20,27 +20,22 @@ module.exports = async (req, res) => {
         result = { hs: Number(fm.home_score), as: Number(fm.away_score) };
       }
     }
-    if (result) await gradeMatch(matchId, result.hs, result.as); // idempotent
+    if (result) await gradeMatch(matchId, result); // idempotent
 
     const playerID = req.query.playerID;
     const allPreds = await getPredictions(matchId);
     const your = (playerID && allPreds.find((p) => p.id === playerID)) || null;
-    const breakdown = your && result ? computePoints(your, result.hs, result.as) : null;
+    const breakdown = your && result ? computePoints(your, result) : null;
 
     // Friends' picks are visible to everyone, even before you've tipped yourself.
+    const predictions = allPreds.map((p) => {
+      const o = { id: p.id, name: p.name, p: p.p, hs: p.hs, as: p.as, b: p.b };
+      if (result) o.pts = computePoints(p, result).pts;
+      return o;
+    });
+    if (result) predictions.sort((a, b) => b.pts - a.pts);
+    else predictions.sort((a, b) => String(a.name).localeCompare(String(b.name)));
     const revealed = true;
-    let predictions;
-    if (revealed) {
-      predictions = allPreds.map((p) => {
-        const o = { id: p.id, name: p.name, p: p.p, hs: p.hs, as: p.as };
-        if (result) o.pts = computePoints(p, result.hs, result.as).pts;
-        return o;
-      });
-      if (result) predictions.sort((a, b) => b.pts - a.pts);
-      else predictions.sort((a, b) => String(a.name).localeCompare(String(b.name)));
-    } else {
-      predictions = allPreds.map((p) => ({ id: p.id, name: p.name }));
-    }
 
     const season = await attachNames(await zTop('1x2:season', 50));
     return res.status(200).json({ result, your, breakdown, predictions, revealed, season });

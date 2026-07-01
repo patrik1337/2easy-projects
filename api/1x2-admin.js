@@ -1,6 +1,7 @@
 const {
   kv, kvReady, getData, normalizeFeedMatch, gradeMatch, regradeMatch,
-  venueDateStr, kickoffMs,
+  venueDateStr, kickoffMs, buildBonus, getCurrent, getResult,
+  setPrediction, findPlayerByName,
 } = require('./_wc');
 
 module.exports = async (req, res) => {
@@ -60,6 +61,8 @@ module.exports = async (req, res) => {
       } else {
         return res.status(400).json({ error: 'provide refId or a full custom match' });
       }
+      // Attach the bonus questions (admin-graded extras) to this match.
+      match.bonus = buildBonus(match);
       // Pin for the chosen date AND set it as the persistent "current" match
       // (stays the active game across days until replaced — ideal for knockouts).
       await kv([
@@ -75,18 +78,69 @@ module.exports = async (req, res) => {
       return res.status(200).json({ ok: true });
     }
 
-    // Enter / correct a final result and grade.
+    // Wipe the 1x2 cumulative highscore (and the current match's per-match data).
+    if (action === 'resetSeason') {
+      const cmds = [['DEL', '1x2:season'], ['DEL', '1x2:names']];
+      const cur = await getCurrent();
+      if (cur && cur.matchId) {
+        const id = cur.matchId;
+        cmds.push(['DEL', `1x2:pred:${id}`], ['DEL', `1x2:daily:${id}`], ['DEL', `1x2:applied:${id}`],
+                  ['DEL', `1x2:graded:${id}`], ['DEL', `1x2:result:${id}`]);
+      }
+      await kv(cmds);
+      return res.status(200).json({ ok: true, note: 'Topplistan nollställd.' });
+    }
+
+    // Fix/set one player's prediction by display name (e.g. a broken/incomplete
+    // submission). If the match is already graded, transparently regrades everyone
+    // afterwards so the correction is reflected in the standings immediately.
+    if (action === 'fixPrediction') {
+      const { matchId, playerName } = body;
+      const H = Number(body.hs), A = Number(body.as);
+      if (!matchId || !playerName || !Number.isInteger(H) || !Number.isInteger(A) || H < 0 || A < 0 || H > 30 || A > 30) {
+        return res.status(400).json({ error: 'matchId, playerName + integer hs/as required' });
+      }
+      const existing = await findPlayerByName(matchId, playerName);
+      const playerID = existing ? existing.id : `manual-${playerName.trim().toLowerCase().replace(/\s+/g, '-')}`;
+      await setPrediction(matchId, playerID, playerName, H, A, existing ? existing.b : {});
+
+      const existingResult = await getResult(matchId);
+      if (existingResult) {
+        await regradeMatch(matchId, existingResult);
+        return res.status(200).json({ ok: true, regraded: true, note: `${playerName}s tips satt till ${H}–${A} och poängen omräknade.` });
+      }
+      return res.status(200).json({ ok: true, note: `${playerName}s tips satt till ${H}–${A}.` });
+    }
+
+    // Look up a player's currently stored prediction for a match (debug helper).
+    if (action === 'getPrediction') {
+      const { matchId, playerName } = body;
+      if (!matchId || !playerName) return res.status(400).json({ error: 'matchId + playerName required' });
+      const found = await findPlayerByName(matchId, playerName);
+      return res.status(200).json({ found });
+    }
+
+    // Enter / correct a final result (incl. bonus answers) and grade.
     if (action === 'setResult' || action === 'regrade') {
       const { matchId } = body;
       const H = Number(body.hs), A = Number(body.as);
       if (!matchId || !Number.isInteger(H) || !Number.isInteger(A) || H < 0 || A < 0 || H > 30 || A > 30) {
         return res.status(400).json({ error: 'matchId + integer hs/as required' });
       }
+      // Pull this match's bonus definitions so the answers can be graded.
+      const cur = await getCurrent();
+      const bonusDefs = (cur && cur.matchId === matchId && Array.isArray(cur.bonus)) ? cur.bonus : [];
+      const b = {};
+      if (body.bonus && typeof body.bonus === 'object') {
+        for (const d of bonusDefs) if (body.bonus[d.id] != null && body.bonus[d.id] !== '') b[d.id] = String(body.bonus[d.id]).slice(0, 32);
+      }
+      const result = { hs: H, as: A, b, bonusDefs };
+
       if (action === 'regrade') {
-        await regradeMatch(matchId, H, A);
+        await regradeMatch(matchId, result);
         return res.status(200).json({ ok: true, regraded: true, note: 'Poäng omräknade.' });
       }
-      const graded = await gradeMatch(matchId, H, A);
+      const graded = await gradeMatch(matchId, result);
       return res.status(200).json({
         ok: true, graded,
         note: graded ? 'Resultat sparat och poäng utdelade.' : 'Redan rättad — använd "Rätta om" för att ändra.',

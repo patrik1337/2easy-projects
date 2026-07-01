@@ -154,12 +154,19 @@ async function getCurrent() {
 
 async function resolveMatch(dateStr) {
   const override = await getOverride(dateStr);   // explicit per-day pin (highest priority)
-  if (override) return override;
+  if (override) return withBonus(override);
   const current = await getCurrent();            // admin-set match, persists until replaced
-  if (current) return current;
+  if (current) return withBonus(current);
   const { matches, teamById } = await getData(); // feed auto-select (group stage)
   const fm = pickMatchOfDay(matches, teamById, dateStr);
   return fm ? normalizeFeedMatch(fm, teamById, dateStr) : null;
+}
+// Backfill .bonus on admin matches saved before the bonus feature existed, so an
+// already-pinned match (e.g. one set via the admin panel earlier) picks it up
+// automatically without needing to be re-entered.
+function withBonus(match) {
+  if (!Array.isArray(match.bonus) || !match.bonus.length) match.bonus = buildBonus(match);
+  return match;
 }
 
 // ── Results & grading ─────────────────────────────────────────────────────────
@@ -169,19 +176,57 @@ async function getResult(matchId) {
   try { return JSON.parse(v); } catch { return null; }
 }
 
-// Pure scoring: 3 for 1X2, 1 for exact home, 1 for exact away. Max 5.
-function computePoints(pred, hs, as) {
-  const actual = hs > as ? '1' : hs < as ? '2' : 'X';
-  const r1x2 = pred.p === actual;
+// Optional bonus questions attached to a match (admin-graded; e.g. knockout extras).
+// Options that reference the teams are generated from the match so it stays generic.
+function buildBonus(match) {
+  const H = (match.home && match.home.name) || 'Hemma';
+  const A = (match.away && match.away.name) || 'Borta';
+  return [
+    { id: 'yellows', q: 'Antal gula kort totalt', type: 'number' },
+    { id: 'penalties', q: 'Avgörs matchen på straffar?', type: 'choice', options: ['Ja', 'Nej'] },
+    { id: 'possession', q: 'Högst bollinnehav?', type: 'choice', options: [H, A] },
+    { id: 'redcard', q: 'Blir det rött kort?', type: 'choice', options: ['Ja', 'Nej'] },
+    { id: 'corners', q: 'Flest hörnor?', type: 'choice', options: [H, A, 'Lika'] },
+  ];
+}
+
+// The 1X2 outcome is always derived from the score — never stored/read as a separate
+// field. This is deliberate: a stored pick that disagrees with the stored score (the
+// exact bug that hit one player's prediction) is now structurally impossible.
+function derivePick(hs, as) {
+  const h = Number(hs), a = Number(as);
+  return h > a ? '1' : h < a ? '2' : 'X';
+}
+
+// Scoring: 3 for 1X2 (derived from scores on both sides), 1 exact home, 1 exact away,
+// +1 per correct bonus (when the result carries bonusDefs + actual answers in `b`).
+// Base max 5; bonuses add on top.
+function computePoints(pred, result) {
+  const hs = result.hs, as = result.as;
+  const actual = derivePick(hs, as);
+  const r1x2 = derivePick(pred.hs, pred.as) === actual;
   const rh = Number(pred.hs) === hs;
   const ra = Number(pred.as) === as;
-  const pts = (r1x2 ? 3 : 0) + (rh ? 1 : 0) + (ra ? 1 : 0);
-  return { pts, r1x2, rh, ra, actual };
+  let pts = (r1x2 ? 3 : 0) + (rh ? 1 : 0) + (ra ? 1 : 0);
+  const bonus = [];
+  const defs = result.bonusDefs || [];
+  for (const d of defs) {
+    const ans = pred.b ? pred.b[d.id] : undefined;
+    const act = result.b ? result.b[d.id] : undefined;
+    let correct = false;
+    if (ans != null && ans !== '' && act != null && act !== '') {
+      correct = d.type === 'number' ? Number(ans) === Number(act) : String(ans) === String(act);
+    }
+    if (correct) pts += 1;
+    bonus.push({ id: d.id, q: d.q, correct, answer: ans, actual: act });
+  }
+  return { pts, r1x2, rh, ra, actual, bonus };
 }
 
 // Grade once (idempotent via NX guard). Records exact per-player points so a regrade
 // can reverse them precisely. Returns true if it graded, false if already graded.
-async function gradeMatch(matchId, hs, as) {
+// `result` = { hs, as, b?:{id->actual}, bonusDefs?:[...] }
+async function gradeMatch(matchId, result) {
   const [got] = await kv([['SET', `1x2:graded:${matchId}`, '1', 'NX']]);
   if (got !== 'OK') return false;
   const [raw] = await kv([['HGETALL', `1x2:pred:${matchId}`]]);
@@ -191,19 +236,19 @@ async function gradeMatch(matchId, hs, as) {
   for (const [pid, json] of Object.entries(preds)) {
     let pred;
     try { pred = JSON.parse(json); } catch { continue; }
-    const { pts } = computePoints(pred, hs, as);
+    const { pts } = computePoints(pred, result);
     cmds.push(['ZADD', `1x2:daily:${matchId}`, String(pts), pid]);
     cmds.push(['ZINCRBY', '1x2:season', String(pts), pid]);
     applied.push(pid, String(pts));
   }
   if (applied.length) cmds.push(['HSET', `1x2:applied:${matchId}`, ...applied]);
-  cmds.push(['SET', `1x2:result:${matchId}`, JSON.stringify({ hs, as })]);
+  cmds.push(['SET', `1x2:result:${matchId}`, JSON.stringify(result)]);
   await kv(cmds);
   return true;
 }
 
-// Reverse a prior grading exactly, then grade again with the corrected score.
-async function regradeMatch(matchId, hs, as) {
+// Reverse a prior grading exactly, then grade again with the corrected result.
+async function regradeMatch(matchId, result) {
   const [raw] = await kv([['HGETALL', `1x2:applied:${matchId}`]]);
   const applied = hashToObj(raw);
   const cmds = [];
@@ -217,7 +262,7 @@ async function regradeMatch(matchId, hs, as) {
     ['DEL', `1x2:result:${matchId}`],
   );
   await kv(cmds);
-  await gradeMatch(matchId, hs, as);
+  await gradeMatch(matchId, result);
 }
 
 // ── Leaderboards ──────────────────────────────────────────────────────────────
@@ -238,8 +283,27 @@ async function getPredictions(matchId) {
   return ids.map((id, i) => {
     let pr = {};
     try { pr = JSON.parse(obj[id]); } catch (_) {}
-    return { id, name: (Array.isArray(names) && names[i]) || 'Anonym', p: pr.p, hs: pr.hs, as: pr.as };
+    // p is always derived from hs/as (never stored/trusted) — see derivePick().
+    return { id, name: (Array.isArray(names) && names[i]) || 'Anonym', p: derivePick(pr.hs, pr.as), hs: pr.hs, as: pr.as, b: pr.b || null };
   });
+}
+
+// Set (or overwrite) one player's raw prediction for a match — used by the admin
+// panel to fix a broken/incomplete submission. Does not grade; call gradeMatch or
+// regradeMatch afterwards if the match already has a result.
+async function setPrediction(matchId, playerID, name, hs, as, b) {
+  const member = JSON.stringify({ hs: Number(hs), as: Number(as), b: b || {} });
+  const cmds = [['HSET', `1x2:pred:${matchId}`, playerID, member]];
+  if (name) cmds.push(['HSET', '1x2:names', playerID, String(name).slice(0, 20)]);
+  await kv(cmds);
+}
+
+// Find a playerID by (case-insensitive) display name among this match's predictions —
+// so the admin can identify "Mint" without needing to know her stable playerID.
+async function findPlayerByName(matchId, name) {
+  const preds = await getPredictions(matchId);
+  const needle = String(name).trim().toLowerCase();
+  return preds.find((p) => p.name.trim().toLowerCase() === needle) || null;
 }
 
 async function attachNames(rows) {
@@ -253,4 +317,5 @@ module.exports = {
   kv, kvReady, getData, todayStockholm, stockholmDateStr, venueDateStr, kickoffMs,
   normalizeFeedMatch, pickMatchOfDay, nextMatch, resolveMatch, getOverride,
   getResult, computePoints, gradeMatch, regradeMatch, zTop, attachNames, getPredictions,
+  buildBonus, getCurrent, derivePick, setPrediction, findPlayerByName,
 };

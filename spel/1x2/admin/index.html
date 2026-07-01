@@ -91,9 +91,33 @@ button.danger{background:var(--red)}
         <div><label>Hemmamål</label><input type="number" id="r-hs" min="0" max="30" value="0"></div>
         <div><label>Bortamål</label><input type="number" id="r-as" min="0" max="30" value="0"></div>
       </div>
+      <button class="sec" onclick="loadBonus()">Ladda bonusfrågor för aktuell match</button>
+      <div id="bonus-actuals"></div>
       <button onclick="setResult()">Spara resultat &amp; dela ut poäng</button>
       <button class="danger" onclick="regrade()">Rätta om (skriv över tidigare poäng)</button>
       <div class="msg" id="m-result"></div>
+    </div>
+
+    <div class="card">
+      <h2>3 · Rätta en spelares tips</h2>
+      <div class="hint">Sätter (eller skriver över) en spelares tippade resultat för en match — t.ex. om någon glömde fylla i resultatet. Räknar automatiskt om poängen om matchen redan har ett resultat.</div>
+      <label>Match-ID</label>
+      <input id="f-matchid" placeholder="t.ex. c-2026-06-28">
+      <label>Spelarens namn (smeknamn)</label>
+      <input id="f-name" placeholder="t.ex. Mint">
+      <div class="row">
+        <div><label>Hemmamål</label><input type="number" id="f-hs" min="0" max="30" value="0"></div>
+        <div><label>Bortamål</label><input type="number" id="f-as" min="0" max="30" value="0"></div>
+      </div>
+      <button onclick="fixPrediction()">Spara spelarens tips</button>
+      <div class="msg" id="m-fix"></div>
+    </div>
+
+    <div class="card">
+      <h2>4 · Nollställ topplista</h2>
+      <div class="hint">Raderar 1x2-spelets totalställning (och aktuell matchs tips). Går inte att ångra.</div>
+      <button class="danger" onclick="resetSeason()">Nollställ 1x2-topplistan</button>
+      <div class="msg" id="m-reset"></div>
     </div>
   </div>
 </div>
@@ -148,11 +172,31 @@ async function clearMatch(){
   msg('m-match',ok,ok?'Override borttagen — feed-val gäller igen.':(j.error||'Fel'));
 }
 
+// Load the current match's bonus questions and render an input per question.
+async function loadBonus(){
+  let m=null;
+  try{ const r=await fetch('/api/1x2-match'); const j=await r.json(); m=j.match; }catch{}
+  const box=document.getElementById('bonus-actuals');
+  if(!m){ box.innerHTML='<div class="hint">Kunde inte hämta matchen.</div>'; return; }
+  if(m.matchId) document.getElementById('r-matchid').value=m.matchId;
+  const defs=m.bonus||[];
+  if(!defs.length){ box.innerHTML='<div class="hint">Den här matchen har inga bonusfrågor.</div>'; return; }
+  box.innerHTML='<div class="hint" style="margin-top:10px">Facit för bonusfrågorna (1 p styck):</div>'+defs.map(d=>{
+    if(d.type==='number') return `<label>${d.q}</label><input type="number" min="0" max="50" id="bonus-${d.id}">`;
+    return `<label>${d.q}</label><select id="bonus-${d.id}"><option value="">—</option>${(d.options||[]).map(o=>`<option value="${o}">${o}</option>`).join('')}</select>`;
+  }).join('');
+  box.dataset.ids=defs.map(d=>d.id).join(',');
+}
+function gatherBonus(){
+  const box=document.getElementById('bonus-actuals'); const ids=(box.dataset.ids||'').split(',').filter(Boolean);
+  const b={}; ids.forEach(id=>{ const el=document.getElementById('bonus-'+id); if(el&&el.value!=='') b[id]=el.value; });
+  return b;
+}
 async function setResult(){
   const matchId=document.getElementById('r-matchid').value.trim();
   const hs=Number(document.getElementById('r-hs').value), as=Number(document.getElementById('r-as').value);
   if(!matchId){ msg('m-result',false,'Ange match-ID'); return; }
-  const {ok,j}=await api({action:'setResult',matchId,hs,as});
+  const {ok,j}=await api({action:'setResult',matchId,hs,as,bonus:gatherBonus()});
   msg('m-result',ok,ok?(j.note||'Klart'):(j.error||'Fel'));
 }
 async function regrade(){
@@ -160,8 +204,21 @@ async function regrade(){
   const hs=Number(document.getElementById('r-hs').value), as=Number(document.getElementById('r-as').value);
   if(!matchId){ msg('m-result',false,'Ange match-ID'); return; }
   if(!confirm('Rätta om '+matchId+' till '+hs+'–'+as+'? Detta skriver över tidigare poäng.')) return;
-  const {ok,j}=await api({action:'regrade',matchId,hs,as});
+  const {ok,j}=await api({action:'regrade',matchId,hs,as,bonus:gatherBonus()});
   msg('m-result',ok,ok?'Omräknat till '+hs+'–'+as+'.':(j.error||'Fel'));
+}
+async function resetSeason(){
+  if(!confirm('Nollställa hela 1x2-topplistan? Detta raderar alla poäng och går inte att ångra.')) return;
+  const {ok,j}=await api({action:'resetSeason'});
+  msg('m-reset',ok,ok?(j.note||'Nollställd.'):(j.error||'Fel'));
+}
+async function fixPrediction(){
+  const matchId=document.getElementById('f-matchid').value.trim();
+  const playerName=document.getElementById('f-name').value.trim();
+  const hs=Number(document.getElementById('f-hs').value), as=Number(document.getElementById('f-as').value);
+  if(!matchId||!playerName){ msg('m-fix',false,'Ange match-ID och spelarens namn'); return; }
+  const {ok,j}=await api({action:'fixPrediction',matchId,playerName,hs,as});
+  msg('m-fix',ok,ok?(j.note||'Klart'):(j.error||'Fel'));
 }
 
 document.getElementById('date').value=todaySthlm();

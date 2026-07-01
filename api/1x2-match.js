@@ -26,6 +26,7 @@ module.exports = async (req, res) => {
         away: match.away,
         group: match.group,
         stage: match.stage,
+        bonus: match.bonus || [],
       },
       result,
     });

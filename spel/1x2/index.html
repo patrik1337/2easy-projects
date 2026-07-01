@@ -12,7 +12,18 @@ header{display:flex;align-items:center;justify-content:space-between;padding:12p
 header h1{font-size:1.25rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;position:absolute;left:50%;transform:translateX(-50%)}
 .back-link{color:var(--text);text-decoration:none;font-size:.85rem;opacity:.7;z-index:1}
 #trophy-btn{background:none;border:none;color:var(--text);font-size:1.2rem;cursor:pointer;padding:4px 8px;z-index:1}
-main{flex:1;width:100%;max-width:460px;margin:0 auto;padding:18px 16px}
+main{flex:1;width:100%;max-width:980px;margin:0 auto;padding:16px}
+.layout{display:grid;grid-template-columns:1fr;gap:0 16px;align-items:start}
+@media(min-width:780px){.layout{grid-template-columns:minmax(0,1fr) 300px}#side{position:sticky;top:16px}}
+.bonus-q{margin-bottom:14px}
+.bq-label{font-size:.85rem;margin-bottom:6px}
+.bopts{display:flex;gap:8px;flex-wrap:wrap}
+.bopts button{flex:1;min-width:64px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:11px 6px;font-weight:600;cursor:pointer;font-size:.85rem}
+.bopts button.sel{background:var(--green);border-color:var(--green)}
+.bnum{display:flex;align-items:center;gap:10px}
+.bnum input{flex:1;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:1.1rem;text-align:center;outline:none}
+.bnum input:focus{border-color:var(--green)}
+.fbonus{font-size:.72rem;color:var(--muted);margin-top:3px;line-height:1.4}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px}
 .chip{display:inline-block;font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);background:var(--bg);border:1px solid var(--border);padding:3px 9px;border-radius:20px}
 .matchup{display:flex;align-items:center;justify-content:center;gap:12px;margin:14px 0 6px}
@@ -83,7 +94,7 @@ main{flex:1;width:100%;max-width:460px;margin:0 auto;padding:18px 16px}
 <div class="modal-overlay hidden" id="name-modal">
   <div class="modal">
     <h2>Välkommen till VM-Tips!</h2>
-    <p>Tippa dagens match. Rätt utgång ger 3 p, rätt hemmamål 1 p, rätt bortamål 1 p — max 5 p. Välj ett smeknamn för topplistan.</p>
+    <p>Tippa dagens match. Rätt utgång ger 3 p, rätt hemmamål 1 p, rätt bortamål 1 p. Vissa matcher har även extrafrågor värda 1 p styck. Välj ett smeknamn för topplistan.</p>
     <form id="name-form" onsubmit="return false;">
       <input type="text" id="name-input" placeholder="Ditt smeknamn" maxlength="20" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false">
       <button type="submit" class="btn" id="name-btn">Kör igång!</button>
@@ -99,8 +110,20 @@ main{flex:1;width:100%;max-width:460px;margin:0 auto;padding:18px 16px}
   </div>
 </div>
 
-<main id="app">
-  <div class="card center muted" style="font-size:.9rem">Laddar dagens match…</div>
+<main>
+  <div class="layout">
+    <div id="app">
+      <div class="card center muted" style="font-size:.9rem">Laddar dagens match…</div>
+    </div>
+    <aside id="side">
+      <div class="card">
+        <div class="section-label">Vännernas tips</div>
+        <div id="friends"><div class="center muted" style="font-size:.84rem;padding:6px">Laddar…</div></div>
+        <div class="section-label" style="margin-top:16px">Totalställning</div>
+        <div id="lb-season"><div class="center muted" style="font-size:.84rem;padding:6px">Laddar…</div></div>
+      </div>
+    </aside>
+  </div>
 </main>
 
 <script>
@@ -111,8 +134,8 @@ function savePlayer(name){ const p={id:uuid(),name:name.trim().slice(0,20)}; loc
 
 let player = getPlayer();
 let DATA = null;          // /api/1x2-match response
-let pick = null;          // '1' | 'X' | '2'
 let hs = 0, as = 0;
+let bAns = {};            // bonus answers {id: value}
 let localPred = null;     // saved submitted prediction for this match
 let cdTimer = null;
 
@@ -128,11 +151,43 @@ function flagHTML(team){
 function stageLabel(s){
   return ({group:'Gruppspel',r32:'16-delsfinal',r16:'Åttondelsfinal',qf:'Kvartsfinal',sf:'Semifinal',third:'Bronsmatch',final:'FINAL',knockout:'Slutspel'})[s] || 'Match';
 }
-function pickLabel(p, m){
-  if(p==='1') return '1 · ' + (m.home?m.home.name:'Hemma');
-  if(p==='2') return '2 · ' + (m.away?m.away.name:'Borta');
+// 1X2 label derived from the score alone (never a stored/separate pick).
+function pickLabel(hs, as, m){
+  const h=Number(hs), a=Number(as);
+  if(h>a) return '1 · ' + (m.home?m.home.name:'Hemma');
+  if(h<a) return '2 · ' + (m.away?m.away.name:'Borta');
   return 'X · Oavgjort';
 }
+
+// ── Bonus questions ─────────────────────────────────────────────────────────────
+function bonusDefs(){ return (DATA && DATA.match && DATA.match.bonus) || []; }
+function bonusFormHTML(m){
+  const defs = m.bonus || [];
+  if(!defs.length) return '';
+  return `<div class="section-label">Extrafrågor (1 p styck)</div>` + defs.map(d=>{
+    if(d.type==='number')
+      return `<div class="bonus-q"><div class="bq-label">${esc(d.q)}</div><div class="bnum"><input type="number" min="0" max="50" inputmode="numeric" data-bid="${esc(d.id)}" value="${bAns[d.id]!=null?esc(bAns[d.id]):''}" placeholder="Antal"></div></div>`;
+    return `<div class="bonus-q"><div class="bq-label">${esc(d.q)}</div><div class="bopts" data-bid="${esc(d.id)}">${(d.options||[]).map(o=>`<button type="button" data-opt="${esc(o)}"${bAns[d.id]===o?' class="sel"':''}>${esc(o)}</button>`).join('')}</div></div>`;
+  }).join('');
+}
+function wireBonus(){
+  app.querySelectorAll('.bopts').forEach(g=>{
+    const id=g.dataset.bid;
+    g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+      bAns[id]=b.dataset.opt;
+      g.querySelectorAll('button').forEach(x=>x.classList.toggle('sel',x.dataset.opt===bAns[id]));
+    }));
+  });
+  app.querySelectorAll('input[data-bid]').forEach(inp=>inp.addEventListener('input',()=>{
+    const v=inp.value; if(v==='') delete bAns[inp.dataset.bid]; else bAns[inp.dataset.bid]=v;
+  }));
+}
+// Compact "label: answer" line for a stored bonus answer set.
+function bonusAnswersText(b){
+  const defs=bonusDefs(); if(!b||!defs.length) return '';
+  return defs.filter(d=>b[d.id]!=null&&b[d.id]!=='').map(d=>`${esc(shortQ(d))}: ${esc(b[d.id])}`).join(' · ');
+}
+function shortQ(d){ return ({yellows:'Gula',penalties:'Straffar',possession:'Innehav',redcard:'Rött',corners:'Hörnor'})[d.id] || d.q; }
 
 let toastTimer;
 function toast(msg, ms=1800){ const el=document.getElementById('toast'); el.textContent=msg; el.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove('show'),ms); }
@@ -163,7 +218,7 @@ function loadLocalPred(){ const k=predKey(); if(!k) return null; try{ return JSO
 function render(){
   if(cdTimer){ clearInterval(cdTimer); cdTimer=null; }
 
-  if(!DATA || (!DATA.match && !DATA.next)){ app.innerHTML='<div class="card center muted">Inget VM-tips tillgängligt just nu.</div>'; return; }
+  if(!DATA || (!DATA.match && !DATA.next)){ app.innerHTML='<div class="card center muted">Inget VM-tips tillgängligt just nu.</div>'; loadSeasonOnly(); return; }
 
   if(!DATA.match){
     const n = DATA.next;
@@ -178,6 +233,7 @@ function render(){
       <div class="kick">Sparkar igång om <b id="cd">--:--:--</b></div>
     </div>`;
     startCd(n.kickoffMs);
+    loadSeasonOnly();
     return;
   }
 
@@ -193,7 +249,6 @@ function render(){
 
 // ── State: open prediction form ───────────────────────────────────────────────
 function renderForm(m){
-  pick = pick || null; // keep selection across re-renders
   app.innerHTML = `
     <div class="card">
       <div class="center"><span class="chip">${stageLabel(m.stage)}${m.group?' · Grupp '+esc(m.group):''}</span></div>
@@ -205,13 +260,7 @@ function renderForm(m){
       <div class="kick">Lås in före avspark om <b id="cd">--:--:--</b></div>
     </div>
     <div class="card">
-      <div class="section-label">Vem vinner? (3 p)</div>
-      <div class="toggle" id="tg">
-        <button data-p="1">1<small>${esc(m.home.name)}</small></button>
-        <button data-p="X">X<small>Oavgjort</small></button>
-        <button data-p="2">2<small>${esc(m.away.name)}</small></button>
-      </div>
-      <div class="section-label">Exakt resultat (1 p + 1 p)</div>
+      <div class="section-label">Tippa resultatet (3 p + 1 p + 1 p)</div>
       <div class="scores">
         <div class="stepper">
           <div class="lbl">${esc(m.home.name)}</div>
@@ -222,36 +271,41 @@ function renderForm(m){
           <div class="ctrls"><button data-s="a" data-d="-1">−</button><span class="val" id="va">${as}</span><button data-s="a" data-d="1">+</button></div>
         </div>
       </div>
-      <button class="btn" id="submit-btn" ${pick?'':'disabled'}>Lås in tips</button>
-    </div>
-    <div class="card"><div class="section-label">Vännernas tips</div><div id="friends"><div class="center muted" style="font-size:.84rem;padding:6px">Laddar…</div></div></div>
-    <div class="card"><div class="section-label">Totalställning</div><div id="lb-season"><div class="center muted" style="font-size:.84rem;padding:6px">Laddar…</div></div></div>`;
+      <div class="center muted" id="implied-pick" style="font-size:.82rem;margin:-8px 0 16px">${impliedPickText(m,hs,as)}</div>
+      ${bonusFormHTML(m)}
+      <button class="btn" id="submit-btn">Lås in tips</button>
+    </div>`;
 
-  document.getElementById('tg').querySelectorAll('button').forEach(b=>{
-    if(b.dataset.p===pick) b.classList.add('sel');
-    b.addEventListener('click',()=>{ pick=b.dataset.p; document.querySelectorAll('#tg button').forEach(x=>x.classList.toggle('sel',x.dataset.p===pick)); document.getElementById('submit-btn').disabled=false; });
-  });
   app.querySelectorAll('.stepper button').forEach(b=>b.addEventListener('click',()=>{
     const d=Number(b.dataset.d);
     if(b.dataset.s==='h'){ hs=Math.max(0,Math.min(20,hs+d)); document.getElementById('vh').textContent=hs; }
     else { as=Math.max(0,Math.min(20,as+d)); document.getElementById('va').textContent=as; }
+    document.getElementById('implied-pick').textContent=impliedPickText(m,hs,as);
   }));
+  wireBonus();
   document.getElementById('submit-btn').addEventListener('click',submitTip);
   startCd(m.kickoffMs);
   loadSocial(m);
 }
 
+// The 1X2 outcome is derived from the score alone — there is no separate pick to
+// select or disagree with the score (this used to be two inputs that could conflict).
+function impliedPickText(m,h,a){
+  if(h>a) return `Innebär: 1 · ${esc(m.home.name)} vinner`;
+  if(h<a) return `Innebär: 2 · ${esc(m.away.name)} vinner`;
+  return 'Innebär: X · Oavgjort';
+}
+
 async function submitTip(){
   if(!player){ document.getElementById('name-modal').classList.remove('hidden'); return; }
-  if(!pick){ toast('Välj 1, X eller 2'); return; }
   const m = DATA.match;
   const btn=document.getElementById('submit-btn'); btn.disabled=true; btn.textContent='Låser in…';
   try{
     const r = await fetch('/api/1x2-submit',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({playerID:player.id,playerName:player.name,matchId:m.matchId,p:pick,hs,as})});
+      body:JSON.stringify({playerID:player.id,playerName:player.name,matchId:m.matchId,hs,as,b:bAns})});
     const j = await r.json().catch(()=>({}));
     if(r.ok || j.already){
-      localStorage.setItem(predKey(), JSON.stringify({p:pick,hs,as}));
+      localStorage.setItem(predKey(), JSON.stringify({hs,as,b:bAns}));
       toast(j.already?'Du har redan tippat':'Tips inlåst! 🔒');
       render();
     } else if(j.locked){ toast('För sent – matchen har startat'); render(); }
@@ -272,12 +326,11 @@ function renderLocked(m){
         <div class="team">${flagHTML(m.away)}<div class="tname">${esc(m.away.name)}</div></div>
       </div>
       ${p?`<div class="center" style="margin-top:12px"><div class="muted" style="font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Ditt tips 🔒</div>
-        <div class="tip-summary">${p.hs} – ${p.as}<span class="pk">(${esc(pickLabel(p.p,m))})</span></div></div>`
+        <div class="tip-summary">${p.hs} – ${p.as}<span class="pk">(${esc(pickLabel(p.hs,p.as,m))})</span></div>
+        ${p.b&&bonusAnswersText(p.b)?`<div class="fbonus" style="text-align:center">${bonusAnswersText(p.b)}</div>`:''}</div>`
         :'<div class="center muted" style="margin-top:12px;font-size:.85rem">Du tippade inte den här matchen.</div>'}
       <div class="kick">${awaiting?'Matchen pågår – inväntar resultat…':'Avspark om <b id="cd">--:--:--</b>'}</div>
-    </div>
-    <div class="card"><div class="section-label">Vännernas tips</div><div id="friends"><div class="center muted" style="font-size:.84rem;padding:6px">Laddar…</div></div></div>
-    <div class="card"><div class="section-label">Totalställning</div><div id="lb-season"><div class="center muted" style="font-size:.84rem;padding:6px">Laddar…</div></div></div>`;
+    </div>`;
   if(!awaiting) startCd(m.kickoffMs);
   loadSocial(m);
 }
@@ -286,22 +339,6 @@ function renderLocked(m){
 async function renderResult(m){
   const res = DATA.result;
   const your=localPred;
-
-  const bRow=(cls,label,pts)=>`<div class="brow ${cls?'win':'lose'}"><span><span class="ic">${cls?'✓':'✗'}</span>${label}</span><span class="pts">+${pts}</span></div>`;
-  let breakdownHTML='';
-  if(your){
-    const a=res.hs>res.as?'1':res.hs<res.as?'2':'X';
-    const bd={r1x2:your.p===a,rh:Number(your.hs)===res.hs,ra:Number(your.as)===res.as,pts:(your.p===a?3:0)+(Number(your.hs)===res.hs?1:0)+(Number(your.as)===res.as?1:0)};
-    breakdownHTML = `<div class="breakdown">
-        ${bRow(bd.r1x2,'Utgång (1X2) · '+esc(pickLabel(your.p,m)),bd.r1x2?3:0)}
-        ${bRow(bd.rh,'Hemmamål · tippade '+your.hs,bd.rh?1:0)}
-        ${bRow(bd.ra,'Bortamål · tippade '+your.as,bd.ra?1:0)}
-      </div>
-      <div class="total"><span style="font-weight:700;letter-spacing:.03em">Dina poäng</span><span class="n">${bd.pts} <small>/ 5</small></span></div>`;
-  } else {
-    breakdownHTML = '<div class="center muted" style="font-size:.85rem;margin:10px 0">Du tippade inte den här matchen.</div>';
-  }
-
   app.innerHTML = `
     <div class="card">
       <div class="center"><span class="chip">${stageLabel(m.stage)}${m.group?' · Grupp '+esc(m.group):''} · Slutresultat</span></div>
@@ -310,12 +347,29 @@ async function renderResult(m){
         <div class="vs" style="font-size:1.6rem;color:var(--text)">${res.hs} – ${res.as}</div>
         <div class="team">${flagHTML(m.away)}<div class="tname">${esc(m.away.name)}</div></div>
       </div>
-      ${breakdownHTML}
+      <div id="breakdown-wrap">${your?'<div class="center muted" style="font-size:.85rem;margin:10px 0">Räknar poäng…</div>':'<div class="center muted" style="font-size:.85rem;margin:10px 0">Du tippade inte den här matchen.</div>'}</div>
     </div>
-    <div class="card"><div class="section-label">Allas tips &amp; poäng</div><div id="friends"><div class="center muted" style="font-size:.84rem;padding:6px">Laddar…</div></div></div>
-    <div class="card"><div class="section-label">Totalställning</div><div id="lb-season"><div class="center muted" style="font-size:.84rem;padding:6px">Laddar…</div></div>
-      <div class="next-line">Nästa match snart – kom tillbaka imorgon!</div></div>`;
-  loadSocial(m);
+    <div class="next-line">Nästa match snart – kom tillbaka imorgon!</div>`;
+
+  const data = await loadSocial(m);
+  if(your && data.breakdown) renderBreakdown(data.breakdown, your, m);
+}
+
+function renderBreakdown(bd, your, m){
+  const wrap=document.getElementById('breakdown-wrap'); if(!wrap) return;
+  const bRow=(cls,label,pts)=>`<div class="brow ${cls?'win':'lose'}"><span><span class="ic">${cls?'✓':'✗'}</span>${label}</span><span class="pts">+${pts}</span></div>`;
+  const bonusRows=(bd.bonus||[]).map(b=>{
+    const label=shortQ(b)+(b.answer!=null?' · tippade '+esc(b.answer):' · inget svar');
+    return bRow(b.correct,label,b.correct?1:0);
+  }).join('');
+  const maxPts = 5 + (bd.bonus?bd.bonus.length:0);
+  wrap.innerHTML = `<div class="breakdown">
+      ${bRow(bd.r1x2,'Utgång (1X2) · '+esc(pickLabel(your.hs,your.as,m)),bd.r1x2?3:0)}
+      ${bRow(bd.rh,'Hemmamål · tippade '+your.hs,bd.rh?1:0)}
+      ${bRow(bd.ra,'Bortamål · tippade '+your.as,bd.ra?1:0)}
+      ${bonusRows}
+    </div>
+    <div class="total"><span style="font-weight:700;letter-spacing:.03em">Dina poäng</span><span class="n">${bd.pts} <small>/ ${maxPts}</small></span></div>`;
 }
 
 // ── Leaderboards ──────────────────────────────────────────────────────────────
@@ -338,6 +392,14 @@ async function loadSocial(m){
   const sEl=document.getElementById('lb-season'); if(sEl) renderBoard('lb-season', data.season||[]);
   return data;
 }
+// No active match (e.g. between fixtures) — still show the season board in the side panel.
+async function loadSeasonOnly(){
+  const fEl=document.getElementById('friends'); if(fEl) fEl.innerHTML='<div class="center muted" style="font-size:.84rem;padding:6px">Ingen aktiv match just nu.</div>';
+  try{
+    const r=await fetch('/api/1x2-leaderboard?matchId=_none'+(player?'&playerID='+player.id:'')); const j=await r.json();
+    renderBoard('lb-season', j.season||[]);
+  }catch{ const sEl=document.getElementById('lb-season'); if(sEl) sEl.innerHTML='<div class="center muted" style="font-size:.84rem">Kunde inte ladda.</div>'; }
+}
 
 function renderFriends(el, preds, revealed, result, m){
   if(!preds.length){ el.innerHTML='<div class="center muted" style="font-size:.84rem;padding:6px">Ingen vän har tippat än.</div>'; return; }
@@ -354,7 +416,9 @@ function renderFriends(el, preds, revealed, result, m){
       : `<span class="lb-score" style="background:var(--border);color:#fff">${tip}</span>`;
     const mid = result ? `<span style="color:var(--muted);font-size:.8rem;margin-right:8px;white-space:nowrap">${tip}</span>` : '';
     const rank = result ? `<span class="lb-rank">${i+1}</span>` : '';
-    return `<div class="lb-row${you?' lb-you':''}">${rank}<span class="lb-name">${esc(p.name)}${you?' 👈':''}</span>${mid}${right}</div>`;
+    const bTxt = p.b ? bonusAnswersText(p.b) : '';
+    const bLine = bTxt ? `<div class="fbonus" style="padding-left:${result?'26px':'0'}">${bTxt}</div>` : '';
+    return `<div><div class="lb-row${you?' lb-you':''}">${rank}<span class="lb-name">${esc(p.name)}${you?' 👈':''}</span>${mid}${right}</div>${bLine}</div>`;
   }).join('');
 }
 
