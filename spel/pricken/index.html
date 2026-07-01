@@ -22,8 +22,8 @@ main{flex:1 1 auto;display:flex;flex-direction:column;width:100%;max-width:560px
 #timer-fill{height:100%;width:100%;background:var(--green);transition:width .25s linear}
 #timer-fill.warn{background:#b59f3b}#timer-fill.danger{background:#c0392b}
 #timer-num{font-weight:700;font-variant-numeric:tabular-nums;min-width:34px;text-align:right;display:none}
-#map{flex:1 1 auto;min-height:320px;border-radius:12px;border:1px solid var(--border);background:#0d1b2a;touch-action:none}
-.leaflet-container{background:#0d1b2a}
+#map{flex:1 1 auto;min-height:320px;border-radius:12px;border:1px solid var(--border);background:#e8eaed;touch-action:none;overflow:hidden}
+.leaflet-container{background:#e8eaed}
 .action{padding:12px 0 4px;flex:0 0 auto}
 .btn{width:100%;padding:15px;background:var(--green);color:#fff;border:none;border-radius:10px;font-size:1.05rem;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:.05em}
 .btn:disabled{opacity:.4;cursor:default}
@@ -101,8 +101,14 @@ const $=id=>document.getElementById(id);
 let map, guessMarker=null, trueMarker=null, line=null, mapClickOn=false;
 function initMap(){
   map=L.map('map',{worldCopyJump:true,minZoom:1,zoomControl:true,attributionControl:true}).setView([20,0],1);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    maxZoom:18, attribution:'© OpenStreetMap'
+  // Label-free basemap (Carto "Positron no labels") — same OpenStreetMap geography
+  // (borders, coastlines, land/water) as standard OSM tiles, but with all text
+  // labels stripped at the source. Standard OSM raster tiles bake city/country
+  // names directly into the image, so they can't be hidden after the fact — this
+  // swap is required to stop zooming in from revealing the answer. Free, no API key.
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png',{
+    maxZoom:20, subdomains:'abcd',
+    attribution:'© OpenStreetMap contributors © CARTO'
   }).addTo(map);
   map.on('click',e=>{ if(!mapClickOn) return; placeGuess(e.latlng.lat,e.latlng.lng); });
 }
