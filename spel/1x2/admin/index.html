@@ -120,7 +120,18 @@ button.danger{background:var(--red)}
     </div>
 
     <div class="card">
-      <h2>4 · Nollställ topplista</h2>
+      <h2>4 · Slå ihop dubbla spelare</h2>
+      <div class="hint">Om någon fått en ny profil (t.ex. var tvungen att logga in igen) delas poängen upp på två rader i topplistan. Sök på namnet, välj vilken rad som ska vara kvar, resten slås ihop in i den.</div>
+      <label>Spelarens namn</label>
+      <input id="merge-name" placeholder="t.ex. Mint">
+      <button class="sec" onclick="findPlayers()">Hitta spelare</button>
+      <div id="merge-list"></div>
+      <button onclick="mergePlayers()">Slå ihop poäng</button>
+      <div class="msg" id="m-merge"></div>
+    </div>
+
+    <div class="card">
+      <h2>5 · Nollställ topplista</h2>
       <div class="hint">Raderar 1x2-spelets totalställning (och aktuell matchs tips). Går inte att ångra.</div>
       <button class="danger" onclick="resetSeason()">Nollställ 1x2-topplistan</button>
       <div class="msg" id="m-reset"></div>
@@ -265,6 +276,40 @@ async function regrade(){
   if(!confirm('Rätta om '+matchId+' till '+hs+'–'+as+'? Detta skriver över tidigare poäng.')) return;
   const {ok,j}=await api({action:'regrade',matchId,hs,as,bonus:gatherBonus()});
   msg('m-result',ok,ok?'Omräknat till '+hs+'–'+as+'.':(j.error||'Fel'));
+}
+async function findPlayers(){
+  const name=document.getElementById('merge-name').value.trim();
+  if(!name){ msg('m-merge',false,'Ange ett namn'); return; }
+  const {ok,j}=await api({action:'findPlayersByName',name});
+  const box=document.getElementById('merge-list');
+  if(!ok){ box.innerHTML=''; msg('m-merge',false,j.error||'Fel'); return; }
+  if(!j.players.length){ box.innerHTML=''; msg('m-merge',false,'Ingen spelare hittad med det namnet.'); return; }
+  document.getElementById('m-merge').className='msg';
+  if(j.players.length===1){
+    box.innerHTML=`<div class="hint">Bara en rad hittad (${j.players[0].points} p) — inget att slå ihop.</div>`;
+    return;
+  }
+  box.innerHTML = '<div class="hint" style="margin-top:10px">Välj vilken rad som ska behållas — resten slås ihop in i den:</div>' +
+    j.players.map((p,i)=>`
+      <label style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #2b2b2c">
+        <input type="radio" name="merge-target" value="${p.playerID}" ${i===0?'checked':''}>
+        <span style="flex:1;font-size:.88rem">${p.name} <span style="color:#818384">(${p.playerID})</span></span>
+        <span style="font-weight:700">${p.points} p</span>
+      </label>`).join('');
+  box.dataset.ids = j.players.map(p=>p.playerID).join(',');
+}
+async function mergePlayers(){
+  const box=document.getElementById('merge-list');
+  const ids=(box.dataset.ids||'').split(',').filter(Boolean);
+  if(ids.length<2){ msg('m-merge',false,'Klicka "Hitta spelare" och välj en rad att behålla först.'); return; }
+  const targetEl=document.querySelector('input[name="merge-target"]:checked');
+  if(!targetEl){ msg('m-merge',false,'Välj vilken rad som ska behållas.'); return; }
+  const targetPlayerID=targetEl.value;
+  const sourcePlayerIDs=ids.filter(id=>id!==targetPlayerID);
+  if(!confirm('Slå ihop '+sourcePlayerIDs.length+' rad(er) in i den valda? Går inte att ångra.')) return;
+  const {ok,j}=await api({action:'mergePlayers',targetPlayerID,sourcePlayerIDs});
+  msg('m-merge',ok,ok?`Klart — ${j.merged} rad(er) ihopslagna, +${j.pointsAdded} p flyttade.`:(j.error||'Fel'));
+  if(ok) box.innerHTML='';
 }
 async function resetSeason(){
   if(!confirm('Nollställa hela 1x2-topplistan? Detta raderar alla poäng och går inte att ångra.')) return;

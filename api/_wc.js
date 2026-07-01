@@ -187,23 +187,28 @@ function buildBonus(match) {
   const A = (match.away && match.away.name) || 'Borta';
   return [
     { id: 'yellows', q: 'Antal gula kort totalt', type: 'number' },
-    { id: 'penalties', q: 'Avgörs matchen på straffar?', type: 'choice', options: ['Ja', 'Nej'] },
+    { id: 'penalties', q: 'Blir det straff i matchen?', type: 'choice', options: ['Ja', 'Nej'] },
     { id: 'possession', q: 'Högst bollinnehav?', type: 'choice', options: [H, A] },
     { id: 'redcard', q: 'Blir det rött kort?', type: 'choice', options: ['Ja', 'Nej'] },
     { id: 'corners', q: 'Flest hörnor?', type: 'choice', options: [H, A, 'Lika'] },
   ];
 }
 
-// Validate a full set of bonus answers against a match's bonus questions. Every
-// question must be answered — no partial bets — so a player can never accidentally
-// forfeit bonus points by skipping one. Returns {ok:true, b} with cleaned answers,
-// or {ok:false, error}. Shared by both the player-submit endpoint and the admin
-// fix-a-prediction tool so the same rule applies everywhere a prediction is written.
-function validateBonusAnswers(bonusDefs, incoming) {
+// Validate a set of bonus answers against a match's bonus questions. Every
+// question must be answered when requireAll is true (the default, used for player
+// bets) — no partial bets that quietly forfeit bonus points. The admin's
+// result-facit entry passes requireAll=false since it may be filled in before
+// every stat is known. Shared by the player-submit endpoint, the admin
+// fix-a-prediction tool, and the admin result-facit entry so the same rule
+// applies everywhere a bonus answer set is written.
+function validateBonusAnswers(bonusDefs, incoming, requireAll = true) {
   const b = {};
   for (const d of bonusDefs || []) {
     const v = incoming ? incoming[d.id] : undefined;
-    if (v == null || v === '') return { ok: false, error: `Alla extrafrågor måste besvaras (saknas: ${d.q})` };
+    if (v == null || v === '') {
+      if (requireAll) return { ok: false, error: `Alla extrafrågor måste besvaras (saknas: ${d.q})` };
+      continue;
+    }
     if (d.type === 'choice' && !(d.options || []).includes(String(v))) return { ok: false, error: `Ogiltigt svar: ${d.q}` };
     if (d.type === 'number' && !Number.isInteger(Number(v))) return { ok: false, error: `Ogiltigt tal: ${d.q}` };
     b[d.id] = String(v).slice(0, 32);
@@ -339,4 +344,5 @@ module.exports = {
   normalizeFeedMatch, pickMatchOfDay, nextMatch, resolveMatch, getOverride,
   getResult, computePoints, gradeMatch, regradeMatch, zTop, attachNames, getPredictions,
   buildBonus, getCurrent, derivePick, setPrediction, findPlayerByName, validateBonusAnswers,
+  hashToObj,
 };

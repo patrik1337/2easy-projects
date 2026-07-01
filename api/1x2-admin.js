@@ -1,7 +1,7 @@
 const {
   kv, kvReady, getData, normalizeFeedMatch, gradeMatch, regradeMatch,
   venueDateStr, kickoffMs, buildBonus, getCurrent, getResult,
-  setPrediction, findPlayerByName, validateBonusAnswers,
+  setPrediction, findPlayerByName, validateBonusAnswers, hashToObj,
 } = require('./_wc');
 
 module.exports = async (req, res) => {
@@ -127,6 +127,46 @@ module.exports = async (req, res) => {
       return res.status(200).json({ found });
     }
 
+    // Find every playerID currently displaying a given (case-insensitive) name,
+    // with their season points — surfaces duplicate identities (e.g. someone had
+    // to sign in again after their browser lost its stored player, splitting their
+    // score across two rows) so they can be reviewed before merging.
+    if (action === 'findPlayersByName') {
+      const { name } = body;
+      if (!name) return res.status(400).json({ error: 'name required' });
+      const [namesRaw] = await kv([['HGETALL', '1x2:names']]);
+      const namesObj = hashToObj(namesRaw);
+      const needle = String(name).trim().toLowerCase();
+      const ids = Object.keys(namesObj).filter((id) => String(namesObj[id]).trim().toLowerCase() === needle);
+      if (!ids.length) return res.status(200).json({ players: [] });
+      const scores = await kv(ids.map((id) => ['ZSCORE', '1x2:season', id]));
+      const players = ids
+        .map((id, i) => ({ playerID: id, name: namesObj[id], points: Number(scores[i]) || 0 }))
+        .sort((a, b) => b.points - a.points);
+      return res.status(200).json({ players });
+    }
+
+    // Merge one or more duplicate playerIDs' season points into a single target
+    // playerID. Sums 1x2:season into the target, removes the source rows from the
+    // leaderboard, and drops their now-orphaned name mapping. Historical per-match
+    // prediction records (tied to the old ids) are left as-is — only the ongoing
+    // season total is consolidated.
+    if (action === 'mergePlayers') {
+      const { targetPlayerID, sourcePlayerIDs } = body;
+      if (!targetPlayerID || !Array.isArray(sourcePlayerIDs) || !sourcePlayerIDs.length) {
+        return res.status(400).json({ error: 'targetPlayerID + sourcePlayerIDs[] required' });
+      }
+      const ids = sourcePlayerIDs.filter((id) => id && id !== targetPlayerID);
+      if (!ids.length) return res.status(400).json({ error: 'no valid source ids' });
+      const scores = await kv(ids.map((id) => ['ZSCORE', '1x2:season', id]));
+      const totalToAdd = scores.reduce((sum, s) => sum + (Number(s) || 0), 0);
+      const cmds = [];
+      if (totalToAdd !== 0) cmds.push(['ZINCRBY', '1x2:season', String(totalToAdd), targetPlayerID]);
+      ids.forEach((id) => { cmds.push(['ZREM', '1x2:season', id], ['HDEL', '1x2:names', id]); });
+      await kv(cmds);
+      return res.status(200).json({ ok: true, merged: ids.length, pointsAdded: totalToAdd });
+    }
+
     // Enter / correct a final result (incl. bonus answers) and grade.
     if (action === 'setResult' || action === 'regrade') {
       const { matchId } = body;
@@ -134,14 +174,13 @@ module.exports = async (req, res) => {
       if (!matchId || !Number.isInteger(H) || !Number.isInteger(A) || H < 0 || A < 0 || H > 30 || A > 30) {
         return res.status(400).json({ error: 'matchId + integer hs/as required' });
       }
-      // Pull this match's bonus definitions so the answers can be graded.
+      // Pull this match's bonus definitions so the answers can be graded. Partial
+      // facit entry is allowed (requireAll=false) — stats may trickle in before grading.
       const cur = await getCurrent();
       const bonusDefs = (cur && cur.matchId === matchId && Array.isArray(cur.bonus)) ? cur.bonus : [];
-      const b = {};
-      if (body.bonus && typeof body.bonus === 'object') {
-        for (const d of bonusDefs) if (body.bonus[d.id] != null && body.bonus[d.id] !== '') b[d.id] = String(body.bonus[d.id]).slice(0, 32);
-      }
-      const result = { hs: H, as: A, b, bonusDefs };
+      const bv = validateBonusAnswers(bonusDefs, body.bonus, false);
+      if (!bv.ok) return res.status(400).json({ error: bv.error });
+      const result = { hs: H, as: A, b: bv.b, bonusDefs };
 
       if (action === 'regrade') {
         await regradeMatch(matchId, result);
