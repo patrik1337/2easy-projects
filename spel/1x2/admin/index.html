@@ -88,14 +88,13 @@ button.danger{background:var(--red)}
 
     <div class="card">
       <h2>2 · Resultat &amp; rättning</h2>
-      <label>Match-ID</label>
-      <input id="r-matchid" placeholder="t.ex. m62 eller c-2026-06-28">
-      <div class="hint">Feed-matcher: <code>m</code> + feed-id (visas ovan). Egen match: <code>c-DATUM</code>.</div>
+      <label>Match</label>
+      <select id="r-matchid" onchange="onResultMatchChange()"><option value="">— välj match —</option></select>
+      <button class="sec" onclick="loadMatchList()">Uppdatera matchlistan</button>
       <div class="row">
         <div><label>Hemmamål</label><input type="number" id="r-hs" min="0" max="30" value="0"></div>
         <div><label>Bortamål</label><input type="number" id="r-as" min="0" max="30" value="0"></div>
       </div>
-      <button class="sec" onclick="loadBonus()">Ladda bonusfrågor (fyller även i sektion 3)</button>
       <div id="bonus-actuals"></div>
       <button onclick="setResult()">Spara resultat &amp; dela ut poäng</button>
       <button class="danger" onclick="regrade()">Rätta om (skriv över tidigare poäng)</button>
@@ -105,10 +104,11 @@ button.danger{background:var(--red)}
     <div class="card">
       <h2>3 · Rätta en spelares tips</h2>
       <div class="hint">Sätter (eller skriver över) en spelares tippade resultat för en match — t.ex. om någon glömde fylla i resultatet. Räknar automatiskt om poängen om matchen redan har ett resultat.</div>
-      <label>Match-ID</label>
-      <input id="f-matchid" placeholder="t.ex. c-2026-06-28">
-      <label>Spelarens namn (smeknamn)</label>
-      <input id="f-name" placeholder="t.ex. Mint">
+      <label>Match</label>
+      <select id="f-matchid" onchange="onFixMatchChange()"><option value="">— välj match —</option></select>
+      <label>Spelarens namn</label>
+      <select id="f-name-pick" onchange="document.getElementById('f-name').value=this.value; refreshPlayerTip()"><option value="">— välj befintlig spelare —</option></select>
+      <input id="f-name" placeholder="…eller skriv ett nytt namn, t.ex. Mint" onchange="refreshPlayerTip()">
       <div class="row">
         <div><label>Hemmamål</label><input type="number" id="f-hs" min="0" max="30" value="0"></div>
         <div><label>Bortamål</label><input type="number" id="f-as" min="0" max="30" value="0"></div>
@@ -206,7 +206,7 @@ async function setFromFeed(){
   const date=document.getElementById('date').value, refId=document.getElementById('fixture-select').value;
   if(!date||!refId){ msg('m-match',false,'Välj datum och feed-match'); return; }
   const {ok,j}=await api({action:'setMatch',date,refId});
-  if(ok){ msg('m-match',true,'Satt: '+(j.match.home.name)+' – '+(j.match.away.name)+' ('+j.match.matchId+')'); document.getElementById('r-matchid').value=j.match.matchId; document.getElementById('f-matchid').value=j.match.matchId; loadBonus(); }
+  if(ok){ msg('m-match',true,'Satt: '+(j.match.home.name)+' – '+(j.match.away.name)+' ('+j.match.matchId+')'); await loadMatchList(); selectMatch(j.match.matchId); }
   else msg('m-match',false,j.error||'Fel');
 }
 
@@ -218,7 +218,7 @@ async function setCustom(){
   const stage=document.getElementById('c-stage').value;
   if(!date||!home.name||!away.name||!kickoff){ msg('m-match',false,'Fyll i datum, båda lagen och avspark'); return; }
   const {ok,j}=await api({action:'setMatch',date,custom:{home,away,kickoff,stage}});
-  if(ok){ msg('m-match',true,'Egen match satt: '+home.name+' – '+away.name+' ('+j.match.matchId+')'); document.getElementById('r-matchid').value=j.match.matchId; document.getElementById('f-matchid').value=j.match.matchId; loadBonus(); }
+  if(ok){ msg('m-match',true,'Egen match satt: '+home.name+' – '+away.name+' ('+j.match.matchId+')'); await loadMatchList(); selectMatch(j.match.matchId); }
   else msg('m-match',false,j.error||'Fel');
 }
 
@@ -236,32 +236,95 @@ function renderBonusFields(defs, prefix){
     return `<label>${d.q}</label><select id="${prefix}-${d.id}"><option value="">—</option>${(d.options||[]).map(o=>`<option value="${o}">${o}</option>`).join('')}</select>`;
   }).join('');
 }
+function fillBonusFields(prefix, defs, values){
+  (defs||[]).forEach(d=>{
+    const el=document.getElementById(prefix+'-'+d.id); if(!el) return;
+    el.value = (values && values[d.id]!=null) ? values[d.id] : '';
+  });
+}
 function gatherBonusFields(prefix, ids){
   const b={}; ids.forEach(id=>{ const el=document.getElementById(prefix+'-'+id); if(el&&el.value!=='') b[id]=el.value; });
   return b;
 }
 function bonusIdsFor(boxId){ const box=document.getElementById(boxId); return (box.dataset.ids||'').split(',').filter(Boolean); }
-
-// Load the current match's bonus questions into BOTH the result-facit block
-// (section 2) and the player-answer block (section 3) at once.
-async function loadBonus(){
-  let m=null;
-  try{ const r=await fetch('/api/1x2-match'); const j=await r.json(); m=j.match; }catch{}
-  const box=document.getElementById('bonus-actuals');
-  const fbox=document.getElementById('fixbonus-inputs');
-  if(!m){ box.innerHTML='<div class="hint">Kunde inte hämta matchen.</div>'; if(fbox) fbox.innerHTML=''; return; }
-  if(m.matchId){ document.getElementById('r-matchid').value=m.matchId; document.getElementById('f-matchid').value=m.matchId; }
-  const defs=m.bonus||[];
-  if(!defs.length){ box.innerHTML='<div class="hint">Den här matchen har inga bonusfrågor.</div>'; if(fbox) fbox.innerHTML=''; return; }
-  box.innerHTML='<div class="hint" style="margin-top:10px">Facit för bonusfrågorna (1 p styck):</div>'+renderBonusFields(defs,'bonus');
-  box.dataset.ids=defs.map(d=>d.id).join(',');
-  if(fbox){
-    fbox.innerHTML='<div class="hint" style="margin-top:10px">Spelarens svar på bonusfrågorna:</div>'+renderBonusFields(defs,'fixbonus');
-    fbox.dataset.ids=defs.map(d=>d.id).join(',');
-  }
-}
 function gatherBonus(){ return gatherBonusFields('bonus', bonusIdsFor('bonus-actuals')); }
 function gatherFixBonus(){ return gatherBonusFields('fixbonus', bonusIdsFor('fixbonus-inputs')); }
+
+// ── Match list (dropdowns for sections 2 & 3) ──────────────────────────────────
+let MATCH_LIST=[];
+function matchLabel(m){
+  const teams=`${m.home?m.home.name:'?'} – ${m.away?m.away.name:'?'}`;
+  const status=m.graded ? `Resultat ${m.result.hs}–${m.result.as}` : 'Ograderad';
+  return `${teams} (${m.dateStr||'?'}) — ${status}`;
+}
+async function loadMatchList(){
+  const {ok,j}=await api({action:'listMatches'});
+  if(!ok){ return; }
+  MATCH_LIST=j.matches||[];
+  const opts='<option value="">— välj match —</option>'+MATCH_LIST.map(m=>`<option value="${m.matchId}">${matchLabel(m)}</option>`).join('');
+  const current=MATCH_LIST.find(m=>m.isCurrent);
+  ['r-matchid','f-matchid'].forEach(id=>{
+    const sel=document.getElementById(id); const keep=sel.value;
+    sel.innerHTML=opts;
+    if(keep) sel.value=keep; else if(current) sel.value=current.matchId;
+  });
+}
+function findMatch(matchId){ return MATCH_LIST.find(m=>m.matchId===matchId); }
+function selectMatch(matchId){
+  ['r-matchid','f-matchid'].forEach(id=>{ document.getElementById(id).value=matchId; });
+  onResultMatchChange();
+  onFixMatchChange();
+}
+
+// Section 2: picking a match loads its bonus facit fields, pre-filled with the
+// existing result/facit if it's already graded (so you can review before "Rätta om").
+function onResultMatchChange(){
+  const m=findMatch(document.getElementById('r-matchid').value);
+  const box=document.getElementById('bonus-actuals');
+  if(!m){ box.innerHTML=''; document.getElementById('r-hs').value='0'; document.getElementById('r-as').value='0'; return; }
+  document.getElementById('r-hs').value = m.graded ? m.result.hs : 0;
+  document.getElementById('r-as').value = m.graded ? m.result.as : 0;
+  if(!m.bonus||!m.bonus.length){ box.innerHTML='<div class="hint">Den här matchen har inga bonusfrågor.</div>'; return; }
+  box.innerHTML='<div class="hint" style="margin-top:10px">Facit för bonusfrågorna (1 p styck):</div>'+renderBonusFields(m.bonus,'bonus');
+  box.dataset.ids=m.bonus.map(d=>d.id).join(',');
+  if(m.graded) fillBonusFields('bonus', m.bonus, m.result.b);
+}
+
+// Section 3: picking a match loads blank answer fields for it; if a player is
+// also picked, refreshPlayerTip() additionally pre-fills their existing tip.
+function onFixMatchChange(){
+  const m=findMatch(document.getElementById('f-matchid').value);
+  const fbox=document.getElementById('fixbonus-inputs');
+  if(!m){ fbox.innerHTML=''; return; }
+  if(!m.bonus||!m.bonus.length){ fbox.innerHTML='<div class="hint">Den här matchen har inga bonusfrågor.</div>'; return; }
+  fbox.innerHTML='<div class="hint" style="margin-top:10px">Spelarens svar på bonusfrågorna:</div>'+renderBonusFields(m.bonus,'fixbonus');
+  fbox.dataset.ids=m.bonus.map(d=>d.id).join(',');
+  refreshPlayerTip();
+}
+
+// If both a match and a player name are set, look up their current tip (if any)
+// and pre-fill the fields so you can see what's there before correcting it.
+async function refreshPlayerTip(){
+  const matchId=document.getElementById('f-matchid').value;
+  const playerName=document.getElementById('f-name').value.trim();
+  if(!matchId||!playerName) return;
+  const m=findMatch(matchId); if(!m) return;
+  const {ok,j}=await api({action:'getPrediction',matchId,playerName});
+  if(!ok||!j.found){ document.getElementById('f-hs').value='0'; document.getElementById('f-as').value='0'; return; }
+  document.getElementById('f-hs').value=j.found.hs;
+  document.getElementById('f-as').value=j.found.as;
+  fillBonusFields('fixbonus', m.bonus, j.found.b);
+}
+
+// ── Player list (dropdown for section 3) ───────────────────────────────────────
+let PLAYER_LIST=[];
+async function loadPlayerList(){
+  const {ok,j}=await api({action:'listPlayers'});
+  if(!ok) return;
+  PLAYER_LIST=j.players||[];
+  const sel=document.getElementById('f-name-pick');
+  sel.innerHTML='<option value="">— välj befintlig spelare —</option>'+PLAYER_LIST.map(p=>`<option value="${p.name}">${p.name}</option>`).join('');
+}
 async function setResult(){
   const matchId=document.getElementById('r-matchid').value.trim();
   const hs=Number(document.getElementById('r-hs').value), as=Number(document.getElementById('r-as').value);
@@ -324,7 +387,7 @@ async function fixPrediction(){
   const ids=bonusIdsFor('fixbonus-inputs');
   const bonus=gatherFixBonus();
   if(ids.length && Object.keys(bonus).length<ids.length){
-    msg('m-fix',false,'Alla bonusfrågor måste fyllas i (klicka "Ladda bonusfrågor" ovan om fälten är tomma).');
+    msg('m-fix',false,'Alla bonusfrågor måste fyllas i (välj en match ovan om fälten är tomma).');
     return;
   }
   const {ok,j}=await api({action:'fixPrediction',matchId,playerName,hs,as,bonus});
@@ -334,7 +397,8 @@ async function fixPrediction(){
 document.getElementById('date').value=todaySthlm();
 fillTeamPickers();
 wireTeamPickers();
-loadBonus();
+loadPlayerList();
+loadMatchList().then(()=>{ onResultMatchChange(); onFixMatchChange(); });
 showPanel();
 </script>
 </body>

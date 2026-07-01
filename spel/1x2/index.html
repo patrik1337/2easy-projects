@@ -66,8 +66,10 @@ main{flex:1;width:100%;max-width:980px;margin:0 auto;padding:16px}
 .total .n small{font-size:.85rem;color:var(--muted);font-weight:400}
 .lb-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;margin-bottom:3px;background:var(--bg)}
 .lb-rank{font-size:.8rem;color:var(--muted);width:18px;text-align:right}
+.lb-rank.medal{font-size:1.05rem}
 .lb-name{flex:1;font-weight:600;font-size:.9rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .lb-score{font-size:.78rem;background:var(--green);padding:2px 9px;border-radius:5px;font-weight:700;white-space:nowrap}
+.lb-score.yellow{background:var(--yellow);color:#2b2200}
 .lb-you{border:1px solid var(--green)}
 .next-line{text-align:center;color:var(--muted);font-size:.82rem;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
 .next-line b{color:var(--text)}
@@ -197,12 +199,13 @@ function wireBonus(){
   }));
   updateSubmitState(m);
 }
-// Compact "label: answer" line for a stored bonus answer set.
+// Compact "icon answer" line for a stored bonus answer set.
 function bonusAnswersText(b){
   const defs=bonusDefs(); if(!b||!defs.length) return '';
-  return defs.filter(d=>b[d.id]!=null&&b[d.id]!=='').map(d=>`${esc(shortQ(d))}: ${esc(b[d.id])}`).join(' · ');
+  return defs.filter(d=>b[d.id]!=null&&b[d.id]!=='').map(d=>`${bonusIcon(d.id)} ${esc(b[d.id])}`).join(' · ');
 }
 function shortQ(d){ return ({yellows:'Gula',penalties:'Straffar',possession:'Innehav',redcard:'Rött',corners:'Hörnor'})[d.id] || d.q; }
+function bonusIcon(id){ return ({yellows:'🟨',penalties:'🥅',possession:'⏱️',redcard:'🟥',corners:'🚩'})[id] || '❔'; }
 
 let toastTimer;
 function toast(msg, ms=1800){ const el=document.getElementById('toast'); el.textContent=msg; el.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove('show'),ms); }
@@ -375,7 +378,7 @@ function renderBreakdown(bd, your, m){
   const wrap=document.getElementById('breakdown-wrap'); if(!wrap) return;
   const bRow=(cls,label,pts)=>`<div class="brow ${cls?'win':'lose'}"><span><span class="ic">${cls?'✓':'✗'}</span>${label}</span><span class="pts">+${pts}</span></div>`;
   const bonusRows=(bd.bonus||[]).map(b=>{
-    const label=shortQ(b)+(b.answer!=null?' · tippade '+esc(b.answer):' · inget svar');
+    const label=bonusIcon(b.id)+' '+shortQ(b)+(b.answer!=null?' · tippade '+esc(b.answer):' · inget svar');
     return bRow(b.correct,label,b.correct?1:0);
   }).join('');
   const maxPts = 5 + (bd.bonus?bd.bonus.length:0);
@@ -389,12 +392,15 @@ function renderBreakdown(bd, your, m){
 }
 
 // ── Leaderboards ──────────────────────────────────────────────────────────────
+const MEDALS=['🥇','🥈','🥉'];
 function renderBoard(elId, rows){
   const el=document.getElementById(elId); if(!el) return;
   if(!rows || !rows.length){ el.innerHTML='<div class="center muted" style="font-size:.84rem;padding:6px">Inga poäng än.</div>'; return; }
   el.innerHTML = rows.map((s,i)=>{
     const you = player && s.id===player.id;
-    return `<div class="lb-row${you?' lb-you':''}"><span class="lb-rank">${i+1}</span><span class="lb-name">${esc(s.name)}${you?' 👈':''}</span><span class="lb-score">${s.pts} p</span></div>`;
+    const rank = i<3 ? `<span class="lb-rank medal">${MEDALS[i]}</span>` : `<span class="lb-rank">${i+1}</span>`;
+    const scoreCls = i<3 ? 'lb-score' : 'lb-score yellow';
+    return `<div class="lb-row${you?' lb-you':''}">${rank}<span class="lb-name">${esc(s.name)}${you?' 👈':''}</span><span class="${scoreCls}">${s.pts} p</span></div>`;
   }).join('');
 }
 // Fetch once, fill the friends' predictions + season highscore on the current page.
@@ -458,14 +464,13 @@ document.getElementById('name-btn').addEventListener('click',submitName);
 
 document.getElementById('trophy-btn').addEventListener('click',async()=>{
   document.getElementById('lb-modal').classList.remove('hidden');
-  const body=document.getElementById('lb-modal-body'); body.innerHTML='<div class="center muted" style="font-size:.85rem">Laddar…</div>';
+  document.getElementById('lb-modal-body').innerHTML='<div class="center muted" style="font-size:.85rem">Laddar…</div>';
   try{
     const mid = DATA && DATA.match ? DATA.match.matchId : 'season';
     const q=new URLSearchParams({matchId:mid}); if(player) q.set('playerID',player.id);
     const r=await fetch('/api/1x2-leaderboard?'+q.toString()); const j=await r.json();
-    const rows=j.season||[];
-    body.innerHTML = rows.length ? rows.map((s,i)=>{const you=player&&s.id===player.id;return `<div class="lb-row${you?' lb-you':''}"><span class="lb-rank">${i+1}</span><span class="lb-name">${esc(s.name)}${you?' 👈':''}</span><span class="lb-score">${s.pts} p</span></div>`;}).join('') : '<div class="center muted" style="font-size:.85rem">Inga poäng än – var först!</div>';
-  }catch{ body.innerHTML='<div class="center muted" style="font-size:.85rem">Kunde inte ladda.</div>'; }
+    renderBoard('lb-modal-body', j.season||[]);
+  }catch{ document.getElementById('lb-modal-body').innerHTML='<div class="center muted" style="font-size:.85rem">Kunde inte ladda.</div>'; }
 });
 document.getElementById('lb-modal').addEventListener('click',e=>{ if(e.target.id==='lb-modal') e.currentTarget.classList.add('hidden'); });
 

@@ -166,10 +166,12 @@ async function resolveMatch(dateStr) {
   if (!fm) return null;
   return withBonus(normalizeFeedMatch(fm, teamById, dateStr));
 }
-// Backfill .bonus on any match missing it (e.g. one pinned before the bonus feature
-// existed, or a fresh feed pick) — deterministic and idempotent, safe to call always.
+// Always (re)generate .bonus fresh from the match's current team names. Bonus
+// questions are never customized per-match, so there's no reason a stored match
+// should ever carry a stale/outdated set — this also means wording fixes to
+// buildBonus() apply immediately to already-pinned matches, not just new ones.
 function withBonus(match) {
-  if (!Array.isArray(match.bonus) || !match.bonus.length) match.bonus = buildBonus(match);
+  match.bonus = buildBonus(match);
   return match;
 }
 

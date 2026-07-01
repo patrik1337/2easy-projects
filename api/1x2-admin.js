@@ -39,6 +39,42 @@ module.exports = async (req, res) => {
       return res.status(200).json({ fixtures });
     }
 
+    // List matches that have been set via admin (newest first), with graded status
+    // and result — powers the "pick a match" dropdowns in sections 2 and 3 instead
+    // of typing a matchId by hand.
+    if (action === 'listMatches') {
+      const [ids] = await kv([['ZREVRANGE', '1x2:history', '0', '49']]);
+      const idList = Array.isArray(ids) ? ids : [];
+      const metaCmds = idList.map((id) => ['GET', `1x2:matchmeta:${id}`]);
+      const resultCmds = idList.map((id) => ['GET', `1x2:result:${id}`]);
+      const [metas, results] = await Promise.all([kv(metaCmds), kv(resultCmds)]);
+      const cur = await getCurrent();
+      const curId = cur && cur.matchId;
+      const matches = idList.map((id, i) => {
+        let m = null, r = null;
+        try { m = metas[i] ? JSON.parse(metas[i]) : null; } catch (_) {}
+        try { r = results[i] ? JSON.parse(results[i]) : null; } catch (_) {}
+        if (!m) return null;
+        return {
+          matchId: id, home: m.home, away: m.away, group: m.group, stage: m.stage,
+          dateStr: m.dateStr, bonus: m.bonus || [], graded: Boolean(r), result: r,
+          isCurrent: id === curId,
+        };
+      }).filter(Boolean);
+      // Fallback: the currently-active match may predate history tracking (set
+      // before this feature existed) and so wouldn't be in 1x2:history yet —
+      // include it anyway so the dropdown isn't empty on first use.
+      if (curId && !matches.some((m) => m.matchId === curId)) {
+        const r = await getResult(curId);
+        matches.unshift({
+          matchId: curId, home: cur.home, away: cur.away, group: cur.group,
+          stage: cur.stage, dateStr: cur.dateStr, bonus: cur.bonus || [], graded: Boolean(r), result: r,
+          isCurrent: true,
+        });
+      }
+      return res.status(200).json({ matches });
+    }
+
     // Pin / override the match of the day.
     if (action === 'setMatch') {
       const { date, refId, custom } = body;
@@ -65,9 +101,15 @@ module.exports = async (req, res) => {
       match.bonus = buildBonus(match);
       // Pin for the chosen date AND set it as the persistent "current" match
       // (stays the active game across days until replaced — ideal for knockouts).
+      // Also record it in the match history (ZSET, newest-first, self-deduping by
+      // matchId) with a full snapshot, so the admin can later pick it from a
+      // dropdown instead of typing the matchId — including matches that are no
+      // longer "current" because a newer one replaced them.
       await kv([
         ['SET', `1x2:override:${date}`, JSON.stringify(match)],
         ['SET', '1x2:current', JSON.stringify(match)],
+        ['ZADD', '1x2:history', String(Date.now()), match.matchId],
+        ['SET', `1x2:matchmeta:${match.matchId}`, JSON.stringify(match)],
       ]);
       return res.status(200).json({ ok: true, match });
     }
@@ -125,6 +167,17 @@ module.exports = async (req, res) => {
       if (!matchId || !playerName) return res.status(400).json({ error: 'matchId + playerName required' });
       const found = await findPlayerByName(matchId, playerName);
       return res.status(200).json({ found });
+    }
+
+    // Every player who has ever appeared (any game), alphabetically — powers the
+    // "pick a player" dropdown in section 3.
+    if (action === 'listPlayers') {
+      const [namesRaw] = await kv([['HGETALL', '1x2:names']]);
+      const namesObj = hashToObj(namesRaw);
+      const players = Object.entries(namesObj)
+        .map(([playerID, name]) => ({ playerID, name }))
+        .sort((a, b) => a.name.localeCompare(b.name, 'sv'));
+      return res.status(200).json({ players });
     }
 
     // Find every playerID currently displaying a given (case-insensitive) name,
