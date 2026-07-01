@@ -194,6 +194,23 @@ function buildBonus(match) {
   ];
 }
 
+// Validate a full set of bonus answers against a match's bonus questions. Every
+// question must be answered — no partial bets — so a player can never accidentally
+// forfeit bonus points by skipping one. Returns {ok:true, b} with cleaned answers,
+// or {ok:false, error}. Shared by both the player-submit endpoint and the admin
+// fix-a-prediction tool so the same rule applies everywhere a prediction is written.
+function validateBonusAnswers(bonusDefs, incoming) {
+  const b = {};
+  for (const d of bonusDefs || []) {
+    const v = incoming ? incoming[d.id] : undefined;
+    if (v == null || v === '') return { ok: false, error: `Alla extrafrågor måste besvaras (saknas: ${d.q})` };
+    if (d.type === 'choice' && !(d.options || []).includes(String(v))) return { ok: false, error: `Ogiltigt svar: ${d.q}` };
+    if (d.type === 'number' && !Number.isInteger(Number(v))) return { ok: false, error: `Ogiltigt tal: ${d.q}` };
+    b[d.id] = String(v).slice(0, 32);
+  }
+  return { ok: true, b };
+}
+
 // The 1X2 outcome is always derived from the score — never stored/read as a separate
 // field. This is deliberate: a stored pick that disagrees with the stored score (the
 // exact bug that hit one player's prediction) is now structurally impossible.
@@ -321,5 +338,5 @@ module.exports = {
   kv, kvReady, getData, todayStockholm, stockholmDateStr, venueDateStr, kickoffMs,
   normalizeFeedMatch, pickMatchOfDay, nextMatch, resolveMatch, getOverride,
   getResult, computePoints, gradeMatch, regradeMatch, zTop, attachNames, getPredictions,
-  buildBonus, getCurrent, derivePick, setPrediction, findPlayerByName,
+  buildBonus, getCurrent, derivePick, setPrediction, findPlayerByName, validateBonusAnswers,
 };

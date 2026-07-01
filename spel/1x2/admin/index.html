@@ -95,7 +95,7 @@ button.danger{background:var(--red)}
         <div><label>Hemmamål</label><input type="number" id="r-hs" min="0" max="30" value="0"></div>
         <div><label>Bortamål</label><input type="number" id="r-as" min="0" max="30" value="0"></div>
       </div>
-      <button class="sec" onclick="loadBonus()">Ladda bonusfrågor för aktuell match</button>
+      <button class="sec" onclick="loadBonus()">Ladda bonusfrågor (fyller även i sektion 3)</button>
       <div id="bonus-actuals"></div>
       <button onclick="setResult()">Spara resultat &amp; dela ut poäng</button>
       <button class="danger" onclick="regrade()">Rätta om (skriv över tidigare poäng)</button>
@@ -113,6 +113,8 @@ button.danger{background:var(--red)}
         <div><label>Hemmamål</label><input type="number" id="f-hs" min="0" max="30" value="0"></div>
         <div><label>Bortamål</label><input type="number" id="f-as" min="0" max="30" value="0"></div>
       </div>
+      <div id="fixbonus-inputs"></div>
+      <div class="hint">Alla bonusfrågor måste fyllas i — annars sparas inte tipset.</div>
       <button onclick="fixPrediction()">Spara spelarens tips</button>
       <div class="msg" id="m-fix"></div>
     </div>
@@ -149,7 +151,10 @@ const WC_TEAMS = [
   {name:'England',code:'ENG',flag:flagUrl('gb-eng')},{name:'Kroatien',code:'CRO',flag:flagUrl('hr')},{name:'Ghana',code:'GHA',flag:flagUrl('gh')},{name:'Panama',code:'PAN',flag:flagUrl('pa')},
 ];
 function fillTeamPickers(){
-  const opts = '<option value="">— välj land —</option>' + WC_TEAMS.map((t,i)=>`<option value="${i}">${t.flag} ${t.name}</option>`).join('');
+  // Option text is the country name only — <option> can't render an <img>, so the
+  // flag URL used to leak through as literal text. The flag still auto-fills the
+  // hidden field behind the scenes on selection; nothing else changes.
+  const opts = '<option value="">— välj land —</option>' + WC_TEAMS.map((t,i)=>`<option value="${i}">${t.name}</option>`).join('');
   ['c-home-pick','c-away-pick'].forEach(id=>{ document.getElementById(id).innerHTML = opts; });
 }
 function wireTeamPickers(){
@@ -190,7 +195,7 @@ async function setFromFeed(){
   const date=document.getElementById('date').value, refId=document.getElementById('fixture-select').value;
   if(!date||!refId){ msg('m-match',false,'Välj datum och feed-match'); return; }
   const {ok,j}=await api({action:'setMatch',date,refId});
-  if(ok){ msg('m-match',true,'Satt: '+(j.match.home.name)+' – '+(j.match.away.name)+' ('+j.match.matchId+')'); document.getElementById('r-matchid').value=j.match.matchId; }
+  if(ok){ msg('m-match',true,'Satt: '+(j.match.home.name)+' – '+(j.match.away.name)+' ('+j.match.matchId+')'); document.getElementById('r-matchid').value=j.match.matchId; document.getElementById('f-matchid').value=j.match.matchId; loadBonus(); }
   else msg('m-match',false,j.error||'Fel');
 }
 
@@ -202,7 +207,7 @@ async function setCustom(){
   const stage=document.getElementById('c-stage').value;
   if(!date||!home.name||!away.name||!kickoff){ msg('m-match',false,'Fyll i datum, båda lagen och avspark'); return; }
   const {ok,j}=await api({action:'setMatch',date,custom:{home,away,kickoff,stage}});
-  if(ok){ msg('m-match',true,'Egen match satt: '+home.name+' – '+away.name+' ('+j.match.matchId+')'); document.getElementById('r-matchid').value=j.match.matchId; }
+  if(ok){ msg('m-match',true,'Egen match satt: '+home.name+' – '+away.name+' ('+j.match.matchId+')'); document.getElementById('r-matchid').value=j.match.matchId; document.getElementById('f-matchid').value=j.match.matchId; loadBonus(); }
   else msg('m-match',false,j.error||'Fel');
 }
 
@@ -212,26 +217,40 @@ async function clearMatch(){
   msg('m-match',ok,ok?'Override borttagen — feed-val gäller igen.':(j.error||'Fel'));
 }
 
-// Load the current match's bonus questions and render an input per question.
+// Renders one input per bonus question, ids prefixed so the two blocks (result
+// facit vs. a player's answers) never collide.
+function renderBonusFields(defs, prefix){
+  return defs.map(d=>{
+    if(d.type==='number') return `<label>${d.q}</label><input type="number" min="0" max="50" id="${prefix}-${d.id}">`;
+    return `<label>${d.q}</label><select id="${prefix}-${d.id}"><option value="">—</option>${(d.options||[]).map(o=>`<option value="${o}">${o}</option>`).join('')}</select>`;
+  }).join('');
+}
+function gatherBonusFields(prefix, ids){
+  const b={}; ids.forEach(id=>{ const el=document.getElementById(prefix+'-'+id); if(el&&el.value!=='') b[id]=el.value; });
+  return b;
+}
+function bonusIdsFor(boxId){ const box=document.getElementById(boxId); return (box.dataset.ids||'').split(',').filter(Boolean); }
+
+// Load the current match's bonus questions into BOTH the result-facit block
+// (section 2) and the player-answer block (section 3) at once.
 async function loadBonus(){
   let m=null;
   try{ const r=await fetch('/api/1x2-match'); const j=await r.json(); m=j.match; }catch{}
   const box=document.getElementById('bonus-actuals');
-  if(!m){ box.innerHTML='<div class="hint">Kunde inte hämta matchen.</div>'; return; }
-  if(m.matchId) document.getElementById('r-matchid').value=m.matchId;
+  const fbox=document.getElementById('fixbonus-inputs');
+  if(!m){ box.innerHTML='<div class="hint">Kunde inte hämta matchen.</div>'; if(fbox) fbox.innerHTML=''; return; }
+  if(m.matchId){ document.getElementById('r-matchid').value=m.matchId; document.getElementById('f-matchid').value=m.matchId; }
   const defs=m.bonus||[];
-  if(!defs.length){ box.innerHTML='<div class="hint">Den här matchen har inga bonusfrågor.</div>'; return; }
-  box.innerHTML='<div class="hint" style="margin-top:10px">Facit för bonusfrågorna (1 p styck):</div>'+defs.map(d=>{
-    if(d.type==='number') return `<label>${d.q}</label><input type="number" min="0" max="50" id="bonus-${d.id}">`;
-    return `<label>${d.q}</label><select id="bonus-${d.id}"><option value="">—</option>${(d.options||[]).map(o=>`<option value="${o}">${o}</option>`).join('')}</select>`;
-  }).join('');
+  if(!defs.length){ box.innerHTML='<div class="hint">Den här matchen har inga bonusfrågor.</div>'; if(fbox) fbox.innerHTML=''; return; }
+  box.innerHTML='<div class="hint" style="margin-top:10px">Facit för bonusfrågorna (1 p styck):</div>'+renderBonusFields(defs,'bonus');
   box.dataset.ids=defs.map(d=>d.id).join(',');
+  if(fbox){
+    fbox.innerHTML='<div class="hint" style="margin-top:10px">Spelarens svar på bonusfrågorna:</div>'+renderBonusFields(defs,'fixbonus');
+    fbox.dataset.ids=defs.map(d=>d.id).join(',');
+  }
 }
-function gatherBonus(){
-  const box=document.getElementById('bonus-actuals'); const ids=(box.dataset.ids||'').split(',').filter(Boolean);
-  const b={}; ids.forEach(id=>{ const el=document.getElementById('bonus-'+id); if(el&&el.value!=='') b[id]=el.value; });
-  return b;
-}
+function gatherBonus(){ return gatherBonusFields('bonus', bonusIdsFor('bonus-actuals')); }
+function gatherFixBonus(){ return gatherBonusFields('fixbonus', bonusIdsFor('fixbonus-inputs')); }
 async function setResult(){
   const matchId=document.getElementById('r-matchid').value.trim();
   const hs=Number(document.getElementById('r-hs').value), as=Number(document.getElementById('r-as').value);
@@ -257,13 +276,20 @@ async function fixPrediction(){
   const playerName=document.getElementById('f-name').value.trim();
   const hs=Number(document.getElementById('f-hs').value), as=Number(document.getElementById('f-as').value);
   if(!matchId||!playerName){ msg('m-fix',false,'Ange match-ID och spelarens namn'); return; }
-  const {ok,j}=await api({action:'fixPrediction',matchId,playerName,hs,as});
+  const ids=bonusIdsFor('fixbonus-inputs');
+  const bonus=gatherFixBonus();
+  if(ids.length && Object.keys(bonus).length<ids.length){
+    msg('m-fix',false,'Alla bonusfrågor måste fyllas i (klicka "Ladda bonusfrågor" ovan om fälten är tomma).');
+    return;
+  }
+  const {ok,j}=await api({action:'fixPrediction',matchId,playerName,hs,as,bonus});
   msg('m-fix',ok,ok?(j.note||'Klart'):(j.error||'Fel'));
 }
 
 document.getElementById('date').value=todaySthlm();
 fillTeamPickers();
 wireTeamPickers();
+loadBonus();
 showPanel();
 </script>
 </body>

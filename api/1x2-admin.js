@@ -1,7 +1,7 @@
 const {
   kv, kvReady, getData, normalizeFeedMatch, gradeMatch, regradeMatch,
   venueDateStr, kickoffMs, buildBonus, getCurrent, getResult,
-  setPrediction, findPlayerByName,
+  setPrediction, findPlayerByName, validateBonusAnswers,
 } = require('./_wc');
 
 module.exports = async (req, res) => {
@@ -100,9 +100,16 @@ module.exports = async (req, res) => {
       if (!matchId || !playerName || !Number.isInteger(H) || !Number.isInteger(A) || H < 0 || A < 0 || H > 30 || A > 30) {
         return res.status(400).json({ error: 'matchId, playerName + integer hs/as required' });
       }
+      // Same rule as a normal submission: every bonus question must be answered,
+      // so a corrected tip is never left partial either.
+      const cur = await getCurrent();
+      const bonusDefs = (cur && cur.matchId === matchId && Array.isArray(cur.bonus)) ? cur.bonus : [];
+      const bv = validateBonusAnswers(bonusDefs, body.bonus);
+      if (!bv.ok) return res.status(400).json({ error: bv.error });
+
       const existing = await findPlayerByName(matchId, playerName);
       const playerID = existing ? existing.id : `manual-${playerName.trim().toLowerCase().replace(/\s+/g, '-')}`;
-      await setPrediction(matchId, playerID, playerName, H, A, existing ? existing.b : {});
+      await setPrediction(matchId, playerID, playerName, H, A, bv.b);
 
       const existingResult = await getResult(matchId);
       if (existingResult) {

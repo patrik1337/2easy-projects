@@ -170,17 +170,32 @@ function bonusFormHTML(m){
     return `<div class="bonus-q"><div class="bq-label">${esc(d.q)}</div><div class="bopts" data-bid="${esc(d.id)}">${(d.options||[]).map(o=>`<button type="button" data-opt="${esc(o)}"${bAns[d.id]===o?' class="sel"':''}>${esc(o)}</button>`).join('')}</div></div>`;
   }).join('');
 }
+// All bonus questions must be answered before locking in a tip — no partial bets
+// that quietly forfeit points (this is what happened before).
+function allBonusAnswered(m){
+  return (m.bonus||[]).every(d=>bAns[d.id]!=null && bAns[d.id]!=='');
+}
+function updateSubmitState(m){
+  const btn=document.getElementById('submit-btn'); if(!btn) return;
+  const ready = allBonusAnswered(m);
+  btn.disabled = !ready;
+  btn.title = ready ? '' : 'Besvara alla extrafrågor för att låsa in tipset';
+}
 function wireBonus(){
+  const m = DATA.match;
   app.querySelectorAll('.bopts').forEach(g=>{
     const id=g.dataset.bid;
     g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
       bAns[id]=b.dataset.opt;
       g.querySelectorAll('button').forEach(x=>x.classList.toggle('sel',x.dataset.opt===bAns[id]));
+      updateSubmitState(m);
     }));
   });
   app.querySelectorAll('input[data-bid]').forEach(inp=>inp.addEventListener('input',()=>{
     const v=inp.value; if(v==='') delete bAns[inp.dataset.bid]; else bAns[inp.dataset.bid]=v;
+    updateSubmitState(m);
   }));
+  updateSubmitState(m);
 }
 // Compact "label: answer" line for a stored bonus answer set.
 function bonusAnswersText(b){
@@ -299,6 +314,7 @@ function impliedPickText(m,h,a){
 async function submitTip(){
   if(!player){ document.getElementById('name-modal').classList.remove('hidden'); return; }
   const m = DATA.match;
+  if(!allBonusAnswered(m)){ toast('Besvara alla extrafrågor innan du låser in'); return; }
   const btn=document.getElementById('submit-btn'); btn.disabled=true; btn.textContent='Låser in…';
   try{
     const r = await fetch('/api/1x2-submit',{method:'POST',headers:{'Content-Type':'application/json'},

@@ -1,4 +1,4 @@
-const { resolveMatch, kvReady, kv, todayStockholm } = require('./_wc');
+const { resolveMatch, kvReady, kv, todayStockholm, validateBonusAnswers } = require('./_wc');
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -24,14 +24,11 @@ module.exports = async (req, res) => {
 
   const safeName = String(playerName).slice(0, 20).replace(/["\\\n\r]/g, '');
 
-  // Keep only answers for this match's defined bonus questions.
-  const cleanB = {};
-  if (b && typeof b === 'object' && Array.isArray(match.bonus)) {
-    for (const d of match.bonus) {
-      if (b[d.id] != null && b[d.id] !== '') cleanB[d.id] = String(b[d.id]).slice(0, 32);
-    }
-  }
-  const member = JSON.stringify({ hs: H, as: A, b: cleanB });
+  // All bonus questions must be answered — no partial bets that quietly forfeit
+  // points (this is the exact mistake that slipped through before).
+  const bv = validateBonusAnswers(match.bonus, b);
+  if (!bv.ok) return res.status(400).json({ error: bv.error });
+  const member = JSON.stringify({ hs: H, as: A, b: bv.b });
 
   // One submission per player per match (atomic).
   const [added] = await kv([['HSETNX', `1x2:pred:${matchId}`, playerID, member]]);
