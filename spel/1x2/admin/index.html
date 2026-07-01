@@ -127,23 +127,26 @@ button.danger{background:var(--red)}
 </div>
 
 <script>
-// All 48 World Cup 2026 teams — Swedish name + correct flag emoji + FIFA code,
-// sourced from openfootball/worldcup.json (verified against their live teams file).
-// Used to auto-fill the custom-match name+flag fields so you never have to hunt for
-// the right flag emoji by hand. Grouped in tournament group order (A–L).
+// All 48 World Cup 2026 teams — Swedish name + FIFA code + a flagcdn.com image URL
+// (not an emoji): country-flag emoji render inconsistently across OSes — especially
+// England/Scotland's subdivision flags on Windows — which is exactly why the old
+// feed-based matches "looked nicer": that feed also used flagcdn image URLs, which
+// render identically everywhere. Every code below was verified to resolve (HTTP 200)
+// before being added. Grouped in tournament group order (A–L).
+function flagUrl(iso){ return `https://flagcdn.com/w80/${iso}.png`; }
 const WC_TEAMS = [
-  {name:'Mexiko',code:'MEX',flag:'🇲🇽'},{name:'Sydafrika',code:'RSA',flag:'🇿🇦'},{name:'Sydkorea',code:'KOR',flag:'🇰🇷'},{name:'Tjeckien',code:'CZE',flag:'🇨🇿'},
-  {name:'Kanada',code:'CAN',flag:'🇨🇦'},{name:'Bosnien och Hercegovina',code:'BIH',flag:'🇧🇦'},{name:'Qatar',code:'QAT',flag:'🇶🇦'},{name:'Schweiz',code:'SUI',flag:'🇨🇭'},
-  {name:'Brasilien',code:'BRA',flag:'🇧🇷'},{name:'Marocko',code:'MAR',flag:'🇲🇦'},{name:'Haiti',code:'HAI',flag:'🇭🇹'},{name:'Skottland',code:'SCO',flag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿'},
-  {name:'USA',code:'USA',flag:'🇺🇸'},{name:'Paraguay',code:'PAR',flag:'🇵🇾'},{name:'Australien',code:'AUS',flag:'🇦🇺'},{name:'Turkiet',code:'TUR',flag:'🇹🇷'},
-  {name:'Tyskland',code:'GER',flag:'🇩🇪'},{name:'Curaçao',code:'CUW',flag:'🇨🇼'},{name:'Elfenbenskusten',code:'CIV',flag:'🇨🇮'},{name:'Ecuador',code:'ECU',flag:'🇪🇨'},
-  {name:'Nederländerna',code:'NED',flag:'🇳🇱'},{name:'Japan',code:'JPN',flag:'🇯🇵'},{name:'Sverige',code:'SWE',flag:'🇸🇪'},{name:'Tunisien',code:'TUN',flag:'🇹🇳'},
-  {name:'Belgien',code:'BEL',flag:'🇧🇪'},{name:'Egypten',code:'EGY',flag:'🇪🇬'},{name:'Iran',code:'IRN',flag:'🇮🇷'},{name:'Nya Zeeland',code:'NZL',flag:'🇳🇿'},
-  {name:'Spanien',code:'ESP',flag:'🇪🇸'},{name:'Kap Verde',code:'CPV',flag:'🇨🇻'},{name:'Saudiarabien',code:'KSA',flag:'🇸🇦'},{name:'Uruguay',code:'URU',flag:'🇺🇾'},
-  {name:'Frankrike',code:'FRA',flag:'🇫🇷'},{name:'Senegal',code:'SEN',flag:'🇸🇳'},{name:'Irak',code:'IRQ',flag:'🇮🇶'},{name:'Norge',code:'NOR',flag:'🇳🇴'},
-  {name:'Argentina',code:'ARG',flag:'🇦🇷'},{name:'Algeriet',code:'ALG',flag:'🇩🇿'},{name:'Österrike',code:'AUT',flag:'🇦🇹'},{name:'Jordanien',code:'JOR',flag:'🇯🇴'},
-  {name:'Portugal',code:'POR',flag:'🇵🇹'},{name:'Kongo-Kinshasa',code:'COD',flag:'🇨🇩'},{name:'Uzbekistan',code:'UZB',flag:'🇺🇿'},{name:'Colombia',code:'COL',flag:'🇨🇴'},
-  {name:'England',code:'ENG',flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿'},{name:'Kroatien',code:'CRO',flag:'🇭🇷'},{name:'Ghana',code:'GHA',flag:'🇬🇭'},{name:'Panama',code:'PAN',flag:'🇵🇦'},
+  {name:'Mexiko',code:'MEX',flag:flagUrl('mx')},{name:'Sydafrika',code:'RSA',flag:flagUrl('za')},{name:'Sydkorea',code:'KOR',flag:flagUrl('kr')},{name:'Tjeckien',code:'CZE',flag:flagUrl('cz')},
+  {name:'Kanada',code:'CAN',flag:flagUrl('ca')},{name:'Bosnien och Hercegovina',code:'BIH',flag:flagUrl('ba')},{name:'Qatar',code:'QAT',flag:flagUrl('qa')},{name:'Schweiz',code:'SUI',flag:flagUrl('ch')},
+  {name:'Brasilien',code:'BRA',flag:flagUrl('br')},{name:'Marocko',code:'MAR',flag:flagUrl('ma')},{name:'Haiti',code:'HAI',flag:flagUrl('ht')},{name:'Skottland',code:'SCO',flag:flagUrl('gb-sct')},
+  {name:'USA',code:'USA',flag:flagUrl('us')},{name:'Paraguay',code:'PAR',flag:flagUrl('py')},{name:'Australien',code:'AUS',flag:flagUrl('au')},{name:'Turkiet',code:'TUR',flag:flagUrl('tr')},
+  {name:'Tyskland',code:'GER',flag:flagUrl('de')},{name:'Curaçao',code:'CUW',flag:flagUrl('cw')},{name:'Elfenbenskusten',code:'CIV',flag:flagUrl('ci')},{name:'Ecuador',code:'ECU',flag:flagUrl('ec')},
+  {name:'Nederländerna',code:'NED',flag:flagUrl('nl')},{name:'Japan',code:'JPN',flag:flagUrl('jp')},{name:'Sverige',code:'SWE',flag:flagUrl('se')},{name:'Tunisien',code:'TUN',flag:flagUrl('tn')},
+  {name:'Belgien',code:'BEL',flag:flagUrl('be')},{name:'Egypten',code:'EGY',flag:flagUrl('eg')},{name:'Iran',code:'IRN',flag:flagUrl('ir')},{name:'Nya Zeeland',code:'NZL',flag:flagUrl('nz')},
+  {name:'Spanien',code:'ESP',flag:flagUrl('es')},{name:'Kap Verde',code:'CPV',flag:flagUrl('cv')},{name:'Saudiarabien',code:'KSA',flag:flagUrl('sa')},{name:'Uruguay',code:'URU',flag:flagUrl('uy')},
+  {name:'Frankrike',code:'FRA',flag:flagUrl('fr')},{name:'Senegal',code:'SEN',flag:flagUrl('sn')},{name:'Irak',code:'IRQ',flag:flagUrl('iq')},{name:'Norge',code:'NOR',flag:flagUrl('no')},
+  {name:'Argentina',code:'ARG',flag:flagUrl('ar')},{name:'Algeriet',code:'ALG',flag:flagUrl('dz')},{name:'Österrike',code:'AUT',flag:flagUrl('at')},{name:'Jordanien',code:'JOR',flag:flagUrl('jo')},
+  {name:'Portugal',code:'POR',flag:flagUrl('pt')},{name:'Kongo-Kinshasa',code:'COD',flag:flagUrl('cd')},{name:'Uzbekistan',code:'UZB',flag:flagUrl('uz')},{name:'Colombia',code:'COL',flag:flagUrl('co')},
+  {name:'England',code:'ENG',flag:flagUrl('gb-eng')},{name:'Kroatien',code:'CRO',flag:flagUrl('hr')},{name:'Ghana',code:'GHA',flag:flagUrl('gh')},{name:'Panama',code:'PAN',flag:flagUrl('pa')},
 ];
 function fillTeamPickers(){
   const opts = '<option value="">— välj land —</option>' + WC_TEAMS.map((t,i)=>`<option value="${i}">${t.flag} ${t.name}</option>`).join('');
