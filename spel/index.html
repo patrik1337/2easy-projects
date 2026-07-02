@@ -94,6 +94,7 @@ GAMES.forEach(g=>{
   const a=document.createElement('a');
   a.href='/spel/'+g.slug;
   a.className='game-card';
+  a.dataset.slug=g.slug;
   a.innerHTML=`
     <div class="game-icon">${g.icon}</div>
     <div class="game-info">
@@ -103,6 +104,30 @@ GAMES.forEach(g=>{
     <span class="game-badge ${g.done?'badge-done':'badge-play'}">${g.done?'✓ Spelat':'Spela'}</span>`;
   grid.appendChild(a);
 });
+
+// The local breadcrumb above can miss a completed game (played on another
+// device/browser, or before a deploy landed), so double-check with the
+// server — it's the actual source of truth for "played today" — and patch
+// the badge + breadcrumb if they disagree.
+function setBadgeDone(slug){
+  const card=grid.querySelector(`[data-slug="${slug}"]`);
+  if(!card) return;
+  const badge=card.querySelector('.game-badge');
+  if(!badge || badge.classList.contains('badge-done')) return;
+  badge.className='game-badge badge-done';
+  badge.textContent='✓ Spelat';
+}
+(function verifyDoneToday(){
+  const player=getPlayer();
+  if(!player) return;
+  const qs='?playerID='+encodeURIComponent(player.id);
+  fetch('/api/plats-play'+qs).then(r=>r.json()).then(j=>{
+    if(j && j.played){ try{ localStorage.setItem('plats_played_'+todaySthlm(),'1'); }catch{} setBadgeDone('pricken'); }
+  }).catch(()=>{});
+  fetch('/api/quiz-play'+qs).then(r=>r.json()).then(j=>{
+    if(j && j.played){ try{ localStorage.setItem('quiz_played_'+todaySthlm(),'1'); }catch{} setBadgeDone('rullen'); }
+  }).catch(()=>{});
+})();
 
 // ── Smeknamn (delas av VM-Tips, Pricken, Rullen — samma id, poängen följer med) ──
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
