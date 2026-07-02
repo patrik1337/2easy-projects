@@ -133,7 +133,7 @@ async function boot(){
 
 async function loadState(){
   let st={};
-  try{ const q=new URLSearchParams(); if(player) q.set('playerID',player.id); st=await api('/api/plats-state?'+q.toString()); }catch{}
+  try{ const q=new URLSearchParams(); if(player) q.set('playerID',player.id); st=await api('/api/plats-play?'+q.toString()); }catch{}
   window.__season=st.season||[];
   if(st.played && st.result){ showResult(st.result); return; }
   if(st.hasStarted && !st.played){ beginPlay(true); return; } // resume an in-progress attempt
@@ -149,7 +149,7 @@ function showLanding(){
 }
 
 async function beginPlay(resume){
-  const st=await api('/api/plats-start',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({playerID:player.id,playerName:player.name})});
+  const st=await api('/api/plats-play',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phase:'start',playerID:player.id,playerName:player.name})});
   if(st.already||st.played){ return loadState(); }
   if(!st.city){ showLanding(); return; }
   startTs=st.startTs||Date.now();
@@ -180,12 +180,12 @@ async function finish(){
   if(timer) clearInterval(timer);
   mapClickOn=false;
   const cb=$('confirm-btn'); if(cb){ cb.disabled=true; cb.textContent='Skickar…'; }
-  const body={playerID:player.id,playerName:player.name};
+  const body={phase:'submit',playerID:player.id,playerName:player.name};
   if(guessMarker){ const ll=guessMarker.getLatLng(); body.lat=ll.lat; body.lng=ll.lng; }
-  const result=await api('/api/plats-submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const result=await api('/api/plats-play',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
   await loadStateThen(()=>showResult(result));
 }
-async function loadStateThen(cb){ try{ const q=new URLSearchParams(); if(player) q.set('playerID',player.id); const st=await api('/api/plats-state?'+q.toString()); window.__season=st.season||[]; }catch{} cb(); }
+async function loadStateThen(cb){ try{ const q=new URLSearchParams(); if(player) q.set('playerID',player.id); const st=await api('/api/plats-play?'+q.toString()); window.__season=st.season||[]; }catch{} cb(); }
 
 function showResult(r){
   if(timer) clearInterval(timer);
@@ -246,7 +246,7 @@ $('trophy-btn').addEventListener('click',async()=>{
   $('lb-modal').classList.remove('hidden');
   const body=$('lb-modal-body'); body.innerHTML='<div class="hint">Laddar…</div>';
   let rows=window.__season;
-  if(!rows){ try{ const st=await api('/api/plats-state'); rows=st.season||[]; }catch{ rows=[]; } }
+  if(!rows){ try{ const st=await api('/api/plats-play'); rows=st.season||[]; }catch{ rows=[]; } }
   body.innerHTML = rows.length ? rows.map((s,i)=>{const you=player&&s.id===player.id;return `<div class="lb-row${you?' lb-you':''}"><span class="lb-rank">${i+1}</span><span class="lb-name">${esc(s.name)}${you?' 👈':''}</span><span class="lb-score">${s.pts} p</span></div>`;}).join('') : '<div class="hint">Inga poäng än – var först!</div>';
 });
 $('lb-modal').addEventListener('click',e=>{ if(e.target.id==='lb-modal') e.currentTarget.classList.add('hidden'); });

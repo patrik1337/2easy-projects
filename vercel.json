@@ -7,14 +7,13 @@
     "api/1x2-submit.js": { "maxDuration": 10 },
     "api/1x2-leaderboard.js": { "maxDuration": 10 },
     "api/1x2-admin.js": { "maxDuration": 10 },
-    "api/plats-state.js": { "maxDuration": 10 },
-    "api/plats-start.js": { "maxDuration": 10 },
-    "api/plats-submit.js": { "maxDuration": 10 },
+    "api/plats-play.js": { "maxDuration": 10 },
     "api/quiz-play.js": { "maxDuration": 10 },
-    "api/quiz-admin.js": { "maxDuration": 10 }
+    "api/quiz-admin.js": { "maxDuration": 10 },
+    "api/rename.js": { "maxDuration": 10 }
   },
   "crons": [
-    { "path": "/api/plats-state", "schedule": "0 23 * * *" }
+    { "path": "/api/plats-play", "schedule": "0 23 * * *" }
   ],
   "rewrites": [
     { "source": "/spel", "destination": "/spel/index.html" },

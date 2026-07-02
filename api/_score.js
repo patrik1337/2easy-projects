@@ -4,20 +4,27 @@
 // a future move to admin-assigned accounts.
 //
 // Key scheme:
-//   score:season                                ZSET   member=playerID, score=cumulative across ALL games+days  (THE board)
-//   score:names                                 HASH   playerID -> display name (display only)
+//   score:season                                ZSET   member=playerID, score=cumulative across ALL games+days
+//                                                       (cross-game grand total — not shown on any individual
+//                                                       game's own page; reserved for a future /spel front-page
+//                                                       "total" view. Games display score:game:{game} instead —
+//                                                       each game's own leaderboard is independent of the others.)
+//   score:game:{game}                           ZSET   member=playerID, score=cumulative for just THIS game (all days)
+//                                                       — this is what each game's own "Totalställning" reads.
+//   score:names                                 HASH   playerID -> display name (shared across games using this
+//                                                       system; kept in sync by the rename endpoint, api/rename.js)
 //   score:contrib:{game}:{date}:{playerID}      STRING points (0–5) this game awarded this player this day (idempotency ledger)
-//   score:daily:{game}:{date}                   ZSET   member=playerID, score=that day's points for that game (per-game board)
-//   game = short slug ('ordel' | '1x2' | 'pricken'); date = Stockholm 'YYYY-MM-DD'
+//   score:daily:{game}:{date}                   ZSET   member=playerID, score=that day's points for that game (per-game daily board)
+//   game = short slug ('ordel' | '1x2' | 'pricken' | 'rullen'); date = Stockholm 'YYYY-MM-DD'
 //
 // Migration notes for the other two games (do later; not touched here):
 //   1x2:   in gradeMatch(), replace `ZINCRBY 1x2:season` with
 //          awardPoints({game:'1x2', date: matchDate, playerID, name, points}) — it already yields 0–5.
-//          Display via readSeason(). Backfill once by replaying old 1x2:season through awardPoints.
+//          Display via readGameSeason('1x2'). Backfill once by replaying old 1x2:season through awardPoints.
 //   Ordel: map attempts->0–5 (e.g. 1–2=5,3=4,4=3,5=2,6=1,fail=0) and call
 //          awardPoints({game:'ordel', date, playerID, name, points}) on completion. Keep wordle:lb:{date} for the word view.
 //   Identity move: everything is keyed by playerID, so the season survives — remap members in
-//          score:season and repoint score:names; no score loss.
+//          score:season/score:game:* and repoint score:names; no score loss.
 
 const KV_URL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
 const KV_TOKEN = process.env.KV_REST_API_TOKEN || process.env.KV_REST_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
@@ -57,6 +64,7 @@ async function awardPoints({ game, date, playerID, name, points }) {
   const cmds = [
     ['SET', ledgerKey, String(pts)],
     ['ZINCRBY', 'score:season', String(delta), playerID],
+    ['ZINCRBY', `score:game:${game}`, String(delta), playerID],
     ['ZADD', `score:daily:${game}:${date}`, String(pts), playerID],
   ];
   if (name) cmds.push(['HSET', 'score:names', playerID, String(name).slice(0, 24)]);
@@ -81,9 +89,13 @@ async function zTopWithNames(key, limit) {
   return rows;
 }
 
-// THE unified cross-game leaderboard for display.
+// Cross-game grand total — not displayed on any individual game's page today;
+// reserved for a future combined view on the /spel front page.
 const readSeason = (limit = 50) => zTopWithNames('score:season', limit);
+// A single game's own cumulative leaderboard (all days, that game only) — this is
+// what each game's own "Totalställning" should read.
+const readGameSeason = (game, limit = 50) => zTopWithNames(`score:game:${game}`, limit);
 // A single game's per-day board (kept, not the shared one).
 const readGameDay = (game, date, limit = 50) => zTopWithNames(`score:daily:${game}:${date}`, limit);
 
-module.exports = { kv, kvReady, hashToObj, awardPoints, getContribution, readSeason, readGameDay };
+module.exports = { kv, kvReady, hashToObj, awardPoints, getContribution, readSeason, readGameSeason, readGameDay };

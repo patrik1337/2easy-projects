@@ -1,7 +1,7 @@
 // Consolidated: GET = state check, POST {phase:'start'} = begin/resume, POST
 // {phase:'answer', qIndex, answer} = grade one question. Merged from three
 // separate files into one to stay under Vercel's per-deployment function cap.
-const { kv, kvReady, awardPoints, readSeason } = require('./_score');
+const { kv, kvReady, awardPoints, readGameSeason } = require('./_score');
 const { todayStockholm, resolveTodayQuestions, getQuestion, publicQuestion, TIME_LIMIT_MS, GRACE_MS } = require('./_quiz');
 
 module.exports = async (req, res) => {
@@ -34,7 +34,7 @@ async function handleState(req, res) {
       if (!result && idx != null) { inProgress = true; qIndex = Number(idx); }
     }
 
-    const season = await readSeason(50);
+    const season = await readGameSeason('rullen', 50);
     return res.status(200).json({ date, played: Boolean(result), result, inProgress, qIndex, season });
   } catch (e) {
     return res.status(500).json({ error: 'state failed', detail: String((e && e.message) || e) });
@@ -125,6 +125,6 @@ async function handleAnswer(req, res) {
   await kv([['SET', `quiz:answers:${date}:${playerID}`, JSON.stringify(answers)]]);
   await awardPoints({ game: 'rullen', date, playerID, name: playerName, points: score });
   await kv([['SET', `quiz:result:${date}:${playerID}`, JSON.stringify(result)]]);
-  const season = await readSeason(50);
+  const season = await readGameSeason('rullen', 50);
   return res.status(200).json({ ...result, season });
 }
