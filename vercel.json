@@ -9,7 +9,11 @@
     "api/1x2-admin.js": { "maxDuration": 10 },
     "api/plats-state.js": { "maxDuration": 10 },
     "api/plats-start.js": { "maxDuration": 10 },
-    "api/plats-submit.js": { "maxDuration": 10 }
+    "api/plats-submit.js": { "maxDuration": 10 },
+    "api/quiz-state.js": { "maxDuration": 10 },
+    "api/quiz-start.js": { "maxDuration": 10 },
+    "api/quiz-answer.js": { "maxDuration": 10 },
+    "api/quiz-admin.js": { "maxDuration": 10 }
   },
   "crons": [
     { "path": "/api/plats-state", "schedule": "0 23 * * *" }
@@ -22,6 +26,9 @@
     { "source": "/spel/1x2", "destination": "/spel/1x2/index.html" },
     { "source": "/spel/1x2/admin", "destination": "/spel/1x2/admin/index.html" },
     { "source": "/spel/pricken", "destination": "/spel/pricken/index.html" },
-    { "source": "/spel/pricken/", "destination": "/spel/pricken/index.html" }
+    { "source": "/spel/pricken/", "destination": "/spel/pricken/index.html" },
+    { "source": "/spel/rullen", "destination": "/spel/rullen/index.html" },
+    { "source": "/spel/rullen/", "destination": "/spel/rullen/index.html" },
+    { "source": "/spel/rullen/admin", "destination": "/spel/rullen/admin/index.html" }
   ]
 }

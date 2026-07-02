@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rullen Admin</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--green:#538d4e;--bg:#121213;--surface:#1a1a1b;--text:#fff;--border:#3a3a3c;--muted:#818384}
+body{background:var(--bg);color:var(--text);font-family:'Helvetica Neue',Arial,sans-serif;min-height:100dvh;padding:16px}
+.wrap{max-width:520px;margin:0 auto}
+h1{font-size:1.2rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.sub{color:var(--muted);font-size:.82rem;margin-bottom:18px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:14px}
+.card h2{font-size:.95rem;margin-bottom:12px}
+label{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:10px 0 4px}
+input{width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.95rem;outline:none}
+input:focus{border-color:var(--green)}
+button{width:100%;padding:12px;background:var(--green);color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:12px;text-transform:uppercase;letter-spacing:.04em}
+button.sec{background:var(--border)}
+.msg{font-size:.84rem;margin-top:10px;padding:8px 10px;border-radius:8px;display:none}
+.msg.ok{display:block;background:#1f3a1d;color:#bfe6ba}
+.msg.err{display:block;background:#3a1d1d;color:#e6bcbc}
+.hint{font-size:.74rem;color:var(--muted);margin-top:6px;line-height:1.4}
+.hidden{display:none}
+.qrow{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #2b2b2c;font-size:.86rem}
+.qrow .tag{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;padding-top:2px}
+.qrow.svensk .tag{color:#7fb8e0}
+.counter{font-size:.8rem;color:var(--muted);margin:8px 0}
+.counter.full{color:var(--green);font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Rullen · Admin</h1>
+  <div class="sub">Standard är helt automatiskt urval varje dag. Här kan du valfritt peka ut ett specifikt datums 5 frågor, t.ex. för en temakväll.</div>
+
+  <div class="card" id="auth-card">
+    <h2>Logga in</h2>
+    <label>Admin-token</label>
+    <input type="password" id="token" placeholder="ADMIN_TOKEN" autocomplete="off">
+    <button onclick="saveToken()">Spara token</button>
+  </div>
+
+  <div id="panel" class="hidden">
+    <div class="card">
+      <h2>Sätt dagens frågor</h2>
+      <label>Datum (Stockholm, ÅÅÅÅ-MM-DD)</label>
+      <input type="date" id="date">
+      <div class="counter" id="counter">0/5 valda</div>
+      <div id="question-list"></div>
+      <button onclick="setOverride()">Sätt dessa 5 frågor för datumet</button>
+      <button class="sec" onclick="clearOverride()">Ta bort override (återgå till automatiskt)</button>
+      <div class="msg" id="m-override"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function token(){ return localStorage.getItem('rullen_admin_token')||''; }
+function saveToken(){ const t=document.getElementById('token').value.trim(); if(!t) return; localStorage.setItem('rullen_admin_token',t); showPanel(); }
+function showPanel(){ if(token()){ document.getElementById('panel').classList.remove('hidden'); document.getElementById('auth-card').classList.add('hidden'); loadQuestions(); } }
+function todaySthlm(){ return new Date().toLocaleDateString('sv-SE',{timeZone:'Europe/Stockholm'}); }
+
+async function api(body){
+  const r = await fetch('/api/quiz-admin',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token()},body:JSON.stringify(body)});
+  const j = await r.json().catch(()=>({error:'Svar kunde inte läsas'}));
+  return {ok:r.ok,status:r.status,j};
+}
+function msg(id,ok,text){ const el=document.getElementById(id); el.className='msg '+(ok?'ok':'err'); el.textContent=text; }
+
+let QUESTIONS=[];
+const SELECTED=new Set();
+async function loadQuestions(){
+  const {ok,j}=await api({action:'listQuestions'});
+  if(!ok){ msg('m-override',false,j.error||'Fel'); return; }
+  QUESTIONS=j.questions||[];
+  const box=document.getElementById('question-list');
+  box.innerHTML = QUESTIONS.map(q=>`
+    <label class="qrow ${q.category==='svensk'?'svensk':''}">
+      <input type="checkbox" value="${q.id}" onchange="toggleQ('${q.id}',this.checked)">
+      <span style="flex:1">${q.q}</span>
+      <span class="tag">${q.category} · ${q.decade}</span>
+    </label>`).join('');
+  updateCounter();
+}
+function toggleQ(id,checked){
+  if(checked) SELECTED.add(id); else SELECTED.delete(id);
+  updateCounter();
+}
+function updateCounter(){
+  const el=document.getElementById('counter');
+  el.textContent=SELECTED.size+'/5 valda';
+  el.className='counter'+(SELECTED.size===5?' full':'');
+}
+async function setOverride(){
+  const date=document.getElementById('date').value; if(!date){ msg('m-override',false,'Välj datum'); return; }
+  if(SELECTED.size!==5){ msg('m-override',false,'Välj exakt 5 frågor (just nu: '+SELECTED.size+').'); return; }
+  const {ok,j}=await api({action:'setOverride',date,ids:[...SELECTED]});
+  msg('m-override',ok,ok?('Frågorna satta för '+j.date+'.'):(j.error||'Fel'));
+}
+async function clearOverride(){
+  const date=document.getElementById('date').value; if(!date){ msg('m-override',false,'Välj datum'); return; }
+  const {ok,j}=await api({action:'clearOverride',date});
+  msg('m-override',ok,ok?'Override borttagen — automatiskt urval gäller igen.':(j.error||'Fel'));
+}
+
+document.getElementById('date').value=todaySthlm();
+showPanel();
+</script>
+</body>
+</html>

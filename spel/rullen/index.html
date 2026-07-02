@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Rullen – 2easy Spel</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--green:#538d4e;--yellow:#b59f3b;--red:#c0392b;--bg:#121213;--surface:#1a1a1b;--text:#fff;--border:#3a3a3c;--muted:#818384}
+body{background:var(--bg);color:var(--text);font-family:'Helvetica Neue',Arial,sans-serif;display:flex;flex-direction:column;min-height:100dvh;min-height:100vh;-webkit-tap-highlight-color:transparent}
+header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);position:relative;flex:0 0 auto}
+header h1{font-size:1.25rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;position:absolute;left:50%;transform:translateX(-50%)}
+.back-link{color:var(--text);text-decoration:none;font-size:.85rem;opacity:.7;z-index:1}
+#trophy-btn{background:none;border:none;color:var(--text);font-size:1.2rem;cursor:pointer;padding:4px 8px;z-index:1}
+main{flex:1;width:100%;max-width:460px;margin:0 auto;padding:18px 16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px}
+.center{text-align:center}
+.muted{color:var(--muted)}
+.btn{width:100%;padding:14px;background:var(--green);color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:.05em}
+.btn:disabled{opacity:.4;cursor:default}
+.section-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:0 0 10px}
+.progress{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.progress .n{font-size:.8rem;color:var(--muted);white-space:nowrap;font-weight:700}
+.timer-wrap{flex:1;height:10px;background:var(--bg);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.timer-fill{height:100%;width:100%;background:var(--green);transition:width .1s linear}
+.timer-fill.warn{background:var(--yellow)}
+.timer-fill.danger{background:var(--red)}
+.qtext{font-size:1.15rem;font-weight:700;margin-bottom:16px;line-height:1.4}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opts button{width:100%;text-align:left;padding:16px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:10px;font-size:.95rem;font-weight:600;cursor:pointer;transition:.1s}
+.opts button:disabled{opacity:.5;cursor:default}
+.opts button.sel{background:var(--green);border-color:var(--green)}
+.opts button.right{background:var(--green);border-color:var(--green)}
+.opts button.wrong{background:var(--red);border-color:var(--red)}
+.qrow{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px}
+.qrow .qh{display:flex;align-items:center;gap:8px;font-size:.88rem;font-weight:700;margin-bottom:6px}
+.qrow .qh .ic{font-size:1rem}
+.qrow .a{font-size:.82rem;color:var(--muted);line-height:1.5}
+.qrow .a b{color:var(--text)}
+.scoreline{text-align:center;margin:6px 0 18px}
+.scoreline .n{font-size:2.4rem;font-weight:700}
+.scoreline .n small{font-size:1.1rem;color:var(--muted);font-weight:400}
+.lb-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;margin-bottom:3px;background:var(--bg)}
+.lb-rank{font-size:.8rem;color:var(--muted);width:18px;text-align:right}
+.lb-rank.medal{font-size:1.05rem}
+.lb-name{flex:1;font-weight:600;font-size:.9rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-score{font-size:.78rem;background:var(--green);padding:2px 9px;border-radius:5px;font-weight:700;white-space:nowrap}
+.lb-score.yellow{background:var(--yellow);color:#2b2200}
+.lb-you{border:1px solid var(--green)}
+.next-line{text-align:center;color:var(--muted);font-size:.82rem;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;z-index:200;padding:16px}
+.modal-overlay.hidden{display:none}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;width:100%;max-width:340px;text-align:center}
+.modal h2{font-size:1.2rem;margin-bottom:8px}
+.modal p{color:var(--muted);font-size:.9rem;margin-bottom:16px;line-height:1.4}
+.modal input{width:100%;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:1rem;margin-bottom:12px;text-align:center;outline:none}
+.modal input:focus{border-color:var(--green)}
+#toast{position:fixed;top:64px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:10px 18px;border-radius:8px;font-weight:700;font-size:.88rem;opacity:0;transition:opacity .2s;z-index:300;pointer-events:none}
+#toast.show{opacity:1}
+</style>
+</head>
+<body>
+<header>
+  <a href="/spel" class="back-link">← Spel</a>
+  <h1>Rullen</h1>
+  <button id="trophy-btn" title="Totalställning" aria-label="Totalställning">🏆</button>
+</header>
+
+<div id="toast"></div>
+
+<div class="modal-overlay hidden" id="name-modal">
+  <div class="modal">
+    <h2>Välkommen till Rullen!</h2>
+    <p>Dagens filmquiz — 5 frågor, samma för alla. 12 sekunder per fråga, sen låses den. 1 poäng per rätt svar. Välj ett smeknamn för topplistan.</p>
+    <form id="name-form" onsubmit="return false;">
+      <input type="text" id="name-input" placeholder="Ditt smeknamn" maxlength="20" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false">
+      <button type="submit" class="btn" id="name-btn">Kör igång!</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="lb-modal">
+  <div class="modal" style="max-width:360px;text-align:left">
+    <h2 style="text-align:center;margin-bottom:14px">Totalställning</h2>
+    <div id="lb-modal-body"></div>
+    <button class="btn" style="margin-top:14px;background:var(--border)" onclick="document.getElementById('lb-modal').classList.add('hidden')">Stäng</button>
+  </div>
+</div>
+
+<main id="app">
+  <div class="card center muted" style="font-size:.9rem">Laddar dagens quiz…</div>
+</main>
+
+<script>
+// ── Identity (shared with the other games) ────────────────────────────────────
+function getPlayer(){ try{ return JSON.parse(localStorage.getItem('wp2_player')); }catch{ return null; } }
+function uuid(){ try{ return crypto.randomUUID(); }catch{} return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0;return (c==='x'?r:(r&0x3|0x8)).toString(16);}); }
+function savePlayer(name){ const p={id:uuid(),name:name.trim().slice(0,20)}; localStorage.setItem('wp2_player',JSON.stringify(p)); return p; }
+let player=getPlayer();
+
+const app=document.getElementById('app');
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const MEDALS=['🥇','🥈','🥉'];
+
+let curQ=null;     // current question payload from server {qIndex,qId,q,options,total,qShownAt,timeLimitMs}
+let picked=false;  // lock during the brief highlight before advancing
+let timerId=null;
+
+async function api(path,body){ const r=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}); return r.json().catch(()=>({})); }
+
+async function boot(){
+  if(!player) document.getElementById('name-modal').classList.remove('hidden');
+  let st={};
+  try{ const q=new URLSearchParams(); if(player) q.set('playerID',player.id); const r=await fetch('/api/quiz-state?'+q.toString()); st=await r.json(); }catch{}
+  window.__season=st.season||[];
+  if(st.played && st.result){ showResult(st.result); return; }
+  if(st.inProgress && player){ await beginQuiz(); return; }
+  showLanding();
+}
+
+function showLanding(){
+  app.innerHTML=`<div class="card center">
+    <div class="section-label">Dagens filmquiz</div>
+    <p class="muted" style="margin-bottom:16px;font-size:.9rem">5 frågor, 12 sekunder per fråga. Samma frågor för alla idag.</p>
+    <button class="btn" id="start-btn">Starta</button>
+  </div>`;
+  document.getElementById('start-btn').addEventListener('click',()=>{ if(!player){ document.getElementById('name-modal').classList.remove('hidden'); return; } beginQuiz(); });
+}
+
+async function beginQuiz(){
+  const j=await api('/api/quiz-start',{playerID:player.id,playerName:player.name});
+  if(j.already||j.played){ boot(); return; }
+  if(!j.qId){ toast('Kunde inte starta quizet'); showLanding(); return; }
+  curQ=j; picked=false;
+  renderQuestion();
+}
+
+function renderQuestion(){
+  app.innerHTML=`
+    <div class="card">
+      <div class="progress">
+        <span class="n">Fråga ${curQ.qIndex+1}/${curQ.total}</span>
+        <div class="timer-wrap"><div class="timer-fill" id="tfill"></div></div>
+      </div>
+      <div class="qtext">${esc(curQ.q)}</div>
+      <div class="opts" id="opts">${curQ.options.map(o=>`<button type="button" data-opt="${esc(o)}">${esc(o)}</button>`).join('')}</div>
+    </div>`;
+  document.querySelectorAll('#opts button').forEach(b=>b.addEventListener('click',()=>chooseAnswer(b.dataset.opt,b)));
+  runTimer();
+}
+
+function runTimer(){
+  if(timerId) clearInterval(timerId);
+  const shownAt=curQ.qShownAt, limit=curQ.timeLimitMs;
+  function tick(){
+    const left=Math.max(0, limit-(Date.now()-shownAt));
+    const pct=(left/limit)*100;
+    const fill=document.getElementById('tfill'); if(fill){ fill.style.width=pct+'%'; fill.className='timer-fill'+(left<=2000?' danger':left<=5000?' warn':''); }
+    if(left<=0){ clearInterval(timerId); if(!picked) chooseAnswer(null,null); }
+  }
+  tick(); timerId=setInterval(tick,100);
+}
+
+async function chooseAnswer(opt, btnEl){
+  if(picked) return; picked=true;
+  if(timerId) clearInterval(timerId);
+  document.querySelectorAll('#opts button').forEach(b=>{ b.disabled=true; if(b===btnEl) b.classList.add('sel'); });
+  const j=await api('/api/quiz-answer',{playerID:player.id,playerName:player.name,qIndex:curQ.qIndex,answer:opt});
+  if(j.done){ if(j.season) window.__season=j.season; showResult(j); return; }
+  if(!j.qId){ toast('Något gick fel'); return; }
+  curQ=j; picked=false;
+  setTimeout(renderQuestion, 350);
+}
+
+async function showResult(result){
+  const wrong = 5-result.score;
+  app.innerHTML=`
+    <div class="card">
+      <div class="section-label center">Dagens resultat</div>
+      <div class="scoreline"><span class="n">${result.score}<small> / 5</small></span></div>
+      <div id="breakdown"></div>
+    </div>
+    <div class="card"><div class="section-label">Totalställning</div><div id="lb-season"></div>
+      <div class="next-line">Ny quiz imorgon — kom tillbaka då!</div></div>`;
+  const box=document.getElementById('breakdown');
+  box.innerHTML=(result.breakdown||[]).map(b=>{
+    const ic = b.correct ? '✓' : '✗';
+    const yourLine = b.yourAnswer!=null
+      ? `Du svarade: <b>${esc(b.yourAnswer)}</b>`
+      : `<span class="muted">Inget svar (dags ute)</span>`;
+    const correctLine = b.correct ? '' : `<br>Rätt svar: <b>${esc(b.correctAnswer)}</b>`;
+    return `<div class="qrow"><div class="qh"><span class="ic">${ic}</span>${esc(b.q)}</div><div class="a">${yourLine}${correctLine}</div></div>`;
+  }).join('');
+  renderBoard('lb-season', window.__season||[]);
+}
+
+function renderBoard(elId, rows){
+  const el=document.getElementById(elId); if(!el) return;
+  if(!rows || !rows.length){ el.innerHTML='<div class="center muted" style="font-size:.84rem;padding:6px">Inga poäng än.</div>'; return; }
+  el.innerHTML = rows.map((s,i)=>{
+    const you = player && s.id===player.id;
+    const rank = i<3 ? `<span class="lb-rank medal">${MEDALS[i]}</span>` : `<span class="lb-rank">${i+1}</span>`;
+    const scoreCls = i<3 ? 'lb-score' : 'lb-score yellow';
+    return `<div class="lb-row${you?' lb-you':''}">${rank}<span class="lb-name">${esc(s.name)}${you?' 👈':''}</span><span class="${scoreCls}">${s.pts} p</span></div>`;
+  }).join('');
+}
+
+let toastTimer;
+function toast(msg, ms=1800){ const el=document.getElementById('toast'); el.textContent=msg; el.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove('show'),ms); }
+
+// ── Name modal + trophy ─────────────────────────────────────────────────────────
+function submitName(){ const inp=document.getElementById('name-input'); const name=inp?inp.value.trim():''; if(!name){ if(inp) inp.focus(); return; } player=savePlayer(name); document.getElementById('name-modal').classList.add('hidden'); boot(); }
+document.getElementById('name-form').addEventListener('submit',e=>{e.preventDefault();submitName();});
+document.getElementById('name-btn').addEventListener('click',submitName);
+
+document.getElementById('trophy-btn').addEventListener('click',async()=>{
+  document.getElementById('lb-modal').classList.remove('hidden');
+  document.getElementById('lb-modal-body').innerHTML='<div class="center muted" style="font-size:.85rem">Laddar…</div>';
+  try{
+    const q=new URLSearchParams(); if(player) q.set('playerID',player.id);
+    const r=await fetch('/api/quiz-state?'+q.toString()); const j=await r.json();
+    renderBoard('lb-modal-body', j.season||[]);
+  }catch{ document.getElementById('lb-modal-body').innerHTML='<div class="center muted" style="font-size:.85rem">Kunde inte ladda.</div>'; }
+});
+document.getElementById('lb-modal').addEventListener('click',e=>{ if(e.target.id==='lb-modal') e.currentTarget.classList.add('hidden'); });
+
+boot();
+</script>
+</body>
+</html>
