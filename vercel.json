@@ -10,9 +10,7 @@
     "api/plats-state.js": { "maxDuration": 10 },
     "api/plats-start.js": { "maxDuration": 10 },
     "api/plats-submit.js": { "maxDuration": 10 },
-    "api/quiz-state.js": { "maxDuration": 10 },
-    "api/quiz-start.js": { "maxDuration": 10 },
-    "api/quiz-answer.js": { "maxDuration": 10 },
+    "api/quiz-play.js": { "maxDuration": 10 },
     "api/quiz-admin.js": { "maxDuration": 10 }
   },
   "crons": [

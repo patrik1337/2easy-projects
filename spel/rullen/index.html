@@ -111,7 +111,7 @@ async function api(path,body){ const r=await fetch(path,{method:'POST',headers:{
 async function boot(){
   if(!player) document.getElementById('name-modal').classList.remove('hidden');
   let st={};
-  try{ const q=new URLSearchParams(); if(player) q.set('playerID',player.id); const r=await fetch('/api/quiz-state?'+q.toString()); st=await r.json(); }catch{}
+  try{ const q=new URLSearchParams(); if(player) q.set('playerID',player.id); const r=await fetch('/api/quiz-play?'+q.toString()); st=await r.json(); }catch{}
   window.__season=st.season||[];
   if(st.played && st.result){ showResult(st.result); return; }
   if(st.inProgress && player){ await beginQuiz(); return; }
@@ -128,7 +128,7 @@ function showLanding(){
 }
 
 async function beginQuiz(){
-  const j=await api('/api/quiz-start',{playerID:player.id,playerName:player.name});
+  const j=await api('/api/quiz-play',{playerID:player.id,playerName:player.name,phase:'start'});
   if(j.already||j.played){ boot(); return; }
   if(!j.qId){ toast('Kunde inte starta quizet'); showLanding(); return; }
   curQ=j; picked=false;
@@ -165,7 +165,7 @@ async function chooseAnswer(opt, btnEl){
   if(picked) return; picked=true;
   if(timerId) clearInterval(timerId);
   document.querySelectorAll('#opts button').forEach(b=>{ b.disabled=true; if(b===btnEl) b.classList.add('sel'); });
-  const j=await api('/api/quiz-answer',{playerID:player.id,playerName:player.name,qIndex:curQ.qIndex,answer:opt});
+  const j=await api('/api/quiz-play',{playerID:player.id,playerName:player.name,phase:'answer',qIndex:curQ.qIndex,answer:opt});
   if(j.done){ if(j.season) window.__season=j.season; showResult(j); return; }
   if(!j.qId){ toast('Något gick fel'); return; }
   curQ=j; picked=false;
@@ -218,7 +218,7 @@ document.getElementById('trophy-btn').addEventListener('click',async()=>{
   document.getElementById('lb-modal-body').innerHTML='<div class="center muted" style="font-size:.85rem">Laddar…</div>';
   try{
     const q=new URLSearchParams(); if(player) q.set('playerID',player.id);
-    const r=await fetch('/api/quiz-state?'+q.toString()); const j=await r.json();
+    const r=await fetch('/api/quiz-play?'+q.toString()); const j=await r.json();
     renderBoard('lb-modal-body', j.season||[]);
   }catch{ document.getElementById('lb-modal-body').innerHTML='<div class="center muted" style="font-size:.85rem">Kunde inte ladda.</div>'; }
 });

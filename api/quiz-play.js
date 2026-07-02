@@ -1,12 +1,81 @@
+// Consolidated: GET = state check, POST {phase:'start'} = begin/resume, POST
+// {phase:'answer', qIndex, answer} = grade one question. Merged from three
+// separate files into one to stay under Vercel's per-deployment function cap.
 const { kv, kvReady, awardPoints, readSeason } = require('./_score');
 const { todayStockholm, resolveTodayQuestions, getQuestion, publicQuestion, TIME_LIMIT_MS, GRACE_MS } = require('./_quiz');
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   if (req.method === 'OPTIONS') return res.status(200).end();
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
-  if (!kvReady()) return res.status(500).json({ error: 'Storage not configured' });
 
+  if (req.method === 'GET') return handleState(req, res);
+  if (req.method === 'POST') {
+    const phase = (req.body && req.body.phase) || 'start';
+    if (phase === 'answer') return handleAnswer(req, res);
+    return handleStart(req, res);
+  }
+  return res.status(405).json({ error: 'Method not allowed' });
+};
+
+async function handleState(req, res) {
+  res.setHeader('Cache-Control', 'no-store');
+  try {
+    const date = todayStockholm();
+    await resolveTodayQuestions(date); // pre-pick today's 5; never leaks them here
+
+    const playerID = req.query && req.query.playerID;
+    let result = null, inProgress = false, qIndex = 0;
+    if (playerID) {
+      const [r, idx] = await kv([
+        ['GET', `quiz:result:${date}:${playerID}`],
+        ['GET', `quiz:qidx:${date}:${playerID}`],
+      ]);
+      if (r) { try { result = JSON.parse(r); } catch (_) {} }
+      if (!result && idx != null) { inProgress = true; qIndex = Number(idx); }
+    }
+
+    const season = await readSeason(50);
+    return res.status(200).json({ date, played: Boolean(result), result, inProgress, qIndex, season });
+  } catch (e) {
+    return res.status(500).json({ error: 'state failed', detail: String((e && e.message) || e) });
+  }
+}
+
+async function handleStart(req, res) {
+  if (!kvReady()) return res.status(500).json({ error: 'Storage not configured' });
+  const { playerID, playerName } = req.body || {};
+  if (!playerID) return res.status(400).json({ error: 'playerID required' });
+
+  const date = todayStockholm();
+  const ids = await resolveTodayQuestions(date);
+  if (!ids || ids.length !== 5) return res.status(500).json({ error: 'No quiz available' });
+
+  const [done] = await kv([['GET', `quiz:result:${date}:${playerID}`]]);
+  if (done) return res.status(200).json({ already: true, played: true });
+
+  // Resume mid-quiz (e.g. page reload) at the same question, with a fresh timer —
+  // a reload doesn't skip or extend the anti-google window in any useful way.
+  const [existingIdx] = await kv([['GET', `quiz:qidx:${date}:${playerID}`]]);
+  const qIndex = existingIdx != null ? Number(existingIdx) : 0;
+
+  const qId = ids[qIndex];
+  const q = getQuestion(qId);
+  if (!q) return res.status(500).json({ error: 'Question missing' });
+
+  const now = Date.now();
+  const cmds = [
+    ['SET', `quiz:qidx:${date}:${playerID}`, String(qIndex)],
+    ['SET', `quiz:qshown:${date}:${playerID}`, String(now)],
+  ];
+  if (existingIdx == null) cmds.push(['SETNX', `quiz:start:${date}:${playerID}`, String(now)]);
+  if (playerName) cmds.push(['HSET', 'score:names', playerID, String(playerName).slice(0, 24)]);
+  await kv(cmds);
+
+  return res.status(200).json({ ...publicQuestion(q, qIndex), qShownAt: now, timeLimitMs: TIME_LIMIT_MS });
+}
+
+async function handleAnswer(req, res) {
+  if (!kvReady()) return res.status(500).json({ error: 'Storage not configured' });
   const { playerID, playerName, qIndex, answer } = req.body || {};
   const idx = Number(qIndex);
   if (!playerID || !Number.isInteger(idx) || idx < 0 || idx > 4) return res.status(400).json({ error: 'Invalid payload' });
@@ -58,4 +127,4 @@ module.exports = async (req, res) => {
   await kv([['SET', `quiz:result:${date}:${playerID}`, JSON.stringify(result)]]);
   const season = await readSeason(50);
   return res.status(200).json({ ...result, season });
-};
+}
