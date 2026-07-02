@@ -188,6 +188,9 @@ async function finish(){
 async function loadStateThen(cb){ try{ const q=new URLSearchParams(); if(player) q.set('playerID',player.id); const st=await api('/api/plats-play?'+q.toString()); window.__season=st.season||[]; }catch{} cb(); }
 
 function showResult(r){
+  // Local breadcrumb only (server is still the source of truth for gameplay) —
+  // lets the /spel front page show "Spelat" without an extra network call.
+  try{ localStorage.setItem('plats_played_'+new Date().toLocaleDateString('sv-SE',{timeZone:'Europe/Stockholm'}),'1'); }catch{}
   if(timer) clearInterval(timer);
   $('timer-wrap').style.display='none'; $('timer-num').style.display='none';
   $('city-name').innerHTML=`<b>${esc(r.city)}</b> <small>${esc(r.country)}</small>`;

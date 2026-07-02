@@ -74,12 +74,19 @@ function vmtipsSubmittedToday(){
   try{ for(let i=0;i<localStorage.length;i++){ if(localStorage.key(i).startsWith('1x2_pred_')) return true; } }catch{}
   return false;
 }
+// Pricken/Rullen leave a simple per-day breadcrumb once a result is shown.
+function prickenDoneToday(){
+  try{ return localStorage.getItem('plats_played_'+todaySthlm())==='1'; }catch{ return false; }
+}
+function rullenDoneToday(){
+  try{ return localStorage.getItem('quiz_played_'+todaySthlm())==='1'; }catch{ return false; }
+}
 
 const GAMES = [
   { slug:'ordle', name:'Ordel', icon:'🟩', desc:'Gissa det svenska 5-bokstavsordet på 6 försök.', done:ordelDoneToday() },
   { slug:'1x2',   name:'VM-Tips', icon:'⚽', desc:'Tippa dagens VM-match. Rätt utgång + rätt resultat ger poäng.', done:vmtipsSubmittedToday() },
-  { slug:'pricken', name:'Pricken', icon:'📍', desc:'Hitta dagens stad på världskartan. Närmare pricken = mer poäng.', done:false },
-  { slug:'rullen', name:'Rullen', icon:'🎬', desc:'Dagens filmquiz — 5 frågor, 12 sekunder per fråga.', done:false },
+  { slug:'pricken', name:'Pricken', icon:'📍', desc:'Hitta dagens stad på världskartan. Närmare pricken = mer poäng.', done:prickenDoneToday() },
+  { slug:'rullen', name:'Rullen', icon:'🎬', desc:'Dagens filmquiz — 5 frågor, 12 sekunder per fråga.', done:rullenDoneToday() },
 ];
 
 const grid=document.getElementById('games-grid');

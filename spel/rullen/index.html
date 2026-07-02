@@ -173,6 +173,9 @@ async function chooseAnswer(opt, btnEl){
 }
 
 async function showResult(result){
+  // Local breadcrumb only (server is still the source of truth for gameplay) —
+  // lets the /spel front page show "Spelat" without an extra network call.
+  try{ localStorage.setItem('quiz_played_'+new Date().toLocaleDateString('sv-SE',{timeZone:'Europe/Stockholm'}),'1'); }catch{}
   const wrong = 5-result.score;
   app.innerHTML=`
     <div class="card">
