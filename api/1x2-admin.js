@@ -203,9 +203,11 @@ module.exports = async (req, res) => {
     // playerID. Sums 1x2:season into the target, removes the source rows from the
     // leaderboard, and drops their now-orphaned name mapping. Historical per-match
     // prediction records (tied to the old ids) are left as-is — only the ongoing
-    // season total is consolidated.
+    // season total is consolidated. Optional newName covers the case where the
+    // surviving id's own display name isn't the one you want going forward (e.g.
+    // keeping someone's currently-active browser identity but relabeling it).
     if (action === 'mergePlayers') {
-      const { targetPlayerID, sourcePlayerIDs } = body;
+      const { targetPlayerID, sourcePlayerIDs, newName } = body;
       if (!targetPlayerID || !Array.isArray(sourcePlayerIDs) || !sourcePlayerIDs.length) {
         return res.status(400).json({ error: 'targetPlayerID + sourcePlayerIDs[] required' });
       }
@@ -216,8 +218,9 @@ module.exports = async (req, res) => {
       const cmds = [];
       if (totalToAdd !== 0) cmds.push(['ZINCRBY', '1x2:season', String(totalToAdd), targetPlayerID]);
       ids.forEach((id) => { cmds.push(['ZREM', '1x2:season', id], ['HDEL', '1x2:names', id]); });
+      if (newName && newName.trim()) cmds.push(['HSET', '1x2:names', targetPlayerID, newName.trim().slice(0, 20)]);
       await kv(cmds);
-      return res.status(200).json({ ok: true, merged: ids.length, pointsAdded: totalToAdd });
+      return res.status(200).json({ ok: true, merged: ids.length, pointsAdded: totalToAdd, renamedTo: newName || null });
     }
 
     // Enter / correct a final result (incl. bonus answers) and grade.

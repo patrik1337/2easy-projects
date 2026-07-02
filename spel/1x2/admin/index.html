@@ -121,11 +121,14 @@ button.danger{background:var(--red)}
 
     <div class="card">
       <h2>4 · Slå ihop dubbla spelare</h2>
-      <div class="hint">Om någon fått en ny profil (t.ex. var tvungen att logga in igen) delas poängen upp på två rader i topplistan. Sök på namnet, välj vilken rad som ska vara kvar, resten slås ihop in i den.</div>
-      <label>Spelarens namn</label>
-      <input id="merge-name" placeholder="t.ex. Mint">
-      <button class="sec" onclick="findPlayers()">Hitta spelare</button>
+      <div class="hint">Om någon fått en ny profil (t.ex. var tvungen att logga in igen, eller råkade spela under ett smeknamn från ett annat spel) delas poängen upp på två rader. Sök upp varje rad för sig (namnen behöver inte matcha) — de läggs till i listan nedan — välj sedan vilken rad som ska vara kvar.</div>
+      <label>Sök spelarens namn</label>
+      <input id="merge-name" placeholder="t.ex. Per — sök igen med t.ex. ReggaeMan för att lägga till fler">
+      <button class="sec" onclick="findPlayers()">Lägg till i listan</button>
+      <button class="sec" onclick="clearMergeList()">Rensa listan</button>
       <div id="merge-list"></div>
+      <label>Nytt namn för den kvarvarande raden (valfritt)</label>
+      <input id="merge-newname" placeholder="Lämna tomt för att behålla dess nuvarande namn">
       <button onclick="mergePlayers()">Slå ihop poäng</button>
       <div class="msg" id="m-merge"></div>
     </div>
@@ -340,39 +343,54 @@ async function regrade(){
   const {ok,j}=await api({action:'regrade',matchId,hs,as,bonus:gatherBonus()});
   msg('m-result',ok,ok?'Omräknat till '+hs+'–'+as+'.':(j.error||'Fel'));
 }
+// Accumulates across multiple searches (by playerID) so rows with DIFFERENT
+// display names — e.g. "Per" and "ReggaeMan" being the same person — can be
+// looked up one at a time and merged together, not just exact-name duplicates.
+let MERGE_CANDIDATES=[];
+function renderMergeList(){
+  const box=document.getElementById('merge-list');
+  if(!MERGE_CANDIDATES.length){ box.innerHTML=''; return; }
+  if(MERGE_CANDIDATES.length===1){
+    box.innerHTML=`<div class="hint">1 rad i listan (${MERGE_CANDIDATES[0].name}, ${MERGE_CANDIDATES[0].points} p). Sök upp minst en till för att slå ihop.</div>`;
+    return;
+  }
+  const prevChecked=(document.querySelector('input[name="merge-target"]:checked')||{}).value;
+  box.innerHTML = '<div class="hint" style="margin-top:10px">Välj vilken rad som ska behållas — resten slås ihop in i den:</div>' +
+    MERGE_CANDIDATES.map((p,i)=>`
+      <label style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #2b2b2c">
+        <input type="radio" name="merge-target" value="${p.playerID}" ${(prevChecked?prevChecked===p.playerID:i===0)?'checked':''}>
+        <span style="flex:1;font-size:.88rem">${p.name} <span style="color:#818384">(${p.playerID})</span></span>
+        <span style="font-weight:700">${p.points} p</span>
+      </label>`).join('');
+}
+function clearMergeList(){
+  MERGE_CANDIDATES=[]; renderMergeList();
+  document.getElementById('merge-name').value=''; document.getElementById('merge-newname').value='';
+  msg('m-merge',true,''); document.getElementById('m-merge').className='msg';
+}
 async function findPlayers(){
   const name=document.getElementById('merge-name').value.trim();
   if(!name){ msg('m-merge',false,'Ange ett namn'); return; }
   const {ok,j}=await api({action:'findPlayersByName',name});
-  const box=document.getElementById('merge-list');
-  if(!ok){ box.innerHTML=''; msg('m-merge',false,j.error||'Fel'); return; }
-  if(!j.players.length){ box.innerHTML=''; msg('m-merge',false,'Ingen spelare hittad med det namnet.'); return; }
+  if(!ok){ msg('m-merge',false,j.error||'Fel'); return; }
+  if(!j.players.length){ msg('m-merge',false,'Ingen spelare hittad med namnet "'+name+'".'); return; }
+  j.players.forEach(p=>{ if(!MERGE_CANDIDATES.some(c=>c.playerID===p.playerID)) MERGE_CANDIDATES.push(p); });
   document.getElementById('m-merge').className='msg';
-  if(j.players.length===1){
-    box.innerHTML=`<div class="hint">Bara en rad hittad (${j.players[0].points} p) — inget att slå ihop.</div>`;
-    return;
-  }
-  box.innerHTML = '<div class="hint" style="margin-top:10px">Välj vilken rad som ska behållas — resten slås ihop in i den:</div>' +
-    j.players.map((p,i)=>`
-      <label style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #2b2b2c">
-        <input type="radio" name="merge-target" value="${p.playerID}" ${i===0?'checked':''}>
-        <span style="flex:1;font-size:.88rem">${p.name} <span style="color:#818384">(${p.playerID})</span></span>
-        <span style="font-weight:700">${p.points} p</span>
-      </label>`).join('');
-  box.dataset.ids = j.players.map(p=>p.playerID).join(',');
+  document.getElementById('merge-name').value='';
+  renderMergeList();
 }
 async function mergePlayers(){
-  const box=document.getElementById('merge-list');
-  const ids=(box.dataset.ids||'').split(',').filter(Boolean);
-  if(ids.length<2){ msg('m-merge',false,'Klicka "Hitta spelare" och välj en rad att behålla först.'); return; }
+  if(MERGE_CANDIDATES.length<2){ msg('m-merge',false,'Sök upp minst två rader att slå ihop (t.ex. sök "Per", sedan sök "ReggaeMan").'); return; }
   const targetEl=document.querySelector('input[name="merge-target"]:checked');
   if(!targetEl){ msg('m-merge',false,'Välj vilken rad som ska behållas.'); return; }
   const targetPlayerID=targetEl.value;
-  const sourcePlayerIDs=ids.filter(id=>id!==targetPlayerID);
-  if(!confirm('Slå ihop '+sourcePlayerIDs.length+' rad(er) in i den valda? Går inte att ångra.')) return;
-  const {ok,j}=await api({action:'mergePlayers',targetPlayerID,sourcePlayerIDs});
-  msg('m-merge',ok,ok?`Klart — ${j.merged} rad(er) ihopslagna, +${j.pointsAdded} p flyttade.`:(j.error||'Fel'));
-  if(ok) box.innerHTML='';
+  const sourcePlayerIDs=MERGE_CANDIDATES.map(p=>p.playerID).filter(id=>id!==targetPlayerID);
+  const newName=document.getElementById('merge-newname').value.trim();
+  const confirmMsg='Slå ihop '+sourcePlayerIDs.length+' rad(er) in i den valda'+(newName?(' och byta namn till "'+newName+'"'):'')+'? Går inte att ångra.';
+  if(!confirm(confirmMsg)) return;
+  const {ok,j}=await api({action:'mergePlayers',targetPlayerID,sourcePlayerIDs,newName:newName||undefined});
+  msg('m-merge',ok,ok?`Klart — ${j.merged} rad(er) ihopslagna, +${j.pointsAdded} p flyttade${j.renamedTo?(', namn satt till "'+j.renamedTo+'"'):''}.`:(j.error||'Fel'));
+  if(ok){ MERGE_CANDIDATES=[]; renderMergeList(); document.getElementById('merge-newname').value=''; }
 }
 async function resetSeason(){
   if(!confirm('Nollställa hela 1x2-topplistan? Detta raderar alla poäng och går inte att ångra.')) return;
