@@ -1,6 +1,20 @@
 {
-  "generatedAt": "2026-07-03T13:31:03.028Z",
+  "generatedAt": "2026-07-04T12:56:36.915Z",
   "transfers": [
+    {
+      "date": "2026-07-04",
+      "player": "FrosT",
+      "from": "None",
+      "to": "(Head Coach)",
+      "game": "Valorant"
+    },
+    {
+      "date": "2026-07-04",
+      "player": "cb",
+      "from": "None",
+      "to": "None",
+      "game": "Valorant"
+    },
     {
       "date": "2026-07-03",
       "player": "seph1roth",
@@ -26,6 +40,34 @@
       "date": "2026-07-03",
       "player": "olifant",
       "from": "(Analyst)",
+      "to": "None",
+      "game": "Valorant"
+    },
+    {
+      "date": "2026-07-02",
+      "player": "Tunaso",
+      "from": "None",
+      "to": "None",
+      "game": "Valorant"
+    },
+    {
+      "date": "2026-07-02",
+      "player": "Yuna",
+      "from": "(Substitute)",
+      "to": "None",
+      "game": "Valorant"
+    },
+    {
+      "date": "2026-07-02",
+      "player": "Rober",
+      "from": "(Head Coach)",
+      "to": "None",
+      "game": "Valorant"
+    },
+    {
+      "date": "2026-07-02",
+      "player": "Soren",
+      "from": "(Assistant Coach)",
       "to": "None",
       "game": "Valorant"
     },
@@ -65,46 +107,18 @@
       "game": "Valorant"
     },
     {
-      "date": "2026-07-02",
-      "player": "braind3ad",
+      "date": "2026-07-03",
+      "player": "InFlame",
       "from": "None",
-      "to": "None",
-      "game": "Valorant"
+      "to": "DOG",
+      "game": "League of Legends"
     },
     {
-      "date": "2026-07-02",
-      "player": "SiLenT",
-      "from": "None",
-      "to": "(Coach)",
-      "game": "Valorant"
-    },
-    {
-      "date": "2026-07-02",
-      "player": "hqna",
-      "from": "(Coach)",
-      "to": "None",
-      "game": "Valorant"
-    },
-    {
-      "date": "2026-07-02",
-      "player": "vuxqt",
-      "from": "None",
-      "to": "None",
-      "game": "Valorant"
-    },
-    {
-      "date": "2026-07-01",
-      "player": "basic",
-      "from": "(Substitute)",
-      "to": "None",
-      "game": "Valorant"
-    },
-    {
-      "date": "2026-07-01",
-      "player": "GRUBINHO",
-      "from": "None",
-      "to": "None",
-      "game": "Valorant"
+      "date": "2026-07-03",
+      "player": "Redemption",
+      "from": "DOG",
+      "to": "DOG(Substitute)",
+      "game": "League of Legends"
     },
     {
       "date": "2026-07-03",
@@ -198,18 +212,81 @@
       "game": "League of Legends"
     },
     {
-      "date": "2026-07-01",
-      "player": "Oddie",
-      "from": "FUE",
+      "date": "2026-07-03",
+      "player": "tge",
+      "from": "(Inactive Coach)",
       "to": "None",
-      "game": "League of Legends"
+      "game": "Counter-Strike"
     },
     {
-      "date": "2026-07-01",
-      "player": "Samikin",
+      "date": "2026-07-03",
+      "player": "Jimpphat",
       "from": "None",
-      "to": "WU",
-      "game": "League of Legends"
+      "to": "None",
+      "game": "Counter-Strike"
+    },
+    {
+      "date": "2026-07-03",
+      "player": "ashhh",
+      "from": "None",
+      "to": "(Coach)",
+      "game": "Counter-Strike"
+    },
+    {
+      "date": "2026-07-03",
+      "player": "Kvem",
+      "from": "None",
+      "to": "None",
+      "game": "Counter-Strike"
+    },
+    {
+      "date": "2026-07-03",
+      "player": "ewjerkz",
+      "from": "None",
+      "to": "None",
+      "game": "Counter-Strike"
+    },
+    {
+      "date": "2026-07-03",
+      "player": "story",
+      "from": "(Inactive)",
+      "to": "None",
+      "game": "Counter-Strike"
+    },
+    {
+      "date": "2026-07-03",
+      "player": "MUTiRiS",
+      "from": "(Inactive)",
+      "to": "None",
+      "game": "Counter-Strike"
+    },
+    {
+      "date": "2026-07-03",
+      "player": "tuxa",
+      "from": "None",
+      "to": "None",
+      "game": "Counter-Strike"
+    },
+    {
+      "date": "2026-07-03",
+      "player": "b1elany",
+      "from": "None",
+      "to": "None",
+      "game": "Counter-Strike"
+    },
+    {
+      "date": "2026-07-03",
+      "player": "nicoodoz",
+      "from": "(Inactive)",
+      "to": "None",
+      "game": "Counter-Strike"
+    },
+    {
+      "date": "2026-07-03",
+      "player": "mwlky",
+      "from": "None",
+      "to": "(Inactive)",
+      "game": "Counter-Strike"
     },
     {
       "date": "2026-07-03",
@@ -227,94 +304,31 @@
     },
     {
       "date": "2026-07-03",
+      "player": "Lapa",
+      "from": "None",
+      "to": "None",
+      "game": "Counter-Strike"
+    },
+    {
+      "date": "2026-07-03",
       "player": "clax",
       "from": "(Inactive)",
       "to": "None",
       "game": "Counter-Strike"
     },
     {
-      "date": "2026-07-02",
-      "player": "MAJ3R",
-      "from": "None",
-      "to": "(Inactive)",
-      "game": "Counter-Strike"
-    },
-    {
-      "date": "2026-07-02",
-      "player": "Jimpphat",
-      "from": "(Inactive)",
-      "to": "None",
-      "game": "Counter-Strike"
-    },
-    {
-      "date": "2026-07-02",
-      "player": "Sn0w",
+      "date": "2026-07-03",
+      "player": "Emo",
       "from": "None",
       "to": "None",
-      "game": "Counter-Strike"
+      "game": "Dota 2"
     },
     {
-      "date": "2026-07-02",
-      "player": "FL4MUS",
-      "from": "/ (Loan/Inactive)",
-      "to": "(Inactive)",
-      "game": "Counter-Strike"
-    },
-    {
-      "date": "2026-07-02",
-      "player": "bullet",
-      "from": "None",
-      "to": "(Coach)",
-      "game": "Counter-Strike"
-    },
-    {
-      "date": "2026-07-02",
-      "player": "story",
-      "from": "None",
-      "to": "(Inactive)",
-      "game": "Counter-Strike"
-    },
-    {
-      "date": "2026-07-02",
-      "player": "YINXING",
-      "from": "(Coach/Manager)",
-      "to": "/ (Coach/Assistant Coach)",
-      "game": "Counter-Strike"
-    },
-    {
-      "date": "2026-07-01",
-      "player": "freakazoid",
+      "date": "2026-07-03",
+      "player": "Setsu",
       "from": "None",
       "to": "None",
-      "game": "Counter-Strike"
-    },
-    {
-      "date": "2026-07-01",
-      "player": "OrangeZ",
-      "from": "None",
-      "to": "None",
-      "game": "Counter-Strike"
-    },
-    {
-      "date": "2026-07-01",
-      "player": "jL",
-      "from": "(Inactive)",
-      "to": "None",
-      "game": "Counter-Strike"
-    },
-    {
-      "date": "2026-07-01",
-      "player": "cairne",
-      "from": "(Inactive)",
-      "to": "None",
-      "game": "Counter-Strike"
-    },
-    {
-      "date": "2026-07-01",
-      "player": "Gizmy",
-      "from": "None",
-      "to": "None",
-      "game": "Counter-Strike"
+      "game": "Dota 2"
     },
     {
       "date": "2026-06-29",
@@ -408,18 +422,81 @@
       "game": "Dota 2"
     },
     {
-      "date": "2026-06-07",
-      "player": "Darklord^",
+      "date": "2026-07-03",
+      "player": "PNDH",
       "from": "None",
-      "to": "None",
-      "game": "Dota 2"
+      "to": "M80",
+      "game": "Rocket League"
     },
     {
-      "date": "2026-06-07",
-      "player": "yowaai",
-      "from": "None",
+      "date": "2026-07-03",
+      "player": "noly",
+      "from": "M80",
       "to": "None",
-      "game": "Dota 2"
+      "game": "Rocket League"
+    },
+    {
+      "date": "2026-07-03",
+      "player": "ApparentlyJack",
+      "from": "None",
+      "to": "DIG",
+      "game": "Rocket League"
+    },
+    {
+      "date": "2026-07-03",
+      "player": "Crispy",
+      "from": "100%",
+      "to": "VOL",
+      "game": "Rocket League"
+    },
+    {
+      "date": "2026-07-03",
+      "player": "Kasper",
+      "from": "100% (Coach)",
+      "to": "VOL(Coach)",
+      "game": "Rocket League"
+    },
+    {
+      "date": "2026-07-03",
+      "player": "Pierrette",
+      "from": "100% (Manager)",
+      "to": "VOL(Manager)",
+      "game": "Rocket League"
+    },
+    {
+      "date": "2026-07-02",
+      "player": "Czudo",
+      "from": "ELIA",
+      "to": "NOKR",
+      "game": "Rocket League"
+    },
+    {
+      "date": "2026-07-02",
+      "player": "Akcss",
+      "from": "ELIA (Manager)",
+      "to": "NOKR(Manager)",
+      "game": "Rocket League"
+    },
+    {
+      "date": "2026-07-02",
+      "player": "ANDYTHEMANDY",
+      "from": "None",
+      "to": "PCSS(Coach)",
+      "game": "Rocket League"
+    },
+    {
+      "date": "2026-07-01",
+      "player": "ignaa",
+      "from": "None",
+      "to": "LMIX(Coach)",
+      "game": "Rocket League"
+    },
+    {
+      "date": "2026-07-01",
+      "player": "Hopeless",
+      "from": "None",
+      "to": "LMIX",
+      "game": "Rocket League"
     },
     {
       "date": "2026-07-01",
@@ -447,83 +524,6 @@
       "player": "lilook2",
       "from": "None",
       "to": "PXR(Manager)",
-      "game": "Rocket League"
-    },
-    {
-      "date": "2026-07-01",
-      "player": "shallow",
-      "from": "PXR",
-      "to": "None",
-      "game": "Rocket League"
-    },
-    {
-      "date": "2026-07-01",
-      "player": "Byra",
-      "from": "ZAVE",
-      "to": "None",
-      "game": "Rocket League"
-    },
-    {
-      "date": "2026-07-01",
-      "player": "Shiger Tark",
-      "from": "ZAVE (Coach)",
-      "to": "None",
-      "game": "Rocket League"
-    },
-    {
-      "date": "2026-07-01",
-      "player": "Xelty",
-      "from": "TRKF",
-      "to": "None",
-      "game": "Rocket League"
-    },
-    {
-      "date": "2026-07-01",
-      "player": "kaybi",
-      "from": "TRKF (Coach)",
-      "to": "None",
-      "game": "Rocket League"
-    },
-    {
-      "date": "2026-07-01",
-      "player": "Boubource",
-      "from": "TRKF (Manager)",
-      "to": "None",
-      "game": "Rocket League"
-    },
-    {
-      "date": "2026-07-01",
-      "player": "MayKo",
-      "from": "PMR",
-      "to": "TRKF",
-      "game": "Rocket League"
-    },
-    {
-      "date": "2026-07-01",
-      "player": "Reijin",
-      "from": "PMR (Manager)",
-      "to": "TRKF(Manager)",
-      "game": "Rocket League"
-    },
-    {
-      "date": "2026-07-01",
-      "player": "Mat.",
-      "from": "KALO",
-      "to": "PCSS",
-      "game": "Rocket League"
-    },
-    {
-      "date": "2026-07-01",
-      "player": "Mozzarella",
-      "from": "GW",
-      "to": "PCSS",
-      "game": "Rocket League"
-    },
-    {
-      "date": "2026-07-01",
-      "player": "Smokez",
-      "from": "None",
-      "to": "PCSS",
       "game": "Rocket League"
     },
     {
@@ -632,6 +632,13 @@
       "game": "Overwatch"
     },
     {
+      "date": "2026-07-27",
+      "player": "K1ller",
+      "from": "(Analyst)",
+      "to": "None",
+      "game": "Rainbow Six Siege"
+    },
+    {
       "date": "2026-07-02",
       "player": "Capii",
       "from": "None",
@@ -727,13 +734,6 @@
       "player": "Polo",
       "from": "None",
       "to": "None",
-      "game": "Rainbow Six Siege"
-    },
-    {
-      "date": "2026-06-30",
-      "player": "VCent",
-      "from": "(Coach)",
-      "to": "(Coach)",
       "game": "Rainbow Six Siege"
     },
     {
@@ -947,8 +947,85 @@
       "game": "Call of Duty"
     },
     {
+      "date": "2026-07-04",
+      "player": "Ratgun",
+      "from": "None",
+      "to": "None",
+      "game": "Fortnite"
+    },
+    {
+      "date": "2026-07-03",
+      "player": "Gurabon",
+      "from": "None",
+      "to": "None",
+      "game": "Fortnite"
+    },
+    {
+      "date": "2026-07-03",
+      "player": "Mirooz",
+      "from": "None",
+      "to": "None",
+      "game": "Fortnite"
+    },
+    {
+      "date": "2026-07-03",
+      "player": "Craked",
+      "from": "None",
+      "to": "None",
+      "game": "Fortnite"
+    },
+    {
+      "date": "2026-07-03",
+      "player": "Kacpi",
+      "from": "None",
+      "to": "None",
+      "game": "Fortnite"
+    },
+    {
+      "date": "2026-07-03",
+      "player": "Snayzy",
+      "from": "(Ambassador)",
+      "to": "None",
+      "game": "Fortnite"
+    },
+    {
+      "date": "2026-07-03",
+      "player": "Skyjump",
+      "from": "None",
+      "to": "None",
+      "game": "Fortnite"
+    },
+    {
+      "date": "2026-07-03",
+      "player": "JarKo",
+      "from": "None",
+      "to": "None",
+      "game": "Fortnite"
+    },
+    {
+      "date": "2026-07-02",
+      "player": "Ame",
+      "from": "None",
+      "to": "None",
+      "game": "Fortnite"
+    },
+    {
+      "date": "2026-07-02",
+      "player": "Marco",
+      "from": "None",
+      "to": "None",
+      "game": "Fortnite"
+    },
+    {
       "date": "2026-07-01",
       "player": "Larim",
+      "from": "None",
+      "to": "None",
+      "game": "Fortnite"
+    },
+    {
+      "date": "2026-07-01",
+      "player": "Craked",
       "from": "None",
       "to": "None",
       "game": "Fortnite"
@@ -970,83 +1047,6 @@
     {
       "date": "2026-06-30",
       "player": "Kirwa",
-      "from": "None",
-      "to": "None",
-      "game": "Fortnite"
-    },
-    {
-      "date": "2026-06-30",
-      "player": "Rex",
-      "from": "None",
-      "to": "None",
-      "game": "Fortnite"
-    },
-    {
-      "date": "2026-06-30",
-      "player": "Nanihirin",
-      "from": "None",
-      "to": "None",
-      "game": "Fortnite"
-    },
-    {
-      "date": "2026-06-30",
-      "player": "Redwing",
-      "from": "None",
-      "to": "None",
-      "game": "Fortnite"
-    },
-    {
-      "date": "2026-06-30",
-      "player": "Raeru",
-      "from": "None",
-      "to": "None",
-      "game": "Fortnite"
-    },
-    {
-      "date": "2026-06-30",
-      "player": "rarattey",
-      "from": "None",
-      "to": "None",
-      "game": "Fortnite"
-    },
-    {
-      "date": "2026-06-30",
-      "player": "Smile",
-      "from": "None",
-      "to": "None",
-      "game": "Fortnite"
-    },
-    {
-      "date": "2026-06-30",
-      "player": "KanA",
-      "from": "None",
-      "to": "None",
-      "game": "Fortnite"
-    },
-    {
-      "date": "2026-06-30",
-      "player": "Alice",
-      "from": "None",
-      "to": "(Streamer)",
-      "game": "Fortnite"
-    },
-    {
-      "date": "2026-06-30",
-      "player": "Pepo",
-      "from": "None",
-      "to": "None",
-      "game": "Fortnite"
-    },
-    {
-      "date": "2026-06-29",
-      "player": "Coldr",
-      "from": "None",
-      "to": "None",
-      "game": "Fortnite"
-    },
-    {
-      "date": "2026-06-29",
-      "player": "Hern",
       "from": "None",
       "to": "None",
       "game": "Fortnite"
@@ -1262,6 +1262,20 @@
       "game": "PUBG Mobile"
     },
     {
+      "date": "2026-07-04",
+      "player": "BS",
+      "from": "TEN",
+      "to": "None",
+      "game": "Mobile Legends"
+    },
+    {
+      "date": "2026-07-03",
+      "player": "Saviom",
+      "from": "EF",
+      "to": "None",
+      "game": "Mobile Legends"
+    },
+    {
       "date": "2026-07-03",
       "player": "Grifthhhh",
       "from": "TEN",
@@ -1287,6 +1301,13 @@
       "player": "Black",
       "from": "THRN / AI (Loan/Inactive)",
       "to": "AI(Inactive)",
+      "game": "Mobile Legends"
+    },
+    {
+      "date": "2026-07-01",
+      "player": "TheLastHope",
+      "from": "None",
+      "to": "KOG",
       "game": "Mobile Legends"
     },
     {
@@ -1344,135 +1365,37 @@
       "from": "SR",
       "to": "None",
       "game": "Mobile Legends"
-    },
-    {
-      "date": "2026-06-24",
-      "player": "Trap",
-      "from": "SR",
-      "to": "SR",
-      "game": "Mobile Legends"
-    },
-    {
-      "date": "2026-06-24",
-      "player": "Raizan",
-      "from": "RA",
-      "to": "SR",
-      "game": "Mobile Legends"
-    },
-    {
-      "date": "2026-06-24",
-      "player": "Mexi",
-      "from": "None",
-      "to": "SR",
-      "game": "Mobile Legends"
-    },
-    {
-      "date": "2026-07-02",
-      "player": "Jakkapat",
-      "from": "TEN",
-      "to": "None",
-      "game": "Honor of Kings"
-    },
-    {
-      "date": "2026-06-29",
-      "player": "Alan",
-      "from": "None",
-      "to": "ANK",
-      "game": "Honor of Kings"
-    },
-    {
-      "date": "2026-06-27",
-      "player": "Arby",
-      "from": "ANK",
-      "to": "None",
-      "game": "Honor of Kings"
-    },
-    {
-      "date": "2026-06-25",
-      "player": "Celia",
-      "from": "None",
-      "to": "HKU",
-      "game": "Honor of Kings"
-    },
-    {
-      "date": "2026-06-25",
-      "player": "YuXin",
-      "from": "DCG",
-      "to": "DCG",
-      "game": "Honor of Kings"
-    },
-    {
-      "date": "2026-06-25",
-      "player": "Loco",
-      "from": "HKU",
-      "to": "DCG",
-      "game": "Honor of Kings"
-    },
-    {
-      "date": "2026-06-23",
-      "player": "Fleur",
-      "from": "RWH",
-      "to": "JGE",
-      "game": "Honor of Kings"
-    },
-    {
-      "date": "2026-06-23",
-      "player": "Zeipee",
-      "from": "TRND",
-      "to": "JGE",
-      "game": "Honor of Kings"
-    },
-    {
-      "date": "2026-06-23",
-      "player": "Xuxie",
-      "from": "SGD",
-      "to": "1S",
-      "game": "Honor of Kings"
-    },
-    {
-      "date": "2026-06-23",
-      "player": "Hon",
-      "from": "None",
-      "to": "1S",
-      "game": "Honor of Kings"
-    },
-    {
-      "date": "2026-06-17",
-      "player": "YuYi",
-      "from": "None",
-      "to": "JAG",
-      "game": "Honor of Kings"
-    },
-    {
-      "date": "2026-06-17",
-      "player": "Gaoki",
-      "from": "RRQ",
-      "to": "None",
-      "game": "Honor of Kings"
-    },
-    {
-      "date": "2026-06-17",
-      "player": "XuanKai",
-      "from": "None",
-      "to": "TTG",
-      "game": "Honor of Kings"
-    },
-    {
-      "date": "2026-06-16",
-      "player": "DaHe",
-      "from": "JDG",
-      "to": "TKL",
-      "game": "Honor of Kings"
-    },
-    {
-      "date": "2026-06-15",
-      "player": "Phoenix",
-      "from": "SPN",
-      "to": "None",
-      "game": "Honor of Kings"
     }
   ],
   "news": [
+    {
+      "title": "World Cup 2026 Round of 16 Mexico vs. England Prediction &#038; Best Bets",
+      "link": "https://esports-news.co.uk/2026/07/04/world-cup-round-of-16-mexico-england-predictions/",
+      "pubDate": "2026-07-04T11:37:39.000Z",
+      "source": "Esports News UK",
+      "section": "headlines"
+    },
+    {
+      "title": "World Cup 2026 Round of 16 Brazil vs. Norway Prediction &#038; Best Bets",
+      "link": "https://esports-news.co.uk/2026/07/04/world-cup-round-of-16-brazil-norway-predictions/",
+      "pubDate": "2026-07-04T11:33:10.000Z",
+      "source": "Esports News UK",
+      "section": "headlines"
+    },
+    {
+      "title": "Puppey returns as a coach, SumaiL hints at retirement, China&#8217;s chance at redemption: the best storylines going into The International 15",
+      "link": "https://esportsinsider.com/2026/07/the-international-15-storylines",
+      "pubDate": "2026-07-03T17:49:57.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
+    },
+    {
+      "title": "Kalshi&#8217;s June esports data shows a $231.8M market dominated by Counter-Strike",
+      "link": "https://esportsinsider.com/2026/07/kalshi-esports-prediction-markets-june-2026",
+      "pubDate": "2026-07-03T15:58:49.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
+    },
     {
       "title": "T1&#8217;s Riftbound cards revealed during MSI, showcasing players and collectors versions",
       "link": "https://esports-news.co.uk/2026/07/03/t1s-riftbound-cards-revealed-during-msi-showcasing-players-and-collectors-versions/",
@@ -1548,13 +1471,6 @@
       "link": "https://dotesports.com/general/news/fatal-fury-city-wolves-comeback",
       "pubDate": "2026-07-02T12:39:09.000Z",
       "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "How to watch EWC 2026 Valorant: Stream, schedule, results, teams",
-      "link": "https://www.dexerto.com/valorant/how-to-watch-ewc-2026-valorant-stream-schedule-results-teams-3381824/",
-      "pubDate": "2026-07-02T11:22:55.000Z",
-      "source": "Dexerto",
       "section": "headlines"
     },
     {
@@ -1684,20 +1600,6 @@
       "section": "headlines"
     },
     {
-      "title": "World Cup 2026 R32 Australia vs. Egypt Prediction: Knockout Preview &#038; Best Bets",
-      "link": "https://esports-news.co.uk/2026/06/30/world-cup-r32-australia-egypt-predictions/",
-      "pubDate": "2026-06-30T08:34:39.000Z",
-      "source": "Esports News UK",
-      "section": "headlines"
-    },
-    {
-      "title": "World Cup 2026 R32 Colombia vs. Ghana Prediction: Knockout Preview &#038; Best Bets",
-      "link": "https://esports-news.co.uk/2026/06/30/world-cup-r32-colombia-ghana-predictions/",
-      "pubDate": "2026-06-30T08:19:34.000Z",
-      "source": "Esports News UK",
-      "section": "headlines"
-    },
-    {
       "title": "&#8220;Being together and doing hype stuff is important&#8221;: Invincible VS devs discuss locals, trash talk, and working with the FGC",
       "link": "https://esportsinsider.com/2026/06/invincible-vs-devs-interview-locals-fgc",
       "pubDate": "2026-06-29T06:05:34.000Z",
@@ -1708,20 +1610,6 @@
       "title": "&#8220;I want to be an icon like SonicFox&#8221;: Hikari wins 2XKO tourney at Evo Vegas 2026",
       "link": "https://esportsinsider.com/2026/06/hikari-interview-2xko-evo-vegas-2026",
       "pubDate": "2026-06-29T00:26:12.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
-    },
-    {
-      "title": "&#8220;That saltiness and anger stays with the game&#8221;: MenaRD on Kemonomichi controversy, Evo Vegas, and what keeps him positive at every tourney",
-      "link": "https://esportsinsider.com/2026/06/menard-interview-evo-vegas-2026",
-      "pubDate": "2026-06-27T22:08:11.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
-    },
-    {
-      "title": "“We’ve gained so much resilience”: One kiNgg and his four rookies. The winning formula in VCT 2026 and beyond",
-      "link": "https://esportsinsider.com/2026/06/kingg-interview-rookies-dominate-vct-masters-london",
-      "pubDate": "2026-06-26T18:02:19.000Z",
       "source": "Esports Insider",
       "section": "industry"
     }
