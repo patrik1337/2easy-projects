@@ -131,6 +131,8 @@ main{flex:1;width:100%;max-width:980px;margin:0 auto;padding:16px}
         <div id="friends"><div class="center muted" style="font-size:.84rem;padding:6px">Laddar…</div></div>
         <div class="section-label" style="margin-top:16px">Totalställning</div>
         <div id="lb-season"><div class="center muted" style="font-size:.84rem;padding:6px">Laddar…</div></div>
+        <div class="section-label" style="margin-top:16px">Svårast match att tippa hittills</div>
+        <div id="toughest-side"><div class="center muted" style="font-size:.84rem;padding:6px">Laddar…</div></div>
       </div>
     </aside>
   </div>
@@ -243,6 +245,7 @@ function loadLocalPred(){ const k=predKey(); if(!k) return null; try{ return JSO
 
 function render(){
   if(cdTimer){ clearInterval(cdTimer); cdTimer=null; }
+  loadToughestSide();
 
   if(!DATA || (!DATA.match && !DATA.next)){ app.innerHTML='<div class="card center muted">Inget VM-tips tillgängligt just nu.</div>'; loadSeasonOnly(); return; }
 
@@ -436,6 +439,15 @@ async function loadSocial(m){
   const fEl=document.getElementById('friends'); if(fEl) renderFriends(fEl, data.predictions||[], data.revealed, data.result, m);
   const sEl=document.getElementById('lb-season'); if(sEl) renderBoard('lb-season', data.season||[]);
   return data;
+}
+// Loaded once per render (independent of the current match) so the "toughest
+// match" panel is visible on the regular prediction page, not just the trophy modal.
+async function loadToughestSide(){
+  const el=document.getElementById('toughest-side'); if(!el) return;
+  try{
+    const r=await fetch('/api/1x2-leaderboard?toughest=1'); const j=await r.json();
+    renderToughest('toughest-side', j.toughest||[]);
+  }catch{ el.innerHTML='<div class="center muted" style="font-size:.84rem">Kunde inte ladda.</div>'; }
 }
 // No active match (e.g. between fixtures) — still show the season board in the side panel.
 async function loadSeasonOnly(){
