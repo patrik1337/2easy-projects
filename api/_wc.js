@@ -341,10 +341,44 @@ async function attachNames(rows) {
   return rows;
 }
 
+// "Svårast match att tippa hittills" — rank every graded match by the average
+// points awarded per player who predicted it (total points / player count).
+// Lower average = tougher to call. Uses 1x2:history (every match ever pinned,
+// kept indefinitely — see 1x2:matchmeta) so it covers the full season, not
+// just recently-played matches.
+async function toughestMatches(limit = 20) {
+  const [ids] = await kv([['ZREVRANGE', '1x2:history', '0', '-1']]);
+  const idList = Array.isArray(ids) ? ids : [];
+  if (!idList.length) return [];
+  const cmds = [];
+  for (const id of idList) {
+    cmds.push(['GET', `1x2:matchmeta:${id}`]);
+    cmds.push(['GET', `1x2:result:${id}`]);
+    cmds.push(['ZRANGE', `1x2:daily:${id}`, '0', '-1', 'WITHSCORES']);
+  }
+  const rows = await kv(cmds);
+  const out = [];
+  for (let i = 0; i < idList.length; i++) {
+    const metaRaw = rows[i * 3], resultRaw = rows[i * 3 + 1], scoresRaw = rows[i * 3 + 2];
+    if (!metaRaw || !resultRaw) continue; // only graded matches count
+    let m; try { m = JSON.parse(metaRaw); } catch { continue; }
+    const scores = Array.isArray(scoresRaw) ? scoresRaw : [];
+    let total = 0, players = 0;
+    for (let j = 1; j < scores.length; j += 2) { total += Number(scores[j]); players++; }
+    if (!players) continue;
+    out.push({
+      matchId: idList[i], home: m.home, away: m.away, group: m.group, stage: m.stage,
+      dateStr: m.dateStr, players, totalPoints: total, avg: total / players,
+    });
+  }
+  out.sort((a, b) => a.avg - b.avg);
+  return out.slice(0, limit);
+}
+
 module.exports = {
   kv, kvReady, getData, todayStockholm, stockholmDateStr, venueDateStr, kickoffMs,
   normalizeFeedMatch, pickMatchOfDay, nextMatch, resolveMatch, getOverride,
   getResult, computePoints, gradeMatch, regradeMatch, zTop, attachNames, getPredictions,
   buildBonus, getCurrent, derivePick, setPrediction, findPlayerByName, validateBonusAnswers,
-  hashToObj,
+  hashToObj, toughestMatches,
 };

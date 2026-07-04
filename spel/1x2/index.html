@@ -71,6 +71,11 @@ main{flex:1;width:100%;max-width:980px;margin:0 auto;padding:16px}
 .lb-score{font-size:.78rem;background:var(--green);padding:2px 9px;border-radius:5px;font-weight:700;white-space:nowrap}
 .lb-score.yellow{background:var(--yellow);color:#2b2200}
 .lb-score.red{background:var(--red);color:#fff}
+.th-info{flex:1;min-width:0}
+.th-match{font-weight:600;font-size:.88rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.th-date{font-size:.72rem;color:var(--muted)}
+.th-avg{font-size:.95rem;font-weight:700;text-align:right;line-height:1.2;white-space:nowrap}
+.th-avg small{display:block;font-size:.62rem;font-weight:400;color:var(--muted)}
 .lb-you{border:1px solid var(--green)}
 .next-line{text-align:center;color:var(--muted);font-size:.82rem;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
 .next-line b{color:var(--text)}
@@ -109,6 +114,8 @@ main{flex:1;width:100%;max-width:980px;margin:0 auto;padding:16px}
   <div class="modal" style="max-width:360px;text-align:left">
     <h2 style="text-align:center;margin-bottom:14px">Totalställning</h2>
     <div id="lb-modal-body"><div class="center muted" style="font-size:.85rem">Laddar…</div></div>
+    <div class="section-label" style="margin-top:18px">Svårast match att tippa hittills</div>
+    <div id="toughest-body"><div class="center muted" style="font-size:.85rem">Laddar…</div></div>
     <button class="btn btn-secondary" style="margin-top:14px" onclick="document.getElementById('lb-modal').classList.add('hidden')">Stäng</button>
   </div>
 </div>
@@ -409,6 +416,16 @@ function renderBoard(elId, rows){
     return `<div class="lb-row${you?' lb-you':''}">${rankHTML}<span class="lb-name">${esc(s.name)}${you?' 👈':''}</span><span class="${scoreCls}">${s.pts} p</span></div>`;
   }).join('');
 }
+
+// "Svårast match att tippa hittills" — lowest average points per player first.
+function renderToughest(elId, rows){
+  const el=document.getElementById(elId); if(!el) return;
+  if(!rows || !rows.length){ el.innerHTML='<div class="center muted" style="font-size:.84rem;padding:6px">Inga matcher graderade än.</div>'; return; }
+  el.innerHTML = rows.map((m,i)=>{
+    const label = (m.home&&m.home.name && m.away&&m.away.name) ? `${m.home.name} – ${m.away.name}` : m.matchId;
+    return `<div class="lb-row"><span class="lb-rank">${i+1}</span><div class="th-info"><div class="th-match">${esc(label)}</div><div class="th-date">${esc(m.dateStr||'')} · ${m.players} tippare</div></div><span class="th-avg">${m.avg.toFixed(1)} p<small>medelpoäng</small></span></div>`;
+  }).join('');
+}
 // Fetch once, fill the friends' predictions + season highscore on the current page.
 async function loadSocial(m){
   let data={};
@@ -471,12 +488,17 @@ document.getElementById('name-btn').addEventListener('click',submitName);
 document.getElementById('trophy-btn').addEventListener('click',async()=>{
   document.getElementById('lb-modal').classList.remove('hidden');
   document.getElementById('lb-modal-body').innerHTML='<div class="center muted" style="font-size:.85rem">Laddar…</div>';
+  document.getElementById('toughest-body').innerHTML='<div class="center muted" style="font-size:.85rem">Laddar…</div>';
   try{
     const mid = DATA && DATA.match ? DATA.match.matchId : 'season';
     const q=new URLSearchParams({matchId:mid}); if(player) q.set('playerID',player.id);
     const r=await fetch('/api/1x2-leaderboard?'+q.toString()); const j=await r.json();
     renderBoard('lb-modal-body', j.season||[]);
   }catch{ document.getElementById('lb-modal-body').innerHTML='<div class="center muted" style="font-size:.85rem">Kunde inte ladda.</div>'; }
+  try{
+    const r=await fetch('/api/1x2-leaderboard?toughest=1'); const j=await r.json();
+    renderToughest('toughest-body', j.toughest||[]);
+  }catch{ document.getElementById('toughest-body').innerHTML='<div class="center muted" style="font-size:.85rem">Kunde inte ladda.</div>'; }
 });
 document.getElementById('lb-modal').addEventListener('click',e=>{ if(e.target.id==='lb-modal') e.currentTarget.classList.add('hidden'); });
 
