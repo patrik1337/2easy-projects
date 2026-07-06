@@ -188,6 +188,19 @@ module.exports = async (req, res) => {
       return res.status(200).json({ found });
     }
 
+    // Look up one playerID directly, bypassing name search — needed for the merge
+    // tool when a target orphan's name mapping was already deleted by an earlier
+    // merge, so it can no longer be found by searching a name at all.
+    if (action === 'getPlayerByID') {
+      const { playerID } = body;
+      if (!playerID) return res.status(400).json({ error: 'playerID required' });
+      const [name, score] = await kv([
+        ['HGET', '1x2:names', playerID],
+        ['ZSCORE', '1x2:season', playerID],
+      ]);
+      return res.status(200).json({ playerID, name: name || null, points: Number(score) || 0 });
+    }
+
     // Every player who has ever appeared (any game), alphabetically — powers the
     // "pick a player" dropdown in section 3.
     if (action === 'listPlayers') {

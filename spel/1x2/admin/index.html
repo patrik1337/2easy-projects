@@ -126,6 +126,10 @@ button.danger{background:var(--red)}
       <input id="merge-name" placeholder="t.ex. Per — sök igen med t.ex. ReggaeMan för att lägga till fler">
       <button class="sec" onclick="findPlayers()">Lägg till i listan</button>
       <button class="sec" onclick="clearMergeList()">Rensa listan</button>
+      <label>…eller lägg till via exakt spelar-ID</label>
+      <div class="hint">Används om en post redan saknar namn (t.ex. kvarlämnad efter en tidigare sammanslagning) och därför inte går att hitta via namnsökning.</div>
+      <input id="merge-id" placeholder="t.ex. manual-kalle">
+      <button class="sec" onclick="addByID()">Lägg till via ID</button>
       <div id="merge-list"></div>
       <label>Nytt namn för den kvarvarande raden (valfritt)</label>
       <input id="merge-newname" placeholder="Lämna tomt för att behålla dess nuvarande namn">
@@ -377,6 +381,18 @@ async function findPlayers(){
   j.players.forEach(p=>{ if(!MERGE_CANDIDATES.some(c=>c.playerID===p.playerID)) MERGE_CANDIDATES.push(p); });
   document.getElementById('m-merge').className='msg';
   document.getElementById('merge-name').value='';
+  renderMergeList();
+}
+// Fallback for orphaned rows that already lost their name mapping (e.g. left
+// over from an old bug/merge) and so can't be found via the name search above.
+async function addByID(){
+  const playerID=document.getElementById('merge-id').value.trim();
+  if(!playerID){ msg('m-merge',false,'Ange ett spelar-ID'); return; }
+  const {ok,j}=await api({action:'getPlayerByID',playerID});
+  if(!ok){ msg('m-merge',false,j.error||'Fel'); return; }
+  if(!MERGE_CANDIDATES.some(c=>c.playerID===j.playerID)) MERGE_CANDIDATES.push({playerID:j.playerID, name:j.name||'(namnlös post)', points:j.points});
+  document.getElementById('m-merge').className='msg';
+  document.getElementById('merge-id').value='';
   renderMergeList();
 }
 async function mergePlayers(){
