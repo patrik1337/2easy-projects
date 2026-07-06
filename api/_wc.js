@@ -456,6 +456,19 @@ async function findPlayerByName(matchId, name) {
   return preds.find((p) => p.name.trim().toLowerCase() === needle) || null;
 }
 
+// Find any existing playerID by (case-insensitive) display name across the whole
+// game — not just this match. Used by fixPrediction so correcting/adding a tip for
+// someone who already has a season identity (just didn't predict *this* match)
+// reuses their real ID instead of minting a disconnected "manual-x" one that
+// orphans their points from the rest of their season total.
+async function findAnyPlayerIdByName(name) {
+  const [namesRaw] = await kv([['HGETALL', '1x2:names']]);
+  const namesObj = hashToObj(namesRaw);
+  const needle = String(name).trim().toLowerCase();
+  const id = Object.keys(namesObj).find((pid) => String(namesObj[pid]).trim().toLowerCase() === needle);
+  return id || null;
+}
+
 async function attachNames(rows) {
   if (!rows.length) return rows;
   const [names] = await kv([['HMGET', '1x2:names', ...rows.map((r) => r.id)]]);
@@ -501,6 +514,6 @@ module.exports = {
   kv, kvReady, getData, todayStockholm, stockholmDateStr, venueDateStr, kickoffMs,
   normalizeFeedMatch, pickMatchOfDay, nextMatch, resolveMatch, getOverride,
   getResult, computePoints, gradeMatch, regradeMatch, zTop, attachNames, getPredictions,
-  buildBonus, getCurrent, derivePick, setPrediction, findPlayerByName, validateBonusAnswers,
+  buildBonus, getCurrent, derivePick, setPrediction, findPlayerByName, findAnyPlayerIdByName, validateBonusAnswers,
   hashToObj, toughestMatches, getCommentary,
 };

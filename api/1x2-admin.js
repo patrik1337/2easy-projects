@@ -1,7 +1,7 @@
 const {
   kv, kvReady, getData, normalizeFeedMatch, gradeMatch, regradeMatch,
   venueDateStr, kickoffMs, buildBonus, getCurrent, getResult,
-  setPrediction, findPlayerByName, validateBonusAnswers, hashToObj,
+  setPrediction, findPlayerByName, findAnyPlayerIdByName, validateBonusAnswers, hashToObj,
 } = require('./_wc');
 
 module.exports = async (req, res) => {
@@ -149,8 +149,13 @@ module.exports = async (req, res) => {
       const bv = validateBonusAnswers(bonusDefs, body.bonus);
       if (!bv.ok) return res.status(400).json({ error: bv.error });
 
+      // Prefer an ID already tied to this match's prediction, then any existing
+      // season identity by that name (so a last-minute manual entry lands on the
+      // player's real record instead of orphaning points onto a brand-new id),
+      // and only mint a synthetic id if the name has genuinely never been seen.
       const existing = await findPlayerByName(matchId, playerName);
-      const playerID = existing ? existing.id : `manual-${playerName.trim().toLowerCase().replace(/\s+/g, '-')}`;
+      const globalId = existing ? null : await findAnyPlayerIdByName(playerName);
+      const playerID = existing ? existing.id : (globalId || `manual-${playerName.trim().toLowerCase().replace(/\s+/g, '-')}`);
       await setPrediction(matchId, playerID, playerName, H, A, bv.b);
 
       const existingResult = await getResult(matchId);
