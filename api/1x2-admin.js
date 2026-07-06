@@ -2,6 +2,7 @@ const {
   kv, kvReady, getData, normalizeFeedMatch, gradeMatch, regradeMatch,
   venueDateStr, kickoffMs, buildBonus, getCurrent, getResult,
   setPrediction, findPlayerByName, findAnyPlayerIdByName, validateBonusAnswers, hashToObj,
+  regenerateCommentary, reassignPlayerAcrossMatches,
 } = require('./_wc');
 
 module.exports = async (req, res) => {
@@ -155,7 +156,20 @@ module.exports = async (req, res) => {
       // and only mint a synthetic id if the name has genuinely never been seen.
       const existing = await findPlayerByName(matchId, playerName);
       const globalId = existing ? null : await findAnyPlayerIdByName(playerName);
-      const playerID = existing ? existing.id : (globalId || `manual-${playerName.trim().toLowerCase().replace(/\s+/g, '-')}`);
+      const staleManualId = `manual-${playerName.trim().toLowerCase().replace(/\s+/g, '-')}`;
+      const playerID = existing ? existing.id : (globalId || staleManualId);
+      // If an earlier fix for this exact match+name landed on a synthetic id
+      // (the bug this replaces) and has since been merged away, clear its
+      // leftover per-match residue *before* any regrade below — otherwise
+      // regradeMatch would reverse points against a since-deleted season row
+      // and resurrect it with a negative score.
+      if (playerID !== staleManualId) {
+        await kv([
+          ['HDEL', `1x2:pred:${matchId}`, staleManualId],
+          ['ZREM', `1x2:daily:${matchId}`, staleManualId],
+          ['HDEL', `1x2:applied:${matchId}`, staleManualId],
+        ]);
+      }
       await setPrediction(matchId, playerID, playerName, H, A, bv.b);
 
       const existingResult = await getResult(matchId);
@@ -206,11 +220,17 @@ module.exports = async (req, res) => {
 
     // Merge one or more duplicate playerIDs' season points into a single target
     // playerID. Sums 1x2:season into the target, removes the source rows from the
-    // leaderboard, and drops their now-orphaned name mapping. Historical per-match
-    // prediction records (tied to the old ids) are left as-is — only the ongoing
-    // season total is consolidated. Optional newName covers the case where the
-    // surviving id's own display name isn't the one you want going forward (e.g.
-    // keeping someone's currently-active browser identity but relabeling it).
+    // leaderboard, and drops their now-orphaned name mapping. Also reassigns every
+    // match's per-match records (predictions, that match's points, its applied
+    // ledger) from the source ids to the target — without this, old matches keep
+    // pointing at the now-nameless source id (shows "Anonym" in Vännernas Tips)
+    // and a future regrade would reverse points against a since-deleted season
+    // row, resurrecting it with a negative score. If the currently-graded match
+    // was affected, its frozen "Snacket" line is regenerated too, since it may
+    // now be describing a standing that no longer matches reality. Optional
+    // newName covers the case where the surviving id's own display name isn't
+    // the one you want going forward (e.g. keeping someone's currently-active
+    // browser identity but relabeling it).
     if (action === 'mergePlayers') {
       const { targetPlayerID, sourcePlayerIDs, newName } = body;
       if (!targetPlayerID || !Array.isArray(sourcePlayerIDs) || !sourcePlayerIDs.length) {
@@ -225,6 +245,13 @@ module.exports = async (req, res) => {
       ids.forEach((id) => { cmds.push(['ZREM', '1x2:season', id], ['HDEL', '1x2:names', id]); });
       if (newName && newName.trim()) cmds.push(['HSET', '1x2:names', targetPlayerID, newName.trim().slice(0, 20)]);
       await kv(cmds);
+
+      const affectedMatchIds = await reassignPlayerAcrossMatches(ids, targetPlayerID);
+      const cur = await getCurrent();
+      if (cur && cur.matchId && affectedMatchIds.includes(cur.matchId)) {
+        try { await regenerateCommentary(cur.matchId); } catch (_) {}
+      }
+
       return res.status(200).json({ ok: true, merged: ids.length, pointsAdded: totalToAdd, renamedTo: newName || null });
     }
 

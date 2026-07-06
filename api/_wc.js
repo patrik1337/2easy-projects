@@ -397,6 +397,68 @@ async function getCommentary() {
   try { return JSON.parse(v); } catch { return null; }
 }
 
+// Re-derive a match's storyline from CURRENT truth rather than a frozen
+// snapshot: "before" = current season score minus this match's own applied
+// deltas (1x2:applied is the exact per-player ledger gradeMatch already keeps
+// for regrade purposes). This makes the commentary self-healing — callable
+// any time after an identity merge or correction changes who a match's points
+// actually belong to, not just once at grading time.
+async function regenerateCommentary(matchId) {
+  const [appliedRaw, seasonRaw] = await kv([
+    ['HGETALL', `1x2:applied:${matchId}`],
+    ['ZREVRANGE', '1x2:season', '0', '-1', 'WITHSCORES'],
+  ]);
+  const applied = hashToObj(appliedRaw);
+  const roundPts = {};
+  for (const [pid, pts] of Object.entries(applied)) roundPts[pid] = Number(pts);
+  if (!Object.keys(roundPts).length) return;
+  const after = rowsFromWithScores(seasonRaw);
+  const before = after.map((r) => ({ id: r.id, pts: r.pts - (roundPts[r.id] || 0) }));
+  await writeCommentary(matchId, before, roundPts);
+}
+
+// Reassign a set of merged-away playerIDs to the surviving target id across
+// every match's per-match records (predictions, that match's daily points,
+// and its applied-points ledger) — not just the season total. Without this,
+// a merge leaves old matches pointing at a now-nameless id (shows "Anonym" in
+// Vännernas Tips) and, worse, a future regrade of that match would reverse
+// points against an id that no longer exists in 1x2:season, resurrecting it
+// with a negative score. Returns the list of matchIds actually touched.
+async function reassignPlayerAcrossMatches(sourceIds, targetId) {
+  const [histRaw] = await kv([['ZREVRANGE', '1x2:history', '0', '-1']]);
+  const matchIds = Array.isArray(histRaw) ? histRaw : [];
+  const affected = [];
+  for (const matchId of matchIds) {
+    const [predRaw, dailyRaw, appliedRaw] = await kv([
+      ['HGETALL', `1x2:pred:${matchId}`],
+      ['ZRANGE', `1x2:daily:${matchId}`, '0', '-1', 'WITHSCORES'],
+      ['HGETALL', `1x2:applied:${matchId}`],
+    ]);
+    const preds = hashToObj(predRaw);
+    const daily = rowsFromWithScores(dailyRaw);
+    const dailyMap = Object.fromEntries(daily.map((r) => [r.id, r.pts]));
+    const applied = hashToObj(appliedRaw);
+    const cmds = [];
+    for (const sid of sourceIds) {
+      if (preds[sid] != null) {
+        if (preds[targetId] == null) cmds.push(['HSET', `1x2:pred:${matchId}`, targetId, preds[sid]]);
+        cmds.push(['HDEL', `1x2:pred:${matchId}`, sid]);
+      }
+      if (dailyMap[sid] != null) {
+        cmds.push(['ZREM', `1x2:daily:${matchId}`, sid]);
+        cmds.push(['ZINCRBY', `1x2:daily:${matchId}`, String(dailyMap[sid]), targetId]);
+      }
+      if (applied[sid] != null) {
+        const merged = Number(applied[targetId] || 0) + Number(applied[sid]);
+        cmds.push(['HSET', `1x2:applied:${matchId}`, targetId, String(merged)]);
+        cmds.push(['HDEL', `1x2:applied:${matchId}`, sid]);
+      }
+    }
+    if (cmds.length) { await kv(cmds); affected.push(matchId); }
+  }
+  return affected;
+}
+
 // Reverse a prior grading exactly, then grade again with the corrected result.
 async function regradeMatch(matchId, result) {
   const [raw] = await kv([['HGETALL', `1x2:applied:${matchId}`]]);
@@ -515,5 +577,5 @@ module.exports = {
   normalizeFeedMatch, pickMatchOfDay, nextMatch, resolveMatch, getOverride,
   getResult, computePoints, gradeMatch, regradeMatch, zTop, attachNames, getPredictions,
   buildBonus, getCurrent, derivePick, setPrediction, findPlayerByName, findAnyPlayerIdByName, validateBonusAnswers,
-  hashToObj, toughestMatches, getCommentary,
+  hashToObj, toughestMatches, getCommentary, regenerateCommentary, reassignPlayerAcrossMatches,
 };
