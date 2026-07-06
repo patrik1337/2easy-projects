@@ -257,14 +257,20 @@ function computePoints(pred, result) {
 async function gradeMatch(matchId, result) {
   const [got] = await kv([['SET', `1x2:graded:${matchId}`, '1', 'NX']]);
   if (got !== 'OK') return false;
-  const [raw] = await kv([['HGETALL', `1x2:pred:${matchId}`]]);
+  const [raw, beforeRaw] = await kv([
+    ['HGETALL', `1x2:pred:${matchId}`],
+    ['ZREVRANGE', '1x2:season', '0', '-1', 'WITHSCORES'],
+  ]);
   const preds = hashToObj(raw);
+  const before = rowsFromWithScores(beforeRaw);
   const cmds = [];
   const applied = [];
+  const roundPts = {};
   for (const [pid, json] of Object.entries(preds)) {
     let pred;
     try { pred = JSON.parse(json); } catch { continue; }
     const { pts } = computePoints(pred, result);
+    roundPts[pid] = pts;
     cmds.push(['ZADD', `1x2:daily:${matchId}`, String(pts), pid]);
     cmds.push(['ZINCRBY', '1x2:season', String(pts), pid]);
     applied.push(pid, String(pts));
@@ -272,7 +278,123 @@ async function gradeMatch(matchId, result) {
   if (applied.length) cmds.push(['HSET', `1x2:applied:${matchId}`, ...applied]);
   cmds.push(['SET', `1x2:result:${matchId}`, JSON.stringify(result)]);
   await kv(cmds);
+
+  // Best-effort storyline blurb for this match ("Snacket") — never let it fail grading.
+  try { await writeCommentary(matchId, before, roundPts); } catch (_) {}
+
   return true;
+}
+
+// ── "Snacket" — one auto-generated storyline line per graded match ────────────
+// Replaced every time a match is graded (or regraded) — deliberately only ever
+// shows the latest one, no accumulating history, so it always has full context.
+function rowsFromWithScores(raw) {
+  const out = [];
+  if (Array.isArray(raw)) for (let i = 0; i < raw.length; i += 2) out.push({ id: raw[i], pts: Number(raw[i + 1]) });
+  return out;
+}
+// Dense, tie-aware rank (same rule as the front-end leaderboard: equal scores share a rank).
+function ranksOf(rows) {
+  const uniq = [...new Set(rows.map((r) => r.pts))].sort((a, b) => b - a);
+  const map = {};
+  rows.forEach((r) => { map[r.id] = uniq.indexOf(r.pts) + 1; });
+  return map;
+}
+
+async function writeCommentary(matchId, before, roundPts) {
+  const participantIds = Object.keys(roundPts);
+  if (!participantIds.length) return;
+
+  const [afterRaw] = await kv([['ZREVRANGE', '1x2:season', '0', '-1', 'WITHSCORES']]);
+  const after = rowsFromWithScores(afterRaw);
+  const idsNeeded = [...new Set([...before.map((r) => r.id), ...after.map((r) => r.id)])];
+  const [namesRaw] = await kv([['HMGET', '1x2:names', ...idsNeeded]]);
+  const nameOf = {};
+  idsNeeded.forEach((id, i) => { nameOf[id] = (Array.isArray(namesRaw) && namesRaw[i]) || 'Anonym'; });
+
+  const beforeRank = ranksOf(before), afterRank = ranksOf(after);
+  const beforePts = Object.fromEntries(before.map((r) => [r.id, r.pts]));
+  const afterPts = Object.fromEntries(after.map((r) => [r.id, r.pts]));
+  const MAX_ROUND_PTS = 10; // 3+1+1 base + 5 bonus questions, every match
+
+  const positives = [], negatives = [];
+
+  // Biggest rank climb / drop this round (only for players already on the board before).
+  let bestClimb = null, worstDrop = null;
+  for (const id of participantIds) {
+    if (beforeRank[id] == null || afterRank[id] == null) continue;
+    const delta = beforeRank[id] - afterRank[id]; // positive = moved up
+    if (delta > 0 && (!bestClimb || delta > bestClimb.delta)) bestClimb = { id, delta, before: beforeRank[id], after: afterRank[id] };
+    if (delta < 0 && (!worstDrop || delta < worstDrop.delta)) worstDrop = { id, delta, before: beforeRank[id], after: afterRank[id] };
+  }
+  if (bestClimb && bestClimb.delta >= 2) positives.push({ pri: 3, text: `${nameOf[bestClimb.id]} klev från ${bestClimb.before}:a till ${bestClimb.after}:a plats efter senaste omgången!` });
+  if (worstDrop && worstDrop.delta <= -2) negatives.push({ pri: 3, text: `${nameOf[worstDrop.id]} rasade från ${worstDrop.before}:a till ${worstDrop.after}:a plats — vad hände där?` });
+
+  // Full pott / zero pott this specific round.
+  for (const id of participantIds) {
+    if (roundPts[id] === MAX_ROUND_PTS) positives.push({ pri: 4, text: `${nameOf[id]} tog fullpott (${MAX_ROUND_PTS}p) denna omgång — kan hen upprepa bedriften?` });
+    if (roundPts[id] === 0) negatives.push({ pri: 2, text: `${nameOf[id]} fick 0p denna omgång. Tur att det bara är på skoj... eller?` });
+  }
+
+  // Leadership change / lead extended.
+  const leaderBeforeId = before.find((r) => beforeRank[r.id] === 1)?.id;
+  const leaderAfterId = after.find((r) => afterRank[r.id] === 1)?.id;
+  if (leaderBeforeId && leaderAfterId && leaderBeforeId !== leaderAfterId) {
+    positives.push({ pri: 6, text: `Ny serieledare! ${nameOf[leaderAfterId]} går om ${nameOf[leaderBeforeId]} i toppen.` });
+    negatives.push({ pri: 6, text: `${nameOf[leaderBeforeId]} tappade förstaplatsen efter en katastrofal omgång.` });
+  } else if (leaderAfterId && leaderBeforeId === leaderAfterId) {
+    const secondBefore = Math.max(0, ...before.filter((r) => r.id !== leaderBeforeId).map((r) => r.pts), 0);
+    const secondAfter = Math.max(0, ...after.filter((r) => r.id !== leaderAfterId).map((r) => r.pts), 0);
+    const gapAfter = (afterPts[leaderAfterId] || 0) - secondAfter;
+    const gapBefore = (beforePts[leaderBeforeId] || 0) - secondBefore;
+    if (gapAfter > gapBefore) positives.push({ pri: 2, text: `${nameOf[leaderAfterId]} befäste ledningen — försprånget är nu ${gapAfter}p.` });
+  }
+
+  // Best / worst tip of this specific round.
+  if (participantIds.length > 1) {
+    let bestId = null, bestVal = -1, worstId = null, worstVal = Infinity;
+    for (const id of participantIds) {
+      if (roundPts[id] > bestVal) { bestVal = roundPts[id]; bestId = id; }
+      if (roundPts[id] < worstVal) { worstVal = roundPts[id]; worstId = id; }
+    }
+    if (bestId && bestVal > 0) positives.push({ pri: 1, text: `${nameOf[bestId]} hade bästa tipset i omgången med ${bestVal}p.` });
+    if (worstId && worstVal < MAX_ROUND_PTS) negatives.push({ pri: 1, text: `${nameOf[worstId]} gissade sämst i omgången med bara ${worstVal}p.` });
+  }
+
+  // Bottom-to-top comeback / stuck-at-the-bottom roast. Only meaningful once the
+  // board is big enough that "top 3" and "bottom 3" don't trivially overlap
+  // (mirrors the tie threshold used by the front-end leaderboard's own coloring),
+  // and only when the player's rank actually improved/stayed — not just a
+  // before/after snapshot that happens to satisfy both tiers in a tiny league.
+  if (after.length >= 6) {
+    for (const id of participantIds) {
+      if (beforeRank[id] == null || afterRank[id] == null) continue;
+      const wasBottom = beforeRank[id] > Math.max(1, before.length - 3);
+      const nowBottom = afterRank[id] > Math.max(1, after.length - 3);
+      if (wasBottom && afterRank[id] <= 3 && afterRank[id] < beforeRank[id]) {
+        positives.push({ pri: 5, text: `Från botten till toppen! ${nameOf[id]} klev hela vägen upp till ${afterRank[id]}:a plats.` });
+      } else if (wasBottom && nowBottom) {
+        negatives.push({ pri: 1, text: `${nameOf[id]} sitter fortfarande fast i botten av tabellen.` });
+      }
+    }
+  }
+
+  if (!positives.length && !negatives.length) return;
+  // Aim for a 50/50 split of tone over time, but always show something —
+  // fall back to whichever pool actually has a candidate this round.
+  const preferPositive = Math.random() < 0.5;
+  let pool = preferPositive ? positives : negatives;
+  let sentiment = preferPositive ? 'pos' : 'neg';
+  if (!pool.length) { pool = preferPositive ? negatives : positives; sentiment = preferPositive ? 'neg' : 'pos'; }
+  pool.sort((a, b) => b.pri - a.pri);
+
+  await kv([['SET', '1x2:commentary', JSON.stringify({ matchId, text: pool[0].text, sentiment, at: Date.now() })]]);
+}
+
+async function getCommentary() {
+  const [v] = await kv([['GET', '1x2:commentary']]);
+  if (!v) return null;
+  try { return JSON.parse(v); } catch { return null; }
 }
 
 // Reverse a prior grading exactly, then grade again with the corrected result.
@@ -380,5 +502,5 @@ module.exports = {
   normalizeFeedMatch, pickMatchOfDay, nextMatch, resolveMatch, getOverride,
   getResult, computePoints, gradeMatch, regradeMatch, zTop, attachNames, getPredictions,
   buildBonus, getCurrent, derivePick, setPrediction, findPlayerByName, validateBonusAnswers,
-  hashToObj, toughestMatches,
+  hashToObj, toughestMatches, getCommentary,
 };

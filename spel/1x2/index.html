@@ -76,6 +76,10 @@ main{flex:1;width:100%;max-width:980px;margin:0 auto;padding:16px}
 .th-date{font-size:.72rem;color:var(--muted)}
 .th-avg{font-size:.95rem;font-weight:700;text-align:right;line-height:1.2;white-space:nowrap}
 .th-avg small{display:block;font-size:.62rem;font-weight:400;color:var(--muted)}
+.snacket{display:flex;align-items:center;gap:10px;font-weight:600;font-size:.9rem;border-width:1px;border-style:solid}
+.snacket.pos{border-color:var(--green);background:#16261a}
+.snacket.neg{border-color:var(--red);background:#2a1717}
+.snacket-ic{font-size:1.1rem;flex-shrink:0}
 .lb-you{border:1px solid var(--green)}
 .next-line{text-align:center;color:var(--muted);font-size:.82rem;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
 .next-line b{color:var(--text)}
@@ -121,6 +125,10 @@ main{flex:1;width:100%;max-width:980px;margin:0 auto;padding:16px}
 </div>
 
 <main>
+  <div class="card snacket hidden" id="snacket-card">
+    <span class="snacket-ic" id="snacket-ic"></span>
+    <span id="snacket-text"></span>
+  </div>
   <div class="layout">
     <div id="app">
       <div class="card center muted" style="font-size:.9rem">Laddar dagens match…</div>
@@ -243,8 +251,20 @@ async function boot(){
 function predKey(){ return DATA && DATA.match ? '1x2_pred_'+DATA.match.matchId : null; }
 function loadLocalPred(){ const k=predKey(); if(!k) return null; try{ return JSON.parse(localStorage.getItem(k)); }catch{ return null; } }
 
+// "Snacket" — one auto-generated storyline line (positive or sarcastic), replaced
+// every time a match is graded. Comes bundled in /api/1x2-match so no extra call.
+function renderSnacket(){
+  const card=document.getElementById('snacket-card');
+  const c = DATA && DATA.commentary;
+  if(!c || !c.text){ card.classList.add('hidden'); return; }
+  card.className = 'card snacket ' + (c.sentiment==='neg' ? 'neg' : 'pos');
+  document.getElementById('snacket-ic').textContent = c.sentiment==='neg' ? '🔥' : '🎉';
+  document.getElementById('snacket-text').textContent = c.text;
+}
+
 function render(){
   if(cdTimer){ clearInterval(cdTimer); cdTimer=null; }
+  renderSnacket();
   loadToughestSide();
 
   if(!DATA || (!DATA.match && !DATA.next)){ app.innerHTML='<div class="card center muted">Inget VM-tips tillgängligt just nu.</div>'; loadSeasonOnly(); return; }

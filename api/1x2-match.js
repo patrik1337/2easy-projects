@@ -1,4 +1,4 @@
-const { resolveMatch, getData, nextMatch, getResult, todayStockholm } = require('./_wc');
+const { resolveMatch, getData, nextMatch, getResult, todayStockholm, getCommentary } = require('./_wc');
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -8,10 +8,11 @@ module.exports = async (req, res) => {
   try {
     const date = (req.query && req.query.date) || todayStockholm();
     const match = await resolveMatch(date);
+    const commentary = await getCommentary();
 
     if (!match) {
       const { matches, teamById } = await getData();
-      return res.status(200).json({ match: null, next: nextMatch(matches, teamById, Date.now()) });
+      return res.status(200).json({ match: null, next: nextMatch(matches, teamById, Date.now()), commentary });
     }
 
     const locked = match.kickoffMs != null && Date.now() >= match.kickoffMs;
@@ -29,6 +30,7 @@ module.exports = async (req, res) => {
         bonus: match.bonus || [],
       },
       result,
+      commentary,
     });
   } catch (e) {
     return res.status(500).json({ error: 'match resolve failed', detail: String((e && e.message) || e) });
