@@ -143,6 +143,23 @@ button.danger{background:var(--red)}
       <button class="danger" onclick="resetSeason()">Nollställ 1x2-topplistan</button>
       <div class="msg" id="m-reset"></div>
     </div>
+
+    <div class="card">
+      <h2>6 · Reparera matchetikett</h2>
+      <div class="hint">Sällan-behövt verktyg: rättar bara vilka lag/etikett ett match-ID visar (t.ex. om en gammal match fick fel namn av misstag) — rör aldrig tips, resultat eller poäng för matchen.</div>
+      <label>Match-ID</label>
+      <select id="fm-matchid" onchange="onFixMetaMatchChange()"><option value="">— välj match —</option></select>
+      <div class="row">
+        <div><label>Hemmalag</label><input id="fm-home" placeholder="Argentina"></div>
+        <div><label>Bortalag</label><input id="fm-away" placeholder="Egypten"></div>
+      </div>
+      <div class="row">
+        <div><label>Hemma-flagga (emoji/URL)</label><input id="fm-hflag" placeholder="🇦🇷"></div>
+        <div><label>Borta-flagga (emoji/URL)</label><input id="fm-aflag" placeholder="🇪🇬"></div>
+      </div>
+      <button onclick="fixMatchMeta()">Spara korrekt etikett</button>
+      <div class="msg" id="m-fixmeta"></div>
+    </div>
   </div>
 </div>
 
@@ -270,7 +287,7 @@ async function loadMatchList(){
   MATCH_LIST=j.matches||[];
   const opts='<option value="">— välj match —</option>'+MATCH_LIST.map(m=>`<option value="${m.matchId}">${matchLabel(m)}</option>`).join('');
   const current=MATCH_LIST.find(m=>m.isCurrent);
-  ['r-matchid','f-matchid'].forEach(id=>{
+  ['r-matchid','f-matchid','fm-matchid'].forEach(id=>{
     const sel=document.getElementById(id); const keep=sel.value;
     sel.innerHTML=opts;
     if(keep) sel.value=keep; else if(current) sel.value=current.matchId;
@@ -281,6 +298,27 @@ function selectMatch(matchId){
   ['r-matchid','f-matchid'].forEach(id=>{ document.getElementById(id).value=matchId; });
   onResultMatchChange();
   onFixMatchChange();
+}
+
+// Section 6: picking a match pre-fills its currently-stored label (which may
+// be wrong — that's exactly what this tool is for) so you can see what's
+// there before correcting it.
+function onFixMetaMatchChange(){
+  const m=findMatch(document.getElementById('fm-matchid').value);
+  document.getElementById('fm-home').value = m&&m.home ? m.home.name : '';
+  document.getElementById('fm-away').value = m&&m.away ? m.away.name : '';
+  document.getElementById('fm-hflag').value = m&&m.home ? (m.home.flag||'') : '';
+  document.getElementById('fm-aflag').value = m&&m.away ? (m.away.flag||'') : '';
+}
+async function fixMatchMeta(){
+  const matchId=document.getElementById('fm-matchid').value;
+  if(!matchId){ msg('m-fixmeta',false,'Välj en match'); return; }
+  const home={name:document.getElementById('fm-home').value.trim(),flag:document.getElementById('fm-hflag').value.trim()};
+  const away={name:document.getElementById('fm-away').value.trim(),flag:document.getElementById('fm-aflag').value.trim()};
+  if(!home.name||!away.name){ msg('m-fixmeta',false,'Fyll i båda lagen'); return; }
+  const {ok,j}=await api({action:'fixMatchMeta',matchId,home,away});
+  msg('m-fixmeta',ok,ok?('Etikett satt till '+home.name+' – '+away.name+'.'):(j.error||'Fel'));
+  if(ok) loadMatchList();
 }
 
 // Section 2: picking a match loads its bonus facit fields, pre-filled with the

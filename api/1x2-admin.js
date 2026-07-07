@@ -128,6 +128,32 @@ module.exports = async (req, res) => {
       return res.status(200).json({ ok: true });
     }
 
+    // One-off repair: overwrite a match's stored label (home/away/group/stage)
+    // without touching its predictions/result/points. Needed for matches set up
+    // before matchIds included the matchup (a second same-day match used to
+    // collide with the first one's id and overwrite its metadata) — the graded
+    // data under that id is untouched, only its display label was ever wrong.
+    if (action === 'fixMatchMeta') {
+      const { matchId, home, away, group, stage } = body;
+      if (!matchId || !home || !home.name || !away || !away.name) {
+        return res.status(400).json({ error: 'matchId, home{name}, away{name} required' });
+      }
+      const [existingRaw] = await kv([['GET', `1x2:matchmeta:${matchId}`]]);
+      let existing = {};
+      try { existing = existingRaw ? JSON.parse(existingRaw) : {}; } catch (_) {}
+      const fixed = { ...existing, matchId, home, away, group: group || '', stage: stage || existing.stage || 'knockout' };
+      fixed.bonus = buildBonus(fixed);
+      await kv([['SET', `1x2:matchmeta:${matchId}`, JSON.stringify(fixed)]]);
+      // Only keep 1x2:current in sync if this happens to still be the active
+      // match — for the usual repair case (an old, already-superseded match)
+      // it won't be, and 1x2:current is deliberately left alone.
+      const cur = await getCurrent();
+      if (cur && cur.matchId === matchId) {
+        await kv([['SET', '1x2:current', JSON.stringify(fixed)]]);
+      }
+      return res.status(200).json({ ok: true, match: fixed });
+    }
+
     // Wipe the 1x2 cumulative highscore (and the current match's per-match data).
     if (action === 'resetSeason') {
       const cmds = [['DEL', '1x2:season'], ['DEL', '1x2:names']];
