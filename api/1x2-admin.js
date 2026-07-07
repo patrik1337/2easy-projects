@@ -90,8 +90,15 @@ module.exports = async (req, res) => {
       } else if (custom && custom.home && custom.away && custom.kickoff) {
         // custom.kickoff = "YYYY-MM-DDTHH:MM" in Stockholm local time (CEST during the tournament)
         const koMs = Date.parse(`${custom.kickoff}:00+02:00`);
+        // matchId includes the matchup, not just the date — two custom matches
+        // can land on the same calendar day (e.g. a knockout schedule with a gap
+        // between kickoffs). Keying by date alone made a second match collide
+        // with the first one's matchId, silently reusing its predictions/result/
+        // graded-flag. Still deterministic per matchup, so re-submitting the same
+        // fixture (e.g. to fix a typo'd kickoff time) resolves to the same id.
+        const slug = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '').slice(0, 16);
         match = {
-          matchId: `c-${date}`, dateStr: date, kickoffMs: Number.isFinite(koMs) ? koMs : null,
+          matchId: `c-${date}-${slug(custom.home.name)}-${slug(custom.away.name)}`, dateStr: date, kickoffMs: Number.isFinite(koMs) ? koMs : null,
           home: custom.home, away: custom.away, group: custom.group || '',
           stage: custom.stage || 'knockout', source: 'admin-custom',
         };
