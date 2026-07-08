@@ -220,10 +220,27 @@ function wireBonus(){
 // Compact "icon answer" line for a stored bonus answer set.
 function bonusAnswersText(b){
   const defs=bonusDefs(); if(!b||!defs.length) return '';
-  return defs.filter(d=>b[d.id]!=null&&b[d.id]!=='').map(d=>`${bonusIcon(d.id)} ${esc(b[d.id])}`).join(' · ');
+  return defs.filter(d=>b[d.id]!=null&&b[d.id]!=='').map(d=>`${bonusIcon(d)} ${esc(b[d.id])}`).join(' · ');
 }
 function shortQ(d){ return ({yellows:'Gula',penalties:'Straffar',possession:'Innehav',redcard:'Rött',corners:'Hörnor'})[d.id] || d.q; }
-function bonusIcon(id){ return ({yellows:'🟨',penalties:'🥅',possession:'⏱️',redcard:'🟥',corners:'🚩'})[id] || '❔'; }
+// Custom questions (admin-authored, ids q1..q5) don't match the 5 known
+// standard ids — fall back to matching the question TEXT against the same
+// concepts, so a differently-worded custom question ("Vilket lag får flest
+// hörnor?") still gets the corners icon instead of always showing the
+// generic fallback. "mål" (goal) gets its own icon too since "will X score"
+// is a very common custom-question shape; anything else stays generic.
+function bonusIcon(d){
+  const KNOWN={yellows:'🟨',penalties:'🥅',possession:'⏱️',redcard:'🟥',corners:'🚩'};
+  if(KNOWN[d.id]) return KNOWN[d.id];
+  const q=(d.q||'').toLowerCase();
+  if(/gul(a|t)?\s*kort/.test(q)) return '🟨';
+  if(/straff/.test(q)) return '🥅';
+  if(/bollinnehav/.test(q)) return '⏱️';
+  if(/rö(d|tt)\w*\s*kort/.test(q)) return '🟥';
+  if(/hörn/.test(q)) return '🚩';
+  if(/\bmål\b/.test(q)) return '⚽';
+  return '❔';
+}
 
 let toastTimer;
 function toast(msg, ms=1800){ const el=document.getElementById('toast'); el.textContent=msg; el.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove('show'),ms); }
@@ -409,7 +426,7 @@ function renderBreakdown(bd, your, m){
   const wrap=document.getElementById('breakdown-wrap'); if(!wrap) return;
   const bRow=(cls,label,pts)=>`<div class="brow ${cls?'win':'lose'}"><span><span class="ic">${cls?'✓':'✗'}</span>${label}</span><span class="pts">+${pts}</span></div>`;
   const bonusRows=(bd.bonus||[]).map(b=>{
-    const label=bonusIcon(b.id)+' '+shortQ(b)+(b.answer!=null?' · tippade '+esc(b.answer):' · inget svar');
+    const label=bonusIcon(b)+' '+shortQ(b)+(b.answer!=null?' · tippade '+esc(b.answer):' · inget svar');
     return bRow(b.correct,label,b.correct?1:0);
   }).join('');
   const maxPts = 5 + (bd.bonus?bd.bonus.length:0);
