@@ -152,7 +152,7 @@ async function getCurrent() {
   try { return withBonus(JSON.parse(v)); } catch { return null; }
 }
 
-// Every match — admin-pinned or feed-selected — always carries the 5 bonus questions
+// Every match — admin-pinned or feed-selected — always carries 5 bonus questions
 // (10 p total possible per match, every game, going forward). getOverride/getCurrent
 // backfill it centrally (see withBonus) so this file is the single source of truth;
 // the feed-auto-select path attaches it directly below for the same guarantee.
@@ -166,12 +166,17 @@ async function resolveMatch(dateStr) {
   if (!fm) return null;
   return withBonus(normalizeFeedMatch(fm, teamById, dateStr));
 }
-// Always (re)generate .bonus fresh from the match's current team names. Bonus
-// questions are never customized per-match, so there's no reason a stored match
-// should ever carry a stale/outdated set — this also means wording fixes to
-// buildBonus() apply immediately to already-pinned matches, not just new ones.
+// (Re)generates .bonus for the match — from the 5 generic questions (default,
+// "Standard" mode; always fresh from the match's current team names, so a
+// wording fix to buildBonus() applies to every already-pinned match instantly)
+// or, when the admin has authored match-specific ones ("Anpassade" mode via
+// the admin's "Bonusfrågor" tool), from the stored customBonus array verbatim
+// — those must NEVER be silently regenerated/overwritten, unlike the generic
+// set, which is why they live in their own field instead of being computed.
 function withBonus(match) {
-  match.bonus = buildBonus(match);
+  match.bonus = (match.bonusMode === 'custom' && Array.isArray(match.customBonus) && match.customBonus.length === 5)
+    ? match.customBonus
+    : buildBonus(match);
   return match;
 }
 
@@ -180,6 +185,17 @@ async function getResult(matchId) {
   const [v] = await kv([['GET', `1x2:result:${matchId}`]]);
   if (!v) return null;
   try { return JSON.parse(v); } catch { return null; }
+}
+
+// A match's own bonus questions, by matchId, regardless of whether it's the
+// currently-active match. The admin's Section 2/3 pickers can target ANY
+// match from history, not just the current one — resolving bonusDefs only
+// via getCurrent() (the old approach) silently graded bonus questions as
+// empty for every match that wasn't literally "current" at grading time.
+async function getMatchBonusDefs(matchId) {
+  const [metaRaw] = await kv([['GET', `1x2:matchmeta:${matchId}`]]);
+  if (!metaRaw) return [];
+  try { return withBonus(JSON.parse(metaRaw)).bonus || []; } catch { return []; }
 }
 
 // Optional bonus questions attached to a match (admin-graded; e.g. knockout extras).
@@ -194,6 +210,78 @@ function buildBonus(match) {
     { id: 'redcard', q: 'Blir det rött kort?', type: 'choice', options: ['Ja', 'Nej'] },
     { id: 'corners', q: 'Flest hörnor?', type: 'choice', options: [H, A, 'Lika'] },
   ];
+}
+
+// Validate an admin-authored set of 5 match-specific bonus questions before
+// they're saved (see setBonusQuestions in 1x2-admin.js). Positional ids
+// (q1..q5) rather than text-derived ones — stable regardless of later wording
+// edits, and edits are blocked entirely once locked anyway (see
+// matchHasPredictions below).
+function validateCustomBonusDefs(questions) {
+  if (!Array.isArray(questions) || questions.length !== 5) {
+    return { ok: false, error: 'Exakt 5 frågor krävs.' };
+  }
+  const defs = [];
+  for (let i = 0; i < questions.length; i++) {
+    const q = questions[i] || {};
+    const text = String(q.q || '').trim();
+    if (!text) return { ok: false, error: `Fråga ${i + 1} saknar text.` };
+    if (q.type === 'choice') {
+      const options = (q.options || []).map((o) => String(o).trim()).filter(Boolean);
+      if (options.length < 2) return { ok: false, error: `Fråga ${i + 1} ("${text}") behöver minst 2 svarsalternativ.` };
+      defs.push({ id: `q${i + 1}`, q: text, type: 'choice', options: options.slice(0, 6) });
+    } else if (q.type === 'number') {
+      const def = { id: `q${i + 1}`, q: text, type: 'number' };
+      if (q.min != null && q.min !== '') def.min = Number(q.min);
+      if (q.max != null && q.max !== '') def.max = Number(q.max);
+      if (def.min != null && def.max != null && def.min > def.max) {
+        return { ok: false, error: `Fråga ${i + 1} ("${text}") har min > max.` };
+      }
+      defs.push(def);
+    } else {
+      return { ok: false, error: `Fråga ${i + 1} ("${text}") har okänd typ.` };
+    }
+  }
+  return { ok: true, defs };
+}
+
+// Has anyone already predicted this match? Used to hard-lock its bonus
+// questions once true — editing them after even one bet is in would silently
+// invalidate that answer (it'd be graded against a question the player never
+// actually saw).
+async function matchHasPredictions(matchId) {
+  const [raw] = await kv([['HGETALL', `1x2:pred:${matchId}`]]);
+  return Object.keys(hashToObj(raw)).length > 0;
+}
+
+// Persists a patch onto a match's stored metadata — used for bonusMode/
+// customBonus — and keeps 1x2:current / 1x2:override:{date} in sync if this
+// happens to be the currently-active match, mirroring fixMatchMeta's approach
+// in 1x2-admin.js. .bonus itself is never written here; withBonus() always
+// recomputes it from bonusMode/customBonus on read, so there's nothing to
+// keep in sync for it specifically.
+async function updateMatchMeta(matchId, patch) {
+  const [metaRaw] = await kv([['GET', `1x2:matchmeta:${matchId}`]]);
+  let meta = {};
+  try { meta = metaRaw ? JSON.parse(metaRaw) : {}; } catch (_) {}
+  const updated = { ...meta, ...patch };
+  const cmds = [['SET', `1x2:matchmeta:${matchId}`, JSON.stringify(updated)]];
+
+  const cur = await getCurrent();
+  if (cur && cur.matchId === matchId) cmds.push(['SET', '1x2:current', JSON.stringify(updated)]);
+
+  if (updated.dateStr) {
+    const [overrideRaw] = await kv([['GET', `1x2:override:${updated.dateStr}`]]);
+    if (overrideRaw) {
+      try {
+        if (JSON.parse(overrideRaw).matchId === matchId) {
+          cmds.push(['SET', `1x2:override:${updated.dateStr}`, JSON.stringify(updated)]);
+        }
+      } catch (_) {}
+    }
+  }
+  await kv(cmds);
+  return updated;
 }
 
 // Validate a set of bonus answers against a match's bonus questions. Every
@@ -212,7 +300,12 @@ function validateBonusAnswers(bonusDefs, incoming, requireAll = true) {
       continue;
     }
     if (d.type === 'choice' && !(d.options || []).includes(String(v))) return { ok: false, error: `Ogiltigt svar: ${d.q}` };
-    if (d.type === 'number' && !Number.isInteger(Number(v))) return { ok: false, error: `Ogiltigt tal: ${d.q}` };
+    if (d.type === 'number') {
+      const n = Number(v);
+      if (!Number.isInteger(n)) return { ok: false, error: `Ogiltigt tal: ${d.q}` };
+      if (d.min != null && n < d.min) return { ok: false, error: `${d.q} måste vara minst ${d.min}.` };
+      if (d.max != null && n > d.max) return { ok: false, error: `${d.q} måste vara högst ${d.max}.` };
+    }
     b[d.id] = String(v).slice(0, 32);
   }
   return { ok: true, b };
@@ -578,4 +671,5 @@ module.exports = {
   getResult, computePoints, gradeMatch, regradeMatch, zTop, attachNames, getPredictions,
   buildBonus, getCurrent, derivePick, setPrediction, findPlayerByName, findAnyPlayerIdByName, validateBonusAnswers,
   hashToObj, toughestMatches, getCommentary, regenerateCommentary, reassignPlayerAcrossMatches,
+  validateCustomBonusDefs, matchHasPredictions, updateMatchMeta, getMatchBonusDefs, withBonus,
 };

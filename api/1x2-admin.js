@@ -3,6 +3,7 @@ const {
   venueDateStr, kickoffMs, buildBonus, getCurrent, getResult,
   setPrediction, findPlayerByName, findAnyPlayerIdByName, validateBonusAnswers, hashToObj,
   regenerateCommentary, reassignPlayerAcrossMatches,
+  validateCustomBonusDefs, matchHasPredictions, updateMatchMeta, getMatchBonusDefs, withBonus,
 } = require('./_wc');
 
 module.exports = async (req, res) => {
@@ -41,25 +42,27 @@ module.exports = async (req, res) => {
     }
 
     // List matches that have been set via admin (newest first), with graded status
-    // and result — powers the "pick a match" dropdowns in sections 2 and 3 instead
+    // and result — powers the "pick a match" dropdowns in sections 2-4 instead
     // of typing a matchId by hand.
     if (action === 'listMatches') {
       const [ids] = await kv([['ZREVRANGE', '1x2:history', '0', '49']]);
       const idList = Array.isArray(ids) ? ids : [];
       const metaCmds = idList.map((id) => ['GET', `1x2:matchmeta:${id}`]);
       const resultCmds = idList.map((id) => ['GET', `1x2:result:${id}`]);
-      const [metas, results] = await Promise.all([kv(metaCmds), kv(resultCmds)]);
+      const predCountCmds = idList.map((id) => ['HLEN', `1x2:pred:${id}`]);
+      const [metas, results, predCounts] = await Promise.all([kv(metaCmds), kv(resultCmds), kv(predCountCmds)]);
       const cur = await getCurrent();
       const curId = cur && cur.matchId;
       const matches = idList.map((id, i) => {
         let m = null, r = null;
-        try { m = metas[i] ? JSON.parse(metas[i]) : null; } catch (_) {}
+        try { m = metas[i] ? withBonus(JSON.parse(metas[i])) : null; } catch (_) {}
         try { r = results[i] ? JSON.parse(results[i]) : null; } catch (_) {}
         if (!m) return null;
         return {
           matchId: id, home: m.home, away: m.away, group: m.group, stage: m.stage,
-          dateStr: m.dateStr, bonus: m.bonus || [], graded: Boolean(r), result: r,
-          isCurrent: id === curId,
+          dateStr: m.dateStr, bonus: m.bonus || [], bonusMode: m.bonusMode === 'custom' ? 'custom' : 'standard',
+          predictionCount: Number(predCounts[i]) || 0,
+          graded: Boolean(r), result: r, isCurrent: id === curId,
         };
       }).filter(Boolean);
       // Fallback: the currently-active match may predate history tracking (set
@@ -67,10 +70,13 @@ module.exports = async (req, res) => {
       // include it anyway so the dropdown isn't empty on first use.
       if (curId && !matches.some((m) => m.matchId === curId)) {
         const r = await getResult(curId);
+        const [predCount] = await kv([['HLEN', `1x2:pred:${curId}`]]);
         matches.unshift({
           matchId: curId, home: cur.home, away: cur.away, group: cur.group,
-          stage: cur.stage, dateStr: cur.dateStr, bonus: cur.bonus || [], graded: Boolean(r), result: r,
-          isCurrent: true,
+          stage: cur.stage, dateStr: cur.dateStr, bonus: cur.bonus || [],
+          bonusMode: cur.bonusMode === 'custom' ? 'custom' : 'standard',
+          predictionCount: Number(predCount) || 0,
+          graded: Boolean(r), result: r, isCurrent: true,
         });
       }
       return res.status(200).json({ matches });
@@ -133,6 +139,8 @@ module.exports = async (req, res) => {
     // before matchIds included the matchup (a second same-day match used to
     // collide with the first one's id and overwrite its metadata) — the graded
     // data under that id is untouched, only its display label was ever wrong.
+    // Uses updateMatchMeta (a plain merge) rather than rebuilding the whole
+    // object, so it can never clobber bonusMode/customBonus.
     if (action === 'fixMatchMeta') {
       const { matchId, home, away, group, stage } = body;
       if (!matchId || !home || !home.name || !away || !away.name) {
@@ -141,17 +149,39 @@ module.exports = async (req, res) => {
       const [existingRaw] = await kv([['GET', `1x2:matchmeta:${matchId}`]]);
       let existing = {};
       try { existing = existingRaw ? JSON.parse(existingRaw) : {}; } catch (_) {}
-      const fixed = { ...existing, matchId, home, away, group: group || '', stage: stage || existing.stage || 'knockout' };
-      fixed.bonus = buildBonus(fixed);
-      await kv([['SET', `1x2:matchmeta:${matchId}`, JSON.stringify(fixed)]]);
-      // Only keep 1x2:current in sync if this happens to still be the active
-      // match — for the usual repair case (an old, already-superseded match)
-      // it won't be, and 1x2:current is deliberately left alone.
-      const cur = await getCurrent();
-      if (cur && cur.matchId === matchId) {
-        await kv([['SET', '1x2:current', JSON.stringify(fixed)]]);
+      const updated = await updateMatchMeta(matchId, {
+        home, away, group: group || '', stage: stage || existing.stage || 'knockout',
+      });
+      return res.status(200).json({ ok: true, match: withBonus(updated) });
+    }
+
+    // Author (or revert) a match's bonus questions. "standard" reverts to the
+    // usual 5 generic questions (regenerated fresh on every read, same as
+    // before); "custom" replaces them with exactly 5 match-specific ones,
+    // persisted verbatim and never silently regenerated (see withBonus in
+    // _wc.js) — always 1 p each, so every match still maxes at 10 p regardless
+    // of mode. Locked once anyone has already predicted the match: editing a
+    // question after even one bet is in would silently grade that player
+    // against a question they never actually saw.
+    if (action === 'setBonusQuestions') {
+      const { matchId, mode } = body;
+      if (!matchId) return res.status(400).json({ error: 'matchId required' });
+      if (mode !== 'standard' && mode !== 'custom') {
+        return res.status(400).json({ error: 'mode must be "standard" or "custom"' });
       }
-      return res.status(200).json({ ok: true, match: fixed });
+      if (await matchHasPredictions(matchId)) {
+        return res.status(409).json({ error: 'Minst en spelare har redan tippat matchen — bonusfrågorna är låsta och kan inte ändras.' });
+      }
+      let patch;
+      if (mode === 'standard') {
+        patch = { bonusMode: 'standard', customBonus: null };
+      } else {
+        const v = validateCustomBonusDefs(body.questions);
+        if (!v.ok) return res.status(400).json({ error: v.error });
+        patch = { bonusMode: 'custom', customBonus: v.defs };
+      }
+      const updated = await updateMatchMeta(matchId, patch);
+      return res.status(200).json({ ok: true, match: withBonus(updated) });
     }
 
     // Wipe the 1x2 cumulative highscore (and the current match's per-match data).
@@ -177,9 +207,10 @@ module.exports = async (req, res) => {
         return res.status(400).json({ error: 'matchId, playerName + integer hs/as required' });
       }
       // Same rule as a normal submission: every bonus question must be answered,
-      // so a corrected tip is never left partial either.
-      const cur = await getCurrent();
-      const bonusDefs = (cur && cur.matchId === matchId && Array.isArray(cur.bonus)) ? cur.bonus : [];
+      // so a corrected tip is never left partial either. Reads the match's OWN
+      // bonus defs (not just the currently-active match's) — this section's
+      // picker can target any match from history.
+      const bonusDefs = await getMatchBonusDefs(matchId);
       const bv = validateBonusAnswers(bonusDefs, body.bonus);
       if (!bv.ok) return res.status(400).json({ error: bv.error });
 
@@ -308,10 +339,11 @@ module.exports = async (req, res) => {
       if (!matchId || !Number.isInteger(H) || !Number.isInteger(A) || H < 0 || A < 0 || H > 30 || A > 30) {
         return res.status(400).json({ error: 'matchId + integer hs/as required' });
       }
-      // Pull this match's bonus definitions so the answers can be graded. Partial
-      // facit entry is allowed (requireAll=false) — stats may trickle in before grading.
-      const cur = await getCurrent();
-      const bonusDefs = (cur && cur.matchId === matchId && Array.isArray(cur.bonus)) ? cur.bonus : [];
+      // Pull this match's OWN bonus definitions (not just the currently-active
+      // match's — this section's picker can grade any match from history) so
+      // the answers can be graded. Partial facit entry is allowed
+      // (requireAll=false) — stats may trickle in before grading.
+      const bonusDefs = await getMatchBonusDefs(matchId);
       const bv = validateBonusAnswers(bonusDefs, body.bonus, false);
       if (!bv.ok) return res.status(400).json({ error: bv.error });
       const result = { hs: H, as: A, b: bv.b, bonusDefs };

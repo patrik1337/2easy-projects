@@ -29,6 +29,12 @@ button.danger{background:var(--red)}
 .fixrow{font-size:.85rem;padding:6px 0;border-bottom:1px solid #2b2b2c}
 .divider{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;margin:14px 0}
 .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.toggle-btn{background:var(--border)}
+.toggle-btn.active{background:var(--green)}
+.bq-row{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-top:10px}
+.bq-row label{margin-top:6px}
+.bq-row label:first-child{margin-top:0}
+.lock-hint{font-size:.8rem;margin-top:10px;padding:8px 10px;border-radius:8px;background:#3a1d1d;color:#e6bcbc}
 </style>
 </head>
 <body>
@@ -87,7 +93,22 @@ button.danger{background:var(--red)}
     </div>
 
     <div class="card">
-      <h2>2 · Resultat &amp; rättning</h2>
+      <h2>2 · Bonusfrågor för matchen</h2>
+      <div class="hint">Standard = de vanliga 5 frågorna (gula kort, straff, bollinnehav, rött kort, hörnor). Anpassade byts ut helt mot 5 matchspecifika frågor du skriver själv — alltid 1 poäng vardera, så matchen fortsatt maxar på 10p. Går inte att ändra efter att någon redan tippat matchen.</div>
+      <label>Match</label>
+      <select id="bq-matchid" onchange="onBonusMatchChange()"><option value="">— välj match —</option></select>
+      <div id="bq-lock-hint" class="lock-hint hidden"></div>
+      <div class="row" style="margin-top:12px">
+        <button type="button" class="sec toggle-btn" id="bq-btn-standard" onclick="setBonusUIMode('standard')">Standard</button>
+        <button type="button" class="sec toggle-btn" id="bq-btn-custom" onclick="setBonusUIMode('custom')">Anpassade</button>
+      </div>
+      <div id="bq-custom-fields" class="hidden"></div>
+      <button id="bq-save-btn" onclick="saveBonusQuestions()">Spara bonusfrågor</button>
+      <div class="msg" id="m-bonusq"></div>
+    </div>
+
+    <div class="card">
+      <h2>3 · Resultat &amp; rättning</h2>
       <label>Match</label>
       <select id="r-matchid" onchange="onResultMatchChange()"><option value="">— välj match —</option></select>
       <button class="sec" onclick="loadMatchList()">Uppdatera matchlistan</button>
@@ -102,7 +123,7 @@ button.danger{background:var(--red)}
     </div>
 
     <div class="card">
-      <h2>3 · Rätta en spelares tips</h2>
+      <h2>4 · Rätta en spelares tips</h2>
       <div class="hint">Sätter (eller skriver över) en spelares tippade resultat för en match — t.ex. om någon glömde fylla i resultatet. Räknar automatiskt om poängen om matchen redan har ett resultat.</div>
       <label>Match</label>
       <select id="f-matchid" onchange="onFixMatchChange()"><option value="">— välj match —</option></select>
@@ -120,7 +141,7 @@ button.danger{background:var(--red)}
     </div>
 
     <div class="card">
-      <h2>4 · Slå ihop dubbla spelare</h2>
+      <h2>5 · Slå ihop dubbla spelare</h2>
       <div class="hint">Om någon fått en ny profil (t.ex. var tvungen att logga in igen, eller råkade spela under ett smeknamn från ett annat spel) delas poängen upp på två rader. Sök upp varje rad för sig (namnen behöver inte matcha) — de läggs till i listan nedan — välj sedan vilken rad som ska vara kvar.</div>
       <label>Sök spelarens namn</label>
       <input id="merge-name" placeholder="t.ex. Per — sök igen med t.ex. ReggaeMan för att lägga till fler">
@@ -138,14 +159,14 @@ button.danger{background:var(--red)}
     </div>
 
     <div class="card">
-      <h2>5 · Nollställ topplista</h2>
+      <h2>6 · Nollställ topplista</h2>
       <div class="hint">Raderar 1x2-spelets totalställning (och aktuell matchs tips). Går inte att ångra.</div>
       <button class="danger" onclick="resetSeason()">Nollställ 1x2-topplistan</button>
       <div class="msg" id="m-reset"></div>
     </div>
 
     <div class="card">
-      <h2>6 · Reparera matchetikett</h2>
+      <h2>7 · Reparera matchetikett</h2>
       <div class="hint">Sällan-behövt verktyg: rättar bara vilka lag/etikett ett match-ID visar (t.ex. om en gammal match fick fel namn av misstag) — rör aldrig tips, resultat eller poäng för matchen.</div>
       <label>Match-ID</label>
       <select id="fm-matchid" onchange="onFixMetaMatchChange()"><option value="">— välj match —</option></select>
@@ -287,7 +308,7 @@ async function loadMatchList(){
   MATCH_LIST=j.matches||[];
   const opts='<option value="">— välj match —</option>'+MATCH_LIST.map(m=>`<option value="${m.matchId}">${matchLabel(m)}</option>`).join('');
   const current=MATCH_LIST.find(m=>m.isCurrent);
-  ['r-matchid','f-matchid','fm-matchid'].forEach(id=>{
+  ['r-matchid','f-matchid','fm-matchid','bq-matchid'].forEach(id=>{
     const sel=document.getElementById(id); const keep=sel.value;
     sel.innerHTML=opts;
     if(keep) sel.value=keep; else if(current) sel.value=current.matchId;
@@ -295,9 +316,143 @@ async function loadMatchList(){
 }
 function findMatch(matchId){ return MATCH_LIST.find(m=>m.matchId===matchId); }
 function selectMatch(matchId){
-  ['r-matchid','f-matchid'].forEach(id=>{ document.getElementById(id).value=matchId; });
+  ['r-matchid','f-matchid','bq-matchid'].forEach(id=>{ document.getElementById(id).value=matchId; });
   onResultMatchChange();
   onFixMatchChange();
+  onBonusMatchChange();
+}
+
+// ── Section 2: bonus questions (standard vs. match-specific) ──────────────────
+let BONUS_UI_MODE='standard';
+const BONUS_TYPE_PRESETS={ yn:['Ja','Nej'] }; // hbl is resolved per-match (real team names)
+
+function bonusRowHTML(i){
+  return `<div class="bq-row">
+    <label>Fråga ${i+1}</label>
+    <input id="bq-q-${i}" placeholder="T.ex. Kommer Mbappé göra mål?">
+    <label>Typ</label>
+    <select id="bq-type-${i}" onchange="onBonusTypeChange(${i})">
+      <option value="yn">Ja / Nej</option>
+      <option value="hbl">Hemmalag / Bortalag / Lika</option>
+      <option value="choice">Eget flerval</option>
+      <option value="number">Nummer</option>
+    </select>
+    <div id="bq-choice-${i}" class="hidden">
+      <label>Svarsalternativ (kommaseparerade)</label>
+      <input id="bq-opts-${i}" placeholder="T.ex. Ronaldo, Mbappé, Ingen">
+    </div>
+    <div id="bq-number-${i}" class="hidden">
+      <div class="row">
+        <div><label>Min (valfritt)</label><input type="number" id="bq-min-${i}"></div>
+        <div><label>Max (valfritt)</label><input type="number" id="bq-max-${i}"></div>
+      </div>
+    </div>
+  </div>`;
+}
+function onBonusTypeChange(i){
+  const type=document.getElementById('bq-type-'+i).value;
+  document.getElementById('bq-choice-'+i).classList.toggle('hidden', type!=='choice');
+  document.getElementById('bq-number-'+i).classList.toggle('hidden', type!=='number');
+}
+// Renders 5 blank rows, or pre-fills them from a match's already-saved custom
+// questions (round-tripped back into yn/hbl/choice/number so they're editable,
+// not just displayed) — matched against the CURRENT match's own team names,
+// since a Ja/Nej or Hemma/Borta/Lika question looks identical to a custom
+// 2-3 option one otherwise.
+function renderBonusRows(existingDefs){
+  const box=document.getElementById('bq-custom-fields');
+  const m=findMatch(document.getElementById('bq-matchid').value);
+  const H=m&&m.home?m.home.name:'Hemmalag', A=m&&m.away?m.away.name:'Bortalag';
+  const rows=[];
+  for(let i=0;i<5;i++){
+    const d=existingDefs&&existingDefs[i];
+    let type='yn', opts='', min='', max='', qText='';
+    if(d){
+      qText=d.q||'';
+      if(d.type==='number'){ type='number'; min=d.min!=null?d.min:''; max=d.max!=null?d.max:''; }
+      else{
+        const o=d.options||[];
+        if(o.length===2&&o[0]==='Ja'&&o[1]==='Nej') type='yn';
+        else if(o.length===3&&o[0]===H&&o[1]===A&&o[2]==='Lika') type='hbl';
+        else { type='choice'; opts=o.join(', '); }
+      }
+    }
+    rows.push({qText,type,opts,min,max});
+  }
+  box.innerHTML=rows.map((r,i)=>bonusRowHTML(i)).join('');
+  rows.forEach((r,i)=>{
+    document.getElementById('bq-q-'+i).value=r.qText;
+    document.getElementById('bq-type-'+i).value=r.type;
+    if(r.opts) document.getElementById('bq-opts-'+i).value=r.opts;
+    if(r.min!=='') document.getElementById('bq-min-'+i).value=r.min;
+    if(r.max!=='') document.getElementById('bq-max-'+i).value=r.max;
+    onBonusTypeChange(i);
+  });
+}
+function setBonusUIMode(mode){
+  BONUS_UI_MODE=mode;
+  document.getElementById('bq-btn-standard').classList.toggle('active',mode==='standard');
+  document.getElementById('bq-btn-custom').classList.toggle('active',mode==='custom');
+  document.getElementById('bq-custom-fields').classList.toggle('hidden',mode!=='custom');
+  if(mode==='custom'&&!document.getElementById('bq-custom-fields').innerHTML.trim()){
+    const m=findMatch(document.getElementById('bq-matchid').value);
+    renderBonusRows(m&&m.bonusMode==='custom'?m.bonus:null);
+  }
+}
+function onBonusMatchChange(){
+  const m=findMatch(document.getElementById('bq-matchid').value);
+  const lockEl=document.getElementById('bq-lock-hint');
+  const saveBtn=document.getElementById('bq-save-btn');
+  document.getElementById('bq-custom-fields').innerHTML=''; // force re-render for the newly selected match
+  if(!m){ lockEl.classList.add('hidden'); saveBtn.disabled=false; return; }
+  const locked=m.predictionCount>0;
+  if(locked){
+    lockEl.textContent=`🔒 ${m.predictionCount} spelare har redan tippat matchen — bonusfrågorna är låsta och kan inte ändras.`;
+    lockEl.classList.remove('hidden');
+  } else {
+    lockEl.classList.add('hidden');
+  }
+  saveBtn.disabled=locked;
+  setBonusUIMode(m.bonusMode==='custom'?'custom':'standard');
+}
+function gatherCustomQuestions(){
+  const m=findMatch(document.getElementById('bq-matchid').value);
+  const H=m&&m.home?m.home.name:'Hemmalag', A=m&&m.away?m.away.name:'Bortalag';
+  const questions=[];
+  for(let i=0;i<5;i++){
+    const q=document.getElementById('bq-q-'+i).value.trim();
+    const type=document.getElementById('bq-type-'+i).value;
+    if(type==='yn') questions.push({q,type:'choice',options:['Ja','Nej']});
+    else if(type==='hbl') questions.push({q,type:'choice',options:[H,A,'Lika']});
+    else if(type==='choice'){
+      const opts=document.getElementById('bq-opts-'+i).value.split(',').map(s=>s.trim()).filter(Boolean);
+      questions.push({q,type:'choice',options:opts});
+    } else {
+      const minVal=document.getElementById('bq-min-'+i).value, maxVal=document.getElementById('bq-max-'+i).value;
+      const qd={q,type:'number'};
+      if(minVal!=='') qd.min=Number(minVal);
+      if(maxVal!=='') qd.max=Number(maxVal);
+      questions.push(qd);
+    }
+  }
+  return questions;
+}
+async function saveBonusQuestions(){
+  const matchId=document.getElementById('bq-matchid').value;
+  if(!matchId){ msg('m-bonusq',false,'Välj en match'); return; }
+  if(BONUS_UI_MODE==='standard'){
+    const {ok,j}=await api({action:'setBonusQuestions',matchId,mode:'standard'});
+    msg('m-bonusq',ok,ok?'Standardfrågorna gäller för matchen.':(j.error||'Fel'));
+    if(ok) loadMatchList();
+    return;
+  }
+  const questions=gatherCustomQuestions();
+  if(questions.some(q=>!q.q)){ msg('m-bonusq',false,'Alla 5 frågor måste ha text.'); return; }
+  const badChoice=questions.find(q=>q.type==='choice'&&(!q.options||q.options.length<2));
+  if(badChoice){ msg('m-bonusq',false,'Varje flervalsfråga behöver minst 2 alternativ: "'+badChoice.q+'"'); return; }
+  const {ok,j}=await api({action:'setBonusQuestions',matchId,mode:'custom',questions});
+  msg('m-bonusq',ok,ok?'Bonusfrågorna sparade för matchen.':(j.error||'Fel'));
+  if(ok) loadMatchList();
 }
 
 // Section 6: picking a match pre-fills its currently-stored label (which may
@@ -470,7 +625,7 @@ document.getElementById('date').value=todaySthlm();
 fillTeamPickers();
 wireTeamPickers();
 loadPlayerList();
-loadMatchList().then(()=>{ onResultMatchChange(); onFixMatchChange(); });
+loadMatchList().then(()=>{ onResultMatchChange(); onFixMatchChange(); onBonusMatchChange(); });
 showPanel();
 </script>
 </body>
