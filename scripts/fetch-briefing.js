@@ -22,9 +22,10 @@ const xmlParser = new XMLParser({
 const UA = 'esports-briefing/1.0 (2easy.gg daily briefing; contact patrik@2easy.gg)';
 const LIQUIPEDIA_MIN_GAP_MS = 2100;
 // Reddit's unauthenticated RSS is far stricter than Liquipedia's — confirmed
-// live (2026-07-08) at ~1 request per IP per 28-50s reset window. 65s leaves
-// margin either way.
-const REDDIT_MIN_GAP_MS = 65000;
+// live (2026-07-08) at ~1 request per IP per 28-50s reset window. This only
+// runs once a day, so there's no reason to hug that boundary: comfortable
+// margin over speed.
+const REDDIT_MIN_GAP_MS = 90000;
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -150,17 +151,37 @@ async function fetchAllLiquipedia() {
 
 // ── Reddit ────────────────────────────────────────────────────────────────────
 
+async function fetchRedditPage(subreddit) {
+  const url = `https://www.reddit.com/r/${subreddit}/top/.rss?t=day&limit=5`;
+  const res = await fetch(url, {
+    headers: { 'User-Agent': UA },
+    signal: AbortSignal.timeout(10000),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.text();
+}
+
 // Today's top 5 posts, Reddit's own ranking — no score/comment-count is
-// exposed by the RSS feed itself, only title/link/date.
+// exposed by the RSS feed itself, only title/link/date. A failure here is
+// almost always the rate limit not having reset yet, so — unlike Liquipedia's
+// quick 1.5s retry — the retry waits out a FULL gap before trying again; this
+// only runs once a day, so trading a couple extra minutes for reliability is
+// a good deal.
 async function fetchRedditTop(subreddit, game) {
+  let xml;
   try {
-    const url = `https://www.reddit.com/r/${subreddit}/top/.rss?t=day&limit=5`;
-    const res = await fetch(url, {
-      headers: { 'User-Agent': UA },
-      signal: AbortSignal.timeout(10000),
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const xml = await res.text();
+    xml = await fetchRedditPage(subreddit);
+  } catch (err) {
+    console.warn(`[Reddit] r/${subreddit} failed once (${err.message}), retrying after a full gap…`);
+    await sleep(REDDIT_MIN_GAP_MS);
+    try {
+      xml = await fetchRedditPage(subreddit);
+    } catch (err2) {
+      console.warn(`[Reddit] r/${subreddit} failed again: ${err2.message}`);
+      return [];
+    }
+  }
+  try {
     const data = xmlParser.parse(xml);
     const rawEntries = data?.feed?.entry ?? [];
     const entries = Array.isArray(rawEntries) ? rawEntries : [rawEntries];
@@ -178,7 +199,7 @@ async function fetchRedditTop(subreddit, game) {
       }))
       .filter(i => i.title && i.link);
   } catch (err) {
-    console.warn(`[Reddit] r/${subreddit} failed: ${err.message}`);
+    console.warn(`[Reddit] r/${subreddit} parse failed: ${err.message}`);
     return [];
   }
 }
