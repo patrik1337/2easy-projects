@@ -16,7 +16,6 @@
     --line: #e6e6e2;
     --accent: #ff5900;
     --mono: "JetBrains Mono", monospace;
-    --col-gap: 40px;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -88,24 +87,39 @@
     white-space: nowrap;
   }
 
-  /* ── Two-column grid ── */
-  .briefing-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0 var(--col-gap);
-    align-items: start;
-    padding: 0 0 64px;
+  /* ── Section nav (top-level: News / Transfers & Rumors / Community) ── */
+  .section-nav {
+    display: flex;
+    gap: 8px;
+    padding: 28px 0 32px;
+    border-bottom: 1px solid var(--line);
+    flex-wrap: wrap;
+  }
+  .section-tab {
+    font-family: var(--mono);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    padding: 10px 18px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    cursor: pointer;
+    background: var(--paper);
+    color: var(--ink-soft);
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
+  }
+  .section-tab:hover { border-color: var(--accent); color: var(--ink); }
+  .section-tab.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
   }
 
-  .col-news {
-    border-right: 1px solid var(--line);
-    padding-right: var(--col-gap);
-    padding-top: 36px;
-  }
-
-  .col-transfers {
-    padding-top: 36px;
-  }
+  /* ── Section panels (one shown at a time, full width) ── */
+  .section-panel { padding: 36px 0 64px; }
+  .section-panel.hidden { display: none; }
+  .news-panel-inner { max-width: 720px; }
 
   /* ── Column headers ── */
   .col-label {
@@ -361,15 +375,7 @@
 
   /* ── Mobile ── */
   @media (max-width: 800px) {
-    .briefing-grid {
-      grid-template-columns: 1fr;
-    }
-    .col-news {
-      border-right: none;
-      border-bottom: 1px solid var(--line);
-      padding-right: 0;
-      padding-bottom: 36px;
-    }
+    .section-tab { flex: 1; text-align: center; padding: 10px 8px; }
     nav a { margin-left: 16px; }
   }
 </style>
@@ -461,34 +467,39 @@
   let allTransfers = [];
   let allRumours = [];
   let allCommunity = [];
-  let activeType = 'transfers'; // 'transfers' | 'rumours' | 'community'
+  let activeSection = 'news'; // 'news' | 'transfers' | 'community' — top-level page nav
+  let activeType = 'transfers'; // 'transfers' | 'rumours' — sub-switch within the transfers section
   // null = show all; Set = explicit include list (empty Set = show none)
   let selectedGames = null;
   let activeDateRange = 'all'; // 'today' | '5days' | 'all'
 
   // ── Filter logic ─────────────────────────────────────────────────────────
 
-  function activeSource() {
-    if (activeType === 'rumours') return allRumours;
-    if (activeType === 'community') return allCommunity;
-    return allTransfers;
-  }
-
-  function filteredTransfers() {
-    const cutoff = activeDateRange === 'today'
+  function dateCutoff() {
+    return activeDateRange === 'today'
       ? todayStr()
       : activeDateRange === '5days'
         ? daysAgoStr(4)
         : null;
+  }
 
-    return activeSource().filter(t => {
-      if (selectedGames !== null && !selectedGames.has(t.game)) return false;
-      if (cutoff) {
-        const d = toDateStr(t.date);
-        if (!d || d < cutoff) return false;
-      }
-      return true;
-    });
+  function matchesFilters(item) {
+    if (selectedGames !== null && !selectedGames.has(item.game)) return false;
+    const cutoff = dateCutoff();
+    if (cutoff) {
+      const d = toDateStr(item.date);
+      if (!d || d < cutoff) return false;
+    }
+    return true;
+  }
+
+  function filteredTransfers() {
+    const source = activeType === 'rumours' ? allRumours : allTransfers;
+    return source.filter(matchesFilters);
+  }
+
+  function filteredCommunity() {
+    return allCommunity.filter(matchesFilters);
   }
 
   // ── Renderers ────────────────────────────────────────────────────────────
@@ -507,7 +518,6 @@
   }
 
   function renderTransferList() {
-    if (activeType === 'community') return renderCommunityList();
     const items = filteredTransfers();
     const el = document.getElementById('transfer-list');
     if (!el) return;
@@ -539,8 +549,8 @@
   }
 
   function renderCommunityList() {
-    const items = filteredTransfers();
-    const el = document.getElementById('transfer-list');
+    const items = filteredCommunity();
+    const el = document.getElementById('community-list');
     if (!el) return;
     if (!items.length) {
       el.innerHTML = '<p class="state-msg">No discussions match the current filters.</p>';
@@ -564,13 +574,84 @@
     }).join('');
   }
 
+  // Game pills and date tabs each exist in two DOM copies now (Transfers panel
+  // + Community panel share the same filter state) — refresh every copy from
+  // state rather than toggling just the one that was clicked, so both panels
+  // stay visually in sync even while the other one is hidden.
   function refreshPills() {
     document.querySelectorAll('.game-pill').forEach(btn => {
       btn.classList.toggle('active', selectedGames === null || selectedGames.has(btn.dataset.game));
     });
   }
 
+  function refreshDateTabs() {
+    document.querySelectorAll('.date-tab').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.range === activeDateRange);
+    });
+  }
+
   // ── Full render after data loads ─────────────────────────────────────────
+
+  function renderNewsSection(industry, headlines) {
+    return `
+      <div class="news-panel-inner">
+        <p class="col-label">Esports News</p>
+        <div class="news-section">
+          <span class="news-sublabel">Industry</span>
+          ${renderNews(industry)}
+        </div>
+        <div class="news-section">
+          <span class="news-sublabel">Headlines</span>
+          ${renderNews(headlines)}
+        </div>
+      </div>`;
+  }
+
+  function renderTransfersSection(games) {
+    return `
+      <p class="col-label" id="transfer-col-label">Roster Transfers</p>
+      <div class="transfer-controls">
+        <div class="type-tabs">
+          <button class="type-tab active" data-type="transfers">Transfers (${allTransfers.length})</button>
+          <button class="type-tab" data-type="rumours">Rumours (${allRumours.length})</button>
+        </div>
+        <div class="date-tabs">
+          <button class="date-tab" data-range="today">Today</button>
+          <button class="date-tab" data-range="5days">Last 5 days</button>
+          <button class="date-tab active" data-range="all">All</button>
+        </div>
+        <div class="game-filters-label">
+          <span>Filter by title</span>
+          <span class="filter-toggles">
+            <button class="btn-select-all">All</button>
+            <button class="btn-select-none">None</button>
+          </span>
+        </div>
+        <div class="game-pills">${renderGamePills(games)}</div>
+      </div>
+      <div id="transfer-list"></div>`;
+  }
+
+  function renderCommunitySection(games) {
+    return `
+      <p class="col-label">Community Discussions</p>
+      <div class="transfer-controls">
+        <div class="date-tabs">
+          <button class="date-tab" data-range="today">Today</button>
+          <button class="date-tab" data-range="5days">Last 5 days</button>
+          <button class="date-tab active" data-range="all">All</button>
+        </div>
+        <div class="game-filters-label">
+          <span>Filter by title</span>
+          <span class="filter-toggles">
+            <button class="btn-select-all">All</button>
+            <button class="btn-select-none">None</button>
+          </span>
+        </div>
+        <div class="game-pills">${renderGamePills(games)}</div>
+      </div>
+      <div id="community-list"></div>`;
+  }
 
   function render(data) {
     document.getElementById('updated-at').textContent = formatUpdated(data.generatedAt);
@@ -578,6 +659,7 @@
     allTransfers = data.transfers ?? [];
     allRumours = data.rumours ?? [];
     allCommunity = data.community ?? [];
+    activeSection = 'news';
     activeType = 'transfers';
     const games = [...new Set([...allTransfers, ...allRumours, ...allCommunity].map(t => t.game))].sort();
     selectedGames = null; // null = show all
@@ -586,70 +668,38 @@
     const headlines = (data.news ?? []).filter(n => n.section === 'headlines');
 
     document.getElementById('content').innerHTML = `
-      <div class="briefing-grid">
+      <div class="section-nav">
+        <button class="section-tab active" data-section="news">Esports News</button>
+        <button class="section-tab" data-section="transfers">Roster Transfers &amp; Rumors</button>
+        <button class="section-tab" data-section="community">Community</button>
+      </div>
 
-        <!-- ── Left: News ── -->
-        <div class="col-news">
-          <p class="col-label">Esports News</p>
-
-          <div class="news-section">
-            <span class="news-sublabel">Industry</span>
-            ${renderNews(industry)}
-          </div>
-
-          <div class="news-section">
-            <span class="news-sublabel">Headlines</span>
-            ${renderNews(headlines)}
-          </div>
-        </div>
-
-        <!-- ── Right: Transfers / Rumours ── -->
-        <div class="col-transfers">
-          <p class="col-label" id="transfer-col-label">Roster Transfers</p>
-
-          <div class="transfer-controls">
-            <div class="type-tabs">
-              <button class="type-tab active" data-type="transfers">Transfers (${allTransfers.length})</button>
-              <button class="type-tab" data-type="rumours">Rumours (${allRumours.length})</button>
-              <button class="type-tab" data-type="community">Community (${allCommunity.length})</button>
-            </div>
-
-            <div class="date-tabs">
-              <button class="date-tab" data-range="today">Today</button>
-              <button class="date-tab" data-range="5days">Last 5 days</button>
-              <button class="date-tab active" data-range="all">All</button>
-            </div>
-
-            <div class="game-filters-label">
-              <span>Filter by title</span>
-              <span class="filter-toggles">
-                <button id="btn-all">All</button>
-                <button id="btn-none">None</button>
-              </span>
-            </div>
-            <div class="game-pills" id="game-pills">
-              ${renderGamePills(games)}
-            </div>
-          </div>
-
-          <div id="transfer-list"></div>
-        </div>
-
-      </div>`;
+      <div class="section-panel" id="panel-news">${renderNewsSection(industry, headlines)}</div>
+      <div class="section-panel hidden" id="panel-transfers">${renderTransfersSection(games)}</div>
+      <div class="section-panel hidden" id="panel-community">${renderCommunitySection(games)}</div>`;
 
     renderTransferList();
+    renderCommunityList();
     bindEvents(games);
   }
 
   // ── Event binding ─────────────────────────────────────────────────────────
 
   function bindEvents(games) {
-    // Type tabs (Transfers / Rumours / Community)
-    const typeLabels = {
-      transfers: 'Roster Transfers',
-      rumours: 'Roster Rumours',
-      community: 'Community Discussions',
-    };
+    // Top-level section nav — only one panel filled at a time, matches "only
+    // track one category at once" instead of splitting the page into columns.
+    document.querySelectorAll('.section-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeSection = btn.dataset.section;
+        document.querySelectorAll('.section-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.section-panel').forEach(p => p.classList.add('hidden'));
+        document.getElementById('panel-' + activeSection).classList.remove('hidden');
+      });
+    });
+
+    // Type tabs (Transfers / Rumours) — sub-switch within the transfers panel
+    const typeLabels = { transfers: 'Roster Transfers', rumours: 'Roster Rumours' };
     document.querySelectorAll('.type-tab').forEach(btn => {
       btn.addEventListener('click', () => {
         activeType = btn.dataset.type;
@@ -660,49 +710,57 @@
       });
     });
 
-    // Date tabs
+    // Date tabs — shared state, one DOM copy per panel (Transfers + Community)
     document.querySelectorAll('.date-tab').forEach(btn => {
       btn.addEventListener('click', () => {
         activeDateRange = btn.dataset.range;
-        document.querySelectorAll('.date-tab').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+        refreshDateTabs();
         renderTransferList();
+        renderCommunityList();
       });
     });
 
-    // Game pills
-    document.getElementById('game-pills').addEventListener('click', e => {
-      const pill = e.target.closest('.game-pill');
-      if (!pill) return;
-      const game = pill.dataset.game;
+    // Game pills — shared state, one DOM copy per panel; delegate per container
+    document.querySelectorAll('.game-pills').forEach(container => {
+      container.addEventListener('click', e => {
+        const pill = e.target.closest('.game-pill');
+        if (!pill) return;
+        const game = pill.dataset.game;
 
-      if (selectedGames === null) {
-        // Currently showing all — deselect just this one
-        selectedGames = new Set(games.filter(g => g !== game));
-      } else if (selectedGames.has(game)) {
-        selectedGames.delete(game);
-        // If all games are now selected, collapse back to null (show all)
-        if (selectedGames.size === games.length) selectedGames = null;
-      } else {
-        selectedGames.add(game);
-        if (selectedGames.size === games.length) selectedGames = null;
-      }
+        if (selectedGames === null) {
+          // Currently showing all — deselect just this one
+          selectedGames = new Set(games.filter(g => g !== game));
+        } else if (selectedGames.has(game)) {
+          selectedGames.delete(game);
+          // If all games are now selected, collapse back to null (show all)
+          if (selectedGames.size === games.length) selectedGames = null;
+        } else {
+          selectedGames.add(game);
+          if (selectedGames.size === games.length) selectedGames = null;
+        }
 
-      refreshPills();
-      renderTransferList();
+        refreshPills();
+        renderTransferList();
+        renderCommunityList();
+      });
     });
 
-    // Select all / none
-    document.getElementById('btn-all').addEventListener('click', () => {
-      selectedGames = null;
-      refreshPills();
-      renderTransferList();
+    // Select all / none — one DOM copy per panel
+    document.querySelectorAll('.btn-select-all').forEach(btn => {
+      btn.addEventListener('click', () => {
+        selectedGames = null;
+        refreshPills();
+        renderTransferList();
+        renderCommunityList();
+      });
     });
-
-    document.getElementById('btn-none').addEventListener('click', () => {
-      selectedGames = new Set(); // empty Set = show nothing
-      refreshPills();
-      renderTransferList();
+    document.querySelectorAll('.btn-select-none').forEach(btn => {
+      btn.addEventListener('click', () => {
+        selectedGames = new Set(); // empty Set = show nothing
+        refreshPills();
+        renderTransferList();
+        renderCommunityList();
+      });
     });
   }
 
