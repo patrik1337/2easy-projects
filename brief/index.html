@@ -161,6 +161,47 @@
   /* ── Transfer controls ── */
   .transfer-controls { margin-bottom: 20px; }
 
+  .type-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 14px;
+  }
+  .type-tab {
+    font-family: var(--mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    cursor: pointer;
+    background: var(--paper);
+    color: var(--ink-soft);
+    font-weight: 500;
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
+  }
+  .type-tab:hover { border-color: var(--accent); color: var(--ink); }
+  .type-tab.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  .confidence-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 1px 6px;
+    border-radius: 2px;
+    margin-left: 6px;
+    background: var(--line);
+    color: var(--ink-soft);
+  }
+  .confidence-badge.confirmed { background: var(--ink); color: var(--paper); }
+  .confidence-badge.likely { background: var(--accent); color: #fff; }
+
   .date-tabs {
     display: flex;
     gap: 4px;
@@ -407,6 +448,8 @@
   // ── State ────────────────────────────────────────────────────────────────
 
   let allTransfers = [];
+  let allRumours = [];
+  let activeType = 'transfers'; // 'transfers' | 'rumours'
   // null = show all; Set = explicit include list (empty Set = show none)
   let selectedGames = null;
   let activeDateRange = 'all'; // 'today' | '5days' | 'all'
@@ -420,7 +463,8 @@
         ? daysAgoStr(4)
         : null;
 
-    return allTransfers.filter(t => {
+    const source = activeType === 'rumours' ? allRumours : allTransfers;
+    return source.filter(t => {
       if (selectedGames !== null && !selectedGames.has(t.game)) return false;
       if (cutoff) {
         const d = toDateStr(t.date);
@@ -450,7 +494,8 @@
     const el = document.getElementById('transfer-list');
     if (!el) return;
     if (!items.length) {
-      el.innerHTML = '<p class="state-msg">No transfers match the current filters.</p>';
+      const label = activeType === 'rumours' ? 'rumours' : 'transfers';
+      el.innerHTML = `<p class="state-msg">No ${label} match the current filters.</p>`;
       return;
     }
     el.innerHTML = '<ul class="transfer-list">' + items.map(t => {
@@ -460,11 +505,14 @@
       const refHTML = t.refUrl
         ? ` <a class="transfer-ref" href="${esc(t.refUrl)}" target="_blank" rel="noopener noreferrer" title="Source">[ref]</a>`
         : '';
+      const confHTML = t.confidence
+        ? ` <span class="confidence-badge ${esc(t.confidence.toLowerCase())}">${esc(t.confidence)}</span>`
+        : '';
       return `
       <li class="transfer-item">
         <span class="transfer-date">${esc(t.date)}</span>
         <span class="transfer-detail">
-          <span class="transfer-player">${playerHTML}</span>${refHTML}
+          <span class="transfer-player">${playerHTML}</span>${refHTML}${confHTML}
           <div class="transfer-move">${esc(t.from || '—')} → ${esc(t.to || '—')}</div>
           <span class="transfer-game-tag">${esc(t.game)}</span>
         </span>
@@ -491,7 +539,9 @@
     document.getElementById('updated-at').textContent = formatUpdated(data.generatedAt);
 
     allTransfers = data.transfers ?? [];
-    const games = [...new Set(allTransfers.map(t => t.game))].sort();
+    allRumours = data.rumours ?? [];
+    activeType = 'transfers';
+    const games = [...new Set([...allTransfers, ...allRumours].map(t => t.game))].sort();
     selectedGames = null; // null = show all
 
     const industry = (data.news ?? []).filter(n => n.section === 'industry');
@@ -515,11 +565,16 @@
           </div>
         </div>
 
-        <!-- ── Right: Transfers ── -->
+        <!-- ── Right: Transfers / Rumours ── -->
         <div class="col-transfers">
-          <p class="col-label">Roster Transfers</p>
+          <p class="col-label" id="transfer-col-label">Roster Transfers</p>
 
           <div class="transfer-controls">
+            <div class="type-tabs">
+              <button class="type-tab active" data-type="transfers">Transfers (${allTransfers.length})</button>
+              <button class="type-tab" data-type="rumours">Rumours (${allRumours.length})</button>
+            </div>
+
             <div class="date-tabs">
               <button class="date-tab" data-range="today">Today</button>
               <button class="date-tab" data-range="5days">Last 5 days</button>
@@ -550,6 +605,18 @@
   // ── Event binding ─────────────────────────────────────────────────────────
 
   function bindEvents(games) {
+    // Type tabs (Transfers / Rumours)
+    document.querySelectorAll('.type-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeType = btn.dataset.type;
+        document.querySelectorAll('.type-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('transfer-col-label').textContent =
+          activeType === 'rumours' ? 'Roster Rumours' : 'Roster Transfers';
+        renderTransferList();
+      });
+    });
+
     // Date tabs
     document.querySelectorAll('.date-tab').forEach(btn => {
       btn.addEventListener('click', () => {

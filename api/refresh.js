@@ -86,8 +86,28 @@ async function fetchLiquipediaTransfers(wiki, game, page) {
   }
 }
 
-// ── Handler ───────────────────────────────────────────────────────────────────
+async function fetchLiquipediaRumours(wiki, game, page) {
+  try {
+    const html = await fetchLiquipediaPage(wiki, page);
+    return parseTransferTable(html, game, 'RumourRow');
+  } catch (err) {
+    console.error(`[Liquipedia] ${game} rumours failed:`, err.message);
+    return [];
+  }
+}
 
+async function respectGap(t0) {
+  const gap = LIQUIPEDIA_MIN_GAP_MS - (Date.now() - t0);
+  if (gap > 0) await sleep(gap);
+}
+
+// ── Handler ───────────────────────────────────────────────────────────────────
+// Note: this endpoint isn't on the active data path (the cron job runs
+// scripts/fetch-briefing.js directly and commits the static briefing.json;
+// the frontend fetches that file, not this route) — kept in sync for when/if
+// it's wired up, but be aware fetching both transfers AND rumours for all 19
+// wikis sequentially (~80s at the required request-rate limit) exceeds even
+// this route's configured 60s maxDuration on Vercel Hobby.
 module.exports = async (req, res) => {
   // Cache on Vercel CDN for 24 h; cron job at noon refreshes it daily
   res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate=3600');
@@ -106,20 +126,28 @@ module.exports = async (req, res) => {
   // Liquipedia — sequential, min 2.1 s between request *starts* per their rate-limit policy.
   // We subtract actual fetch time so we only sleep the remainder, keeping total runtime low.
   const transfers = [];
+  const rumours = [];
   for (let i = 0; i < FEEDS.liquipedia.length; i++) {
-    const t0 = Date.now();
-    const { wiki, game, page } = FEEDS.liquipedia[i];
-    const items = await fetchLiquipediaTransfers(wiki, game, page);
-    transfers.push(...items);
-    if (i < FEEDS.liquipedia.length - 1) {
-      const gap = LIQUIPEDIA_MIN_GAP_MS - (Date.now() - t0);
-      if (gap > 0) await sleep(gap);
+    const { wiki, game, page, rumoursPage } = FEEDS.liquipedia[i];
+    const isLast = i === FEEDS.liquipedia.length - 1;
+
+    let t0 = Date.now();
+    const tItems = await fetchLiquipediaTransfers(wiki, game, page);
+    transfers.push(...tItems);
+    await respectGap(t0);
+
+    if (rumoursPage) {
+      t0 = Date.now();
+      const rItems = await fetchLiquipediaRumours(wiki, game, rumoursPage);
+      rumours.push(...rItems);
+      if (!isLast) await respectGap(t0);
     }
   }
 
   res.status(200).json({
     generatedAt: new Date().toISOString(),
     transfers,
+    rumours,
     news: allNews,
   });
 };

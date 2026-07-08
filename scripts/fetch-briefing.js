@@ -94,6 +94,21 @@ async function fetchLiquipediaTransfers(wiki, game, page) {
   }
 }
 
+async function fetchLiquipediaRumours(wiki, game, page) {
+  try {
+    const html = await fetchLiquipediaPage(wiki, page);
+    return parseTransferTable(html, game, 'RumourRow');
+  } catch (err) {
+    console.warn(`[Liquipedia] ${game} rumours failed: ${err.message}`);
+    return [];
+  }
+}
+
+async function respectGap(t0) {
+  const gap = LIQUIPEDIA_MIN_GAP_MS - (Date.now() - t0);
+  if (gap > 0) await sleep(gap);
+}
+
 // ── Main ──────────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -106,24 +121,33 @@ async function main() {
     .slice(0, 60);
   console.log(`  ${allNews.length} news items from ${FEEDS.rss.length} feeds`);
 
-  console.log('Fetching Liquipedia transfers…');
+  console.log('Fetching Liquipedia transfers + rumours…');
   const transfers = [];
+  const rumours = [];
   for (let i = 0; i < FEEDS.liquipedia.length; i++) {
-    const { wiki, game, page } = FEEDS.liquipedia[i];
-    const t0 = Date.now();
-    const items = await fetchLiquipediaTransfers(wiki, game, page);
-    transfers.push(...items);
-    console.log(`  ${game}: ${items.length} transfers`);
-    if (i < FEEDS.liquipedia.length - 1) {
-      const gap = LIQUIPEDIA_MIN_GAP_MS - (Date.now() - t0);
-      if (gap > 0) await sleep(gap);
+    const { wiki, game, page, rumoursPage } = FEEDS.liquipedia[i];
+    const isLast = i === FEEDS.liquipedia.length - 1;
+
+    let t0 = Date.now();
+    const tItems = await fetchLiquipediaTransfers(wiki, game, page);
+    transfers.push(...tItems);
+    console.log(`  ${game}: ${tItems.length} transfers`);
+    await respectGap(t0);
+
+    if (rumoursPage) {
+      t0 = Date.now();
+      const rItems = await fetchLiquipediaRumours(wiki, game, rumoursPage);
+      rumours.push(...rItems);
+      console.log(`  ${game}: ${rItems.length} rumours`);
+      if (!isLast) await respectGap(t0);
     }
   }
-  console.log(`  ${transfers.length} transfers total`);
+  console.log(`  ${transfers.length} transfers, ${rumours.length} rumours total`);
 
   const briefing = {
     generatedAt: new Date().toISOString(),
     transfers,
+    rumours,
     news: allNews,
   };
 
