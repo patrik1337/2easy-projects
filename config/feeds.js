@@ -61,4 +61,30 @@ module.exports = {
     { wiki: 'freefire',          game: 'Free Fire',           page: 'Portal:Transfers', rumoursPage: 'Portal:Rumours' },
     { wiki: 'trackmania',        game: 'TrackMania',          page: 'Portal:Transfers', rumoursPage: 'Portal:Rumours' },
   ],
+
+  // Subreddits for "Community Discussions" — today's top 5 posts per sub via
+  // Reddit's own /top/.rss?t=day sort, so the ranking is Reddit's, not ours.
+  // Reddit's unauthenticated RSS rate-limits hard (~1 request per ~60s per IP,
+  // confirmed live 2026-07-08) — independent of and much stricter than
+  // Liquipedia's, so this list is fetched on its own loop, in parallel with
+  // Liquipedia rather than after it. `game` matches the liquipedia list above
+  // for consistent filtering. The user's 3 example subreddits are confirmed
+  // live; the rest are well-known communities picked for coverage, not
+  // individually verified — a wrong/dead name just yields 0 posts for that
+  // game, same graceful degradation as everything else here.
+  reddit: [
+    { subreddit: 'leagueoflegends',      game: 'League of Legends' },
+    { subreddit: 'GlobalOffensive',      game: 'Counter-Strike' },
+    { subreddit: 'ValorantCompetitive',  game: 'Valorant' },
+    { subreddit: 'DotA2',                game: 'Dota 2' },
+    { subreddit: 'CompetitiveOverwatch', game: 'Overwatch' },
+    { subreddit: 'Rainbow6',             game: 'Rainbow Six Siege' },
+    { subreddit: 'apexlegends',          game: 'Apex Legends' },
+    { subreddit: 'CoDCompetitive',       game: 'Call of Duty' },
+    { subreddit: 'RocketLeague',         game: 'Rocket League' },
+    { subreddit: 'FortniteCompetitive',  game: 'Fortnite' },
+    { subreddit: 'PUBATTLEGROUNDS',      game: 'PUBG Battlegrounds' },
+    { subreddit: 'TeamfightTactics',     game: 'Teamfight Tactics' },
+    { subreddit: 'EASportsFC',           game: 'EA Sports FC' },
+  ],
 };

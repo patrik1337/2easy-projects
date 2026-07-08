@@ -317,6 +317,17 @@
   }
   .transfer-ref:hover, .transfer-ref:focus-visible { color: var(--accent); }
   .transfer-move { color: var(--ink-soft); font-size: 13px; margin-top: 1px; }
+  .community-title {
+    display: block;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--ink-soft);
+  }
+  .community-title:hover, .community-title:focus-visible {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
   .transfer-game-tag {
     display: inline-block;
     font-family: var(--mono);
@@ -449,12 +460,19 @@
 
   let allTransfers = [];
   let allRumours = [];
-  let activeType = 'transfers'; // 'transfers' | 'rumours'
+  let allCommunity = [];
+  let activeType = 'transfers'; // 'transfers' | 'rumours' | 'community'
   // null = show all; Set = explicit include list (empty Set = show none)
   let selectedGames = null;
   let activeDateRange = 'all'; // 'today' | '5days' | 'all'
 
   // ── Filter logic ─────────────────────────────────────────────────────────
+
+  function activeSource() {
+    if (activeType === 'rumours') return allRumours;
+    if (activeType === 'community') return allCommunity;
+    return allTransfers;
+  }
 
   function filteredTransfers() {
     const cutoff = activeDateRange === 'today'
@@ -463,8 +481,7 @@
         ? daysAgoStr(4)
         : null;
 
-    const source = activeType === 'rumours' ? allRumours : allTransfers;
-    return source.filter(t => {
+    return activeSource().filter(t => {
       if (selectedGames !== null && !selectedGames.has(t.game)) return false;
       if (cutoff) {
         const d = toDateStr(t.date);
@@ -490,6 +507,7 @@
   }
 
   function renderTransferList() {
+    if (activeType === 'community') return renderCommunityList();
     const items = filteredTransfers();
     const el = document.getElementById('transfer-list');
     if (!el) return;
@@ -520,6 +538,25 @@
     }).join('') + '</ul>';
   }
 
+  function renderCommunityList() {
+    const items = filteredTransfers();
+    const el = document.getElementById('transfer-list');
+    if (!el) return;
+    if (!items.length) {
+      el.innerHTML = '<p class="state-msg">No discussions match the current filters.</p>';
+      return;
+    }
+    el.innerHTML = '<ul class="transfer-list">' + items.map(c => `
+      <li class="transfer-item">
+        <span class="transfer-date">${esc(toDateStr(c.date))}</span>
+        <span class="transfer-detail">
+          <a class="community-title" href="${esc(c.link)}" target="_blank" rel="noopener noreferrer">${esc(c.title)}</a>
+          <div class="transfer-move">r/${esc(c.subreddit)}</div>
+          <span class="transfer-game-tag">${esc(c.game)}</span>
+        </span>
+      </li>`).join('') + '</ul>';
+  }
+
   function renderGamePills(games) {
     return games.map(g => {
       const active = selectedGames === null || selectedGames.has(g) ? 'active' : '';
@@ -540,8 +577,9 @@
 
     allTransfers = data.transfers ?? [];
     allRumours = data.rumours ?? [];
+    allCommunity = data.community ?? [];
     activeType = 'transfers';
-    const games = [...new Set([...allTransfers, ...allRumours].map(t => t.game))].sort();
+    const games = [...new Set([...allTransfers, ...allRumours, ...allCommunity].map(t => t.game))].sort();
     selectedGames = null; // null = show all
 
     const industry = (data.news ?? []).filter(n => n.section === 'industry');
@@ -573,6 +611,7 @@
             <div class="type-tabs">
               <button class="type-tab active" data-type="transfers">Transfers (${allTransfers.length})</button>
               <button class="type-tab" data-type="rumours">Rumours (${allRumours.length})</button>
+              <button class="type-tab" data-type="community">Community (${allCommunity.length})</button>
             </div>
 
             <div class="date-tabs">
@@ -605,14 +644,18 @@
   // ── Event binding ─────────────────────────────────────────────────────────
 
   function bindEvents(games) {
-    // Type tabs (Transfers / Rumours)
+    // Type tabs (Transfers / Rumours / Community)
+    const typeLabels = {
+      transfers: 'Roster Transfers',
+      rumours: 'Roster Rumours',
+      community: 'Community Discussions',
+    };
     document.querySelectorAll('.type-tab').forEach(btn => {
       btn.addEventListener('click', () => {
         activeType = btn.dataset.type;
         document.querySelectorAll('.type-tab').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        document.getElementById('transfer-col-label').textContent =
-          activeType === 'rumours' ? 'Roster Rumours' : 'Roster Transfers';
+        document.getElementById('transfer-col-label').textContent = typeLabels[activeType];
         renderTransferList();
       });
     });
