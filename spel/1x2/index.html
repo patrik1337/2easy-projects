@@ -232,7 +232,12 @@ function shortQ(d){ return ({yellows:'Gula',penalties:'Straffar',possession:'Inn
 function bonusIcon(d){
   const KNOWN={yellows:'🟨',penalties:'🥅',possession:'⏱️',redcard:'🟥',corners:'🚩'};
   if(KNOWN[d.id]) return KNOWN[d.id];
-  const q=(d.q||'').toLowerCase();
+  const raw=d.q||'';
+  // Checked against the ORIGINAL casing, before lowercasing below — "var" is
+  // also the everyday Swedish word for "was"/"where", so this only matches
+  // the literal all-caps acronym VAR, never a normal sentence containing it.
+  if(/\bVAR\b/.test(raw)) return '📺';
+  const q=raw.toLowerCase();
   if(/gul(a|t)?\s*kort/.test(q)) return '🟨';
   if(/straff/.test(q)) return '🥅';
   if(/bollinnehav/.test(q)) return '⏱️';
