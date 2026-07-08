@@ -258,6 +258,23 @@
   }
   .transfer-detail { color: var(--ink); font-size: 14px; }
   .transfer-player { font-weight: 500; }
+  .transfer-player a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--ink-soft);
+  }
+  .transfer-player a:hover, .transfer-player a:focus-visible {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .transfer-ref {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    margin-left: 4px;
+  }
+  .transfer-ref:hover, .transfer-ref:focus-visible { color: var(--accent); }
   .transfer-move { color: var(--ink-soft); font-size: 13px; margin-top: 1px; }
   .transfer-game-tag {
     display: inline-block;
@@ -436,15 +453,23 @@
       el.innerHTML = '<p class="state-msg">No transfers match the current filters.</p>';
       return;
     }
-    el.innerHTML = '<ul class="transfer-list">' + items.map(t => `
+    el.innerHTML = '<ul class="transfer-list">' + items.map(t => {
+      const playerHTML = t.playerUrl
+        ? `<a href="${esc(t.playerUrl)}" target="_blank" rel="noopener noreferrer">${esc(t.player)}</a>`
+        : esc(t.player);
+      const refHTML = t.refUrl
+        ? ` <a class="transfer-ref" href="${esc(t.refUrl)}" target="_blank" rel="noopener noreferrer" title="Source">[ref]</a>`
+        : '';
+      return `
       <li class="transfer-item">
         <span class="transfer-date">${esc(t.date)}</span>
         <span class="transfer-detail">
-          <span class="transfer-player">${esc(t.player)}</span>
+          <span class="transfer-player">${playerHTML}</span>${refHTML}
           <div class="transfer-move">${esc(t.from || '—')} → ${esc(t.to || '—')}</div>
           <span class="transfer-game-tag">${esc(t.game)}</span>
         </span>
-      </li>`).join('') + '</ul>';
+      </li>`;
+    }).join('') + '</ul>';
   }
 
   function renderGamePills(games) {

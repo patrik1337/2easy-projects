@@ -7,23 +7,13 @@ const { XMLParser } = require('fast-xml-parser');
 const fs = require('fs');
 const path = require('path');
 const FEEDS = require('../config/feeds');
+const { stripHtml, parseTransferTable } = require('../config/briefing-parse');
 
 const xmlParser = new XMLParser({ ignoreAttributes: false, isArray: (name) => name === 'item' });
 const UA = 'esports-briefing/1.0 (2easy.gg daily briefing; contact patrik@2easy.gg)';
 const LIQUIPEDIA_MIN_GAP_MS = 2100;
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
-
-function stripHtml(str = '') {
-  const text = str
-    .replace(/<[^>]+>/g, '')
-    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"').replace(/&#39;/g, "'")
-    .replace(/&#160;/g, ' ').replace(/&nbsp;/g, ' ')
-    .replace(/\s+/g, ' ').trim();
-  // Liquipedia uses "None" as a placeholder when a player has no team
-  return text === 'None' ? '' : text;
-}
 
 function parsePubDate(raw) {
   if (!raw) return null;
@@ -70,42 +60,34 @@ async function fetchFeed(feed) {
 
 // ── Liquipedia ────────────────────────────────────────────────────────────────
 
-function extractDivCell(chunk, cellClass) {
-  const re = new RegExp(
-    `<div[^>]*class="[^"]*divCell[^"]*\\b${cellClass}\\b[^"]*"[^>]*>([\\s\\S]*?)</div>`,
-    'i'
-  );
-  const m = chunk.match(re);
-  return m ? stripHtml(m[1]) : '';
-}
-
-function parseTransferTable(html, game) {
-  const parts = html.split(/<div[^>]*class="[^"]*\bdivRow\b[^"]*"[^>]*>/i);
-  const transfers = [];
-  for (let i = 1; i < parts.length && transfers.length < 15; i++) {
-    const chunk = parts[i];
-    const date   = extractDivCell(chunk, 'Date');
-    const player = extractDivCell(chunk, 'Name');
-    const from   = extractDivCell(chunk, 'OldTeam');
-    const to     = extractDivCell(chunk, 'NewTeam');
-    if (player) transfers.push({ date, player, from: from || 'None', to: to || 'None', game });
+// A single retry (with a short backoff) covers the kind of transient blip that
+// zeroed out an entire day's transfers on 2026-07-07 despite every other run
+// that week succeeding — one bad request no longer has to mean one bad day.
+async function fetchLiquipediaPage(wiki, page) {
+  const url =
+    `https://liquipedia.net/${wiki}/api.php` +
+    `?action=parse&page=${encodeURIComponent(page)}&prop=text&format=json`;
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    try {
+      const res = await fetch(url, {
+        headers: { 'User-Agent': UA, 'Accept-Encoding': 'gzip' },
+        signal: AbortSignal.timeout(12000),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      if (json.error) throw new Error(`${json.error.code}: ${json.error.info}`);
+      return json?.parse?.text?.['*'] ?? '';
+    } catch (err) {
+      if (attempt === 2) throw err;
+      await sleep(1500);
+    }
   }
-  return transfers;
 }
 
 async function fetchLiquipediaTransfers(wiki, game, page) {
   try {
-    const url =
-      `https://liquipedia.net/${wiki}/api.php` +
-      `?action=parse&page=${encodeURIComponent(page)}&prop=text&format=json`;
-    const res = await fetch(url, {
-      headers: { 'User-Agent': UA, 'Accept-Encoding': 'gzip' },
-      signal: AbortSignal.timeout(12000),
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const json = await res.json();
-    const html = json?.parse?.text?.['*'] ?? '';
-    return parseTransferTable(html, game);
+    const html = await fetchLiquipediaPage(wiki, page);
+    return parseTransferTable(html, game, 'divRow');
   } catch (err) {
     console.warn(`[Liquipedia] ${game} failed: ${err.message}`);
     return [];
