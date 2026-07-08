@@ -243,6 +243,10 @@ function bonusIcon(d){
   if(/bollinnehav/.test(q)) return '⏱️';
   if(/rö(d|tt)\w*\s*kort/.test(q)) return '🟥';
   if(/hörn/.test(q)) return '🚩';
+  // Player-scoring questions ("göra/gör mål", e.g. "Kommer Mbappé göra mål?")
+  // get a distinct player icon — checked before the generic goal match below
+  // since both phrasings contain "mål".
+  if(/\bgör\w*\s+(ett\s+)?mål\b/.test(q)) return '🎯';
   if(/\bmål\b/.test(q)) return '⚽';
   return '❔';
 }
