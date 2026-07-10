@@ -20,7 +20,19 @@ const xmlParser = new XMLParser({
   processEntities: { maxTotalExpansions: 20000 },
 });
 const UA = 'esports-briefing/1.0 (2easy.gg daily briefing; contact patrik@2easy.gg)';
-const LIQUIPEDIA_MIN_GAP_MS = 2100;
+// Was 2100ms (Liquipedia's documented minimum). In practice a burst of ~12-13
+// requests at that pace reliably trips a stricter, undocumented Varnish-level
+// throttle partway through the 19-wiki run (confirmed 2026-07-10: two separate
+// days' briefing.json both cut off at exactly the same 6th wiki; a lone
+// isolated request to a "failed" wiki succeeds fine outside the burst). This
+// only runs once a day with hours of headroom, so trade speed for a much
+// wider margin — both to recover full coverage and to cut ban risk.
+const LIQUIPEDIA_MIN_GAP_MS = 6000;
+// Extra cooldown inserted after repeated consecutive failures, on the theory
+// that a run of failures means we tripped a burst limiter and need to let it
+// reset — rather than continuing to hammer a wall for the rest of the run.
+const LIQUIPEDIA_COOLDOWN_MS = 60000;
+const LIQUIPEDIA_MAX_CONSECUTIVE_FAILS = 2;
 // Reddit's unauthenticated RSS is far stricter than Liquipedia's — confirmed
 // live (2026-07-08) at ~1 request per IP per 28-50s reset window. This only
 // runs once a day, so there's no reason to hug that boundary: comfortable
@@ -93,29 +105,21 @@ async function fetchLiquipediaPage(wiki, page) {
       return json?.parse?.text?.['*'] ?? '';
     } catch (err) {
       if (attempt === 2) throw err;
-      await sleep(1500);
+      // Widened from 1500ms alongside the main gap — a fast retry right after
+      // a failure is more likely to land inside the same throttle window.
+      await sleep(5000);
     }
   }
 }
 
 async function fetchLiquipediaTransfers(wiki, game, page) {
-  try {
-    const html = await fetchLiquipediaPage(wiki, page);
-    return parseTransferTable(html, game, 'divRow');
-  } catch (err) {
-    console.warn(`[Liquipedia] ${game} failed: ${err.message}`);
-    return [];
-  }
+  const html = await fetchLiquipediaPage(wiki, page);
+  return parseTransferTable(html, game, 'divRow');
 }
 
 async function fetchLiquipediaRumours(wiki, game, page) {
-  try {
-    const html = await fetchLiquipediaPage(wiki, page);
-    return parseTransferTable(html, game, 'RumourRow');
-  } catch (err) {
-    console.warn(`[Liquipedia] ${game} rumours failed: ${err.message}`);
-    return [];
-  }
+  const html = await fetchLiquipediaPage(wiki, page);
+  return parseTransferTable(html, game, 'RumourRow');
 }
 
 async function respectGap(t0, minGapMs = LIQUIPEDIA_MIN_GAP_MS) {
@@ -127,19 +131,43 @@ async function fetchAllLiquipedia() {
   console.log('Fetching Liquipedia transfers + rumours…');
   const transfers = [];
   const rumours = [];
+  let consecutiveFails = 0;
+
+  // Wraps a single page fetch with graceful-degradation (never throws out of
+  // the loop) plus a shared failure counter — a run of failures is treated as
+  // "we tripped a throttle", not independent bad luck per wiki, so it earns a
+  // long cooldown instead of barreling through the remaining wikis at the
+  // same pace that caused the trouble.
+  async function guarded(label, fn) {
+    try {
+      const items = await fn();
+      consecutiveFails = 0;
+      return items;
+    } catch (err) {
+      console.warn(`[Liquipedia] ${label} failed: ${err.message}`);
+      consecutiveFails++;
+      if (consecutiveFails >= LIQUIPEDIA_MAX_CONSECUTIVE_FAILS) {
+        console.warn(`[Liquipedia] ${consecutiveFails} failures in a row — cooling down ${LIQUIPEDIA_COOLDOWN_MS / 1000}s`);
+        await sleep(LIQUIPEDIA_COOLDOWN_MS);
+        consecutiveFails = 0;
+      }
+      return [];
+    }
+  }
+
   for (let i = 0; i < FEEDS.liquipedia.length; i++) {
     const { wiki, game, page, rumoursPage } = FEEDS.liquipedia[i];
     const isLast = i === FEEDS.liquipedia.length - 1;
 
     let t0 = Date.now();
-    const tItems = await fetchLiquipediaTransfers(wiki, game, page);
+    const tItems = await guarded(`${game} transfers`, () => fetchLiquipediaTransfers(wiki, game, page));
     transfers.push(...tItems);
     console.log(`  ${game}: ${tItems.length} transfers`);
     await respectGap(t0);
 
     if (rumoursPage) {
       t0 = Date.now();
-      const rItems = await fetchLiquipediaRumours(wiki, game, rumoursPage);
+      const rItems = await guarded(`${game} rumours`, () => fetchLiquipediaRumours(wiki, game, rumoursPage));
       rumours.push(...rItems);
       console.log(`  ${game}: ${rItems.length} rumours`);
       if (!isLast) await respectGap(t0);

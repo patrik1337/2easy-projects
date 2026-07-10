@@ -4,7 +4,10 @@ const { stripHtml, parseTransferTable } = require('../config/briefing-parse');
 
 const xmlParser = new XMLParser({ ignoreAttributes: false, isArray: (name) => name === 'item' });
 const UA = 'esports-briefing/1.0 (2easy.gg daily briefing; contact patrik@2easy.gg)';
-const LIQUIPEDIA_MIN_GAP_MS = 2100; // Liquipedia ToS: >= 2 s between request starts
+// Kept in sync with scripts/fetch-briefing.js's gap (see that file for why
+// it was widened past Liquipedia's documented 2.1s minimum). This route
+// isn't on the active data path — see the note on the handler below.
+const LIQUIPEDIA_MIN_GAP_MS = 6000;
 
 // ── RSS ──────────────────────────────────────────────────────────────────────
 
