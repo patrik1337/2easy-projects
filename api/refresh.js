@@ -109,12 +109,8 @@ async function respectGap(t0) {
 // scripts/fetch-briefing.js directly and commits the static briefing.json;
 // the frontend fetches that file, not this route) — kept in sync for when/if
 // it's wired up, but be aware fetching both transfers AND rumours for all 19
-// wikis sequentially (~80s at the required request-rate limit) exceeds even
-// this route's configured 60s maxDuration on Vercel Hobby. Reddit community
-// discussions (see scripts/fetch-briefing.js) are deliberately NOT fetched
-// here at all — Reddit's own rate limit (~1 request per ~60s per IP) alone
-// would need ~14 minutes for the full subreddit list, far beyond any Vercel
-// function timeout.
+// wikis sequentially at the required request-rate limit exceeds even this
+// route's configured 60s maxDuration on Vercel Hobby.
 module.exports = async (req, res) => {
   // Cache on Vercel CDN for 24 h; cron job at noon refreshes it daily
   res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate=3600');

@@ -9,15 +9,9 @@ const path = require('path');
 const FEEDS = require('../config/feeds');
 const { stripHtml, parseTransferTable } = require('../config/briefing-parse');
 
-// maxTotalExpansions raised well past the library's 1000 default: Reddit posts
-// pack a lot of doubly-escaped HTML into one <content> field (a whole comment
-// thread's worth of &lt;p&gt;/&amp;/etc.), which trips the default anti-DoS
-// entity-expansion limit and throws before parsing even finishes — these are
-// trusted, known feed URLs, not arbitrary user-supplied XML, so raising it is safe.
 const xmlParser = new XMLParser({
   ignoreAttributes: false,
   isArray: (name) => name === 'item',
-  processEntities: { maxTotalExpansions: 20000 },
 });
 const UA = 'esports-briefing/1.0 (2easy.gg daily briefing; contact patrik@2easy.gg)';
 // Was 2100ms (Liquipedia's documented minimum). In practice a burst of ~12-13
@@ -33,11 +27,6 @@ const LIQUIPEDIA_MIN_GAP_MS = 6000;
 // reset — rather than continuing to hammer a wall for the rest of the run.
 const LIQUIPEDIA_COOLDOWN_MS = 60000;
 const LIQUIPEDIA_MAX_CONSECUTIVE_FAILS = 2;
-// Reddit's unauthenticated RSS is far stricter than Liquipedia's — confirmed
-// live (2026-07-08) at ~1 request per IP per 28-50s reset window. This only
-// runs once a day, so there's no reason to hug that boundary: comfortable
-// margin over speed.
-const REDDIT_MIN_GAP_MS = 90000;
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -122,8 +111,8 @@ async function fetchLiquipediaRumours(wiki, game, page) {
   return parseTransferTable(html, game, 'RumourRow');
 }
 
-async function respectGap(t0, minGapMs = LIQUIPEDIA_MIN_GAP_MS) {
-  const gap = minGapMs - (Date.now() - t0);
+async function respectGap(t0) {
+  const gap = LIQUIPEDIA_MIN_GAP_MS - (Date.now() - t0);
   if (gap > 0) await sleep(gap);
 }
 
@@ -177,91 +166,15 @@ async function fetchAllLiquipedia() {
   return { transfers, rumours };
 }
 
-// ── Reddit ────────────────────────────────────────────────────────────────────
-
-async function fetchRedditPage(subreddit) {
-  const url = `https://www.reddit.com/r/${subreddit}/top/.rss?t=day&limit=5`;
-  const res = await fetch(url, {
-    headers: { 'User-Agent': UA },
-    signal: AbortSignal.timeout(10000),
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.text();
-}
-
-// Today's top 5 posts, Reddit's own ranking — no score/comment-count is
-// exposed by the RSS feed itself, only title/link/date. A failure here is
-// almost always the rate limit not having reset yet, so — unlike Liquipedia's
-// quick 1.5s retry — the retry waits out a FULL gap before trying again; this
-// only runs once a day, so trading a couple extra minutes for reliability is
-// a good deal.
-async function fetchRedditTop(subreddit, game) {
-  let xml;
-  try {
-    xml = await fetchRedditPage(subreddit);
-  } catch (err) {
-    console.warn(`[Reddit] r/${subreddit} failed once (${err.message}), retrying after a full gap…`);
-    await sleep(REDDIT_MIN_GAP_MS);
-    try {
-      xml = await fetchRedditPage(subreddit);
-    } catch (err2) {
-      console.warn(`[Reddit] r/${subreddit} failed again: ${err2.message}`);
-      return [];
-    }
-  }
-  try {
-    const data = xmlParser.parse(xml);
-    const rawEntries = data?.feed?.entry ?? [];
-    const entries = Array.isArray(rawEntries) ? rawEntries : [rawEntries];
-    return entries
-      .slice(0, 5)
-      .map(e => ({
-        title: stripHtml(String(e.title ?? '')),
-        // Reddit's Atom <link> is an attribute (href), not text content like
-        // RSS's <link>text</link> — this is why it needs its own parser
-        // instead of reusing fetchFeed().
-        link: e.link?.['@_href'] ?? '',
-        date: parsePubDate(e.published ?? e.updated),
-        subreddit,
-        game,
-      }))
-      .filter(i => i.title && i.link);
-  } catch (err) {
-    console.warn(`[Reddit] r/${subreddit} parse failed: ${err.message}`);
-    return [];
-  }
-}
-
-async function fetchAllReddit() {
-  console.log('Fetching Reddit community discussions…');
-  const community = [];
-  for (let i = 0; i < FEEDS.reddit.length; i++) {
-    const { subreddit, game } = FEEDS.reddit[i];
-    const isLast = i === FEEDS.reddit.length - 1;
-    const t0 = Date.now();
-    const items = await fetchRedditTop(subreddit, game);
-    community.push(...items);
-    console.log(`  r/${subreddit}: ${items.length} posts`);
-    if (!isLast) await respectGap(t0, REDDIT_MIN_GAP_MS);
-  }
-  console.log(`  ${community.length} community posts total`);
-  return community;
-}
-
 // ── Main ──────────────────────────────────────────────────────────────────────
 
 async function main() {
   console.log('Fetching RSS feeds…');
   const feedResultsPromise = Promise.all(FEEDS.rss.map(fetchFeed));
 
-  // Liquipedia and Reddit are separate hosts with separate, independent rate
-  // limits — run their (each internally sequential) loops concurrently rather
-  // than one after the other, so total runtime is max(~80s, ~14min) instead
-  // of the sum of both.
-  const [feedResults, { transfers, rumours }, community] = await Promise.all([
+  const [feedResults, { transfers, rumours }] = await Promise.all([
     feedResultsPromise,
     fetchAllLiquipedia(),
-    fetchAllReddit(),
   ]);
 
   const allNews = feedResults
@@ -275,7 +188,6 @@ async function main() {
     generatedAt: new Date().toISOString(),
     transfers,
     rumours,
-    community,
     news: allNews,
   };
 

@@ -87,7 +87,7 @@
     white-space: nowrap;
   }
 
-  /* ── Section nav (top-level: News / Transfers & Rumors / Community) ── */
+  /* ── Section nav (top-level: News / Transfers & Rumors) ── */
   .section-nav {
     display: flex;
     gap: 8px;
@@ -331,17 +331,6 @@
   }
   .transfer-ref:hover, .transfer-ref:focus-visible { color: var(--accent); }
   .transfer-move { color: var(--ink-soft); font-size: 13px; margin-top: 1px; }
-  .community-title {
-    display: block;
-    font-weight: 500;
-    color: var(--ink);
-    text-decoration: none;
-    border-bottom: 1px dotted var(--ink-soft);
-  }
-  .community-title:hover, .community-title:focus-visible {
-    color: var(--accent);
-    border-bottom-color: var(--accent);
-  }
   .transfer-game-tag {
     display: inline-block;
     font-family: var(--mono);
@@ -466,8 +455,7 @@
 
   let allTransfers = [];
   let allRumours = [];
-  let allCommunity = [];
-  let activeSection = 'news'; // 'news' | 'transfers' | 'community' — top-level page nav
+  let activeSection = 'news'; // 'news' | 'transfers' — top-level page nav
   let activeType = 'transfers'; // 'transfers' | 'rumours' — sub-switch within the transfers section
   // null = show all; Set = explicit include list (empty Set = show none)
   let selectedGames = null;
@@ -496,10 +484,6 @@
   function filteredTransfers() {
     const source = activeType === 'rumours' ? allRumours : allTransfers;
     return source.filter(matchesFilters);
-  }
-
-  function filteredCommunity() {
-    return allCommunity.filter(matchesFilters);
   }
 
   // ── Renderers ────────────────────────────────────────────────────────────
@@ -548,25 +532,6 @@
     }).join('') + '</ul>';
   }
 
-  function renderCommunityList() {
-    const items = filteredCommunity();
-    const el = document.getElementById('community-list');
-    if (!el) return;
-    if (!items.length) {
-      el.innerHTML = '<p class="state-msg">No discussions match the current filters.</p>';
-      return;
-    }
-    el.innerHTML = '<ul class="transfer-list">' + items.map(c => `
-      <li class="transfer-item">
-        <span class="transfer-date">${esc(toDateStr(c.date))}</span>
-        <span class="transfer-detail">
-          <a class="community-title" href="${esc(c.link)}" target="_blank" rel="noopener noreferrer">${esc(c.title)}</a>
-          <div class="transfer-move">r/${esc(c.subreddit)}</div>
-          <span class="transfer-game-tag">${esc(c.game)}</span>
-        </span>
-      </li>`).join('') + '</ul>';
-  }
-
   function renderGamePills(games) {
     return games.map(g => {
       const active = selectedGames === null || selectedGames.has(g) ? 'active' : '';
@@ -574,10 +539,6 @@
     }).join('');
   }
 
-  // Game pills and date tabs each exist in two DOM copies now (Transfers panel
-  // + Community panel share the same filter state) — refresh every copy from
-  // state rather than toggling just the one that was clicked, so both panels
-  // stay visually in sync even while the other one is hidden.
   function refreshPills() {
     document.querySelectorAll('.game-pill').forEach(btn => {
       btn.classList.toggle('active', selectedGames === null || selectedGames.has(btn.dataset.game));
@@ -632,36 +593,14 @@
       <div id="transfer-list"></div>`;
   }
 
-  function renderCommunitySection(games) {
-    return `
-      <p class="col-label">Community Discussions</p>
-      <div class="transfer-controls">
-        <div class="date-tabs">
-          <button class="date-tab" data-range="today">Today</button>
-          <button class="date-tab" data-range="5days">Last 5 days</button>
-          <button class="date-tab active" data-range="all">All</button>
-        </div>
-        <div class="game-filters-label">
-          <span>Filter by title</span>
-          <span class="filter-toggles">
-            <button class="btn-select-all">All</button>
-            <button class="btn-select-none">None</button>
-          </span>
-        </div>
-        <div class="game-pills">${renderGamePills(games)}</div>
-      </div>
-      <div id="community-list"></div>`;
-  }
-
   function render(data) {
     document.getElementById('updated-at').textContent = formatUpdated(data.generatedAt);
 
     allTransfers = data.transfers ?? [];
     allRumours = data.rumours ?? [];
-    allCommunity = data.community ?? [];
     activeSection = 'news';
     activeType = 'transfers';
-    const games = [...new Set([...allTransfers, ...allRumours, ...allCommunity].map(t => t.game))].sort();
+    const games = [...new Set([...allTransfers, ...allRumours].map(t => t.game))].sort();
     selectedGames = null; // null = show all
 
     const industry = (data.news ?? []).filter(n => n.section === 'industry');
@@ -671,15 +610,12 @@
       <div class="section-nav">
         <button class="section-tab active" data-section="news">Esports News</button>
         <button class="section-tab" data-section="transfers">Roster Transfers &amp; Rumors</button>
-        <button class="section-tab" data-section="community">Community</button>
       </div>
 
       <div class="section-panel" id="panel-news">${renderNewsSection(industry, headlines)}</div>
-      <div class="section-panel hidden" id="panel-transfers">${renderTransfersSection(games)}</div>
-      <div class="section-panel hidden" id="panel-community">${renderCommunitySection(games)}</div>`;
+      <div class="section-panel hidden" id="panel-transfers">${renderTransfersSection(games)}</div>`;
 
     renderTransferList();
-    renderCommunityList();
     bindEvents(games);
   }
 
@@ -710,17 +646,14 @@
       });
     });
 
-    // Date tabs — shared state, one DOM copy per panel (Transfers + Community)
     document.querySelectorAll('.date-tab').forEach(btn => {
       btn.addEventListener('click', () => {
         activeDateRange = btn.dataset.range;
         refreshDateTabs();
         renderTransferList();
-        renderCommunityList();
       });
     });
 
-    // Game pills — shared state, one DOM copy per panel; delegate per container
     document.querySelectorAll('.game-pills').forEach(container => {
       container.addEventListener('click', e => {
         const pill = e.target.closest('.game-pill');
@@ -741,17 +674,14 @@
 
         refreshPills();
         renderTransferList();
-        renderCommunityList();
       });
     });
 
-    // Select all / none — one DOM copy per panel
     document.querySelectorAll('.btn-select-all').forEach(btn => {
       btn.addEventListener('click', () => {
         selectedGames = null;
         refreshPills();
         renderTransferList();
-        renderCommunityList();
       });
     });
     document.querySelectorAll('.btn-select-none').forEach(btn => {
@@ -759,7 +689,6 @@
         selectedGames = new Set(); // empty Set = show nothing
         refreshPills();
         renderTransferList();
-        renderCommunityList();
       });
     });
   }
