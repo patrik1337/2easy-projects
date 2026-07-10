@@ -53,6 +53,8 @@ main{flex:1;width:100%;max-width:980px;margin:0 auto;padding:16px}
 .btn{width:100%;padding:14px;background:var(--green);color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:.05em}
 .btn:disabled{opacity:.4;cursor:default}
 .btn-secondary{background:var(--border)}
+.btn-link{background:none;border:1px solid var(--border);color:var(--muted);border-radius:8px;padding:6px 14px;font-size:.8rem;cursor:pointer}
+.btn-link:hover{color:var(--text);border-color:var(--text)}
 .tip-summary{display:flex;align-items:center;justify-content:center;gap:10px;font-size:1.5rem;font-weight:700;margin:8px 0}
 .tip-summary .pk{font-size:.8rem;color:var(--muted);font-weight:600}
 .breakdown{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:4px 14px;margin:14px 0}
@@ -159,6 +161,8 @@ let DATA = null;          // /api/1x2-match response
 let hs = 0, as = 0;
 let bAns = {};            // bonus answers {id: value}
 let localPred = null;     // saved submitted prediction for this match
+let editing = false;      // user pressed "Ändra tips" — show the form pre-filled, but
+                           // don't touch the stored prediction until they re-submit
 let cdTimer = null;
 
 const app = document.getElementById('app');
@@ -334,8 +338,23 @@ function render(){
   const locked = m.locked;
 
   if(finished){ renderResult(m); return; }
-  if(locked || localPred){ renderLocked(m); return; }
+  if(locked){ editing=false; renderLocked(m); return; }
+  if(editing){ renderForm(m); return; }
+  if(localPred){ renderLocked(m); return; }
   renderForm(m);
+}
+
+// Re-opens the form pre-filled with the existing tip. Nothing is written until
+// the user actually re-submits — closing the tab or refreshing here just falls
+// back to the still-untouched locked prediction (editing resets to false, and
+// render() only shows the form again if editing is true).
+function startEdit(){
+  const p = localPred;
+  hs = p ? p.hs : 0;
+  as = p ? p.as : 0;
+  bAns = (p && p.b) ? {...p.b} : {};
+  editing = true;
+  render();
 }
 
 // ── State: open prediction form ───────────────────────────────────────────────
@@ -396,9 +415,10 @@ async function submitTip(){
     const r = await fetch('/api/1x2-submit',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({playerID:player.id,playerName:player.name,matchId:m.matchId,hs,as,b:bAns})});
     const j = await r.json().catch(()=>({}));
-    if(r.ok || j.already){
+    if(r.ok){
       localStorage.setItem(predKey(), JSON.stringify({hs,as,b:bAns}));
-      toast(j.already?'Du har redan tippat':'Tips inlåst! 🔒');
+      toast(editing?'Tips uppdaterat! 🔒':'Tips inlåst! 🔒');
+      editing = false;
       render();
     } else if(j.locked){ toast('För sent – matchen har startat'); render(); }
     else { toast(j.error||'Något gick fel'); btn.disabled=false; btn.textContent='Lås in tips'; }
@@ -419,10 +439,12 @@ function renderLocked(m){
       </div>
       ${p?`<div class="center" style="margin-top:12px"><div class="muted" style="font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Ditt tips 🔒</div>
         <div class="tip-summary">${p.hs} – ${p.as}<span class="pk">(${esc(pickLabel(p.hs,p.as,m))})</span></div>
-        ${p.b&&bonusAnswersText(p.b)?`<div class="fbonus" style="text-align:center">${bonusAnswersText(p.b)}</div>`:''}</div>`
+        ${p.b&&bonusAnswersText(p.b)?`<div class="fbonus" style="text-align:center">${bonusAnswersText(p.b)}</div>`:''}
+        ${!awaiting?'<button class="btn-link" id="edit-btn" style="margin-top:10px">Ändra tips</button>':''}</div>`
         :'<div class="center muted" style="margin-top:12px;font-size:.85rem">Du tippade inte den här matchen.</div>'}
       <div class="kick">${awaiting?'Matchen pågår – inväntar resultat…':'Avspark om <b id="cd">--:--:--</b>'}</div>
     </div>`;
+  if(p && !awaiting) document.getElementById('edit-btn').addEventListener('click', startEdit);
   if(!awaiting) startCd(m.kickoffMs);
   loadSocial(m);
 }

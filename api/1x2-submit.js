@@ -30,10 +30,13 @@ module.exports = async (req, res) => {
   if (!bv.ok) return res.status(400).json({ error: bv.error });
   const member = JSON.stringify({ hs: H, as: A, b: bv.b });
 
-  // One submission per player per match (atomic).
-  const [added] = await kv([['HSETNX', `1x2:pred:${matchId}`, playerID, member]]);
-  await kv([['HSET', '1x2:names', playerID, safeName]]);
+  // Freely overwritable up until kickoff (the check above is the only real
+  // lock) — lets a player change their mind any time before the deadline,
+  // e.g. bet at 9am, revise at 6pm for an 8pm kickoff.
+  await kv([
+    ['HSET', `1x2:pred:${matchId}`, playerID, member],
+    ['HSET', '1x2:names', playerID, safeName],
+  ]);
 
-  if (added === 0 || added === '0') return res.status(409).json({ error: 'Already submitted', already: true });
   return res.status(200).json({ ok: true });
 };
