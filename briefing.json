@@ -1,11 +1,38 @@
 {
-  "generatedAt": "2026-07-14T13:05:22.938Z",
+  "generatedAt": "2026-07-14T16:39:17.293Z",
   "transfers": [
     {
       "date": "2026-07-14",
-      "player": "Maxx",
+      "player": "Waddle",
+      "playerUrl": "https://liquipedia.net/valorant/Waddle",
+      "from": "None",
+      "to": "PCIFIC Esports",
+      "game": "Valorant",
+      "refUrl": "https://x.com/PCIFICespor/status/2077060561422930063"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "CNed",
+      "playerUrl": "https://liquipedia.net/valorant/CNed",
+      "from": "PCIFIC Esports",
+      "to": "None",
+      "game": "Valorant",
+      "refUrl": "https://x.com/PCIFICespor/status/2077017782286176693"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "Musz3kk",
+      "playerUrl": "https://liquipedia.net/valorant/Musz3kk",
+      "from": "None",
+      "to": "GIANTX",
+      "game": "Valorant",
+      "refUrl": "https://x.com/GIANTXVALORANT/status/2077020074167165250"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "Kuro (German player)",
       "playerUrl": null,
-      "from": "TeamOrangeGaming (Manager)",
+      "from": "TeamOrangeGaming",
       "to": "None",
       "game": "Valorant",
       "refUrl": "https://x.com/TOGfoxes/status/2076987068388155811"
@@ -21,9 +48,9 @@
     },
     {
       "date": "2026-07-14",
-      "player": "Kuro (German player)",
+      "player": "Maxx",
       "playerUrl": null,
-      "from": "TeamOrangeGaming",
+      "from": "TeamOrangeGaming (Manager)",
       "to": "None",
       "game": "Valorant",
       "refUrl": "https://x.com/TOGfoxes/status/2076987068388155811"
@@ -110,31 +137,31 @@
       "refUrl": "https://x.com/T1/status/2075968368549798149"
     },
     {
-      "date": "2026-07-11",
-      "player": "Pa1ka",
-      "playerUrl": "https://liquipedia.net/valorant/Pa1ka",
-      "from": "None",
-      "to": "GIANTX (Streamer)",
-      "game": "Valorant",
-      "refUrl": "https://x.com/GIANTXVALORANT/status/2075928976267067523"
-    },
-    {
-      "date": "2026-07-10",
-      "player": "Znajder",
+      "date": "2026-07-14",
+      "player": "Emperor (Dutch player)",
       "playerUrl": null,
-      "from": "F4TALITY eSports",
-      "to": "F4TALITY eSports (Inactive)",
-      "game": "Valorant",
-      "refUrl": "https://x.com/znajder99/status/2075613299387892197"
+      "from": "None",
+      "to": "ZennIT ZNT",
+      "game": "League of Legends",
+      "refUrl": "https://x.com/zennit_gaming/status/2077000501829206381"
     },
     {
-      "date": "2026-07-10",
-      "player": "V1c",
-      "playerUrl": "https://liquipedia.net/valorant/V1c",
+      "date": "2026-07-14",
+      "player": "Khaydarin",
+      "playerUrl": "https://liquipedia.net/leagueoflegends/Khaydarin",
       "from": "None",
-      "to": "Cloud9",
-      "game": "Valorant",
-      "refUrl": "https://x.com/C9VAL/status/2075656551004803210"
+      "to": "ZennIT ZNT(Substitute)",
+      "game": "League of Legends",
+      "refUrl": "https://x.com/zennit_gaming/status/2077000501829206381"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "Kkero",
+      "playerUrl": "https://liquipedia.net/leagueoflegends/Kkero",
+      "from": "None",
+      "to": "ZennIT ZNT",
+      "game": "League of Legends",
+      "refUrl": "https://x.com/zennit_gaming/status/2077000501829206381"
     },
     {
       "date": "2026-07-14",
@@ -245,31 +272,67 @@
       "refUrl": "https://x.com/Disruptorsgg/status/2076733108871721282"
     },
     {
-      "date": "2026-07-13",
-      "player": "Owlonsky",
-      "playerUrl": "https://liquipedia.net/leagueoflegends/Owlonsky",
-      "from": "All for One Gaming A41G",
-      "to": "Disruptors DS",
-      "game": "League of Legends",
-      "refUrl": "https://x.com/Disruptorsgg/status/2076733108871721282"
+      "date": "2026-07-15",
+      "player": "Salmon",
+      "playerUrl": "https://liquipedia.net/counterstrike/Salmon",
+      "from": "None",
+      "to": "Tianjin E9 Esports (Coach)",
+      "game": "Counter-Strike",
+      "refUrl": null
     },
     {
-      "date": "2026-07-13",
-      "player": "Random",
-      "playerUrl": "https://liquipedia.net/leagueoflegends/Random",
-      "from": "None",
-      "to": "Disruptors DS",
-      "game": "League of Legends",
-      "refUrl": "https://x.com/Disruptorsgg/status/2076733108871721282"
+      "date": "2026-07-15",
+      "player": "Neverland",
+      "playerUrl": "https://liquipedia.net/counterstrike/Neverland",
+      "from": "Tianjin E9 Esports",
+      "to": "None",
+      "game": "Counter-Strike",
+      "refUrl": null
     },
     {
-      "date": "2026-07-12",
-      "player": "Shourdy",
-      "playerUrl": "https://liquipedia.net/leagueoflegends/Shourdy",
-      "from": "None",
-      "to": "Senshi eSports SEN",
-      "game": "League of Legends",
-      "refUrl": "https://x.com/SENSHIdotGG/status/2076328281842880666"
+      "date": "2026-07-15",
+      "player": "Tikkkkkk",
+      "playerUrl": "https://liquipedia.net/counterstrike/Tikkkkkk",
+      "from": "Tianjin E9 Esports (Inactive)",
+      "to": "None",
+      "game": "Counter-Strike",
+      "refUrl": null
+    },
+    {
+      "date": "2026-07-15",
+      "player": "YINXING",
+      "playerUrl": "https://liquipedia.net/counterstrike/YINXING",
+      "from": "Tianjin E9 Esports / (Coach/Assistant Coach)",
+      "to": "YINXING Play FSG.YMGD (Assistant Coach)",
+      "game": "Counter-Strike",
+      "refUrl": null
+    },
+    {
+      "date": "2026-07-15",
+      "player": "T3rry",
+      "playerUrl": "https://liquipedia.net/counterstrike/T3rry",
+      "from": "Tianjin E9 Esports (Organization)",
+      "to": "Tianjin E9 Esports (Organization/Content Creator)",
+      "game": "Counter-Strike",
+      "refUrl": null
+    },
+    {
+      "date": "2026-07-14",
+      "player": "PR",
+      "playerUrl": "https://liquipedia.net/counterstrike/PR",
+      "from": "GamerLegion",
+      "to": "MOUZ",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/GamerLegion/status/2077013965473788343"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "Podi",
+      "playerUrl": "https://liquipedia.net/counterstrike/Podi",
+      "from": "ENCE (Inactive)",
+      "to": "FOKUS",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/ENCE/status/2077030849963249865"
     },
     {
       "date": "2026-07-14",
@@ -279,6 +342,15 @@
       "to": "None",
       "game": "Counter-Strike",
       "refUrl": "https://x.com/Aimclub_/status/2076944834527416324"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "K0gaSs",
+      "playerUrl": null,
+      "from": "Team Spirit Academy Black",
+      "to": "Team Spirit Academy",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/TSpirit_Academy/status/2077038378873163992"
     },
     {
       "date": "2026-07-13",
@@ -335,76 +407,22 @@
       "refUrl": "https://x.com/LosKogutos/status/2076719061933740062"
     },
     {
-      "date": "2026-07-13",
-      "player": "Noruyp",
-      "playerUrl": "https://liquipedia.net/counterstrike/Noruyp",
-      "from": "MASONIC",
-      "to": "Retired",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/MasonicGG/status/2076608248774369677"
+      "date": "2026-07-14",
+      "player": "Illidan",
+      "playerUrl": "https://liquipedia.net/dota2/Illidan",
+      "from": "Yellow Submarine (Coach)",
+      "to": "Team Spirit Academy (Coach)",
+      "game": "Dota 2",
+      "refUrl": "https://dota2.ru/news/65498-illidan-i-mettpum-pomenalis-komandami-v-strukture-team-spirit/"
     },
     {
-      "date": "2026-07-13",
-      "player": "Emil88",
-      "playerUrl": null,
-      "from": "None",
-      "to": "AaB Academy",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/AaBesport/status/2076682469835784448"
-    },
-    {
-      "date": "2026-07-13",
-      "player": "Covais",
-      "playerUrl": null,
-      "from": "None",
-      "to": "EXSAD Gaming",
-      "game": "Counter-Strike",
-      "refUrl": "https://exsadgaming.pt/exsad-welcome-new-team-cs2/"
-    },
-    {
-      "date": "2026-07-13",
-      "player": "HeMan",
-      "playerUrl": null,
-      "from": "None",
-      "to": "Regnum4Games",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/regnum4games/status/2076600095898739089"
-    },
-    {
-      "date": "2026-07-13",
-      "player": "MikOne",
-      "playerUrl": null,
-      "from": "SINQU Rehti",
-      "to": "SINQU Esports",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/SINQUESPORTS/status/2076666639945273395"
-    },
-    {
-      "date": "2026-07-13",
-      "player": "Louna",
-      "playerUrl": null,
-      "from": "SINQU Rehti (Coach)",
-      "to": "SINQU Esports (Coach)",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/SINQUESPORTS/status/2076666643019694548"
-    },
-    {
-      "date": "2026-07-13",
-      "player": "PihLziNh0",
-      "playerUrl": null,
-      "from": "None",
-      "to": "HyperioN",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/HyperioNorg/status/2076651179535208785"
-    },
-    {
-      "date": "2026-07-13",
-      "player": "Nordby",
-      "playerUrl": null,
-      "from": "Retired",
-      "to": "HyperioN (Coach)",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/HyperioNorg/status/2076651179535208785"
+      "date": "2026-07-14",
+      "player": "MeTTpuM",
+      "playerUrl": "https://liquipedia.net/dota2/MeTTpuM",
+      "from": "Team Spirit Academy (Coach)",
+      "to": "Yellow Submarine (Coach)",
+      "game": "Dota 2",
+      "refUrl": "https://dota2.ru/news/65498-illidan-i-mettpum-pomenalis-komandami-v-strukture-team-spirit/"
     },
     {
       "date": "2026-07-08",
@@ -520,24 +538,6 @@
       "playerUrl": "https://liquipedia.net/dota2/Sbdush",
       "from": "Two Move (Coach)",
       "to": "Level UP (Coach)",
-      "game": "Dota 2",
-      "refUrl": "https://www.facebook.com/reel/2077025276559972"
-    },
-    {
-      "date": "2026-06-08",
-      "player": "WoE",
-      "playerUrl": "https://liquipedia.net/dota2/WoE",
-      "from": "Two Move",
-      "to": "Level UP",
-      "game": "Dota 2",
-      "refUrl": "https://www.facebook.com/reel/2077025276559972"
-    },
-    {
-      "date": "2026-06-08",
-      "player": "Buktop",
-      "playerUrl": "https://liquipedia.net/dota2/Buktop",
-      "from": "Level UP (Coach)",
-      "to": "None",
       "game": "Dota 2",
       "refUrl": "https://www.facebook.com/reel/2077025276559972"
     },
@@ -1291,6 +1291,41 @@
   ],
   "news": [
     {
+      "title": "Everything coming with League Classic on July 29",
+      "link": "https://dotesports.com/league-of-legends/guides/league-classic-information",
+      "pubDate": "2026-07-14T15:52:39.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "How to watch EWC 2026 League of Legends: Stream, schedule, results, teams",
+      "link": "https://www.dexerto.com/league-of-legends/how-to-watch-ewc-2026-league-of-legends-stream-schedule-results-teams-3387307/",
+      "pubDate": "2026-07-14T15:15:37.000Z",
+      "source": "Dexerto",
+      "section": "headlines"
+    },
+    {
+      "title": "Twisted Minds adds Americana Foods and Biofit as sponsors heading into EWC 2026",
+      "link": "https://dotesports.com/general/news/twisted-minds-esports-sponsorship-deals-ewc-2026",
+      "pubDate": "2026-07-14T14:42:14.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "VALORANT gives Yoru some power back with Gatecrash and Fakeout changes in Patch 13.01",
+      "link": "https://dotesports.com/valorant/news/valorant-patch-13-01-yoru-changes",
+      "pubDate": "2026-07-14T14:16:50.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "How to get Excalibur Warframe for free in Fortnite",
+      "link": "https://dotesports.com/fortnite/guides/how-to-get-excalibur-warframe-for-free-in-fortnite",
+      "pubDate": "2026-07-14T13:23:55.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
       "title": "Black Ops 7 Season 5 roadmap: New Multiplayer maps, 4 weapons, final Zombies map, and more",
       "link": "https://dotesports.com/call-of-duty/guides/bo7-season-5-roadmap",
       "pubDate": "2026-07-14T10:45:06.000Z",
@@ -1326,7 +1361,7 @@
       "section": "industry"
     },
     {
-      "title": "British Esports Arena confirmed for Late Summer as Sunderland venues report surge in demand",
+      "title": "British Esports’s Arena confirmed for Late Summer as Sunderland venues report surge in demand",
       "link": "https://esports-news.co.uk/2026/07/13/british-esports-arena-confirmed-for-late-summer-as-sunderland-venues-report-surge-in-demand/",
       "pubDate": "2026-07-13T16:44:01.000Z",
       "source": "Esports News UK",
@@ -1354,20 +1389,6 @@
       "section": "headlines"
     },
     {
-      "title": "The First Descendant addresses ever-growing power creep with Serena and Ines changes",
-      "link": "https://dotesports.com/the-first-descendant/news/tfd-serena-ines-changes",
-      "pubDate": "2026-07-13T12:02:26.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "How to complete the Special Dish mission in Palworld 1.0",
-      "link": "https://dotesports.com/palworld/guides/a-special-dish-quest-guide-palworld-1-0",
-      "pubDate": "2026-07-13T11:42:13.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
       "title": "World Cup 2026 Semi-Final England vs Argentina Prediction & Best Bets",
       "link": "https://esports-news.co.uk/2026/07/13/world-cup-semi-final-england-argentina-predictions/",
       "pubDate": "2026-07-13T11:22:47.000Z",
@@ -1379,20 +1400,6 @@
       "link": "https://esports-news.co.uk/2026/07/13/world-cup-semi-final-france-spain-predictions/",
       "pubDate": "2026-07-13T11:18:10.000Z",
       "source": "Esports News UK",
-      "section": "headlines"
-    },
-    {
-      "title": "How to get Iguana Leather in Assassin’s Creed Black Flag Resynced",
-      "link": "https://dotesports.com/assassins-creed/guides/ac-black-flag-resynced-iguana-leather",
-      "pubDate": "2026-07-13T10:12:15.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "Best upcoming Nintendo Switch 2 games",
-      "link": "https://dotesports.com/nintendo/guides/upcoming-switch-2-games",
-      "pubDate": "2026-07-13T09:01:59.000Z",
-      "source": "Dot Esports",
       "section": "headlines"
     },
     {
