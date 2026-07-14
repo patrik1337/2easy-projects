@@ -15,6 +15,10 @@
     --paper: #fbfbfa;
     --line: #e6e6e2;
     --accent: #ff5900;
+    --up: #3f7d52;
+    --up-bg: #eaf2ec;
+    --down: #b23b3b;
+    --down-bg: #f7ebea;
     --mono: "JetBrains Mono", monospace;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -344,6 +348,99 @@
     margin-top: 3px;
   }
 
+  /* ── Esports World Cup 2026 ── */
+  .ewc-block + .ewc-block { margin-top: 48px; }
+  .ewc-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
+  .ewc-head .col-label { margin-bottom: 0; }
+  .ewc-note {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--ink-soft);
+  }
+  .ewc-note .dot { color: var(--accent); }
+
+  .commentary {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    padding: 13px 16px;
+    margin: 14px 0 22px;
+  }
+  .commentary::before { content: "\201C"; color: var(--accent); }
+  .commentary::after { content: "\201D"; color: var(--accent); }
+
+  .standings-scroll { overflow-x: auto; }
+  table.standings { width: 100%; border-collapse: collapse; min-width: 560px; }
+  table.standings th {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+    font-weight: 500;
+    padding: 0 10px 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  table.standings th.num, table.standings td.num { text-align: right; }
+  table.standings td { padding: 11px 10px; border-bottom: 1px dashed var(--line); vertical-align: middle; }
+  table.standings tr:last-child td { border-bottom: none; }
+
+  .ewc-rank { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); width: 34px; }
+  .ewc-club { font-weight: 500; font-size: 14.5px; color: var(--ink); }
+  .ewc-pts { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 14.5px; font-weight: 500; }
+  .ewc-titles { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 12.5px; color: var(--ink-soft); white-space: nowrap; }
+  .ewc-titles b { color: var(--ink); font-weight: 500; }
+
+  .move {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    padding: 2px 7px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .move.up { color: var(--up); background: var(--up-bg); }
+  .move.down { color: var(--down); background: var(--down-bg); }
+  .move.flat { color: var(--ink-soft); background: var(--line); }
+
+  .change-meta {
+    margin-top: 4px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .change-meta b { color: var(--ink); font-weight: 600; }
+  .new-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: var(--accent);
+    color: #fff;
+    padding: 2px 7px;
+    border-radius: 3px;
+  }
+
   /* ── Empty / loading / error ── */
   .state-msg {
     font-family: var(--mono);
@@ -366,6 +463,7 @@
   @media (max-width: 800px) {
     .section-tab { flex: 1; text-align: center; padding: 10px 8px; }
     nav a { margin-left: 16px; }
+    table.standings { min-width: 480px; }
   }
 </style>
 </head>
@@ -448,6 +546,17 @@
     const d = new Date();
     d.setDate(d.getDate() - n);
     return d.toLocaleDateString('en-CA');
+  }
+
+  function movePill(delta, ptsDelta) {
+    if (!delta) {
+      const ptsTxt = ptsDelta ? (ptsDelta > 0 ? ' +' : ' ') + ptsDelta : ' 0';
+      return `<span class="move flat">—${ptsTxt}</span>`;
+    }
+    const cls = delta > 0 ? 'up' : 'down';
+    const arrow = delta > 0 ? '▲' : '▼';
+    const ptsTxt = ptsDelta ? ' ' + (ptsDelta > 0 ? '+' : '') + ptsDelta : '';
+    return `<span class="move ${cls}">${arrow}${Math.abs(delta)}${ptsTxt}</span>`;
   }
 
   // ── State ────────────────────────────────────────────────────────────────
@@ -592,6 +701,72 @@
       <div id="transfer-list"></div>`;
   }
 
+  function renderEwcStandings(ewc) {
+    if (!ewc.standings.length) return '<p class="state-msg">No standings data available.</p>';
+    return `
+      <div class="standings-scroll">
+        <table class="standings">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Club</th>
+              <th class="num">Titles qual.</th>
+              <th class="num">Points</th>
+              <th class="num">Since yesterday</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${ewc.standings.map(r => `
+            <tr>
+              <td class="ewc-rank">${r.rank}.</td>
+              <td class="ewc-club">${esc(r.club)}</td>
+              <td class="ewc-titles num"><b>${r.titlesQualified}</b> / ${r.totalTournaments}</td>
+              <td class="ewc-pts num">${r.points.toLocaleString('en-US')}</td>
+              <td class="num">${movePill(r.rankDelta, r.pointsDelta)}</td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`;
+  }
+
+  function renderEwcChanges(ewc) {
+    if (!ewc.changes.length) {
+      return `<p class="state-msg">${esc(ewc.commentary.changes || 'No new title qualifications today among clubs with 4+ titles.')}</p>`;
+    }
+    return '<ul class="transfer-list">' + ewc.changes.map(c => `
+      <li class="transfer-item">
+        <span class="transfer-date">Today</span>
+        <span class="transfer-detail">
+          <span class="transfer-player">${esc(c.club)}</span> qualified for <span class="transfer-game-tag">${esc(c.titleShort)}</span>
+          <div class="change-meta"><b>${c.newCount} / ${ewc.totalTitles}</b> titles now qualified <span>·</span> up from ${c.prevCount}${c.crossedThreshold ? ' <span class="new-badge">Newly in the 4+ group</span>' : ''}</div>
+        </span>
+      </li>`).join('') + '</ul>';
+  }
+
+  function renderEwcSection(ewc) {
+    if (!ewc) {
+      return '<p class="state-msg">Esports World Cup 2026 club data isn’t available right now.</p>';
+    }
+    const staleNote = ewc.stale ? '<p class="state-msg">Showing yesterday’s data — today’s fetch didn’t come through.</p>' : '';
+    return `
+      ${staleNote}
+      <div class="ewc-block">
+        <div class="ewc-head">
+          <p class="col-label">Club Championship Standings</p>
+        </div>
+        ${ewc.commentary.standings ? `<p class="commentary">${esc(ewc.commentary.standings)}</p>` : ''}
+        ${renderEwcStandings(ewc)}
+      </div>
+      <div class="ewc-block">
+        <div class="ewc-head">
+          <p class="col-label">Qualified Clubs — Changes Today</p>
+          <span class="ewc-note"><span class="dot">●</span> Tracks clubs with 4+ titles qualified · retires once EWC quals conclude</span>
+        </div>
+        ${ewc.commentary.changes ? `<p class="commentary">${esc(ewc.commentary.changes)}</p>` : ''}
+        ${renderEwcChanges(ewc)}
+      </div>`;
+  }
+
   function render(data) {
     document.getElementById('updated-at').textContent = formatUpdated(data.generatedAt);
 
@@ -609,10 +784,12 @@
       <div class="section-nav">
         <button class="section-tab active" data-section="news">Esports News</button>
         <button class="section-tab" data-section="transfers">Roster Transfers &amp; Rumors</button>
+        <button class="section-tab" data-section="ewc">Esports World Cup 2026</button>
       </div>
 
       <div class="section-panel" id="panel-news">${renderNewsSection(industry, headlines)}</div>
-      <div class="section-panel hidden" id="panel-transfers">${renderTransfersSection(games)}</div>`;
+      <div class="section-panel hidden" id="panel-transfers">${renderTransfersSection(games)}</div>
+      <div class="section-panel hidden" id="panel-ewc">${renderEwcSection(data.ewc)}</div>`;
 
     renderTransferList();
     bindEvents(games);

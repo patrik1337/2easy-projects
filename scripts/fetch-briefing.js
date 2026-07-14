@@ -7,7 +7,7 @@ const { XMLParser } = require('fast-xml-parser');
 const fs = require('fs');
 const path = require('path');
 const FEEDS = require('../config/feeds');
-const { stripHtml, parseTransferTable } = require('../config/briefing-parse');
+const { stripHtml, parseTransferTable, parseClubsQualification, parseClubChampionshipStandings } = require('../config/briefing-parse');
 
 const xmlParser = new XMLParser({
   ignoreAttributes: false,
@@ -134,8 +134,8 @@ async function fetchAllLiquipedia() {
   // remaining ~12 wikis retry-cooldown-retry in turn, stretching a run from
   // ~2 minutes to ~20 minutes while recovering nothing — worse for ban risk,
   // not better.
-  async function guarded(label, fn) {
-    if (abort) return [];
+  async function guarded(label, fn, fallback = []) {
+    if (abort) return fallback;
     try {
       const items = await fn();
       consecutiveFails = 0;
@@ -155,7 +155,7 @@ async function fetchAllLiquipedia() {
           hasCooledDown = true;
         }
       }
-      return [];
+      return fallback;
     }
   }
 
@@ -181,7 +181,140 @@ async function fetchAllLiquipedia() {
   }
   if (abort) console.warn(`[Liquipedia] stopped early — ${transfers.length ? 'kept' : 'lost'} whatever was fetched before the block`);
   console.log(`  ${transfers.length} transfers, ${rumours.length} rumours total`);
-  return { transfers, rumours };
+
+  // Esports World Cup 2026 club data — two more single-page fetches, sharing
+  // the same gap/circuit-breaker state as the wiki loop above (a block
+  // detected there also protects these, and vice versa).
+  let ewcClubs = { titleCols: [], clubs: [] };
+  let ewcStandings = [];
+  if (!abort) {
+    let t0 = Date.now();
+    const clubsHtml = await guarded(
+      'EWC clubs', () => fetchLiquipediaPage('esports', 'Esports_World_Cup/2026/Clubs'), ''
+    );
+    if (clubsHtml) ewcClubs = parseClubsQualification(clubsHtml);
+    console.log(`  EWC clubs: ${ewcClubs.clubs.length} parsed`);
+    if (!abort) await respectGap(t0);
+
+    if (!abort) {
+      t0 = Date.now();
+      const standingsHtml = await guarded(
+        'EWC standings', () => fetchLiquipediaPage('esports', 'Esports_World_Cup/2026/Club_Championship_Standings'), ''
+      );
+      if (standingsHtml) ewcStandings = parseClubChampionshipStandings(standingsHtml);
+      console.log(`  EWC standings: ${ewcStandings.length} parsed`);
+    }
+  }
+
+  return { transfers, rumours, ewcClubs, ewcStandings };
+}
+
+// ── Esports World Cup 2026: daily club-race diff ────────────────────────────
+
+function ordinal(n) {
+  const s = ['th', 'st', 'nd', 'rd'], v = n % 100;
+  return `${n}${s[(v - 20) % 10] || s[v] || s[0]}`;
+}
+
+// Joins the Clubs qualification matrix with the Standings points table by
+// club name, then diffs against yesterday's stored snapshot (read from the
+// previous day's committed briefing.json before this run overwrites it) to
+// compute rank/point movement and newly-qualified titles. Commentary is
+// template-built from the diff, not LLM-generated — same approach as the
+// 1x2 game's "Snacket" storyline.
+function buildEwcData(ewcClubs, ewcStandings, prevEwc) {
+  const { titleCols, clubs } = ewcClubs;
+  const standings = ewcStandings;
+
+  // A fully failed fetch of either page leaves nothing to build from — keep
+  // yesterday's data on the page rather than blanking the tab for a day.
+  if (!clubs.length || !standings.length) {
+    return prevEwc ? { ...prevEwc, stale: true } : null;
+  }
+
+  const titleShortBySlug = Object.fromEntries(titleCols.map((t) => [t.slug, t.short]));
+  const clubsByName = new Map(clubs.map((c) => [c.club, c]));
+  const standingsByClub = new Map(standings.map((s) => [s.club, s]));
+  const prevSnapshot = (prevEwc && prevEwc.snapshot) || {};
+  const hasBaseline = Object.keys(prevSnapshot).length > 0;
+
+  const allNames = new Set([...clubsByName.keys(), ...standingsByClub.keys()]);
+  const snapshot = {};
+  for (const name of allNames) {
+    const c = clubsByName.get(name);
+    const s = standingsByClub.get(name);
+    snapshot[name] = { points: s ? s.points : null, rank: s ? s.rank : null, titles: c ? c.titles : [] };
+  }
+
+  const standingsRows = standings
+    .map((s) => {
+      const prev = prevSnapshot[s.club];
+      const c = clubsByName.get(s.club);
+      return {
+        club: s.club,
+        rank: s.rank,
+        points: s.points,
+        titlesQualified: c ? c.titles.length : 0,
+        totalTournaments: c ? c.totalTournaments : titleCols.length,
+        pointsDelta: prev && prev.points != null ? s.points - prev.points : null,
+        rankDelta: prev && prev.rank != null ? prev.rank - s.rank : null, // positive = moved up
+      };
+    })
+    .sort((a, b) => a.rank - b.rank);
+
+  // Changelog entries for clubs with 4+ titles TODAY whose title list grew
+  // since yesterday — including a club crossing into the 4+ group for the
+  // first time (this feature is meant to retire once EWC quals conclude).
+  // No prior day to diff against on the very first run — every title of
+  // every 4+ club would spuriously look "new" against an empty baseline, so
+  // this (like the commentary below) sits out entirely until there's one.
+  const changes = [];
+  if (hasBaseline) {
+    for (const c of clubs) {
+      if (c.titles.length < 4) continue;
+      const prev = prevSnapshot[c.club];
+      const prevTitles = new Set(prev ? prev.titles : []);
+      for (const slug of c.titles) {
+        if (prevTitles.has(slug)) continue;
+        changes.push({
+          club: c.club,
+          titleSlug: slug,
+          titleShort: titleShortBySlug[slug] || slug.replace(/_/g, ' '),
+          newCount: c.titles.length,
+          prevCount: prevTitles.size,
+          crossedThreshold: prevTitles.size < 4,
+        });
+      }
+    }
+  }
+
+  const standingsCommentary = !hasBaseline ? null : (() => {
+    const movers = standingsRows.filter((r) => r.rankDelta);
+    if (!movers.length) return 'No ranking changes on the Club Championship board since yesterday.';
+    movers.sort((a, b) => Math.abs(b.rankDelta) - Math.abs(a.rankDelta));
+    const top = movers[0];
+    const dir = top.rankDelta > 0 ? 'climbed' : 'dropped';
+    const ptsTxt = top.pointsDelta ? ` (${top.pointsDelta > 0 ? '+' : ''}${top.pointsDelta} pts)` : '';
+    return `${top.club} ${dir} to ${ordinal(top.rank)}${ptsTxt} since yesterday.`;
+  })();
+
+  const changesCommentary = !hasBaseline ? null : (() => {
+    if (!changes.length) return 'No new title qualifications today among clubs with 4+ titles.';
+    const crossed = changes.filter((c) => c.crossedThreshold);
+    const lead = changes.slice().sort((a, b) => b.newCount - a.newCount)[0];
+    let s = `${lead.club} qualified for ${lead.titleShort}, now at ${lead.newCount}/${titleCols.length} titles.`;
+    if (crossed.length) s += ` ${crossed.map((c) => c.club).join(', ')} newly crossed into the 4+ group.`;
+    return s;
+  })();
+
+  return {
+    generatedAt: new Date().toISOString(),
+    totalTitles: titleCols.length,
+    standings: standingsRows,
+    changes,
+    commentary: { standings: standingsCommentary, changes: changesCommentary },
+    snapshot,
+  };
 }
 
 // ── Main ──────────────────────────────────────────────────────────────────────
@@ -190,7 +323,7 @@ async function main() {
   console.log('Fetching RSS feeds…');
   const feedResultsPromise = Promise.all(FEEDS.rss.map(fetchFeed));
 
-  const [feedResults, { transfers, rumours }] = await Promise.all([
+  const [feedResults, { transfers, rumours, ewcClubs, ewcStandings }] = await Promise.all([
     feedResultsPromise,
     fetchAllLiquipedia(),
   ]);
@@ -202,14 +335,24 @@ async function main() {
     .slice(0, 60);
   console.log(`  ${allNews.length} news items from ${FEEDS.rss.length} feeds`);
 
+  const outPath = path.join(__dirname, '..', 'briefing.json');
+  // Read yesterday's committed output (still on disk, not yet overwritten)
+  // to diff the EWC club race against — the same file this run replaces.
+  let prevEwc = null;
+  try {
+    prevEwc = JSON.parse(fs.readFileSync(outPath, 'utf8')).ewc || null;
+  } catch (_) { /* first run, or no prior file — no baseline to diff against */ }
+  const ewc = buildEwcData(ewcClubs, ewcStandings, prevEwc);
+  console.log(`  EWC: ${ewc ? `${ewc.standings.length} standings rows, ${ewc.changes.length} title changes today` : 'unavailable'}`);
+
   const briefing = {
     generatedAt: new Date().toISOString(),
     transfers,
     rumours,
     news: allNews,
+    ewc,
   };
 
-  const outPath = path.join(__dirname, '..', 'briefing.json');
   fs.writeFileSync(outPath, JSON.stringify(briefing, null, 2));
   console.log(`Written to ${outPath}`);
 }

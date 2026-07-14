@@ -113,4 +113,87 @@ function parseTransferTable(html, game, rowClass = 'divRow') {
   return rows;
 }
 
-module.exports = { decodeEntities, stripHtml, extractCellRaw, extractTeamCell, extractPlayerCell, extractRefUrl, parseTransferTable };
+// Esports_World_Cup/2026/Clubs: a 209-club x 25-title qualification matrix.
+// Each title cell carries a data-sort-value the page itself uses for its own
+// column sorting — 1=qualified, 2=can still qualify, 3=failed to qualify,
+// 4=not eligible (late signing/joint venture), 9=no team in that title at
+// all — confirmed against every value actually present on the live page
+// (2026-07-14, one-off fetch, saved to a local fixture; not re-fetched since).
+// That data-sort-value is a far more reliable qualified/not signal than
+// matching the fa-check-circle/fa-times icon classes directly, since some
+// cells hold multiple sub-team links (regional academies etc.) with mixed
+// statuses — the cell's own data-sort-value is Liquipedia's own rollup.
+function parseClubsQualification(html) {
+  const tableStart = html.indexOf('wikitable sortable');
+  if (tableStart === -1) return { titleCols: [], clubs: [] };
+  const tableEnd = html.indexOf('</table>', tableStart);
+  const tableHtml = html.slice(tableStart, tableEnd);
+
+  const headerEnd = tableHtml.indexOf('</tr>') + 5;
+  const headerHtml = tableHtml.slice(0, headerEnd);
+  const seen = new Set();
+  const titleCols = [];
+  for (const m of headerHtml.matchAll(/<a href="\/esports\/([^"]+)" title="([^"]+)"/g)) {
+    const slug = decodeURIComponent(m[1]);
+    if (slug === 'Esports_World_Cup' || seen.has(slug)) continue;
+    seen.add(slug);
+    titleCols.push({ slug, short: decodeEntities(m[2]) });
+  }
+
+  const bodyHtml = tableHtml.slice(headerEnd);
+  const rowRe = /<tr>([\s\S]*?)<\/tr>/g;
+  const clubs = [];
+  let rowMatch;
+  while ((rowMatch = rowRe.exec(bodyHtml))) {
+    const row = rowMatch[1];
+    const nameMatch = row.match(/team-template-text"><a[^>]*title="([^"]+)"/);
+    if (!nameMatch) continue;
+    const club = decodeEntities(nameMatch[1]).replace(REDLINK_SUFFIX, '').trim();
+
+    const qMatch = row.match(/<td>(\d+)\/(\d+)<\/td>/);
+    const qualifiedCount = qMatch ? Number(qMatch[1]) : null;
+    const totalTournaments = qMatch ? Number(qMatch[2]) : titleCols.length;
+
+    const sortValues = [...row.matchAll(/<td class="[^"]*" data-sort-value="(\d+)">/g)].map((m) => m[1]);
+    if (sortValues.length !== titleCols.length) continue; // malformed row — skip rather than misalign columns
+
+    const titles = titleCols.filter((_, i) => sortValues[i] === '1').map((t) => t.slug);
+    clubs.push({ club, qualifiedCount, totalTournaments, titles });
+  }
+  return { titleCols, clubs };
+}
+
+// Esports_World_Cup/2026/Club_Championship_Standings: the page pre-renders
+// the same standings table 7 times behind "Week 1..7" toggle buttons — all 7
+// showed identical totals when checked live, so which one is read doesn't
+// affect correctness. Reads the last (highest id = latest) occurrence as
+// "today's" snapshot. Only rank/club/total points are parsed — per-title
+// point columns exist on the page but aren't part of the current design
+// (titles-qualified comes from the Clubs page instead).
+function parseClubChampionshipStandings(html) {
+  const marker = 'data-toggle-area-content="25"';
+  let idx = html.indexOf(marker);
+  if (idx === -1) return [];
+  const rows = [];
+  while (idx !== -1) {
+    const rowEnd = html.indexOf('</tr>', idx);
+    const row = html.slice(idx, rowEnd);
+    const rankMatch = row.match(/^data-toggle-area-content="25"><td[^>]*>([\d.]+)<\/td>/);
+    const nameMatch = row.match(/team-template-text"><a[^>]*title="([^"]+)"/);
+    const pointsMatch = row.match(/font-weight:bold">(\d+)<\/td>/);
+    if (nameMatch && pointsMatch) {
+      rows.push({
+        rank: rankMatch ? Number(rankMatch[1].replace('.', '')) : null,
+        club: decodeEntities(nameMatch[1]).replace(REDLINK_SUFFIX, '').trim(),
+        points: Number(pointsMatch[1]),
+      });
+    }
+    idx = html.indexOf(marker, rowEnd);
+  }
+  return rows;
+}
+
+module.exports = {
+  decodeEntities, stripHtml, extractCellRaw, extractTeamCell, extractPlayerCell, extractRefUrl, parseTransferTable,
+  cleanLinkedName, REDLINK_SUFFIX, parseClubsQualification, parseClubChampionshipStandings,
+};
