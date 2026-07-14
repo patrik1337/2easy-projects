@@ -159,6 +159,37 @@ async function fetchAllLiquipedia() {
     }
   }
 
+  // Esports World Cup 2026 club data — fetched FIRST, before the 19-wiki loop
+  // below. It used to run after that loop and effectively never got a turn:
+  // confirmed live (2026-07-14) that the wiki loop reliably trips the block
+  // around wiki #7 every run, so by the time the loop finished (aborting),
+  // `abort` was already true and these two requests were silently skipped
+  // every single time — the run still reported "Success" since aborting
+  // gracefully isn't an error, it just meant this feature never actually
+  // got fetched. Going first gives it the best chance of landing before any
+  // burst load has accumulated.
+  let ewcClubs = { titleCols: [], clubs: [] };
+  let ewcStandings = [];
+  {
+    let t0 = Date.now();
+    const clubsHtml = await guarded(
+      'EWC clubs', () => fetchLiquipediaPage('esports', 'Esports_World_Cup/2026/Clubs'), ''
+    );
+    if (clubsHtml) ewcClubs = parseClubsQualification(clubsHtml);
+    console.log(`  EWC clubs: ${ewcClubs.clubs.length} parsed`);
+    if (!abort) await respectGap(t0);
+
+    if (!abort) {
+      t0 = Date.now();
+      const standingsHtml = await guarded(
+        'EWC standings', () => fetchLiquipediaPage('esports', 'Esports_World_Cup/2026/Club_Championship_Standings'), ''
+      );
+      if (standingsHtml) ewcStandings = parseClubChampionshipStandings(standingsHtml);
+      console.log(`  EWC standings: ${ewcStandings.length} parsed`);
+      if (!abort) await respectGap(t0);
+    }
+  }
+
   for (let i = 0; i < FEEDS.liquipedia.length; i++) {
     if (abort) break;
     const { wiki, game, page, rumoursPage } = FEEDS.liquipedia[i];
@@ -181,30 +212,6 @@ async function fetchAllLiquipedia() {
   }
   if (abort) console.warn(`[Liquipedia] stopped early — ${transfers.length ? 'kept' : 'lost'} whatever was fetched before the block`);
   console.log(`  ${transfers.length} transfers, ${rumours.length} rumours total`);
-
-  // Esports World Cup 2026 club data — two more single-page fetches, sharing
-  // the same gap/circuit-breaker state as the wiki loop above (a block
-  // detected there also protects these, and vice versa).
-  let ewcClubs = { titleCols: [], clubs: [] };
-  let ewcStandings = [];
-  if (!abort) {
-    let t0 = Date.now();
-    const clubsHtml = await guarded(
-      'EWC clubs', () => fetchLiquipediaPage('esports', 'Esports_World_Cup/2026/Clubs'), ''
-    );
-    if (clubsHtml) ewcClubs = parseClubsQualification(clubsHtml);
-    console.log(`  EWC clubs: ${ewcClubs.clubs.length} parsed`);
-    if (!abort) await respectGap(t0);
-
-    if (!abort) {
-      t0 = Date.now();
-      const standingsHtml = await guarded(
-        'EWC standings', () => fetchLiquipediaPage('esports', 'Esports_World_Cup/2026/Club_Championship_Standings'), ''
-      );
-      if (standingsHtml) ewcStandings = parseClubChampionshipStandings(standingsHtml);
-      console.log(`  EWC standings: ${ewcStandings.length} parsed`);
-    }
-  }
 
   return { transfers, rumours, ewcClubs, ewcStandings };
 }
