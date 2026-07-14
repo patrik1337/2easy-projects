@@ -121,30 +121,46 @@ async function fetchAllLiquipedia() {
   const transfers = [];
   const rumours = [];
   let consecutiveFails = 0;
+  let hasCooledDown = false; // one cooldown-and-retry chance per failure episode
+  let abort = false;
 
   // Wraps a single page fetch with graceful-degradation (never throws out of
-  // the loop) plus a shared failure counter — a run of failures is treated as
-  // "we tripped a throttle", not independent bad luck per wiki, so it earns a
-  // long cooldown instead of barreling through the remaining wikis at the
-  // same pace that caused the trouble.
+  // the loop) plus a shared failure counter. First sign of trouble (2 fails
+  // in a row) earns exactly one long cooldown, on the theory it might be a
+  // transient blip. If it's still failing after that, it isn't transient —
+  // it's a sustained block — so we stop sending requests entirely for the
+  // rest of the run instead of continuing to hammer a wall. Confirmed live
+  // (2026-07-13): without this, a sustained block made every one of the
+  // remaining ~12 wikis retry-cooldown-retry in turn, stretching a run from
+  // ~2 minutes to ~20 minutes while recovering nothing — worse for ban risk,
+  // not better.
   async function guarded(label, fn) {
+    if (abort) return [];
     try {
       const items = await fn();
       consecutiveFails = 0;
+      hasCooledDown = false;
       return items;
     } catch (err) {
       console.warn(`[Liquipedia] ${label} failed: ${err.message}`);
       consecutiveFails++;
       if (consecutiveFails >= LIQUIPEDIA_MAX_CONSECUTIVE_FAILS) {
-        console.warn(`[Liquipedia] ${consecutiveFails} failures in a row — cooling down ${LIQUIPEDIA_COOLDOWN_MS / 1000}s`);
-        await sleep(LIQUIPEDIA_COOLDOWN_MS);
         consecutiveFails = 0;
+        if (hasCooledDown) {
+          console.warn('[Liquipedia] still failing after a cooldown — aborting the rest of this run to limit request volume');
+          abort = true;
+        } else {
+          console.warn(`[Liquipedia] failures in a row — cooling down ${LIQUIPEDIA_COOLDOWN_MS / 1000}s`);
+          await sleep(LIQUIPEDIA_COOLDOWN_MS);
+          hasCooledDown = true;
+        }
       }
       return [];
     }
   }
 
   for (let i = 0; i < FEEDS.liquipedia.length; i++) {
+    if (abort) break;
     const { wiki, game, page, rumoursPage } = FEEDS.liquipedia[i];
     const isLast = i === FEEDS.liquipedia.length - 1;
 
@@ -152,6 +168,7 @@ async function fetchAllLiquipedia() {
     const tItems = await guarded(`${game} transfers`, () => fetchLiquipediaTransfers(wiki, game, page));
     transfers.push(...tItems);
     console.log(`  ${game}: ${tItems.length} transfers`);
+    if (abort) break;
     await respectGap(t0);
 
     if (rumoursPage) {
@@ -159,9 +176,10 @@ async function fetchAllLiquipedia() {
       const rItems = await guarded(`${game} rumours`, () => fetchLiquipediaRumours(wiki, game, rumoursPage));
       rumours.push(...rItems);
       console.log(`  ${game}: ${rItems.length} rumours`);
-      if (!isLast) await respectGap(t0);
+      if (!isLast && !abort) await respectGap(t0);
     }
   }
+  if (abort) console.warn(`[Liquipedia] stopped early — ${transfers.length ? 'kept' : 'lost'} whatever was fetched before the block`);
   console.log(`  ${transfers.length} transfers, ${rumours.length} rumours total`);
   return { transfers, rumours };
 }
