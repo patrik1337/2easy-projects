@@ -1,6 +1,69 @@
 {
-  "generatedAt": "2026-07-14T17:26:03.798Z",
+  "generatedAt": "2026-07-15T13:08:37.446Z",
   "transfers": [
+    {
+      "date": "2026-07-15",
+      "player": "STYRON",
+      "playerUrl": "https://liquipedia.net/valorant/STYRON",
+      "from": "None",
+      "to": "Team Secret",
+      "game": "Valorant",
+      "refUrl": "https://x.com/teamsecret/status/2077358093013238164"
+    },
+    {
+      "date": "2026-07-15",
+      "player": "NaTz",
+      "playerUrl": "https://liquipedia.net/valorant/NaTz",
+      "from": "BOOM Esports",
+      "to": "Team Secret",
+      "game": "Valorant",
+      "refUrl": "https://x.com/boomesportsid/status/2077350090294096019"
+    },
+    {
+      "date": "2026-07-15",
+      "player": "Zeus (Filipino player)",
+      "playerUrl": "https://liquipedia.net/valorant/Zeus_(Filipino_player)",
+      "from": "Team Secret (Substitute)",
+      "to": "Team Secret",
+      "game": "Valorant",
+      "refUrl": "https://x.com/teamsecret/status/2077358093013238164"
+    },
+    {
+      "date": "2026-07-15",
+      "player": "Spin",
+      "playerUrl": "https://liquipedia.net/valorant/Spin",
+      "from": "None",
+      "to": "Team Secret (Head Coach)",
+      "game": "Valorant",
+      "refUrl": "https://x.com/teamsecret/status/2077358093013238164"
+    },
+    {
+      "date": "2026-07-15",
+      "player": "SkyeSG",
+      "playerUrl": "https://liquipedia.net/valorant/SkyeSG",
+      "from": "None",
+      "to": "Team Secret (Coach)",
+      "game": "Valorant",
+      "refUrl": "https://x.com/teamsecret/status/2077358093013238164"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "Blu",
+      "playerUrl": "https://liquipedia.net/valorant/Blu",
+      "from": "None",
+      "to": "Arashi GC",
+      "game": "Valorant",
+      "refUrl": "https://x.com/arashigg_/status/2077105909541507079"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "Virtyy",
+      "playerUrl": "https://liquipedia.net/valorant/Virtyy",
+      "from": "LOUD (Inactive)",
+      "to": "None",
+      "game": "Valorant",
+      "refUrl": "https://x.com/LOUDgg/status/2077138844919472178"
+    },
     {
       "date": "2026-07-14",
       "player": "Waddle",
@@ -74,202 +137,148 @@
       "refUrl": "https://x.com/ElevateGG_BR/status/2076815426139423177"
     },
     {
-      "date": "2026-07-13",
-      "player": "Rimuru",
-      "playerUrl": "https://liquipedia.net/valorant/Rimuru",
-      "from": "Team Secret",
-      "to": "None",
-      "game": "Valorant",
-      "refUrl": "https://x.com/teamsecret/status/2076670961915461901"
-    },
-    {
-      "date": "2026-07-13",
-      "player": "Ren",
-      "playerUrl": null,
-      "from": "ZETA DIVISION ACADEMY",
-      "to": "None",
-      "game": "Valorant",
-      "refUrl": "https://x.com/zetadivision/status/2076547173500748137"
-    },
-    {
-      "date": "2026-07-13",
-      "player": "Sharks",
-      "playerUrl": null,
-      "from": "None",
-      "to": "XLG Esports",
-      "game": "Valorant",
-      "refUrl": "https://weibo.com/7885361795/R8vxUtuCv"
-    },
-    {
-      "date": "2026-07-12",
-      "player": "Brave",
-      "playerUrl": "https://liquipedia.net/valorant/Brave",
-      "from": "Misa Esports",
-      "to": "None",
-      "game": "Valorant",
-      "refUrl": "https://x.com/misaesports/status/2076381151292223580"
-    },
-    {
-      "date": "2026-07-12",
-      "player": "Naero",
-      "playerUrl": "https://liquipedia.net/valorant/Naero",
-      "from": "Misa Esports (Head Coach)",
-      "to": "None",
-      "game": "Valorant",
-      "refUrl": "https://x.com/misaesports/status/2076381151292223580"
-    },
-    {
-      "date": "2026-07-12",
-      "player": "Draken (Turkish coach)",
-      "playerUrl": "https://liquipedia.net/valorant/Draken_(Turkish_coach)",
-      "from": "Misa Esports (Coach)",
-      "to": "None",
-      "game": "Valorant",
-      "refUrl": "https://x.com/misaesports/status/2076381151292223580"
-    },
-    {
-      "date": "2026-07-11",
-      "player": "Carpe",
-      "playerUrl": "https://liquipedia.net/valorant/Carpe",
-      "from": "T1",
-      "to": "None",
-      "game": "Valorant",
-      "refUrl": "https://x.com/T1/status/2075968368549798149"
+      "date": "2026-07-15",
+      "player": "Clearlove",
+      "playerUrl": "https://liquipedia.net/leagueoflegends/Clearlove",
+      "from": "EDward Gaming EDG",
+      "to": "Weibo Gaming WBG",
+      "game": "League of Legends",
+      "refUrl": "https://weibo.com/5235726837/R8ONg9slO"
     },
     {
       "date": "2026-07-14",
-      "player": "Emperor (Dutch player)",
-      "playerUrl": null,
-      "from": "None",
-      "to": "ZennIT ZNT",
-      "game": "League of Legends",
-      "refUrl": "https://x.com/zennit_gaming/status/2077000501829206381"
-    },
-    {
-      "date": "2026-07-14",
-      "player": "Khaydarin",
-      "playerUrl": "https://liquipedia.net/leagueoflegends/Khaydarin",
-      "from": "None",
-      "to": "ZennIT ZNT(Substitute)",
-      "game": "League of Legends",
-      "refUrl": "https://x.com/zennit_gaming/status/2077000501829206381"
-    },
-    {
-      "date": "2026-07-14",
-      "player": "Kkero",
-      "playerUrl": "https://liquipedia.net/leagueoflegends/Kkero",
-      "from": "None",
-      "to": "ZennIT ZNT",
-      "game": "League of Legends",
-      "refUrl": "https://x.com/zennit_gaming/status/2077000501829206381"
-    },
-    {
-      "date": "2026-07-14",
-      "player": "Ilyxøu",
-      "playerUrl": "https://liquipedia.net/leagueoflegends/Ilyx%C3%B8u",
-      "from": "None",
-      "to": "mCon esports MCN",
-      "game": "League of Legends",
-      "refUrl": "https://x.com/mConesports/status/2076926609886527625"
-    },
-    {
-      "date": "2026-07-14",
-      "player": "STANIK",
-      "playerUrl": "https://liquipedia.net/leagueoflegends/STANIK",
-      "from": "The Secret Club TSC",
-      "to": "mCon esports MCN",
-      "game": "League of Legends",
-      "refUrl": "https://x.com/mConesports/status/2076926609886527625"
-    },
-    {
-      "date": "2026-07-14",
-      "player": "MaiYuk",
-      "playerUrl": "https://liquipedia.net/leagueoflegends/MaiYuk",
-      "from": "MCon esports MCN",
-      "to": "None",
-      "game": "League of Legends",
-      "refUrl": "https://x.com/mConesports/status/2076926609886527625"
-    },
-    {
-      "date": "2026-07-14",
-      "player": "TheHank",
-      "playerUrl": "https://liquipedia.net/leagueoflegends/TheHank",
-      "from": "Weibo Gaming WBG",
-      "to": "None",
-      "game": "League of Legends",
-      "refUrl": "https://weibo.com/5937903233/R8EbHoMSQ"
-    },
-    {
-      "date": "2026-07-14",
-      "player": "Crisp",
-      "playerUrl": "https://liquipedia.net/leagueoflegends/Crisp",
-      "from": "None",
-      "to": "LGD Gaming LGD",
-      "game": "League of Legends",
-      "refUrl": "https://weibo.com/5035639623/R8DNlqTNc"
-    },
-    {
-      "date": "2026-07-14",
-      "player": "Hang",
-      "playerUrl": "https://liquipedia.net/leagueoflegends/Hang",
-      "from": "Weibo Gaming WBG",
-      "to": "None",
-      "game": "League of Legends",
-      "refUrl": "https://weibo.com/5937903233/R8DNloIeG"
-    },
-    {
-      "date": "2026-07-14",
-      "player": "Ycx",
-      "playerUrl": "https://liquipedia.net/leagueoflegends/Ycx",
-      "from": "LGD Gaming LGD",
-      "to": "None",
-      "game": "League of Legends",
-      "refUrl": "https://weibo.com/5035639623/R8D0DrRDC"
-    },
-    {
-      "date": "2026-07-13",
       "player": "Young",
       "playerUrl": "https://liquipedia.net/leagueoflegends/Young",
       "from": "None",
       "to": "Blue Otter BLUE",
       "game": "League of Legends",
-      "refUrl": "https://x.com/watchNACL/status/2076838682510725272"
+      "refUrl": "https://x.com/BlueOtterGG/status/2077185951772860592"
     },
     {
-      "date": "2026-07-13",
+      "date": "2026-07-14",
       "player": "Philip",
       "playerUrl": "https://liquipedia.net/leagueoflegends/Philip",
       "from": "Nine Lives Esports 9LE",
       "to": "Blue Otter BLUE",
       "game": "League of Legends",
-      "refUrl": "https://x.com/watchNACL/status/2076838682510725272"
+      "refUrl": "https://x.com/BlueOtterGG/status/2077185951772860592"
     },
     {
-      "date": "2026-07-13",
+      "date": "2026-07-14",
+      "player": "Spawn (Canadian player)",
+      "playerUrl": "https://liquipedia.net/leagueoflegends/Spawn_(Canadian_player)",
+      "from": "Blue Otter BLUE",
+      "to": "None",
+      "game": "League of Legends",
+      "refUrl": "https://x.com/BlueOtterGG/status/2077185951772860592"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "Shadow (Argentinian player)",
+      "playerUrl": "https://liquipedia.net/leagueoflegends/Shadow_(Argentinian_player)",
+      "from": "None",
+      "to": "Volticons VTC",
+      "game": "League of Legends",
+      "refUrl": "https://x.com/Volticons/status/2077112470070599711"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "Camilonicolau",
+      "playerUrl": "https://liquipedia.net/leagueoflegends/Camilonicolau",
+      "from": "Volticons VTC",
+      "to": "Volticons VTC(Substitute)",
+      "game": "League of Legends",
+      "refUrl": "https://x.com/Volticons/status/2077112470070599711"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "Leza",
+      "playerUrl": "https://liquipedia.net/leagueoflegends/Leza",
+      "from": "None",
+      "to": "CCG Esports CCG",
+      "game": "League of Legends",
+      "refUrl": "https://x.com/CCGEsport/status/2077084296100172112"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "AoJune",
+      "playerUrl": "https://liquipedia.net/leagueoflegends/AoJune",
+      "from": "CCG Esports CCG",
+      "to": "Maryville University MU",
+      "game": "League of Legends",
+      "refUrl": "https://x.com/MaryvilleGG/status/2077115141728956734"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "Niles",
+      "playerUrl": "https://liquipedia.net/leagueoflegends/Niles",
+      "from": "Maryville University MU",
+      "to": "Maryville University MU",
+      "game": "League of Legends",
+      "refUrl": "https://x.com/MaryvilleGG/status/2077115141728956734"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "Ariana",
+      "playerUrl": "https://liquipedia.net/leagueoflegends/Ariana",
+      "from": "Grand View University GVU",
+      "to": "University of Mississippi UoM(Substitute)",
+      "game": "League of Legends",
+      "refUrl": "https://x.com/olemissesports/status/2077092745315746120"
+    },
+    {
+      "date": "2026-07-14",
       "player": "Ariana",
       "playerUrl": "https://liquipedia.net/leagueoflegends/Ariana",
       "from": "Blue Otter BLUE",
       "to": "None",
       "game": "League of Legends",
-      "refUrl": "https://x.com/watchNACL/status/2076838682510725272"
+      "refUrl": "https://x.com/olemissesports/status/2077092745315746120"
     },
     {
-      "date": "2026-07-13",
-      "player": "Curty",
-      "playerUrl": "https://liquipedia.net/leagueoflegends/Curty",
-      "from": "Fluxo W7M FXW7 (Loan)",
-      "to": "LOUD LLL(Inactive)",
+      "date": "2026-07-14",
+      "player": "Coatpustmain",
+      "playerUrl": "https://liquipedia.net/leagueoflegends/Coatpustmain",
+      "from": "None",
+      "to": "3BL Esports 3BL",
       "game": "League of Legends",
-      "refUrl": "https://x.com/fluxo_lol/status/2076773598933729396"
+      "refUrl": "https://x.com/3bl_esports/status/2077090865340625180"
     },
     {
-      "date": "2026-07-13",
-      "player": "Chakroun",
-      "playerUrl": "https://liquipedia.net/leagueoflegends/Chakroun",
-      "from": "Victorious Demons VD",
-      "to": "Disruptors DS",
+      "date": "2026-07-14",
+      "player": "Sotsy",
+      "playerUrl": "https://liquipedia.net/leagueoflegends/Sotsy",
+      "from": "3BL Esports 3BL",
+      "to": "None",
       "game": "League of Legends",
-      "refUrl": "https://x.com/Disruptorsgg/status/2076733108871721282"
+      "refUrl": "https://x.com/3bl_esports/status/2077090865340625180"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "Robenong",
+      "playerUrl": "https://liquipedia.net/leagueoflegends/Robenong",
+      "from": "None",
+      "to": "One More Esports 1M",
+      "game": "League of Legends",
+      "refUrl": "https://x.com/OneMore_esports/status/2077106867868741664"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "Blueboar",
+      "playerUrl": "https://liquipedia.net/leagueoflegends/Blueboar",
+      "from": "Honvéd Esport LLH",
+      "to": "One More Esports 1M",
+      "game": "League of Legends",
+      "refUrl": "https://x.com/OneMore_esports/status/2077106867868741664"
+    },
+    {
+      "date": "2026-07-15",
+      "player": "SwerzieN",
+      "playerUrl": "https://liquipedia.net/counterstrike/SwerzieN",
+      "from": "FUT Turkuaz",
+      "to": "None",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/FUTesportsgg/status/2077333580514996698"
     },
     {
       "date": "2026-07-15",
@@ -318,6 +327,24 @@
     },
     {
       "date": "2026-07-14",
+      "player": "MAD (American coach)",
+      "playerUrl": "https://liquipedia.net/counterstrike/MAD_(American_coach)",
+      "from": "None",
+      "to": "Wildcard (Analyst)",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/wildcard_gg/status/2077090967375458311"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "Bright",
+      "playerUrl": null,
+      "from": "None",
+      "to": "F5 Esports",
+      "game": "Counter-Strike",
+      "refUrl": "https://www.dust2.us/news/75980/f5-returns-to-cs2-with-raisedbypixels-stack"
+    },
+    {
+      "date": "2026-07-14",
       "player": "PR",
       "playerUrl": "https://liquipedia.net/counterstrike/PR",
       "from": "GamerLegion",
@@ -345,66 +372,39 @@
     },
     {
       "date": "2026-07-14",
+      "player": "J0nneW",
+      "playerUrl": null,
+      "from": "None",
+      "to": "Glitchtech Esports",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/GlitchtechES/status/2077079360209592555"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "GrimyRannarr",
+      "playerUrl": "https://liquipedia.net/counterstrike/GrimyRannarr",
+      "from": "None",
+      "to": "Glitchtech Esports (Coach)",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/GlitchtechES/status/2077079360209592555"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "Blackcash",
+      "playerUrl": null,
+      "from": "Regnum4Games (Coach)",
+      "to": "Glitchtech Esports (Analyst)",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/GlitchtechES/status/2077079360209592555"
+    },
+    {
+      "date": "2026-07-14",
       "player": "K0gaSs",
       "playerUrl": null,
       "from": "Team Spirit Academy Black",
       "to": "Team Spirit Academy",
       "game": "Counter-Strike",
       "refUrl": "https://x.com/TSpirit_Academy/status/2077038378873163992"
-    },
-    {
-      "date": "2026-07-13",
-      "player": "No1nx",
-      "playerUrl": null,
-      "from": "EMPIRE",
-      "to": "None",
-      "game": "Counter-Strike",
-      "refUrl": "https://www.dust2.us/news/75949/empire-part-ways-with-no1nx"
-    },
-    {
-      "date": "2026-07-13",
-      "player": "Roo",
-      "playerUrl": null,
-      "from": "None",
-      "to": "Revel",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/Revel_LL/status/2076755345624498288"
-    },
-    {
-      "date": "2026-07-13",
-      "player": "M1KA",
-      "playerUrl": null,
-      "from": "SAW Youngsters (Stand-in)",
-      "to": "SAW Youngsters",
-      "game": "Counter-Strike",
-      "refUrl": "https://saw.gg/ner0-m1ka/"
-    },
-    {
-      "date": "2026-07-13",
-      "player": "Ner0",
-      "playerUrl": null,
-      "from": "None",
-      "to": "SAW Youngsters (Coach)",
-      "game": "Counter-Strike",
-      "refUrl": "https://saw.gg/ner0-m1ka/"
-    },
-    {
-      "date": "2026-07-13",
-      "player": "Hotd0g",
-      "playerUrl": "https://liquipedia.net/counterstrike/Hotd0g",
-      "from": "None",
-      "to": "los kogutos",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/LosKogutos/status/2076719061933740062"
-    },
-    {
-      "date": "2026-07-13",
-      "player": "Yvro",
-      "playerUrl": "https://liquipedia.net/counterstrike/Yvro",
-      "from": "los kogutos",
-      "to": "None",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/LosKogutos/status/2076719061933740062"
     },
     {
       "date": "2026-07-14",
@@ -678,6 +678,69 @@
     },
     {
       "date": "2026-07-14",
+      "player": "Jman",
+      "playerUrl": "https://liquipedia.net/overwatch/Jman",
+      "from": "None",
+      "to": "LAIKA",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/laikaesports/status/2077084503336456587"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "Temper",
+      "playerUrl": null,
+      "from": "Kafe Academy",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/thekafeesports/status/2077092873468526607"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "Dare",
+      "playerUrl": null,
+      "from": "Kafe Academy (Coach)",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/thekafeesports/status/2077092873468526607"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "Kuronaa",
+      "playerUrl": null,
+      "from": "Kafe Academy (Assistant Manager)",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/thekafeesports/status/2077092873468526607"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "Kaylaroni",
+      "playerUrl": null,
+      "from": "Kafe Academy (General Manager)",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/thekafeesports/status/2077092873468526607"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "Setsuna",
+      "playerUrl": "https://liquipedia.net/overwatch/Setsuna",
+      "from": "Four Angry Men",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/setsuna_ow/status/2076936918286434621"
+    },
+    {
+      "date": "2026-07-14",
+      "player": "M1nut2",
+      "playerUrl": "https://liquipedia.net/overwatch/M1nut2",
+      "from": "Cheeseburger",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/m1nut2_ow/status/2076925365847826755"
+    },
+    {
+      "date": "2026-07-14",
       "player": "Cap",
       "playerUrl": "https://liquipedia.net/overwatch/Cap",
       "from": "Disguised (Assistant Coach)",
@@ -747,69 +810,6 @@
       "to": "Dystopia",
       "game": "Overwatch",
       "refUrl": "https://x.com/dystopiaow/status/2075952344471060757"
-    },
-    {
-      "date": "2026-07-11",
-      "player": "BuFayez",
-      "playerUrl": null,
-      "from": "None",
-      "to": "Dystopia",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/dystopiaow/status/2075952344471060757"
-    },
-    {
-      "date": "2026-07-11",
-      "player": "ABOSHOGE",
-      "playerUrl": null,
-      "from": "None",
-      "to": "Dystopia (Coach)",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/dystopiaow/status/2075952344471060757"
-    },
-    {
-      "date": "2026-07-11",
-      "player": "DB",
-      "playerUrl": null,
-      "from": "None",
-      "to": "Dystopia (Manager)",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/dystopiaow/status/2075952344471060757"
-    },
-    {
-      "date": "2026-07-11",
-      "player": "LDR",
-      "playerUrl": null,
-      "from": "Dystopia",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/dystopiaow/status/2075952344471060757"
-    },
-    {
-      "date": "2026-07-11",
-      "player": "Santy",
-      "playerUrl": "https://liquipedia.net/overwatch/Santy",
-      "from": "ExO: Sakura",
-      "to": "Ex Oblivione CAH",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/exoblivionegg/status/2076002965136019682"
-    },
-    {
-      "date": "2026-07-11",
-      "player": "Winter (Lucy Falmoe)",
-      "playerUrl": "https://liquipedia.net/overwatch/Winter_(Lucy_Falmoe)",
-      "from": "None",
-      "to": "Ex Oblivione CAH",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/exoblivionegg/status/2076002965136019682"
-    },
-    {
-      "date": "2026-07-11",
-      "player": "Zei",
-      "playerUrl": "https://liquipedia.net/overwatch/Zei",
-      "from": "None",
-      "to": "Ex Oblivione CAH (Coach)",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/exoblivionegg/status/2076002965136019682"
     }
   ],
   "rumours": [
@@ -1006,6 +1006,76 @@
   ],
   "news": [
     {
+      "title": "Warzone Season 5 roadmap: New Verdansk POI, modes, and gameplay features",
+      "link": "https://dotesports.com/call-of-duty/guides/bo7-warzone-season-5-roadmap",
+      "pubDate": "2026-07-15T10:21:33.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "BLAST Premier Open Ulaanbaatar brings $1.25M CS2 event to Mongolia in 2027",
+      "link": "https://dotesports.com/general/news/blast-premier-ulaanbaatar-2027",
+      "pubDate": "2026-07-15T09:07:28.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "Riot puts skins used by the MSI champions on sale till 20th July",
+      "link": "https://esports-news.co.uk/2026/07/15/riot-puts-skins-used-by-the-msi-champions-on-sale-till-20th-july/",
+      "pubDate": "2026-07-15T07:37:48.000Z",
+      "source": "Esports News UK",
+      "section": "headlines"
+    },
+    {
+      "title": "ESIC suspends PTime’s DarkMago, Vintage due to integrity issue at Dota 2 Esports World Cup",
+      "link": "https://dotesports.com/dota-2/news/playtime-darkmago-vintage-esic-suspension-dota-2-ewc",
+      "pubDate": "2026-07-15T03:58:41.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "Dota 2 EWC 2026: Schedule, results, standings, teams, and how to watch",
+      "link": "https://dotesports.com/dota-2/guides/dota-2-ewc-2026-schedule-results",
+      "pubDate": "2026-07-15T02:37:04.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "Fortnite unveils David Beckham Skin as World Cup Finals fever hits",
+      "link": "https://dotesports.com/fortnite/news/david-beckham-fortnite",
+      "pubDate": "2026-07-15T01:00:25.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "The Combo Contest is unironically my favorite Super Smash Bros. tournament of all time",
+      "link": "https://esportsinsider.com/2026/07/combo-contest-smash-tournament",
+      "pubDate": "2026-07-14T20:35:13.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
+    },
+    {
+      "title": "MSI 2026 proved the gap between East and West is closing — at least at the top",
+      "link": "https://esportsinsider.com/2026/07/msi-2026-gap-between-east-and-west",
+      "pubDate": "2026-07-14T19:41:16.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
+    },
+    {
+      "title": "Nadeshot takes a break from streaming: ‘I’ve just kind of fallen out of rhythm’",
+      "link": "https://dotesports.com/streaming/news/nadeshot-streaming-break",
+      "pubDate": "2026-07-14T18:20:03.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "VALORANT Rank Manipulation Penalties: Everything you need to know",
+      "link": "https://dotesports.com/valorant/guides/valorant-rank-manipulation-penalties",
+      "pubDate": "2026-07-14T17:43:22.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
       "title": "Everything coming with League Classic on July 29",
       "link": "https://dotesports.com/league-of-legends/guides/league-classic-information",
       "pubDate": "2026-07-14T15:52:39.000Z",
@@ -1034,41 +1104,6 @@
       "section": "headlines"
     },
     {
-      "title": "How to get Excalibur Warframe for free in Fortnite",
-      "link": "https://dotesports.com/fortnite/guides/how-to-get-excalibur-warframe-for-free-in-fortnite",
-      "pubDate": "2026-07-14T13:23:55.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "Black Ops 7 Season 5 roadmap: New Multiplayer maps, 4 weapons, final Zombies map, and more",
-      "link": "https://dotesports.com/call-of-duty/guides/bo7-season-5-roadmap",
-      "pubDate": "2026-07-14T10:45:06.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "EPOMAKER HE108 review: Solving magnetic issues",
-      "link": "https://dotesports.com/hardware/reviews/epomaker-he-108-review",
-      "pubDate": "2026-07-14T06:19:54.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "Where to find Chillet and how to catch it in Palworld 1.0",
-      "link": "https://dotesports.com/palworld/guides/chillet-location-catch-palworld-1-0",
-      "pubDate": "2026-07-14T01:21:18.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "How to start and manage Fleet Missions in Assassin’s Creed Black Flag Resynced",
-      "link": "https://dotesports.com/assassins-creed/guides/ac-black-flag-resynced-fleet-missions",
-      "pubDate": "2026-07-14T00:05:55.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
       "title": "As much as I want Super Smash Bros. back at Evo, it no longer makes sense to include it",
       "link": "https://esportsinsider.com/2026/07/smash-no-longer-fits-evo",
       "pubDate": "2026-07-13T19:24:44.000Z",
@@ -1088,20 +1123,6 @@
       "pubDate": "2026-07-13T16:35:44.000Z",
       "source": "Esports Insider",
       "section": "industry"
-    },
-    {
-      "title": "Games of the Future 2026 locks in Kazakhstan’s biggest financial backers for Astana",
-      "link": "https://dotesports.com/general/news/games-future-2026-sponsors",
-      "pubDate": "2026-07-13T15:37:15.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "How to get Rabbit Pelt in Assassin’s Creed Black Flag Resynced",
-      "link": "https://dotesports.com/assassins-creed/guides/ac-black-flag-resynced-rabbit-pelt",
-      "pubDate": "2026-07-13T15:07:54.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
     },
     {
       "title": "World Cup 2026 Semi-Final England vs Argentina Prediction & Best Bets",
@@ -1181,13 +1202,6 @@
       "section": "headlines"
     },
     {
-      "title": "Leak culture, vagueposting, and oversharing: What we can learn from the FrosT and Global Esports drama",
-      "link": "https://esportsinsider.com/2026/07/frost-global-esports-drama-lesson",
-      "pubDate": "2026-07-09T02:50:46.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
-    },
-    {
       "title": "World Cup 2026 Quarter-Final Argentina vs Switzerland Prediction & Best Bets",
       "link": "https://esports-news.co.uk/2026/07/08/world-cup-quarter-final-argentina-switzerland-predictions/",
       "pubDate": "2026-07-08T12:29:23.000Z",
@@ -1223,13 +1237,6 @@
       "section": "headlines"
     },
     {
-      "title": "Sony’s baffling decision to region lock Marvel Tōkon: Fighting Souls has united the FGC, as its potential as an esport now hangs in the balance",
-      "link": "https://esportsinsider.com/2026/07/sony-marvel-tokon-fighting-souls-region-lock-fgc",
-      "pubDate": "2026-07-07T17:48:58.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
-    },
-    {
       "title": "Glasgow Children’s Hospital charity is hiring a gamer to help entertain patients",
       "link": "https://esports-news.co.uk/2026/07/07/glasgow-childrens-hospital-charity-is-hiring-a-gamer-to-help-entertain-patients/",
       "pubDate": "2026-07-07T16:01:23.000Z",
@@ -1249,17 +1256,10 @@
       "pubDate": "2026-07-06T21:11:04.000Z",
       "source": "Esports News UK",
       "section": "headlines"
-    },
-    {
-      "title": "Team GB sends two Chess players to ENC",
-      "link": "https://esports-news.co.uk/2026/07/06/team-gb-sends-two-chess-players-to-enc/",
-      "pubDate": "2026-07-06T16:03:38.000Z",
-      "source": "Esports News UK",
-      "section": "headlines"
     }
   ],
   "ewc": {
-    "generatedAt": "2026-07-14T17:26:03.798Z",
+    "generatedAt": "2026-07-15T13:08:37.446Z",
     "totalTitles": 25,
     "standings": [
       {
@@ -1268,8 +1268,8 @@
         "points": 1000,
         "titlesQualified": 2,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Natus Vincere",
@@ -1277,8 +1277,8 @@
         "points": 1000,
         "titlesQualified": 6,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "UNLIMIT",
@@ -1286,8 +1286,8 @@
         "points": 1000,
         "titlesQualified": 1,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "NRG",
@@ -1295,8 +1295,8 @@
         "points": 750,
         "titlesQualified": 3,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Team Vision",
@@ -1304,8 +1304,8 @@
         "points": 750,
         "titlesQualified": 2,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Virtus.pro",
@@ -1313,8 +1313,8 @@
         "points": 750,
         "titlesQualified": 13,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Nongshim Redforce",
@@ -1322,8 +1322,8 @@
         "points": 500,
         "titlesQualified": 3,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Saishunkan Sol Kumamoto",
@@ -1331,8 +1331,8 @@
         "points": 500,
         "titlesQualified": 2,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Sentinels",
@@ -1340,8 +1340,8 @@
         "points": 500,
         "titlesQualified": 3,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Team Vitality",
@@ -1349,8 +1349,8 @@
         "points": 400,
         "titlesQualified": 18,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "BBL Esports",
@@ -1358,8 +1358,8 @@
         "points": 300,
         "titlesQualified": 1,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "REJECT",
@@ -1367,8 +1367,8 @@
         "points": 300,
         "titlesQualified": 4,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Team Falcons",
@@ -1376,8 +1376,8 @@
         "points": 250,
         "titlesQualified": 20,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Elite Esports",
@@ -1385,8 +1385,8 @@
         "points": 200,
         "titlesQualified": 3,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Gentle Mates",
@@ -1394,8 +1394,8 @@
         "points": 200,
         "titlesQualified": 4,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "MIBR.LOS",
@@ -1403,8 +1403,8 @@
         "points": 200,
         "titlesQualified": 6,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Nigma Galaxy",
@@ -1412,8 +1412,8 @@
         "points": 200,
         "titlesQualified": 2,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "T1",
@@ -1421,8 +1421,8 @@
         "points": 200,
         "titlesQualified": 7,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Team Heretics",
@@ -1430,8 +1430,8 @@
         "points": 200,
         "titlesQualified": 5,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Team Yandex",
@@ -1439,8 +1439,8 @@
         "points": 200,
         "titlesQualified": 1,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Weibo Gaming",
@@ -1448,8 +1448,8 @@
         "points": 200,
         "titlesQualified": 5,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "ZETA DIVISION",
@@ -1457,8 +1457,8 @@
         "points": 200,
         "titlesQualified": 5,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "PARIVISION",
@@ -1466,8 +1466,8 @@
         "points": 200,
         "titlesQualified": 2,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "AG.AL International",
@@ -1475,8 +1475,8 @@
         "points": 150,
         "titlesQualified": 17,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Wolves Esports",
@@ -1484,8 +1484,8 @@
         "points": 100,
         "titlesQualified": 2,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "9z Team",
@@ -1493,8 +1493,8 @@
         "points": 0,
         "titlesQualified": 2,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Alpha7 Esports",
@@ -1502,8 +1502,8 @@
         "points": 0,
         "titlesQualified": 2,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Cloud9",
@@ -1511,8 +1511,8 @@
         "points": 0,
         "titlesQualified": 1,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "EDward Gaming",
@@ -1520,8 +1520,8 @@
         "points": 0,
         "titlesQualified": 2,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "FURIA",
@@ -1529,8 +1529,8 @@
         "points": 0,
         "titlesQualified": 5,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "FUT Esports",
@@ -1538,8 +1538,8 @@
         "points": 0,
         "titlesQualified": 5,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Fluxo W7M",
@@ -1547,8 +1547,8 @@
         "points": 0,
         "titlesQualified": 1,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Fnatic",
@@ -1556,8 +1556,8 @@
         "points": 0,
         "titlesQualified": 6,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "G2 Esports",
@@ -1565,8 +1565,8 @@
         "points": 0,
         "titlesQualified": 5,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "GAM Esports",
@@ -1574,8 +1574,8 @@
         "points": 0,
         "titlesQualified": 2,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Gen.G Esports",
@@ -1583,8 +1583,8 @@
         "points": 0,
         "titlesQualified": 9,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "GodLike Esports",
@@ -1592,8 +1592,8 @@
         "points": 0,
         "titlesQualified": 8,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "JD Gaming",
@@ -1601,8 +1601,8 @@
         "points": 0,
         "titlesQualified": 6,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Karmine Corp",
@@ -1610,8 +1610,8 @@
         "points": 0,
         "titlesQualified": 3,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Leviatán",
@@ -1619,8 +1619,8 @@
         "points": 0,
         "titlesQualified": 4,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "MOUZ",
@@ -1628,8 +1628,8 @@
         "points": 0,
         "titlesQualified": 3,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Ninjas in Pyjamas",
@@ -1637,8 +1637,8 @@
         "points": 0,
         "titlesQualified": 8,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "ONIC",
@@ -1646,8 +1646,8 @@
         "points": 0,
         "titlesQualified": 5,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Rex Regum Qeon",
@@ -1655,8 +1655,8 @@
         "points": 0,
         "titlesQualified": 5,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "S8UL Esports",
@@ -1664,8 +1664,8 @@
         "points": 0,
         "titlesQualified": 5,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Team Liquid",
@@ -1673,8 +1673,8 @@
         "points": 0,
         "titlesQualified": 9,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Team Secret",
@@ -1682,8 +1682,8 @@
         "points": 0,
         "titlesQualified": 4,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Team Spirit",
@@ -1691,8 +1691,8 @@
         "points": 0,
         "titlesQualified": 3,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Titan Esports Club",
@@ -1700,8 +1700,8 @@
         "points": 0,
         "titlesQualified": 3,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       },
       {
         "club": "Twisted Minds",
@@ -1709,14 +1709,14 @@
         "points": 0,
         "titlesQualified": 9,
         "totalTournaments": 25,
-        "pointsDelta": null,
-        "rankDelta": null
+        "pointsDelta": 0,
+        "rankDelta": 0
       }
     ],
     "changes": [],
     "commentary": {
-      "standings": null,
-      "changes": null
+      "standings": "No ranking changes on the Club Championship board since yesterday.",
+      "changes": "No new title qualifications today among clubs with 4+ titles."
     },
     "snapshot": {
       "Team Falcons": {
