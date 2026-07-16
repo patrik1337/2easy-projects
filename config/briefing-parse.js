@@ -158,7 +158,11 @@ function parseClubsQualification(html) {
     if (sortValues.length !== titleCols.length) continue; // malformed row — skip rather than misalign columns
 
     const titles = titleCols.filter((_, i) => sortValues[i] === '1').map((t) => t.slug);
-    clubs.push({ club, qualifiedCount, totalTournaments, titles });
+    // sort-value 2 = "Has Team & Can still qualify" — titles where the outcome
+    // isn't decided yet, i.e. this club's remaining upside beyond what it's
+    // already locked in.
+    const stillQualifying = titleCols.filter((_, i) => sortValues[i] === '2').map((t) => t.slug);
+    clubs.push({ club, qualifiedCount, totalTournaments, titles, stillQualifying });
   }
   return { titleCols, clubs };
 }
@@ -167,9 +171,16 @@ function parseClubsQualification(html) {
 // the same standings table 7 times behind "Week 1..7" toggle buttons — all 7
 // showed identical totals when checked live, so which one is read doesn't
 // affect correctness. Reads the last (highest id = latest) occurrence as
-// "today's" snapshot. Only rank/club/total points are parsed — per-title
-// point columns exist on the page but aren't part of the current design
-// (titles-qualified comes from the Clubs page instead).
+// "today's" snapshot. Rank/club/total points plus the club-level eligibility
+// tier are parsed; per-title point columns exist on the page but aren't part
+// of the current design (titles-qualified comes from the Clubs page instead).
+//
+// The page's own legend defines 3 org-level statuses, styled as a class on
+// the club-name cell: "bg-stay" = eligible to WIN (a tournament win + two
+// top-8 finishes), "bg-stayup" = eligible to be ranked at all (two top-8
+// finishes), no class = not yet eligible (needs a 2nd top-8 finish) — this
+// is Liquipedia's own computed answer to "has this club scored points in at
+// least 2 different titles", so it's read directly rather than re-derived.
 function parseClubChampionshipStandings(html) {
   const marker = 'data-toggle-area-content="25"';
   let idx = html.indexOf(marker);
@@ -182,10 +193,21 @@ function parseClubChampionshipStandings(html) {
     const nameMatch = row.match(/team-template-text"><a[^>]*title="([^"]+)"/);
     const pointsMatch = row.match(/font-weight:bold">(\d+)<\/td>/);
     if (nameMatch && pointsMatch) {
+      // The club-name <td> is the one *immediately* preceding the name span.
+      // A naive [\s\S]*? starting from the row's first <td (the rank cell)
+      // would lazily match all the way through to the name span without ever
+      // re-anchoring on the right <td, silently grabbing the rank cell's
+      // attributes instead — so instead, find every <td opening before the
+      // name span and take the last one.
+      const beforeName = row.slice(0, nameMatch.index);
+      const tdOpens = [...beforeName.matchAll(/<td([^>]*)>/g)];
+      const cellAttrs = tdOpens.length ? tdOpens[tdOpens.length - 1][1] : '';
+      const eligibility = /\bbg-stay\b/.test(cellAttrs) ? 'win' : /bg-stayup/.test(cellAttrs) ? 'eligible' : 'none';
       rows.push({
         rank: rankMatch ? Number(rankMatch[1].replace('.', '')) : null,
         club: decodeEntities(nameMatch[1]).replace(REDLINK_SUFFIX, '').trim(),
         points: Number(pointsMatch[1]),
+        eligibility,
       });
     }
     idx = html.indexOf(marker, rowEnd);

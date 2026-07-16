@@ -366,6 +366,9 @@
   }
   .ewc-note .dot { color: var(--accent); }
 
+  /* A single quote-styled block that can hold one line or several — the
+     quote marks bookend the whole block, not each line, so a day with
+     multiple notable moves doesn't read as several separate quotes. */
   .commentary {
     font-family: "Space Grotesk", sans-serif;
     font-size: 15px;
@@ -377,6 +380,7 @@
     padding: 13px 16px;
     margin: 14px 0 22px;
   }
+  .commentary p + p { margin-top: 6px; }
   .commentary::before { content: "\201C"; color: var(--accent); }
   .commentary::after { content: "\201D"; color: var(--accent); }
 
@@ -402,6 +406,25 @@
   .ewc-pts { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 14.5px; font-weight: 500; }
   .ewc-titles { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 12.5px; color: var(--ink-soft); white-space: nowrap; }
   .ewc-titles b { color: var(--ink); font-weight: 500; }
+  .ewc-still { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 12.5px; color: var(--ink-soft); white-space: nowrap; }
+
+  /* Liquipedia's own "two top-8 finishes" rollup — eligible/win-eligible
+     clubs get a small badge next to their name; not-yet-eligible clubs get
+     nothing rather than a "not eligible" badge on every other row. */
+  .elig-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 1px 6px;
+    border-radius: 2px;
+    margin-left: 6px;
+    vertical-align: 1px;
+    white-space: nowrap;
+  }
+  .elig-badge.eligible { background: var(--up-bg); color: var(--up); }
+  .elig-badge.win { background: var(--accent); color: #fff; }
 
   .move {
     display: inline-flex;
@@ -701,6 +724,12 @@
       <div id="transfer-list"></div>`;
   }
 
+  function eligibilityBadge(tier) {
+    if (tier === 'win') return '<span class="elig-badge win">Win-eligible</span>';
+    if (tier === 'eligible') return '<span class="elig-badge eligible">Eligible</span>';
+    return '';
+  }
+
   function renderEwcStandings(ewc) {
     if (!ewc.standings.length) return '<p class="state-msg">No standings data available.</p>';
     return `
@@ -711,6 +740,7 @@
               <th>Rank</th>
               <th>Club</th>
               <th class="num">Titles qual.</th>
+              <th class="num">Still competing</th>
               <th class="num">Points</th>
               <th class="num">Since yesterday</th>
             </tr>
@@ -719,8 +749,9 @@
             ${ewc.standings.map(r => `
             <tr>
               <td class="ewc-rank">${r.rank}.</td>
-              <td class="ewc-club">${esc(r.club)}</td>
+              <td class="ewc-club">${esc(r.club)}${eligibilityBadge(r.eligibility)}</td>
               <td class="ewc-titles num"><b>${r.titlesQualified}</b> / ${r.totalTournaments}</td>
+              <td class="ewc-still num">${r.stillCompeting}</td>
               <td class="ewc-pts num">${r.points.toLocaleString('en-US')}</td>
               <td class="num">${movePill(r.rankDelta, r.pointsDelta)}</td>
             </tr>`).join('')}
@@ -754,7 +785,7 @@
         <div class="ewc-head">
           <p class="col-label">Club Championship Standings</p>
         </div>
-        ${ewc.commentary.standings ? `<p class="commentary">${esc(ewc.commentary.standings)}</p>` : ''}
+        ${ewc.commentary.standings ? `<div class="commentary">${ewc.commentary.standings.map(line => `<p>${esc(line)}</p>`).join('')}</div>` : ''}
         ${renderEwcStandings(ewc)}
       </div>
       <div class="ewc-block">

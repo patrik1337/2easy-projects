@@ -261,8 +261,10 @@ function buildEwcData(ewcClubs, ewcStandings, prevEwc) {
         club: s.club,
         rank: s.rank,
         points: s.points,
+        eligibility: s.eligibility, // 'win' | 'eligible' | 'none' — Liquipedia's own 2-top-8 rollup
         titlesQualified: c ? c.titles.length : 0,
         totalTournaments: c ? c.totalTournaments : titleCols.length,
+        stillCompeting: c ? c.stillQualifying.length : 0, // titles not yet decided — remaining upside
         pointsDelta: prev && prev.points != null ? s.points - prev.points : null,
         rankDelta: prev && prev.rank != null ? prev.rank - s.rank : null, // positive = moved up
       };
@@ -295,14 +297,19 @@ function buildEwcData(ewcClubs, ewcStandings, prevEwc) {
     }
   }
 
+  // One line per notable mover rather than just the single biggest one, so a
+  // day with several real changes doesn't read as if only one thing happened.
+  // Capped at 5 to stay a quick read rather than restating the whole table.
+  const STANDINGS_COMMENTARY_MAX = 5;
   const standingsCommentary = !hasBaseline ? null : (() => {
     const movers = standingsRows.filter((r) => r.rankDelta);
-    if (!movers.length) return 'No ranking changes on the Club Championship board since yesterday.';
+    if (!movers.length) return ['No ranking changes on the Club Championship board since yesterday.'];
     movers.sort((a, b) => Math.abs(b.rankDelta) - Math.abs(a.rankDelta));
-    const top = movers[0];
-    const dir = top.rankDelta > 0 ? 'climbed' : 'dropped';
-    const ptsTxt = top.pointsDelta ? ` (${top.pointsDelta > 0 ? '+' : ''}${top.pointsDelta} pts)` : '';
-    return `${top.club} ${dir} to ${ordinal(top.rank)}${ptsTxt} since yesterday.`;
+    return movers.slice(0, STANDINGS_COMMENTARY_MAX).map((r) => {
+      const dir = r.rankDelta > 0 ? 'climbed' : 'dropped';
+      const ptsTxt = r.pointsDelta ? ` (${r.pointsDelta > 0 ? '+' : ''}${r.pointsDelta} pts)` : '';
+      return `${r.club} ${dir} to ${ordinal(r.rank)}${ptsTxt} since yesterday.`;
+    });
   })();
 
   const changesCommentary = !hasBaseline ? null : (() => {
