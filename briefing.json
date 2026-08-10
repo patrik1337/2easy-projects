@@ -1,6 +1,33 @@
 {
-  "generatedAt": "2026-08-09T12:26:35.192Z",
+  "generatedAt": "2026-08-10T12:43:04.625Z",
   "transfers": [
+    {
+      "date": "2026-08-10",
+      "player": "Leg1t",
+      "playerUrl": "https://liquipedia.net/valorant/Leg1t",
+      "from": "Ninetails (Coach)",
+      "to": "ONSIDE GAMING (Coach)",
+      "game": "Valorant",
+      "refUrl": "https://x.com/ONSIDE_GAMING/status/2086757668358848515"
+    },
+    {
+      "date": "2026-08-09",
+      "player": "Freya",
+      "playerUrl": "https://liquipedia.net/valorant/Freya",
+      "from": "Aogiri",
+      "to": "7VEN STARS",
+      "game": "Valorant",
+      "refUrl": "https://x.com/7VENCLUB/status/2086514223275008448"
+    },
+    {
+      "date": "2026-08-09",
+      "player": "Lya",
+      "playerUrl": null,
+      "from": "Aogiri (Coach)",
+      "to": "7VEN STARS (Coach)",
+      "game": "Valorant",
+      "refUrl": "https://x.com/7VENCLUB/status/2086514223275008448"
+    },
     {
       "date": "2026-08-07",
       "player": "Mazin",
@@ -110,33 +137,6 @@
       "refUrl": "https://x.com/firefluxesports/status/2084972904102363389"
     },
     {
-      "date": "2026-08-05",
-      "player": "XovLoV",
-      "playerUrl": "https://liquipedia.net/valorant/XovLoV",
-      "from": "REBORN (Assistant Coach)",
-      "to": "Fire Flux Esports (Assistant Coach)",
-      "game": "Valorant",
-      "refUrl": "https://x.com/firefluxesports/status/2084972904102363389"
-    },
-    {
-      "date": "2026-08-05",
-      "player": "FukukeN",
-      "playerUrl": "https://liquipedia.net/valorant/FukukeN",
-      "from": "AGELITE (Inactive)",
-      "to": "None",
-      "game": "Valorant",
-      "refUrl": "https://x.com/AGELITEVALORANT/status/2084897190548283713?s=20"
-    },
-    {
-      "date": "2026-08-05",
-      "player": "Sayu",
-      "playerUrl": null,
-      "from": "AGELITE",
-      "to": "None",
-      "game": "Valorant",
-      "refUrl": "https://x.com/AGELITEVALORANT/status/2084897190548283713?s=20"
-    },
-    {
       "date": "2026-08-09",
       "player": "Flandre",
       "playerUrl": "https://liquipedia.net/leagueoflegends/Flandre",
@@ -153,15 +153,6 @@
       "to": "G2 Esports G2(Co-Streamer)",
       "game": "League of Legends",
       "refUrl": "https://x.com/g2league/status/2086075114077249702"
-    },
-    {
-      "date": "2026-08-08",
-      "player": "Painter",
-      "playerUrl": "https://liquipedia.net/leagueoflegends/Painter",
-      "from": "T1 Esports Academy T1.EA",
-      "to": "T1",
-      "game": "League of Legends",
-      "refUrl": "https://x.com/T1LoL/status/2085980608107585906"
     },
     {
       "date": "2026-08-07",
@@ -272,6 +263,15 @@
       "refUrl": "https://x.com/UP2UMEDIApl/status/2084636390306820468"
     },
     {
+      "date": "2026-08-04",
+      "player": "Adi",
+      "playerUrl": "https://liquipedia.net/leagueoflegends/Adi",
+      "from": "None",
+      "to": "Bomba Team BOOM",
+      "game": "League of Legends",
+      "refUrl": "https://x.com/BombaTeamGG/status/2084637697717547366"
+    },
+    {
       "date": "2026-08-08",
       "player": "ASTRA",
       "playerUrl": "https://liquipedia.net/counterstrike/ASTRA",
@@ -318,12 +318,12 @@
     },
     {
       "date": "2026-08-07",
-      "player": "KIRO",
-      "playerUrl": "https://liquipedia.net/counterstrike/KIRO",
-      "from": "33",
+      "player": "Seberya",
+      "playerUrl": null,
+      "from": "Young TigeRES",
       "to": "None",
       "game": "Counter-Strike",
-      "refUrl": "https://t.me/team33_official/303"
+      "refUrl": "https://t.me/nucleartigeres/1662"
     },
     {
       "date": "2026-08-06",
@@ -371,40 +371,49 @@
       "refUrl": "https://x.com/hyperspiritro/status/2085336086142713876"
     },
     {
-      "date": "2026-08-05",
-      "player": "DeLonge",
-      "playerUrl": "https://liquipedia.net/counterstrike/DeLonge",
-      "from": "Gentle Mates (Inactive Coach)",
+      "date": "2026-08-06",
+      "player": "Pony-san",
+      "playerUrl": null,
+      "from": "FROX",
+      "to": "UOL FROX",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/UOL_FROX/status/2085395929385906439"
+    },
+    {
+      "date": "2026-08-06",
+      "player": "XCR",
+      "playerUrl": null,
+      "from": "FROX (Coach/Manager)",
+      "to": "UOL FROX (Coach/Manager)",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/UOL_FROX/status/2085395929385906439"
+    },
+    {
+      "date": "2026-08-06",
+      "player": "TRAVIS",
+      "playerUrl": "https://liquipedia.net/counterstrike/TRAVIS",
+      "from": "SPARTA Esports",
       "to": "None",
       "game": "Counter-Strike",
-      "refUrl": "https://x.com/deLongeMVP/status/2085063536183800027"
+      "refUrl": "https://t.me/travisxcs/192"
     },
     {
-      "date": "2026-08-04",
-      "player": "Jachro",
-      "playerUrl": null,
-      "from": "Revel",
-      "to": "Unreal Nightmare",
+      "date": "2026-08-06",
+      "player": "KIRO",
+      "playerUrl": "https://liquipedia.net/counterstrike/KIRO",
+      "from": "33",
+      "to": "None",
       "game": "Counter-Strike",
-      "refUrl": "https://x.com/Revel_LL/status/2084705845170884652"
+      "refUrl": "https://t.me/kirocs2/456"
     },
     {
-      "date": "2026-08-04",
-      "player": "JeffLaFlavor",
-      "playerUrl": null,
-      "from": "Revel (Coach)",
-      "to": "Unreal Nightmare (Coach)",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/Revel_LL/status/2084705845170884652"
-    },
-    {
-      "date": "2026-08-04",
-      "player": "Rainy",
-      "playerUrl": null,
+      "date": "2026-08-10",
+      "player": "Topson",
+      "playerUrl": "https://liquipedia.net/dota2/Topson",
       "from": "None",
-      "to": "Dynamo Eclot Phoenix",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/dynamoeclot/status/2084640796720992271"
+      "to": "LGD Gaming",
+      "game": "Dota 2",
+      "refUrl": "https://x.com/LGDgaming/status/2086517256058814731"
     },
     {
       "date": "2026-07-30",
@@ -533,13 +542,49 @@
       "refUrl": "https://dota2.ru/news/65498-illidan-i-mettpum-pomenalis-komandami-v-strukture-team-spirit/"
     },
     {
-      "date": "2026-07-14",
-      "player": "MeTTpuM",
-      "playerUrl": "https://liquipedia.net/dota2/MeTTpuM",
-      "from": "Team Spirit Academy (Coach)",
-      "to": "Yellow Submarine (Coach)",
-      "game": "Dota 2",
-      "refUrl": "https://dota2.ru/news/65498-illidan-i-mettpum-pomenalis-komandami-v-strukture-team-spirit/"
+      "date": "2026-08-10",
+      "player": "Dayyshift",
+      "playerUrl": "https://liquipedia.net/rocketleague/Dayyshift",
+      "from": "Next2Nu Esports N2N (Stand-in)",
+      "to": "None",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/Next2NuEsports/status/2086603877860729019"
+    },
+    {
+      "date": "2026-08-10",
+      "player": "Tyzuko",
+      "playerUrl": "https://liquipedia.net/rocketleague/Tyzuko",
+      "from": "Next2Nu Esports N2N (Stand-in Coach)",
+      "to": "None",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/Next2NuEsports/status/2086603877860729019"
+    },
+    {
+      "date": "2026-08-09",
+      "player": "Shuuya",
+      "playerUrl": null,
+      "from": "GhostWhite GW",
+      "to": "None",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/GW_GhostWhite/status/2086486616575492189"
+    },
+    {
+      "date": "2026-08-09",
+      "player": "Pablo",
+      "playerUrl": null,
+      "from": "GhostWhite GW (Manager)",
+      "to": "None",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/GW_GhostWhite/status/2086486616575492189"
+    },
+    {
+      "date": "2026-08-09",
+      "player": "Oss",
+      "playerUrl": "https://liquipedia.net/rocketleague/Oss",
+      "from": "None",
+      "to": "Team Stallions STAL(Coach)",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/TeamStallionsgg/status/2086438388844949971"
     },
     {
       "date": "2026-08-07",
@@ -632,49 +677,58 @@
       "refUrl": "https://x.com/Trkf_Esport/status/2085742841632825440"
     },
     {
-      "date": "2026-08-07",
-      "player": "Zeynr1",
-      "playerUrl": null,
-      "from": "Waiting Screen WS (Manager)",
-      "to": "TRKF Esport TRKF(Manager)",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/Trkf_Esport/status/2085742841632825440"
-    },
-    {
-      "date": "2026-08-07",
-      "player": "Beyond",
-      "playerUrl": "https://liquipedia.net/rocketleague/Beyond",
-      "from": "Triple pop POP (Coach)",
+      "date": "2026-08-09",
+      "player": "Eve",
+      "playerUrl": "https://liquipedia.net/overwatch/Eve",
+      "from": "La Suerte",
       "to": "None",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/beyondz_/status/2085520445936165078"
+      "game": "Overwatch",
+      "refUrl": "https://x.com/team_lasuerte/status/2086171739457990722"
     },
     {
-      "date": "2026-08-06",
-      "player": "Taro",
-      "playerUrl": null,
-      "from": "None",
-      "to": "GhostWhite GW",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/GW_GhostWhite/status/2085395484609273903"
-    },
-    {
-      "date": "2026-08-06",
-      "player": "Pablo",
-      "playerUrl": null,
-      "from": "None",
-      "to": "GhostWhite GW(Manager)",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/GW_GhostWhite/status/2085395484609273903"
-    },
-    {
-      "date": "2026-08-06",
-      "player": "Hidden",
-      "playerUrl": null,
-      "from": "GhostWhite GW",
+      "date": "2026-08-09",
+      "player": "Wed",
+      "playerUrl": "https://liquipedia.net/overwatch/Wed",
+      "from": "The Fallen",
       "to": "None",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/GW_GhostWhite/status/2085395484609273903"
+      "game": "Overwatch",
+      "refUrl": "https://x.com/wed_oww/status/2086539531201761453"
+    },
+    {
+      "date": "2026-08-09",
+      "player": "Jodan",
+      "playerUrl": null,
+      "from": "Frost Tails eSport",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/jodanow/status/2086398608799133960"
+    },
+    {
+      "date": "2026-08-09",
+      "player": "LCŠ",
+      "playerUrl": "https://liquipedia.net/overwatch/LC%C5%A0",
+      "from": "Amplify",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/lcs_ow/status/2086525975123116172"
+    },
+    {
+      "date": "2026-08-09",
+      "player": "Jacob (British player)",
+      "playerUrl": "https://liquipedia.net/overwatch/Jacob_(British_player)",
+      "from": "Dreamlight x Harmony",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/owjacob/status/2086443492524339600"
+    },
+    {
+      "date": "2026-08-09",
+      "player": "GaaRa",
+      "playerUrl": "https://liquipedia.net/overwatch/GaaRa",
+      "from": "Last Word",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/g1aara/status/2086396487336870322"
     },
     {
       "date": "2026-08-08",
@@ -756,60 +810,6 @@
       "to": "None",
       "game": "Overwatch",
       "refUrl": "https://x.com/arise_pj/status/2085652175108313273"
-    },
-    {
-      "date": "2026-08-05",
-      "player": "MN3",
-      "playerUrl": "https://liquipedia.net/overwatch/MN3",
-      "from": "None",
-      "to": "99DIVINE",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/99divine_/status/2084882474061210073"
-    },
-    {
-      "date": "2026-08-04",
-      "player": "DOYOULOVEME",
-      "playerUrl": null,
-      "from": "xD wavefy",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/doyouloveme_99/status/2084584564069183668"
-    },
-    {
-      "date": "2026-08-04",
-      "player": "HEISER",
-      "playerUrl": "https://liquipedia.net/overwatch/HEISER",
-      "from": "ZANSIDE GAMING",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/heiser72_/status/2084478175678287914"
-    },
-    {
-      "date": "2026-08-03",
-      "player": "Five",
-      "playerUrl": null,
-      "from": "None",
-      "to": "Kafe Kitchen (Substitute)",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/TheKafeEsports/status/2084357405035684061"
-    },
-    {
-      "date": "2026-08-03",
-      "player": "Poryuu",
-      "playerUrl": null,
-      "from": "Kafe VIII",
-      "to": "Kafe Kitchen",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/TheKafeEsports/status/2084357405035684061"
-    },
-    {
-      "date": "2026-08-03",
-      "player": "PROM15E",
-      "playerUrl": null,
-      "from": "Iliad Helios",
-      "to": "Kafe Kitchen",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/TheKafeEsports/status/2084357405035684061"
     }
   ],
   "rumours": [
@@ -1006,6 +1006,48 @@
   ],
   "news": [
     {
+      "title": "Kachoww and kozzy shatter VCT EMEA youth records within 48 hours of each other",
+      "link": "https://dotesports.com/general/news/vct-emea-records-kachoww-kozzy",
+      "pubDate": "2026-08-10T12:18:07.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "BLAST Open Porto 2026 preview: schedule, format, teams, and more",
+      "link": "https://esportsinsider.com/2026/08/blast-open-porto-2026-preview",
+      "pubDate": "2026-08-10T11:53:44.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
+    },
+    {
+      "title": "All Gears of War: E-Day multiplayer maps",
+      "link": "https://dotesports.com/gears-of-war/guides/all-gears-of-war-e-day-multiplayer-maps",
+      "pubDate": "2026-08-10T08:30:12.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "Topson joins LGD for TI 2026 to replace banned TaiLung",
+      "link": "https://dotesports.com/dota-2/news/topson-lgd-ti-2026-tailung-ban",
+      "pubDate": "2026-08-10T04:57:56.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "Black Ops 7 at Esports World Cup 2026: Schedule, results, bracket, teams, and how to watch",
+      "link": "https://dotesports.com/call-of-duty/news/bo7-ewc-2026-schedule-results-bracket",
+      "pubDate": "2026-08-10T03:00:00.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "LGD’s TaiLung banned from TI 2026, permanently barred from PGL events due to integrity issue",
+      "link": "https://dotesports.com/dota-2/news/lgd-tailung-banned-ti-2026-pgl-events",
+      "pubDate": "2026-08-09T14:32:28.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
       "title": "A real-life Freddy Fazbear’s Pizzeria is opening in 2027",
       "link": "https://dotesports.com/fnaf/news/fnaf-five-nights-at-freddys-real-restaurant-location-pizza",
       "pubDate": "2026-08-08T23:11:04.000Z",
@@ -1041,32 +1083,11 @@
       "section": "headlines"
     },
     {
-      "title": "Black Ops 7 at Esports World Cup 2026: Schedule, results, bracket, teams, and how to watch",
-      "link": "https://dotesports.com/call-of-duty/news/bo7-ewc-2026-schedule-results-bracket",
-      "pubDate": "2026-08-08T05:00:00.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
       "title": "Gambling in esports: Oddin expands, BIG partners with Razed, League of Legends grows at Kalshi",
       "link": "https://esportsinsider.com/2026/08/gambling-in-esports-roundup-oddin-big-razed-kalshi",
       "pubDate": "2026-08-08T00:07:16.000Z",
       "source": "Esports Insider",
       "section": "industry"
-    },
-    {
-      "title": "Best Pals for Planting in Palworld",
-      "link": "https://dotesports.com/palworld/guides/best-pals-for-planting-in-palworld",
-      "pubDate": "2026-08-07T23:16:49.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "All D.Mon abilities, Perks, and passives in Overwatch",
-      "link": "https://dotesports.com/overwatch/guides/overwatch-d-mon-abilities",
-      "pubDate": "2026-08-07T22:07:11.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
     },
     {
       "title": "Nobody is playing fighting games anymore, and Marvel Tōkon: Fighting Souls isn’t helping",
@@ -1076,25 +1097,11 @@
       "section": "industry"
     },
     {
-      "title": "Arctic Haze god rolls and how to get them in Destiny 2",
-      "link": "https://dotesports.com/destiny/news/how-to-get-arctic-haze-in-destiny-2-all-god-rolls",
-      "pubDate": "2026-08-07T18:17:33.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
       "title": "Alright, I’ve watched the Tekken 8 EWC tourney so far, and here is my prediction for the Top 8",
       "link": "https://esportsinsider.com/2026/08/tekken-8-ewc-top-8-predictions",
       "pubDate": "2026-08-07T17:38:02.000Z",
       "source": "Esports Insider",
       "section": "industry"
-    },
-    {
-      "title": "Take-Two announces GTA 6 has already made an “unprecedented” profit in preorder sales",
-      "link": "https://dotesports.com/gta/news/gta-6-take-two-preorder-sales-billion",
-      "pubDate": "2026-08-07T15:23:21.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
     },
     {
       "title": "AI vs expert: Return of the bots for LEC week three predictions",
@@ -1149,13 +1156,6 @@
       "title": "I’m either a psychic or I cursed 2XKO to fail: Riot’s fighter could be on its last leg at CEO 2026",
       "link": "https://esportsinsider.com/2026/08/2xko-dead-after-ceo-2026",
       "pubDate": "2026-08-04T22:03:05.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
-    },
-    {
-      "title": "“It’s important to foster the grassroots nature of TCGs”: T1 CEO Joe Marsh talks entering Riftbound, T1 bundle cards, and grassroots communities",
-      "link": "https://esportsinsider.com/2026/08/t1-joe-marsh-riftbound-interview",
-      "pubDate": "2026-08-04T21:29:08.000Z",
       "source": "Esports Insider",
       "section": "industry"
     },
