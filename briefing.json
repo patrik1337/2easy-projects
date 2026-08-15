@@ -1,6 +1,24 @@
 {
-  "generatedAt": "2026-08-14T12:39:15.193Z",
+  "generatedAt": "2026-08-15T12:17:04.896Z",
   "transfers": [
+    {
+      "date": "2026-08-15",
+      "player": "Ate",
+      "playerUrl": "https://liquipedia.net/valorant/Ate",
+      "from": "None",
+      "to": "FENNEL Female (Caoch)",
+      "game": "Valorant",
+      "refUrl": "https://x.com/FENNEL_official/status/2088551277722841333"
+    },
+    {
+      "date": "2026-08-14",
+      "player": "Sucette",
+      "playerUrl": "https://liquipedia.net/valorant/Sucette",
+      "from": "ZennIT Orange GC",
+      "to": "None",
+      "game": "Valorant",
+      "refUrl": "https://x.com/zennit_gaming/status/2088310185995493628"
+    },
     {
       "date": "2026-08-14",
       "player": "Sw",
@@ -117,24 +135,6 @@
       "to": "UNIWAY (Stand-in)",
       "game": "Valorant",
       "refUrl": null
-    },
-    {
-      "date": "2026-08-07",
-      "player": "Recoil",
-      "playerUrl": "https://liquipedia.net/valorant/Recoil",
-      "from": "Evil Geniuses Academy",
-      "to": "None",
-      "game": "Valorant",
-      "refUrl": "https://x.com/EvilGeniuses/status/2085773064499773543"
-    },
-    {
-      "date": "2026-08-07",
-      "player": "PhuRME",
-      "playerUrl": null,
-      "from": "Galatasaray Esports",
-      "to": "None",
-      "game": "Valorant",
-      "refUrl": "https://x.com/GSEsports/status/2085700283393294774"
     },
     {
       "date": "2026-08-12",
@@ -272,6 +272,24 @@
       "refUrl": "https://x.com/Meavedron/status/2087156356373524816"
     },
     {
+      "date": "2026-08-14",
+      "player": "AZe",
+      "playerUrl": null,
+      "from": "None",
+      "to": "BIG Academy",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/bigclangg/status/2088292334823715199"
+    },
+    {
+      "date": "2026-08-14",
+      "player": "Bl1x1",
+      "playerUrl": "https://liquipedia.net/counterstrike/Bl1x1",
+      "from": "CYBERSHOKE Esports",
+      "to": "CYBERSHOKE Esports (Inactive)",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/team_cybershoke/status/2088274453494944117"
+    },
+    {
       "date": "2026-08-13",
       "player": "Joeski",
       "playerUrl": "https://liquipedia.net/counterstrike/Joeski",
@@ -389,22 +407,49 @@
       "refUrl": "https://www.dust2.us/news/76761/without-a-roof-solidify-roster-with-cerq-steel-additions"
     },
     {
-      "date": "2026-08-11",
-      "player": "Neityu",
-      "playerUrl": "https://liquipedia.net/counterstrike/Neityu",
-      "from": "ENCE (Inactive)",
-      "to": "FaZe Clan",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/FaZeEsports/status/2087245228553945214"
+      "date": "2026-08-13",
+      "player": "Flokk1n",
+      "playerUrl": null,
+      "from": "None",
+      "to": "DOGSENT",
+      "game": "Dota 2",
+      "refUrl": "https://x.com/D0GSENT/status/2087989697666498910"
     },
     {
-      "date": "2026-08-11",
-      "player": "Munstur",
-      "playerUrl": "https://liquipedia.net/counterstrike/Munstur",
+      "date": "2026-08-13",
+      "player": "Most want3d",
+      "playerUrl": null,
       "from": "None",
-      "to": "M80 (Assistant Coach)",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/M80gg/status/2087193879543988603"
+      "to": "DOGSENT (Coach)",
+      "game": "Dota 2",
+      "refUrl": "https://x.com/D0GSENT/status/2087989697666498910"
+    },
+    {
+      "date": "2026-08-13",
+      "player": "Kai",
+      "playerUrl": null,
+      "from": "DOGSENT",
+      "to": "None",
+      "game": "Dota 2",
+      "refUrl": "https://x.com/D0GSENT/status/2087989697666498910"
+    },
+    {
+      "date": "2026-08-13",
+      "player": "OTTO",
+      "playerUrl": null,
+      "from": "DOGSENT (Inactive)",
+      "to": "None",
+      "game": "Dota 2",
+      "refUrl": "https://x.com/D0GSENT/status/2087989697666498910"
+    },
+    {
+      "date": "2026-08-13",
+      "player": "Kemps",
+      "playerUrl": null,
+      "from": "DOGSENT (Coach)",
+      "to": "None",
+      "game": "Dota 2",
+      "refUrl": "https://x.com/D0GSENT/status/2087989697666498910"
     },
     {
       "date": "2026-08-13",
@@ -495,51 +540,6 @@
       "to": "None",
       "game": "Dota 2",
       "refUrl": "https://t.me/virtuspro_dota/1767"
-    },
-    {
-      "date": "2026-07-22",
-      "player": "Serenada",
-      "playerUrl": "https://liquipedia.net/dota2/Serenada",
-      "from": "VP.Prodigy (Inactive)",
-      "to": "None",
-      "game": "Dota 2",
-      "refUrl": "https://t.me/virtuspro_dota/1767"
-    },
-    {
-      "date": "2026-07-22",
-      "player": "Ponlo",
-      "playerUrl": "https://liquipedia.net/dota2/Ponlo",
-      "from": "None",
-      "to": "Ilbirs eSports",
-      "game": "Dota 2",
-      "refUrl": "https://t.me/ilbirs_esports/1015"
-    },
-    {
-      "date": "2026-07-19",
-      "player": "FortniteMan",
-      "playerUrl": "https://liquipedia.net/dota2/FortniteMan",
-      "from": "Ilbirs eSports",
-      "to": "None",
-      "game": "Dota 2",
-      "refUrl": "https://x.com/IlbirsEsports/status/2078817504860774435"
-    },
-    {
-      "date": "2026-07-17",
-      "player": "Dreamocel",
-      "playerUrl": "https://liquipedia.net/dota2/Dreamocel",
-      "from": "Carstensz Esports",
-      "to": "None",
-      "game": "Dota 2",
-      "refUrl": "https://www.instagram.com/carstenszesports/p/Da5GyoMD6U0/"
-    },
-    {
-      "date": "2026-07-16",
-      "player": "Vintage",
-      "playerUrl": "https://liquipedia.net/dota2/Vintage",
-      "from": "PTime (Sporting Director)",
-      "to": "None",
-      "game": "Dota 2",
-      "refUrl": "https://www.facebook.com/61587580225453/posts/122124720279252674/"
     },
     {
       "date": "2026-08-13",
@@ -675,6 +675,141 @@
       "to": "None",
       "game": "Rocket League",
       "refUrl": "https://x.com/Antique_Network/status/2085730114348765392"
+    },
+    {
+      "date": "2026-08-15",
+      "player": "GgulTaek",
+      "playerUrl": "https://liquipedia.net/overwatch/GgulTaek",
+      "from": "ZETA DIVISION (Coach)",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/zetadivision/status/2088490872241545366"
+    },
+    {
+      "date": "2026-08-14",
+      "player": "Senna",
+      "playerUrl": "https://liquipedia.net/overwatch/Senna",
+      "from": "None",
+      "to": "Retired",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/sennaxoo/status/2088244076877357499"
+    },
+    {
+      "date": "2026-08-14",
+      "player": "Dirt",
+      "playerUrl": "https://liquipedia.net/overwatch/Dirt",
+      "from": "Tanuki",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/dirtgamingy/status/2088369361081803054"
+    },
+    {
+      "date": "2026-08-14",
+      "player": "Pixels",
+      "playerUrl": null,
+      "from": "FXHND",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/pixelsow/status/2088345953287692586"
+    },
+    {
+      "date": "2026-08-14",
+      "player": "MrPeppar1337",
+      "playerUrl": "https://liquipedia.net/overwatch/MrPeppar1337",
+      "from": "Redline (Analyst)",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/mrpepparl337/status/2088139596009791897"
+    },
+    {
+      "date": "2026-08-14",
+      "player": "Kajor",
+      "playerUrl": null,
+      "from": "Telacy (Content Creator)",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/telacyesports/status/2088307199558779055"
+    },
+    {
+      "date": "2026-08-13",
+      "player": "Szatan",
+      "playerUrl": null,
+      "from": "Frost Tails eSport",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/szatan_ow/status/2087893448359641570"
+    },
+    {
+      "date": "2026-08-12",
+      "player": "Sbaj",
+      "playerUrl": null,
+      "from": "Telacy Anarchy",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/ow_sbaj/status/2087625845640757719"
+    },
+    {
+      "date": "2026-08-12",
+      "player": "Pip",
+      "playerUrl": null,
+      "from": "VTY Velocity",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/Pip_o7/status/2087589464625340735"
+    },
+    {
+      "date": "2026-08-12",
+      "player": "Jamal1505",
+      "playerUrl": "https://liquipedia.net/overwatch/Jamal1505",
+      "from": "Dystopia",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/Jamal15051/status/2087594663720935699"
+    },
+    {
+      "date": "2026-08-11",
+      "player": "Blu",
+      "playerUrl": null,
+      "from": "DhillDucklings",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/blu_zxc/status/2087433408716886250"
+    },
+    {
+      "date": "2026-08-11",
+      "player": "Kyidk",
+      "playerUrl": null,
+      "from": "JBFC",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/kyidk/status/2087345342937501728"
+    },
+    {
+      "date": "2026-08-11",
+      "player": "Gloomy",
+      "playerUrl": null,
+      "from": "ELMT Normal",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/gloomy_ow/status/2087288413598966246"
+    },
+    {
+      "date": "2026-08-11",
+      "player": "NLEGAYBOY",
+      "playerUrl": null,
+      "from": "None",
+      "to": "Alvernia University",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/alverniagg/status/2087239826810528088"
+    },
+    {
+      "date": "2026-08-11",
+      "player": "Da1Da1Sm00th",
+      "playerUrl": "https://liquipedia.net/overwatch/Da1Da1Sm00th",
+      "from": "Cheeseburger (Coach)",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/daldalsm00th/status/2087182721567395914"
     }
   ],
   "rumours": [
@@ -871,18 +1006,109 @@
   ],
   "news": [
     {
-      "title": "Genshin Impact: How to reach the White Birch Snowgrave Statue of the Seven in Snezhnaya",
-      "link": "https://dotesports.com/genshin-impact/guides/white-birch-snowgrave-statue",
-      "pubDate": "2026-08-14T12:02:56.000Z",
+      "title": "Dota 2 The International 2026: Schedule, results, standings, teams, and how to watch",
+      "link": "https://dotesports.com/dota-2/news/dota-2-ti-2026-schedule-results",
+      "pubDate": "2026-08-15T11:35:20.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
     {
-      "title": "Warzone Season 5 Reloaded roadmap: Black Ops Royale’s return, Loaded Resurgence, new camos",
-      "link": "https://dotesports.com/call-of-duty/news/bo7-warzone-season-5-reloaded-roadmap",
-      "pubDate": "2026-08-14T10:42:43.000Z",
+      "title": "Black Ops 7 Season 5 Reloaded roadmap: New MP map, Freerun course, weapons, more",
+      "link": "https://dotesports.com/call-of-duty/news/bo7-season-5-reloaded-roadmap",
+      "pubDate": "2026-08-15T10:32:08.000Z",
       "source": "Dot Esports",
       "section": "headlines"
+    },
+    {
+      "title": "CS2 at Esports World Cup 2026: Schedule, results, bracket, teams, and how to watch",
+      "link": "https://dotesports.com/counter-strike/news/cs2-ewc-2026-schedule-results",
+      "pubDate": "2026-08-15T07:10:06.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "G2 turns its Counter-Strike jersey into rotating showcase for Wizards of the Coast games",
+      "link": "https://dotesports.com/counter-strike/news/g2-wizards-of-the-coast-cs2-jersey-deal",
+      "pubDate": "2026-08-15T04:04:51.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "How well did Paper Rex f0rsakeN perform on each VALORANT agent?",
+      "link": "https://esportsinsider.com/2026/08/f0rsaken-all-agents-ranked",
+      "pubDate": "2026-08-14T19:46:42.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
+    },
+    {
+      "title": "Gen Z increasingly sees esports betting as financial planning",
+      "link": "https://esportsinsider.com/2026/08/gen-z-esports-betting-financial-planning",
+      "pubDate": "2026-08-14T19:01:18.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
+    },
+    {
+      "title": "Rainbow 6 Siege at Esports World Cup 2026: Schedule, results, bracket, teams, and how to watch",
+      "link": "https://dotesports.com/rainbow-6/guides/r6s-ewc-2026-schedule-results-bracket",
+      "pubDate": "2026-08-14T18:58:00.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "Honkai: Star Rail version 4.5 banner schedule: Robin Summeretto, Aventurine Waveflair",
+      "link": "https://dotesports.com/honkai/guides/honkai-star-rail-4-5-banners",
+      "pubDate": "2026-08-14T18:26:28.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "How to play Modern Warfare 4 Open Beta: Dates and platforms",
+      "link": "https://dotesports.com/call-of-duty/guides/cod-mw4-open-beta",
+      "pubDate": "2026-08-14T18:08:00.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "How to get a Modern Warfare 4 early access beta code from Discord Nitro",
+      "link": "https://dotesports.com/call-of-duty/guides/mw4-early-access-beta-code-discord-nitro",
+      "pubDate": "2026-08-14T18:02:00.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "Honkai: Star Rail and Zenless Zone Zero collab announced!",
+      "link": "https://dotesports.com/honkai/news/hsr-zzz-collab-annonunced",
+      "pubDate": "2026-08-14T17:57:02.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "Call of Duty NEXT 2026: Date, time, and how to watch",
+      "link": "https://dotesports.com/call-of-duty/news/call-of-duty-next-2026",
+      "pubDate": "2026-08-14T17:52:00.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "From EU LCS to Riftbound: How Stress is helping to build the UK’s Riftbound scene",
+      "link": "https://esports-news.co.uk/2026/08/14/from-eu-lcs-to-riftbound-how-stress-is-helping-to-build-the-uks-riftbound-scene/",
+      "pubDate": "2026-08-14T15:48:19.000Z",
+      "source": "Esports News UK",
+      "section": "headlines"
+    },
+    {
+      "title": "Janicka Gaming on bridging PUBG MOBILE’s community and its esports scene",
+      "link": "https://esportsinsider.com/2026/08/janicka-gaming-pubg-mobile-ambassador-interview",
+      "pubDate": "2026-08-14T15:13:23.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
+    },
+    {
+      "title": "AI vs expert: The human strikes back heading into LEC week four",
+      "link": "https://esportsinsider.com/2026/08/ai-vs-expert-lec-week-four-predictions",
+      "pubDate": "2026-08-14T13:14:00.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
     },
     {
       "title": "Are women actually worse at esports – or is it just the money?",
@@ -890,62 +1116,6 @@
       "pubDate": "2026-08-14T10:34:53.000Z",
       "source": "Esports Insider",
       "section": "industry"
-    },
-    {
-      "title": "Tarik steps away from VALORANT watch parties after years of hosting",
-      "link": "https://dotesports.com/valorant/news/tarik-steps-away-from-valorant-watch-parties",
-      "pubDate": "2026-08-14T09:50:24.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "Dota 2 The International 2026: Schedule, results, standings, teams, and how to watch",
-      "link": "https://dotesports.com/dota-2/news/dota-2-ti-2026-schedule-results",
-      "pubDate": "2026-08-14T08:44:48.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "Call of Duty NEXT 2026: Date, time, and how to watch",
-      "link": "https://dotesports.com/call-of-duty/news/call-of-duty-next-2026",
-      "pubDate": "2026-08-14T08:21:59.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "When is BO7 and Warzone Season 5 Reloaded? Release date countdown and what to expect",
-      "link": "https://dotesports.com/call-of-duty/news/bo7-warzone-season-5-reloaded-release-date",
-      "pubDate": "2026-08-14T08:18:32.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "Genshin Impact adds Donald Trump parody in Version 7.0",
-      "link": "https://dotesports.com/genshin-impact/guides/donald-trump-reference-snezhnaya",
-      "pubDate": "2026-08-14T05:40:33.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "Everything we know about ARC Raiders Frozen Trail update: Release date, Outpost, new map, and more",
-      "link": "https://dotesports.com/arc-raiders/news/arc-raiders-frozen-trail-update",
-      "pubDate": "2026-08-14T05:35:53.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "How to opt your channel out of Twitch’s generative AI training",
-      "link": "https://dotesports.com/streaming/guides/twitch-generative-ai-training-opt-out",
-      "pubDate": "2026-08-14T04:26:51.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "CS2 at Esports World Cup 2026: Schedule, results, bracket, teams, and how to watch",
-      "link": "https://dotesports.com/counter-strike/news/cs2-ewc-2026-schedule-results",
-      "pubDate": "2026-08-14T00:53:49.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
     },
     {
       "title": "Who should be the next Hall of Legends inductee after Caps?",
@@ -983,13 +1153,6 @@
       "section": "industry"
     },
     {
-      "title": "How to watch CS2 at EWC 2026: Streams, matches, teams",
-      "link": "https://www.dexerto.com/counter-strike-2/how-to-watch-cs2-at-ewc-2026-stream-matches-teams-3397653/",
-      "pubDate": "2026-08-12T15:28:00.000Z",
-      "source": "Dexerto",
-      "section": "headlines"
-    },
-    {
       "title": "G2 Esports CEO Alban Dechelotte: “We see huge long-term potential” for PUBG MOBILE in Western Europe",
       "link": "https://esportsinsider.com/2026/08/g2-esports-alban-dechelotte-pubg-mobile-western-europe-interview",
       "pubDate": "2026-08-12T14:31:18.000Z",
@@ -1004,39 +1167,11 @@
       "section": "headlines"
     },
     {
-      "title": "The International 2026 predictions: which teams will make it to the playoffs?",
-      "link": "https://esportsinsider.com/2026/08/the-international-2026-predictions",
-      "pubDate": "2026-08-12T09:57:19.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
-    },
-    {
-      "title": "Five Shotzzy plays that guided OpTic Gaming to Esports World Cup success",
-      "link": "https://esportsinsider.com/2026/08/shotzzy-plays-optic-gaming-esports-world-cup",
-      "pubDate": "2026-08-11T18:17:22.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
-    },
-    {
-      "title": "Chess should be played over the board at the Esports World Cup",
-      "link": "https://esportsinsider.com/2026/08/chess-esports-world-cup-board",
-      "pubDate": "2026-08-11T18:03:13.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
-    },
-    {
       "title": "G2 Esports reveals new long-term partnership with Wizards of the Coast, starting with Exodus",
       "link": "https://esports-news.co.uk/2026/08/11/g2-esports-wizards-of-the-coast-partnership-exodus/",
       "pubDate": "2026-08-11T15:23:12.000Z",
       "source": "Esports News UK",
       "section": "headlines"
-    },
-    {
-      "title": "Dota 2 Fantasy picks for TI 2026: best players, Emblems, and more",
-      "link": "https://esportsinsider.com/2026/08/dota-2-fantasy-picks-ti-2026",
-      "pubDate": "2026-08-11T13:00:10.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
     },
     {
       "title": "Esports weekend review: OpTic triumphs in Black Ops 7, M. Zubair wins Tekken 8, Karmine Corp extends flawless run",
@@ -1112,13 +1247,6 @@
       "title": "Why is competitive Chess suddenly booming in the UK? Esports plays a part in it",
       "link": "https://esports-news.co.uk/2026/07/31/why-is-competitive-chess-suddenly-booming-in-the-uk-esports-plays-a-part-in-it/",
       "pubDate": "2026-07-31T17:13:37.000Z",
-      "source": "Esports News UK",
-      "section": "headlines"
-    },
-    {
-      "title": "Riot seems aware that classical Pro strategies, like lane swaps could come back",
-      "link": "https://esports-news.co.uk/2026/07/31/riot-seems-aware-that-classical-pro-strategies-like-lane-swaps-could-come-back/",
-      "pubDate": "2026-07-31T14:25:17.000Z",
       "source": "Esports News UK",
       "section": "headlines"
     }
