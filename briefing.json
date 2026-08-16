@@ -1,6 +1,78 @@
 {
-  "generatedAt": "2026-08-15T12:17:04.896Z",
+  "generatedAt": "2026-08-16T12:17:47.076Z",
   "transfers": [
+    {
+      "date": "2026-08-16",
+      "player": "Wolfiee",
+      "playerUrl": null,
+      "from": "None",
+      "to": "FRG GC",
+      "game": "Valorant",
+      "refUrl": "https://x.com/FraggingFriends/status/2088671358947340400"
+    },
+    {
+      "date": "2026-08-16",
+      "player": "Kyle (British coach)",
+      "playerUrl": null,
+      "from": "None",
+      "to": "FRG GC (Coach)",
+      "game": "Valorant",
+      "refUrl": "https://x.com/FraggingFriends/status/2088671358947340400"
+    },
+    {
+      "date": "2026-08-16",
+      "player": "Jojo (German manager)",
+      "playerUrl": null,
+      "from": "None",
+      "to": "FRG GC (Manager)",
+      "game": "Valorant",
+      "refUrl": "https://x.com/FraggingFriends/status/2088671358947340400"
+    },
+    {
+      "date": "2026-08-15",
+      "player": "LittleBigSpy",
+      "playerUrl": "https://liquipedia.net/valorant/LittleBigSpy",
+      "from": "None",
+      "to": "ZennIT Orange GC",
+      "game": "Valorant",
+      "refUrl": "https://x.com/zennit_gaming/status/2088649433592336578"
+    },
+    {
+      "date": "2026-08-15",
+      "player": "Valone",
+      "playerUrl": "https://liquipedia.net/valorant/Valone",
+      "from": "ZennIT Orange GC (Inactive)",
+      "to": "ZennIT Orange GC",
+      "game": "Valorant",
+      "refUrl": "https://x.com/zennit_gaming/status/2088649433592336578"
+    },
+    {
+      "date": "2026-08-15",
+      "player": "GolRan",
+      "playerUrl": "https://liquipedia.net/valorant/GolRan",
+      "from": "None",
+      "to": "ZennIT Orange GC (Head Coach)",
+      "game": "Valorant",
+      "refUrl": "https://x.com/zennit_gaming/status/2088649433592336578"
+    },
+    {
+      "date": "2026-08-15",
+      "player": "SLd",
+      "playerUrl": null,
+      "from": "ZennIT Orange GC (Head Coach)",
+      "to": "None",
+      "game": "Valorant",
+      "refUrl": "https://x.com/zennit_gaming/status/2088649433592336578"
+    },
+    {
+      "date": "2026-08-15",
+      "player": "Koko",
+      "playerUrl": null,
+      "from": "ZennIT Orange GC (Performance Coach)",
+      "to": "None",
+      "game": "Valorant",
+      "refUrl": "https://x.com/zennit_gaming/status/2088649433592336578"
+    },
     {
       "date": "2026-08-15",
       "player": "Ate",
@@ -63,78 +135,6 @@
       "to": "GamerZ Esports",
       "game": "Valorant",
       "refUrl": "https://x.com/GZEsportsgg/status/2086799741958918626"
-    },
-    {
-      "date": "2026-08-10",
-      "player": "Atom",
-      "playerUrl": "https://liquipedia.net/valorant/Atom",
-      "from": "None",
-      "to": "KRÜ Esports (Sports Director)",
-      "game": "Valorant",
-      "refUrl": "https://x.com/KRUesports/status/2086893668460302584"
-    },
-    {
-      "date": "2026-08-10",
-      "player": "Leg1t",
-      "playerUrl": "https://liquipedia.net/valorant/Leg1t",
-      "from": "Ninetails (Coach)",
-      "to": "ONSIDE GAMING (Coach)",
-      "game": "Valorant",
-      "refUrl": "https://x.com/ONSIDE_GAMING/status/2086757668358848515"
-    },
-    {
-      "date": "2026-08-09",
-      "player": "Freya",
-      "playerUrl": "https://liquipedia.net/valorant/Freya",
-      "from": "Aogiri",
-      "to": "7VEN STARS",
-      "game": "Valorant",
-      "refUrl": "https://x.com/7VENCLUB/status/2086514223275008448"
-    },
-    {
-      "date": "2026-08-09",
-      "player": "Lya",
-      "playerUrl": null,
-      "from": "Aogiri (Coach)",
-      "to": "7VEN STARS (Coach)",
-      "game": "Valorant",
-      "refUrl": "https://x.com/7VENCLUB/status/2086514223275008448"
-    },
-    {
-      "date": "2026-08-08",
-      "player": "Faither",
-      "playerUrl": "https://liquipedia.net/valorant/Faither",
-      "from": "ONSIDE GAMING",
-      "to": "ONSIDE GAMING (Inactive)",
-      "game": "Valorant",
-      "refUrl": "https://x.com/Faither_vlrt/status/2086078029235957787"
-    },
-    {
-      "date": "2026-08-07",
-      "player": "Mazin",
-      "playerUrl": "https://liquipedia.net/valorant/Mazin",
-      "from": "La Masia",
-      "to": "Fluxo W7M",
-      "game": "Valorant",
-      "refUrl": "https://x.com/fluxogg/status/2085863672375579045?s=20"
-    },
-    {
-      "date": "2026-08-07",
-      "player": "Stk",
-      "playerUrl": "https://liquipedia.net/valorant/Stk",
-      "from": "La Masia (Coach)",
-      "to": "Fluxo W7M (Head Coach)",
-      "game": "Valorant",
-      "refUrl": "https://x.com/fluxogg/status/2085863672375579045?s=20"
-    },
-    {
-      "date": "2026-08-07",
-      "player": "Ryau",
-      "playerUrl": null,
-      "from": "None",
-      "to": "UNIWAY (Stand-in)",
-      "game": "Valorant",
-      "refUrl": null
     },
     {
       "date": "2026-08-12",
@@ -272,6 +272,24 @@
       "refUrl": "https://x.com/Meavedron/status/2087156356373524816"
     },
     {
+      "date": "2026-08-15",
+      "player": "Xant3r",
+      "playerUrl": "https://liquipedia.net/counterstrike/Xant3r",
+      "from": "None",
+      "to": "Nemiga Gaming",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/nemigagg/status/2088683491558846660"
+    },
+    {
+      "date": "2026-08-15",
+      "player": "Sowalio",
+      "playerUrl": "https://liquipedia.net/counterstrike/Sowalio",
+      "from": "Nemiga Gaming",
+      "to": "Nemiga Gaming (Inactive)",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/nemigagg/status/2088680007870689653"
+    },
+    {
       "date": "2026-08-14",
       "player": "AZe",
       "playerUrl": null,
@@ -288,6 +306,15 @@
       "to": "CYBERSHOKE Esports (Inactive)",
       "game": "Counter-Strike",
       "refUrl": "https://x.com/team_cybershoke/status/2088274453494944117"
+    },
+    {
+      "date": "2026-08-14",
+      "player": "Gooddeph",
+      "playerUrl": "https://liquipedia.net/counterstrike/Gooddeph",
+      "from": "None",
+      "to": "INOX Division",
+      "game": "Counter-Strike",
+      "refUrl": "https://t.me/inoxdivision/191"
     },
     {
       "date": "2026-08-13",
@@ -380,31 +407,31 @@
       "refUrl": "https://www.dust2.us/news/76761/without-a-roof-solidify-roster-with-cerq-steel-additions"
     },
     {
-      "date": "2026-08-11",
-      "player": "Autimatic",
-      "playerUrl": "https://liquipedia.net/counterstrike/Autimatic",
-      "from": "Retired",
-      "to": "Without a Roof",
-      "game": "Counter-Strike",
-      "refUrl": "https://www.dust2.us/news/76761/without-a-roof-solidify-roster-with-cerq-steel-additions"
+      "date": "2026-08-16",
+      "player": "Yao",
+      "playerUrl": "https://liquipedia.net/dota2/Yao",
+      "from": "Vici Gaming (Coach)",
+      "to": "None",
+      "game": "Dota 2",
+      "refUrl": "https://weibo.com/1751065087/RdDPavbmc"
     },
     {
-      "date": "2026-08-11",
-      "player": "Steel (Joshua Nissan)",
-      "playerUrl": "https://liquipedia.net/counterstrike/Steel_(Joshua_Nissan)",
-      "from": "None",
-      "to": "Without a Roof (Coach)",
-      "game": "Counter-Strike",
-      "refUrl": "https://www.dust2.us/news/76761/without-a-roof-solidify-roster-with-cerq-steel-additions"
+      "date": "2026-08-16",
+      "player": "XinQ",
+      "playerUrl": "https://liquipedia.net/dota2/XinQ",
+      "from": "Vici Gaming (Sub)",
+      "to": "None",
+      "game": "Dota 2",
+      "refUrl": "https://weibo.com/1751065087/RdDPavbmc"
     },
     {
-      "date": "2026-08-11",
-      "player": "Danan",
-      "playerUrl": null,
-      "from": "None",
-      "to": "Without a Roof (Manager)",
-      "game": "Counter-Strike",
-      "refUrl": "https://www.dust2.us/news/76761/without-a-roof-solidify-roster-with-cerq-steel-additions"
+      "date": "2026-08-16",
+      "player": "Shiro",
+      "playerUrl": "https://liquipedia.net/dota2/Shiro",
+      "from": "Vici Gaming",
+      "to": "None",
+      "game": "Dota 2",
+      "refUrl": "https://weibo.com/1751065087/RdDPavbmc"
     },
     {
       "date": "2026-08-13",
@@ -513,33 +540,6 @@
       "to": "Xtreme Gaming (Assistant Coach)",
       "game": "Dota 2",
       "refUrl": "https://weibo.com/7720945580/Rb4ElFSFj"
-    },
-    {
-      "date": "2026-07-30",
-      "player": "Xiao8",
-      "playerUrl": "https://liquipedia.net/dota2/Xiao8",
-      "from": "Xtreme Gaming (Coach)",
-      "to": "None",
-      "game": "Dota 2",
-      "refUrl": "https://weibo.com/7720945580/Rb4ElFSFj"
-    },
-    {
-      "date": "2026-07-22",
-      "player": "GuessWho",
-      "playerUrl": "https://liquipedia.net/dota2/GuessWho",
-      "from": "VP.Prodigy (Coach)",
-      "to": "None",
-      "game": "Dota 2",
-      "refUrl": "https://t.me/virtuspro_dota/1767"
-    },
-    {
-      "date": "2026-07-22",
-      "player": "Cutie",
-      "playerUrl": null,
-      "from": "VP.Prodigy",
-      "to": "None",
-      "game": "Dota 2",
-      "refUrl": "https://t.me/virtuspro_dota/1767"
     },
     {
       "date": "2026-08-13",
@@ -678,12 +678,48 @@
     },
     {
       "date": "2026-08-15",
+      "player": "Affe",
+      "playerUrl": null,
+      "from": "FXHND",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/fxhnd_jj/status/2088584616768676179"
+    },
+    {
+      "date": "2026-08-15",
+      "player": "Bulle",
+      "playerUrl": "https://liquipedia.net/overwatch/Bulle",
+      "from": "FXHND (Coach)",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/fxhnd_jj/status/2088584616768676179"
+    },
+    {
+      "date": "2026-08-15",
+      "player": "Aadil",
+      "playerUrl": null,
+      "from": "FXHND (Manager)",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/fxhnd_jj/status/2088584616768676179"
+    },
+    {
+      "date": "2026-08-15",
       "player": "GgulTaek",
       "playerUrl": "https://liquipedia.net/overwatch/GgulTaek",
       "from": "ZETA DIVISION (Coach)",
       "to": "None",
       "game": "Overwatch",
       "refUrl": "https://x.com/zetadivision/status/2088490872241545366"
+    },
+    {
+      "date": "2026-08-14",
+      "player": "KnicNicks",
+      "playerUrl": null,
+      "from": "Savannah College of Art and Design (Head Coach)",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/KnicNicks/status/2088452150867234940"
     },
     {
       "date": "2026-08-14",
@@ -774,42 +810,6 @@
       "to": "None",
       "game": "Overwatch",
       "refUrl": "https://x.com/blu_zxc/status/2087433408716886250"
-    },
-    {
-      "date": "2026-08-11",
-      "player": "Kyidk",
-      "playerUrl": null,
-      "from": "JBFC",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/kyidk/status/2087345342937501728"
-    },
-    {
-      "date": "2026-08-11",
-      "player": "Gloomy",
-      "playerUrl": null,
-      "from": "ELMT Normal",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/gloomy_ow/status/2087288413598966246"
-    },
-    {
-      "date": "2026-08-11",
-      "player": "NLEGAYBOY",
-      "playerUrl": null,
-      "from": "None",
-      "to": "Alvernia University",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/alverniagg/status/2087239826810528088"
-    },
-    {
-      "date": "2026-08-11",
-      "player": "Da1Da1Sm00th",
-      "playerUrl": "https://liquipedia.net/overwatch/Da1Da1Sm00th",
-      "from": "Cheeseburger (Coach)",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/daldalsm00th/status/2087182721567395914"
     }
   ],
   "rumours": [
@@ -1008,7 +1008,49 @@
     {
       "title": "Dota 2 The International 2026: Schedule, results, standings, teams, and how to watch",
       "link": "https://dotesports.com/dota-2/news/dota-2-ti-2026-schedule-results",
-      "pubDate": "2026-08-15T11:35:20.000Z",
+      "pubDate": "2026-08-16T11:50:13.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "VCT Pacific Stage 2 2026: Schedule, results, teams, and how to watch",
+      "link": "https://dotesports.com/valorant/guides/vct-2026-pacific-stage-2",
+      "pubDate": "2026-08-16T08:26:00.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "VCT EMEA Stage 2 2026: Schedule, results, teams, and how to watch",
+      "link": "https://dotesports.com/valorant/guides/vct-2026-emea-stage-2",
+      "pubDate": "2026-08-16T08:12:00.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "VCT Americas Stage 2 2026: Schedule, results, teams, and how to watch",
+      "link": "https://dotesports.com/valorant/guides/vct-americas-stage-2-2026-schedule-results",
+      "pubDate": "2026-08-16T08:08:00.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "Rainbow 6 Siege at Esports World Cup 2026: Schedule, results, bracket, teams, and how to watch",
+      "link": "https://dotesports.com/rainbow-6/guides/r6s-ewc-2026-schedule-results-bracket",
+      "pubDate": "2026-08-16T07:56:00.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "CS2 at Esports World Cup 2026: Schedule, results, bracket, teams, and how to watch",
+      "link": "https://dotesports.com/counter-strike/news/cs2-ewc-2026-schedule-results",
+      "pubDate": "2026-08-16T03:50:14.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "Magnus Carlsen makes history as first two-time Esports World Cup Chess Champion",
+      "link": "https://dotesports.com/chess/news/magnus-carlsen-two-time-ewc-chess-champion",
+      "pubDate": "2026-08-15T17:44:01.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
@@ -1016,13 +1058,6 @@
       "title": "Black Ops 7 Season 5 Reloaded roadmap: New MP map, Freerun course, weapons, more",
       "link": "https://dotesports.com/call-of-duty/news/bo7-season-5-reloaded-roadmap",
       "pubDate": "2026-08-15T10:32:08.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "CS2 at Esports World Cup 2026: Schedule, results, bracket, teams, and how to watch",
-      "link": "https://dotesports.com/counter-strike/news/cs2-ewc-2026-schedule-results",
-      "pubDate": "2026-08-15T07:10:06.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
@@ -1048,44 +1083,9 @@
       "section": "industry"
     },
     {
-      "title": "Rainbow 6 Siege at Esports World Cup 2026: Schedule, results, bracket, teams, and how to watch",
-      "link": "https://dotesports.com/rainbow-6/guides/r6s-ewc-2026-schedule-results-bracket",
-      "pubDate": "2026-08-14T18:58:00.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
       "title": "Honkai: Star Rail version 4.5 banner schedule: Robin Summeretto, Aventurine Waveflair",
       "link": "https://dotesports.com/honkai/guides/honkai-star-rail-4-5-banners",
       "pubDate": "2026-08-14T18:26:28.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "How to play Modern Warfare 4 Open Beta: Dates and platforms",
-      "link": "https://dotesports.com/call-of-duty/guides/cod-mw4-open-beta",
-      "pubDate": "2026-08-14T18:08:00.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "How to get a Modern Warfare 4 early access beta code from Discord Nitro",
-      "link": "https://dotesports.com/call-of-duty/guides/mw4-early-access-beta-code-discord-nitro",
-      "pubDate": "2026-08-14T18:02:00.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "Honkai: Star Rail and Zenless Zone Zero collab announced!",
-      "link": "https://dotesports.com/honkai/news/hsr-zzz-collab-annonunced",
-      "pubDate": "2026-08-14T17:57:02.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "Call of Duty NEXT 2026: Date, time, and how to watch",
-      "link": "https://dotesports.com/call-of-duty/news/call-of-duty-next-2026",
-      "pubDate": "2026-08-14T17:52:00.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
