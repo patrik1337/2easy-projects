@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-16T12:17:47.076Z",
+  "generatedAt": "2026-08-17T12:21:16.235Z",
   "transfers": [
     {
       "date": "2026-08-16",
@@ -137,6 +137,15 @@
       "refUrl": "https://x.com/GZEsportsgg/status/2086799741958918626"
     },
     {
+      "date": "2026-08-17",
+      "player": "Armao",
+      "playerUrl": "https://liquipedia.net/leagueoflegends/Armao",
+      "from": "LYON",
+      "to": "None",
+      "game": "League of Legends",
+      "refUrl": "https://x.com/LyonLATAM/status/2089151710178562335"
+    },
+    {
       "date": "2026-08-12",
       "player": "Will",
       "playerUrl": "https://liquipedia.net/leagueoflegends/Will",
@@ -263,13 +272,13 @@
       "refUrl": "https://x.com/Meavedron/status/2087156356373524816"
     },
     {
-      "date": "2026-08-11",
-      "player": "Fishireal",
-      "playerUrl": null,
-      "from": "Meavedron MVE",
-      "to": "None",
-      "game": "League of Legends",
-      "refUrl": "https://x.com/Meavedron/status/2087156356373524816"
+      "date": "2026-08-16",
+      "player": "Gump",
+      "playerUrl": "https://liquipedia.net/counterstrike/Gump",
+      "from": "Team Abyssal",
+      "to": "Team Abyssal (Inactive)",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/teamabyssalgg/status/2088860829328580814"
     },
     {
       "date": "2026-08-15",
@@ -396,15 +405,6 @@
       "to": "None",
       "game": "Counter-Strike",
       "refUrl": "https://x.com/FlyQuestCS/status/2087584943102726585"
-    },
-    {
-      "date": "2026-08-11",
-      "player": "Stewie2K",
-      "playerUrl": "https://liquipedia.net/counterstrike/Stewie2K",
-      "from": "None",
-      "to": "Without a Roof",
-      "game": "Counter-Strike",
-      "refUrl": "https://www.dust2.us/news/76761/without-a-roof-solidify-roster-with-cerq-steel-additions"
     },
     {
       "date": "2026-08-16",
@@ -677,6 +677,78 @@
       "refUrl": "https://x.com/Antique_Network/status/2085730114348765392"
     },
     {
+      "date": "2026-08-16",
+      "player": "Yimitra",
+      "playerUrl": "https://liquipedia.net/overwatch/Yimitra",
+      "from": "Iliad Artemis",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/yimitra_/status/2089087016646463857"
+    },
+    {
+      "date": "2026-08-16",
+      "player": "Umi",
+      "playerUrl": null,
+      "from": "Please Not Hero Ban",
+      "to": "99DIVINE",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/99divine_/status/2088868453516263846"
+    },
+    {
+      "date": "2026-08-16",
+      "player": "Akie",
+      "playerUrl": "https://liquipedia.net/overwatch/Akie",
+      "from": "RTplz",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/rtplz_ow/status/2089006191854981513"
+    },
+    {
+      "date": "2026-08-16",
+      "player": "Da1Da1Sm00th",
+      "playerUrl": "https://liquipedia.net/overwatch/Da1Da1Sm00th",
+      "from": "None",
+      "to": "RTplz (Coach)",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/rtplz_ow/status/2088916171865354664"
+    },
+    {
+      "date": "2026-08-16",
+      "player": "Akie",
+      "playerUrl": "https://liquipedia.net/overwatch/Akie",
+      "from": "Najdorf Esports",
+      "to": "RTplz",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/rtplz_ow/status/2088916171865354664"
+    },
+    {
+      "date": "2026-08-16",
+      "player": "D4RT",
+      "playerUrl": "https://liquipedia.net/overwatch/D4RT",
+      "from": "HUNENG Gaming",
+      "to": "RTplz",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/rtplz_ow/status/2088916171865354664"
+    },
+    {
+      "date": "2026-08-16",
+      "player": "M1nut2",
+      "playerUrl": "https://liquipedia.net/overwatch/M1nut2",
+      "from": "None",
+      "to": "RTplz",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/rtplz_ow/status/2088916171865354664"
+    },
+    {
+      "date": "2026-08-15",
+      "player": "Graalis",
+      "playerUrl": null,
+      "from": "Dreamlight x Harmony",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/graalistf/status/2088731646606430316"
+    },
+    {
       "date": "2026-08-15",
       "player": "Affe",
       "playerUrl": null,
@@ -738,78 +810,6 @@
       "to": "None",
       "game": "Overwatch",
       "refUrl": "https://x.com/dirtgamingy/status/2088369361081803054"
-    },
-    {
-      "date": "2026-08-14",
-      "player": "Pixels",
-      "playerUrl": null,
-      "from": "FXHND",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/pixelsow/status/2088345953287692586"
-    },
-    {
-      "date": "2026-08-14",
-      "player": "MrPeppar1337",
-      "playerUrl": "https://liquipedia.net/overwatch/MrPeppar1337",
-      "from": "Redline (Analyst)",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/mrpepparl337/status/2088139596009791897"
-    },
-    {
-      "date": "2026-08-14",
-      "player": "Kajor",
-      "playerUrl": null,
-      "from": "Telacy (Content Creator)",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/telacyesports/status/2088307199558779055"
-    },
-    {
-      "date": "2026-08-13",
-      "player": "Szatan",
-      "playerUrl": null,
-      "from": "Frost Tails eSport",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/szatan_ow/status/2087893448359641570"
-    },
-    {
-      "date": "2026-08-12",
-      "player": "Sbaj",
-      "playerUrl": null,
-      "from": "Telacy Anarchy",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/ow_sbaj/status/2087625845640757719"
-    },
-    {
-      "date": "2026-08-12",
-      "player": "Pip",
-      "playerUrl": null,
-      "from": "VTY Velocity",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/Pip_o7/status/2087589464625340735"
-    },
-    {
-      "date": "2026-08-12",
-      "player": "Jamal1505",
-      "playerUrl": "https://liquipedia.net/overwatch/Jamal1505",
-      "from": "Dystopia",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/Jamal15051/status/2087594663720935699"
-    },
-    {
-      "date": "2026-08-11",
-      "player": "Blu",
-      "playerUrl": null,
-      "from": "DhillDucklings",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/blu_zxc/status/2087433408716886250"
     }
   ],
   "rumours": [
@@ -1006,65 +1006,79 @@
   ],
   "news": [
     {
-      "title": "Dota 2 The International 2026: Schedule, results, standings, teams, and how to watch",
-      "link": "https://dotesports.com/dota-2/news/dota-2-ti-2026-schedule-results",
-      "pubDate": "2026-08-16T11:50:13.000Z",
+      "title": "Full list of MPL Indonesia Season 18 rosters: All players and coaching staff",
+      "link": "https://dotesports.com/mobile-legends/news/mpl-id-season-18-rosters-teams-players",
+      "pubDate": "2026-08-17T11:57:22.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
     {
-      "title": "VCT Pacific Stage 2 2026: Schedule, results, teams, and how to watch",
-      "link": "https://dotesports.com/valorant/guides/vct-2026-pacific-stage-2",
-      "pubDate": "2026-08-16T08:26:00.000Z",
+      "title": "All confirmed skins for Fortnite Chapter 7 Season 4 Override",
+      "link": "https://dotesports.com/fortnite/guides/fortnite-chapter-7-season-4-override-skins",
+      "pubDate": "2026-08-17T11:47:40.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
     {
-      "title": "VCT EMEA Stage 2 2026: Schedule, results, teams, and how to watch",
-      "link": "https://dotesports.com/valorant/guides/vct-2026-emea-stage-2",
-      "pubDate": "2026-08-16T08:12:00.000Z",
+      "title": "All armor archetypes in Destiny 2, and their primary and secondary stats",
+      "link": "https://dotesports.com/destiny/news/destiny-2-armor-archetypes",
+      "pubDate": "2026-08-17T11:44:46.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
     {
-      "title": "VCT Americas Stage 2 2026: Schedule, results, teams, and how to watch",
-      "link": "https://dotesports.com/valorant/guides/vct-americas-stage-2-2026-schedule-results",
-      "pubDate": "2026-08-16T08:08:00.000Z",
+      "title": "Apex Legends star ImperialHal says the game “sucks” now and has lost its identity",
+      "link": "https://www.dexerto.com/apex-legends/apex-legends-star-imperialhal-says-the-game-sucks-now-and-has-lost-its-identity-3399139/",
+      "pubDate": "2026-08-17T11:10:35.000Z",
+      "source": "Dexerto",
+      "section": "headlines"
+    },
+    {
+      "title": "Eintracht Frankfurt and Fire Flux Esports seal final VCT EMEA Stage 2 playoff berths",
+      "link": "https://dotesports.com/general/news/vct-emea-stage-2-playoffs",
+      "pubDate": "2026-08-17T09:13:09.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
     {
-      "title": "Rainbow 6 Siege at Esports World Cup 2026: Schedule, results, bracket, teams, and how to watch",
-      "link": "https://dotesports.com/rainbow-6/guides/r6s-ewc-2026-schedule-results-bracket",
-      "pubDate": "2026-08-16T07:56:00.000Z",
+      "title": "PUBG Mobile Light announced as smaller client for the full battle royale",
+      "link": "https://dotesports.com/pubg/news/pubg-mobile-light-announced",
+      "pubDate": "2026-08-17T08:06:13.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "Palworld Online mobile game: Release date and gameplay features to expect",
+      "link": "https://dotesports.com/palworld/guides/palworld-online-mobile-release-date-features",
+      "pubDate": "2026-08-17T06:30:00.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "Everything we know about Planet Zoo 2: Release date, editions, new animals, and more",
+      "link": "https://dotesports.com/planet-zoo/news/planet-zoo-2-release-date-editions-dlc-animals-price",
+      "pubDate": "2026-08-17T03:06:33.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
     {
       "title": "CS2 at Esports World Cup 2026: Schedule, results, bracket, teams, and how to watch",
       "link": "https://dotesports.com/counter-strike/news/cs2-ewc-2026-schedule-results",
-      "pubDate": "2026-08-16T03:50:14.000Z",
+      "pubDate": "2026-08-17T02:00:00.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
     {
-      "title": "Magnus Carlsen makes history as first two-time Esports World Cup Chess Champion",
-      "link": "https://dotesports.com/chess/news/magnus-carlsen-two-time-ewc-chess-champion",
-      "pubDate": "2026-08-15T17:44:01.000Z",
+      "title": "Dota 2 The International 2026: Schedule, results, standings, teams, and how to watch",
+      "link": "https://dotesports.com/dota-2/news/dota-2-ti-2026-schedule-results",
+      "pubDate": "2026-08-17T01:30:00.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
     {
-      "title": "Black Ops 7 Season 5 Reloaded roadmap: New MP map, Freerun course, weapons, more",
-      "link": "https://dotesports.com/call-of-duty/news/bo7-season-5-reloaded-roadmap",
-      "pubDate": "2026-08-15T10:32:08.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "G2 turns its Counter-Strike jersey into rotating showcase for Wizards of the Coast games",
-      "link": "https://dotesports.com/counter-strike/news/g2-wizards-of-the-coast-cs2-jersey-deal",
-      "pubDate": "2026-08-15T04:04:51.000Z",
+      "title": "Caps confirmed as third League of Legends Hall of Legends inductee",
+      "link": "https://dotesports.com/league-of-legends/news/caps-hall-of-legends-confirmed",
+      "pubDate": "2026-08-17T00:15:56.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
@@ -1081,13 +1095,6 @@
       "pubDate": "2026-08-14T19:01:18.000Z",
       "source": "Esports Insider",
       "section": "industry"
-    },
-    {
-      "title": "Honkai: Star Rail version 4.5 banner schedule: Robin Summeretto, Aventurine Waveflair",
-      "link": "https://dotesports.com/honkai/guides/honkai-star-rail-4-5-banners",
-      "pubDate": "2026-08-14T18:26:28.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
     },
     {
       "title": "From EU LCS to Riftbound: How Stress is helping to build the UK’s Riftbound scene",
