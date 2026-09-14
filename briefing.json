@@ -1,6 +1,42 @@
 {
-  "generatedAt": "2026-09-13T15:15:17.511Z",
+  "generatedAt": "2026-09-14T17:12:26.031Z",
   "transfers": [
+    {
+      "date": "2026-09-14",
+      "player": "STYRON",
+      "playerUrl": "https://liquipedia.net/valorant/STYRON",
+      "from": "Team Secret",
+      "to": "Team Secret (Inactive)",
+      "game": "Valorant",
+      "refUrl": "https://x.com/STYR0N/status/2099461076169724241"
+    },
+    {
+      "date": "2026-09-14",
+      "player": "Al0rante",
+      "playerUrl": "https://liquipedia.net/valorant/Al0rante",
+      "from": "PCIFIC Esports",
+      "to": "PCIFIC Esports (Inactive)",
+      "game": "Valorant",
+      "refUrl": "https://x.com/al0rante/status/2099433668041216378"
+    },
+    {
+      "date": "2026-09-14",
+      "player": "Jovi",
+      "playerUrl": "https://liquipedia.net/valorant/Jovi",
+      "from": "Rex Regum Qeon (Head Coach)",
+      "to": "Rex Regum Qeon (Inactive Coach)",
+      "game": "Valorant",
+      "refUrl": "https://x.com/ImJoviGG/status/2099388534121730484"
+    },
+    {
+      "date": "2026-09-13",
+      "player": "H1ber",
+      "playerUrl": "https://liquipedia.net/valorant/H1ber",
+      "from": "Gentle Mates",
+      "to": "None",
+      "game": "Valorant",
+      "refUrl": "https://x.com/H1berr/status/2099181639817470085"
+    },
     {
       "date": "2026-09-13",
       "player": "Magnum",
@@ -101,40 +137,13 @@
       "refUrl": "https://x.com/SEIBI_official/status/2098350851723034861?s=20"
     },
     {
-      "date": "2026-09-11",
-      "player": "Miko (Japanese coach)",
-      "playerUrl": null,
-      "from": "TEAM SEIBI (Coach)",
-      "to": "TEAM SEIBI (Manager)",
-      "game": "Valorant",
-      "refUrl": "https://x.com/SEIBI_official/status/2098350851723034861?s=20"
-    },
-    {
-      "date": "2026-09-11",
-      "player": "Nolozy",
-      "playerUrl": null,
-      "from": "FENNEL (Analyst)",
+      "date": "2026-09-14",
+      "player": "Draktharr",
+      "playerUrl": "https://liquipedia.net/leagueoflegends/Draktharr",
+      "from": "GAM Esports GAM",
       "to": "None",
-      "game": "Valorant",
-      "refUrl": "https://x.com/FENNEL_official/status/2098350843070153103?s=20"
-    },
-    {
-      "date": "2026-09-11",
-      "player": "Hiroronn",
-      "playerUrl": "https://liquipedia.net/valorant/Hiroronn",
-      "from": "REJECT",
-      "to": "REJECT (Inactive)",
-      "game": "Valorant",
-      "refUrl": "https://x.com/hiroronnsann/status/2098335742049300814?s=20"
-    },
-    {
-      "date": "2026-09-10",
-      "player": "SkyeSG",
-      "playerUrl": "https://liquipedia.net/valorant/SkyeSG",
-      "from": "Team Secret (Coach)",
-      "to": "Team Secret (Inactive Coach)",
-      "game": "Valorant",
-      "refUrl": "https://x.com/_skyeSG/status/2098061917403439378"
+      "game": "League of Legends",
+      "refUrl": "https://www.facebook.com/share/p/1HNkNE8s5y"
     },
     {
       "date": "2026-09-11",
@@ -263,13 +272,94 @@
       "refUrl": "https://www.facebook.com/vcslmht/posts/pfbid0WokkkenZEvNvxdxgcfxmiYWYshKrxaJ7QbpHthLbKPN4wK8ksQZgrHM8qunDPvFhl"
     },
     {
-      "date": "2026-09-07",
-      "player": "Sparda",
-      "playerUrl": "https://liquipedia.net/leagueoflegends/Sparda",
+      "date": "2026-09-14",
+      "player": "Tatu",
+      "playerUrl": null,
+      "from": "paiN Gaming Academy",
+      "to": "paiN Gaming",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/paiNGamingBR/status/2099484276798468142"
+    },
+    {
+      "date": "2026-09-14",
+      "player": "Piriajr",
+      "playerUrl": "https://liquipedia.net/counterstrike/Piriajr",
+      "from": "paiN Gaming",
+      "to": "paiN Gaming (Inactive)",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/paiNGamingBR/status/2099484276798468142"
+    },
+    {
+      "date": "2026-09-14",
+      "player": "Dytor",
+      "playerUrl": "https://liquipedia.net/counterstrike/Dytor",
+      "from": "INFINITE",
+      "to": "None",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/infiniteggro/status/2099468408441938258"
+    },
+    {
+      "date": "2026-09-14",
+      "player": "Redeye (Danish player)",
+      "playerUrl": null,
       "from": "None",
-      "to": "CyberCore Esports CBC",
-      "game": "League of Legends",
-      "refUrl": "https://www.facebook.com/vcslmht/posts/pfbid0WokkkenZEvNvxdxgcfxmiYWYshKrxaJ7QbpHthLbKPN4wK8ksQZgrHM8qunDPvFhl"
+      "to": "Esport Academy Copenhagen (Coach)",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/TeamEAC/status/2099373659487895945"
+    },
+    {
+      "date": "2026-09-14",
+      "player": "Yab0ku-",
+      "playerUrl": "https://liquipedia.net/counterstrike/Yab0ku-",
+      "from": "Lazer Cats",
+      "to": "None",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/lzrcats/status/2099429154550698340"
+    },
+    {
+      "date": "2026-09-14",
+      "player": "Sakeazey",
+      "playerUrl": null,
+      "from": "UBITEAM",
+      "to": "None",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/UBITEAM/status/2099416669483311339"
+    },
+    {
+      "date": "2026-09-14",
+      "player": "Davud",
+      "playerUrl": null,
+      "from": "None",
+      "to": "MASQ",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/MASQ_CS2/status/2099374255569858704"
+    },
+    {
+      "date": "2026-09-13",
+      "player": "FxRE",
+      "playerUrl": "https://liquipedia.net/counterstrike/FxRE",
+      "from": "Zomblers",
+      "to": "None",
+      "game": "Counter-Strike",
+      "refUrl": "https://www.dust2.us/news/77823/fxre-steps-down-from-zomblers-as-players-continue-to-weigh-individual-options"
+    },
+    {
+      "date": "2026-09-13",
+      "player": "OrangeZ",
+      "playerUrl": null,
+      "from": "DETONATE (Coach)",
+      "to": "None",
+      "game": "Counter-Strike",
+      "refUrl": "https://www.dust2.us/news/77825/australian-coach-orangez-steps-down-from-detonate"
+    },
+    {
+      "date": "2026-09-12",
+      "player": "Strong3r",
+      "playerUrl": null,
+      "from": "Spirit Esports",
+      "to": "None",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/NonS3nScs/status/2098726433333838194"
     },
     {
       "date": "2026-09-12",
@@ -317,94 +407,22 @@
       "refUrl": "https://x.com/ecstaticCS/status/2098403428510601550"
     },
     {
-      "date": "2026-09-11",
-      "player": "Skejs",
-      "playerUrl": null,
+      "date": "2026-09-14",
+      "player": "Swedenstrong",
+      "playerUrl": "https://liquipedia.net/dota2/Swedenstrong",
       "from": "None",
-      "to": "ECSTATIC",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/ecstaticCS/status/2098403428510601550"
+      "to": "BetBoom Team",
+      "game": "Dota 2",
+      "refUrl": "https://x.com/BetBoomTeam/status/2099453469207752711"
     },
     {
-      "date": "2026-09-11",
-      "player": "Z1noz",
-      "playerUrl": null,
-      "from": "MASQ",
-      "to": "ECSTATIC",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/ecstaticCS/status/2098403428510601550"
-    },
-    {
-      "date": "2026-09-11",
-      "player": "Flex0r",
-      "playerUrl": "https://liquipedia.net/counterstrike/Flex0r",
-      "from": "3DMAX Academy (Coach)",
-      "to": "None",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/flex0rCSGO/status/2098370039535575542"
-    },
-    {
-      "date": "2026-09-11",
-      "player": "Diirty",
-      "playerUrl": null,
-      "from": "None",
-      "to": "AaB Academy",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/AaBesport/status/2098370325394190761"
-    },
-    {
-      "date": "2026-09-10",
-      "player": "AVA174",
-      "playerUrl": null,
-      "from": "Shimmer",
-      "to": "None",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/avava174/status/2098184751052173375"
-    },
-    {
-      "date": "2026-09-10",
-      "player": "HOLY",
-      "playerUrl": null,
-      "from": "None",
-      "to": "Nexus Gaming",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/NexusGamingRo/status/2097994316551451037"
-    },
-    {
-      "date": "2026-09-10",
-      "player": "Sanju",
-      "playerUrl": null,
-      "from": "None",
-      "to": "Team LEISURE",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/Team_LEISURE/status/2097988460158071193"
-    },
-    {
-      "date": "2026-09-10",
-      "player": "Pano",
-      "playerUrl": null,
-      "from": "Team LEISURE",
-      "to": "None",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/Team_LEISURE/status/2098003562383188192"
-    },
-    {
-      "date": "2026-09-10",
-      "player": "ARTYSAN",
-      "playerUrl": null,
-      "from": "None",
-      "to": "The Golden Horde",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/aRTYS4N/status/2098173725875073072"
-    },
-    {
-      "date": "2026-09-09",
-      "player": "Jachro",
-      "playerUrl": null,
-      "from": "Unreal Nightmare",
-      "to": "Unreal Nightmare (Inactive)",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/JACHR0/status/2097695364430086221"
+      "date": "2026-09-13",
+      "player": "TORONTOTOKYO",
+      "playerUrl": "https://liquipedia.net/dota2/TORONTOTOKYO",
+      "from": "Aurora Gaming (Inactive)",
+      "to": "BetBoom Team (Coach)",
+      "game": "Dota 2",
+      "refUrl": "https://x.com/BetBoomTeam/status/2099121079063040056"
     },
     {
       "date": "2026-09-13",
@@ -432,6 +450,24 @@
       "to": "BetBoom Team (Inactive)",
       "game": "Dota 2",
       "refUrl": "https://x.com/BetBoomTeam/status/2099090768996585522"
+    },
+    {
+      "date": "2026-09-13",
+      "player": "CemaTheSlayeR",
+      "playerUrl": "https://liquipedia.net/dota2/CemaTheSlayeR",
+      "from": "Team Lynx (Coach)",
+      "to": "None",
+      "game": "Dota 2",
+      "refUrl": "https://t.me/teamlynxua/1553"
+    },
+    {
+      "date": "2026-09-13",
+      "player": "TA2000",
+      "playerUrl": "https://liquipedia.net/dota2/TA2000",
+      "from": "Team Lynx (Stand-in)",
+      "to": "None",
+      "game": "Dota 2",
+      "refUrl": "https://t.me/teamlynxua/1438"
     },
     {
       "date": "2026-09-12",
@@ -506,40 +542,22 @@
       "refUrl": "https://x.com/FalconsEsport/status/2096630211471118361"
     },
     {
-      "date": "2026-09-06",
-      "player": "Skiter",
-      "playerUrl": "https://liquipedia.net/dota2/Skiter",
-      "from": "Team Falcons",
+      "date": "2026-09-14",
+      "player": "Alpha54",
+      "playerUrl": "https://liquipedia.net/rocketleague/Alpha54",
+      "from": "Geekay Esports GK",
       "to": "None",
-      "game": "Dota 2",
-      "refUrl": "https://x.com/FalconsEsport/status/2096630211471118361"
+      "game": "Rocket League",
+      "refUrl": "https://x.com/GeekayRL/status/2099513512708206957"
     },
     {
-      "date": "2026-09-05",
-      "player": "Ghost (Daniel Chan)",
-      "playerUrl": "https://liquipedia.net/dota2/Ghost_(Daniel_Chan)",
-      "from": "GamerLegion",
+      "date": "2026-09-14",
+      "player": "Fairy Peak",
+      "playerUrl": "https://liquipedia.net/rocketleague/Fairy_Peak",
+      "from": "Geekay Esports GK (Coach)",
       "to": "None",
-      "game": "Dota 2",
-      "refUrl": "https://x.com/Ghostdota98/status/2096204391376372108"
-    },
-    {
-      "date": "2026-09-04",
-      "player": "AfrOmoush",
-      "playerUrl": "https://liquipedia.net/dota2/AfrOmoush",
-      "from": "Team Falcons (Manager)",
-      "to": "None",
-      "game": "Dota 2",
-      "refUrl": "https://x.com/AfrOmoush/status/2095880813166330065"
-    },
-    {
-      "date": "2026-09-04",
-      "player": "LaNm",
-      "playerUrl": "https://liquipedia.net/dota2/LaNm",
-      "from": "Xtreme Gaming / (Head Coach/General Manager)",
-      "to": "Cloud Rising (General Manager)",
-      "game": "Dota 2",
-      "refUrl": "https://weibo.com/7720945580/RgzqvhpWC"
+      "game": "Rocket League",
+      "refUrl": "https://x.com/GeekayRL/status/2099513512708206957"
     },
     {
       "date": "2026-09-04",
@@ -659,22 +677,13 @@
       "refUrl": "https://x.com/Tarnishedgg/status/2088175423901282527"
     },
     {
-      "date": "2026-08-13",
-      "player": "PureRL4",
+      "date": "2026-09-14",
+      "player": "Agony (Chinese player)",
       "playerUrl": null,
-      "from": "Tarnished TARN (Substitute)",
-      "to": "Tarnished Black TARB",
-      "game": "Rocket League",
-      "refUrl": null
-    },
-    {
-      "date": "2026-08-13",
-      "player": "Reset",
-      "playerUrl": null,
-      "from": "Tarnished TARN (Substitute)",
-      "to": "Tarnished White TARW",
-      "game": "Rocket League",
-      "refUrl": null
+      "from": "SHENGSHI Esports",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/ShengshiEsports/status/2099177999484809657"
     },
     {
       "date": "2026-09-12",
@@ -799,15 +808,6 @@
       "playerUrl": null,
       "from": "None",
       "to": "NewGens",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/newgens_ow/status/2098087273065484745"
-    },
-    {
-      "date": "2026-09-10",
-      "player": "BAR",
-      "playerUrl": "https://liquipedia.net/overwatch/BAR",
-      "from": "None",
-      "to": "NewGens (Manager)",
       "game": "Overwatch",
       "refUrl": "https://x.com/newgens_ow/status/2098087273065484745"
     }
@@ -1006,72 +1006,93 @@
   ],
   "news": [
     {
+      "title": "How to unlock TR51 Para in Black Ops 7 and Warzone",
+      "link": "https://dotesports.com/call-of-duty/guides/unlock-tr51-para-bo7-warzone",
+      "pubDate": "2026-09-14T16:44:00.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "All Sombra and Roadhog rework abilities coming to Overwatch",
+      "link": "https://dotesports.com/overwatch/guides/overwatch-sombra-roadhog-rework",
+      "pubDate": "2026-09-14T14:26:16.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "VALORANT overhauls progression with Agent Mastery, new Competitive reward coming in 2027",
+      "link": "https://dotesports.com/valorant/news/valorant-agent-mastery-competitive-rewards",
+      "pubDate": "2026-09-14T13:10:00.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "Gauntlet: Glitched lets you build your own VALORANT Agent in a multi-team roguelike",
+      "link": "https://dotesports.com/valorant/news/valorant-gauntlet-glitched-reveal",
+      "pubDate": "2026-09-14T13:05:00.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "Warden shakes up VALORANT’s Vandal vs Phantom debate as the newest rifle",
+      "link": "https://dotesports.com/valorant/news/valorant-warden-reveal",
+      "pubDate": "2026-09-14T13:00:00.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "Esports Weekend Review: Legacy win FISSURE Playground 3, Movistar KOI survive LEC, Epos triumphs at XPEvo",
+      "link": "https://esports-news.co.uk/2026/09/14/esports-weekend-review-sep-14th/",
+      "pubDate": "2026-09-14T11:16:04.000Z",
+      "source": "Esports News UK",
+      "section": "headlines"
+    },
+    {
+      "title": "Rex Regum Qeon releases VALORANT head coach Jovi after one season",
+      "link": "https://dotesports.com/general/news/rrq-parts-ways-head-coach-jovi-valorant",
+      "pubDate": "2026-09-14T10:31:02.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "GUNNAR Pendleton review: Sleek 20/20 vision almost within reach",
+      "link": "https://dotesports.com/hardware/reviews/gunnar-pendleton-review",
+      "pubDate": "2026-09-14T10:30:10.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "How to unlock VMP in Black Ops 7 and Warzone",
+      "link": "https://dotesports.com/call-of-duty/guides/unlock-vmp-bo7-warzone",
+      "pubDate": "2026-09-14T10:25:42.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "StarLadder StarSeries Fall 2026 predictions: Which teams can win in Barcelona?",
+      "link": "https://esportsinsider.com/2026/09/starladder-starseries-fall-2026-predictions",
+      "pubDate": "2026-09-14T10:23:44.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
+    },
+    {
+      "title": "Legacy Deliver At 4/1 To Win FISSURE Playground 3",
+      "link": "https://esports-news.co.uk/2026/09/14/legacy-deliver-at-4-1-to-win-fissure-playground-3/",
+      "pubDate": "2026-09-14T09:39:17.000Z",
+      "source": "Esports News UK",
+      "section": "headlines"
+    },
+    {
+      "title": "All League of Legends level borders and unlock levels",
+      "link": "https://dotesports.com/league-of-legends/news/all-league-of-legends-level-borders-explained",
+      "pubDate": "2026-09-14T09:21:36.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
       "title": "Overwatch World Cup 2026: Schedule, results, teams, and format",
       "link": "https://dotesports.com/overwatch/news/overwatch-world-cup-2026-results",
-      "pubDate": "2026-09-13T12:06:42.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "All hero Perks in Overwatch: All Minor and Major Perks, listed",
-      "link": "https://dotesports.com/overwatch/news/all-hero-perks-in-overwatch-2",
-      "pubDate": "2026-09-13T00:25:06.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "All Doctrine abilities, Perks, and passives in Overwatch",
-      "link": "https://dotesports.com/overwatch/guides/overwatch-doctrine-abilities",
-      "pubDate": "2026-09-13T00:11:18.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "Diablo V is coming in 2029 as Blizzard reveals Diablo’s next few years at BlizzCon",
-      "link": "https://dotesports.com/diablo/news/diablo-v-announcement-blizzcon",
-      "pubDate": "2026-09-13T00:10:06.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "VCT 2026 Champions Shanghai Pick’Ems guide: All rewards and how to get them",
-      "link": "https://dotesports.com/valorant/news/vct-2026-champions-shanghai-pickems-guide",
-      "pubDate": "2026-09-12T19:36:40.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "Blizzard finally reveals StarCraft open-world shooter, but it isn’t coming until 2030",
-      "link": "https://dotesports.com/general/news/starcraft-open-world-shooter-coming-2030",
-      "pubDate": "2026-09-12T18:49:56.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "Genshin Impact version 7.1 banners: Vesna and Vodyanitsa",
-      "link": "https://dotesports.com/genshin-impact/guides/genshin-impact-version-7-1-banners-vesna-and-vodyanitsa",
-      "pubDate": "2026-09-12T18:02:24.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "VCT 2027 format explained: New system, Open Qualifiers, and Cups",
-      "link": "https://dotesports.com/valorant/news/vct-2027-roadmap",
-      "pubDate": "2026-09-12T14:55:27.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "Genshin Impact 6th Anniversary rewards: TWO free 5-stars?!",
-      "link": "https://dotesports.com/genshin-impact/guides/6th-anniversary-rewards",
-      "pubDate": "2026-09-12T14:28:39.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "How to get Marvel Rivals Twitch Drops",
-      "link": "https://dotesports.com/marvel/news/all-marvel-rivals-twitch-drops-and-how-to-claim-them",
-      "pubDate": "2026-09-12T14:01:45.000Z",
+      "pubDate": "2026-09-14T07:48:03.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
@@ -1167,13 +1188,6 @@
       "section": "industry"
     },
     {
-      "title": "“I wish I was better”: The downfall of Fnatic’s VALORANT team",
-      "link": "https://esportsinsider.com/2026/09/fnatic-valorant-downfall",
-      "pubDate": "2026-09-08T21:59:51.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
-    },
-    {
       "title": "Alliance stun FaZe 2-0 in FISSURE Playground 3 opener",
       "link": "https://esports-news.co.uk/2026/09/08/alliance-stun-faze-2-0-in-fissure-playground-3-opener/",
       "pubDate": "2026-09-08T17:10:44.000Z",
@@ -1233,20 +1247,6 @@
       "title": "UK EA FC players can compete for a trip to Miami in January with Red Bull’s Wings Cup",
       "link": "https://esports-news.co.uk/2026/09/03/red-bulls-wings-cup-miami-uk-player/",
       "pubDate": "2026-09-03T15:42:22.000Z",
-      "source": "Esports News UK",
-      "section": "headlines"
-    },
-    {
-      "title": "BLAST Open Porto 2026 Playoff predictions: Who are the favourites?",
-      "link": "https://esports-news.co.uk/2026/09/03/blast-open-porto-2026-playoff-predictions/",
-      "pubDate": "2026-09-03T09:18:51.000Z",
-      "source": "Esports News UK",
-      "section": "headlines"
-    },
-    {
-      "title": "McDonalds UK get special Xbox cross-over menu and rewards",
-      "link": "https://esports-news.co.uk/2026/09/02/mcdonalds-uk-get-special-xbox-cross-over-menu-and-rewards/",
-      "pubDate": "2026-09-02T11:59:43.000Z",
       "source": "Esports News UK",
       "section": "headlines"
     }
