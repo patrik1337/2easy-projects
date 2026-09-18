@@ -26,6 +26,8 @@
     { "source": "/spel/pricken/", "destination": "/spel/pricken/index.html" },
     { "source": "/spel/rullen", "destination": "/spel/rullen/index.html" },
     { "source": "/spel/rullen/", "destination": "/spel/rullen/index.html" },
-    { "source": "/spel/rullen/admin", "destination": "/spel/rullen/admin/index.html" }
+    { "source": "/spel/rullen/admin", "destination": "/spel/rullen/admin/index.html" },
+    { "source": "/ewc-simulator", "destination": "/ewc-simulator/index.html" },
+    { "source": "/ewc-simulator/admin", "destination": "/ewc-simulator/admin/index.html" }
   ]
 }

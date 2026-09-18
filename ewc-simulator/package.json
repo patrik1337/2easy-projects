@@ -1,0 +1,10 @@
+{
+  "name": "ewc-simulator",
+  "private": true,
+  "type": "module",
+  "description": "Static EWC Club Championship Monte Carlo simulator. No build step; this file only enables ES modules for node --test.",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "extract": "python tools/extract_workbook.py"
+  }
+}

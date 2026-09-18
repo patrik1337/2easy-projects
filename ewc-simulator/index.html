@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<base href="/ewc-simulator/" />
+<title>EWC Club Championship Simulator — 2easy.gg</title>
+<meta name="description" content="Monte Carlo simulator for the Esports World Cup 2026 Club Championship: simulated vs actual, per club and per title." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<header class="site">
+  <div class="wrap-wide">
+    <a class="site-mark" href="/">2easy<span>.gg</span></a>
+    <nav>
+      <a href="/brief">Briefing</a>
+      <a href="/ewc-simulator" class="active">EWC Simulator</a>
+      <a href="/ewc-simulator/admin">Admin</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap-wide page-title">
+    <div class="page-title-inner">
+      <div>
+        <p class="eyebrow">Esports World Cup 2026 · Club Championship</p>
+        <h1>Monte Carlo simulator</h1>
+      </div>
+      <p class="source-note" id="source-note">Loading data…</p>
+    </div>
+  </div>
+
+  <div class="wrap-wide"><div class="banner" id="calibration-banner">Loading…</div></div>
+
+  <div class="controls">
+    <div class="wrap-wide">
+      <label class="ctl">Runs <input type="number" id="ctl-runs" min="100" max="500000" step="1000" /><span class="mod hidden" id="mod-runs">●</span></label>
+      <label class="ctl">Seed <input type="number" id="ctl-seed" step="1" /><span class="mod hidden" id="mod-seed">●</span></label>
+      <button class="btn primary" id="btn-run">Run</button>
+      <label class="ctl"><input type="checkbox" id="ctl-compare" /> Compare two parameter sets</label>
+      <span class="seg hidden" id="seg-editing" role="group" aria-label="Parameter set being edited">
+        <button data-set="a" class="active">Editing A</button><button data-set="b" class="b">Editing B</button>
+      </span>
+      <button class="btn" id="btn-reset" title="Clear every session change and return to data.json defaults">Reset to defaults</button>
+      <button class="btn" id="btn-link" title="Copy a link to this exact configuration">Copy link</button>
+      <div class="progress" aria-label="Simulation progress"><div id="progress-bar"></div></div>
+      <span class="run-status" id="run-status">Not run yet</span>
+    </div>
+  </div>
+
+  <div class="wrap-wide">
+    <nav class="section-nav" id="section-nav">
+      <button class="section-tab" data-view="summary">Actual top 8</button>
+      <button class="section-tab" data-view="table">Club Championship</button>
+      <button class="section-tab" data-view="titles">Titles</button>
+      <button class="section-tab" data-view="focus">Club focus</button>
+      <button class="section-tab" data-view="investment">Investment</button>
+      <button class="section-tab" data-view="method">Method</button>
+    </nav>
+    <section class="panel" id="panel"></section>
+  </div>
+</main>
+
+<footer><div class="wrap-wide">Workbook-canonical data · <a href="/" style="text-decoration:none">2easy.gg</a></div></footer>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

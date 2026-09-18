@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<base href="/ewc-simulator/" />
+<title>Admin — EWC Simulator — 2easy.gg</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<header class="site">
+  <div class="wrap-wide">
+    <a class="site-mark" href="/">2easy<span>.gg</span></a>
+    <nav>
+      <a href="/ewc-simulator">EWC Simulator</a>
+      <a href="/ewc-simulator/admin" class="active">Admin</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap-wide">
+  <div class="page-title">
+    <p class="eyebrow">EWC Simulator · defaults editor</p>
+    <h1>Admin</h1>
+  </div>
+  <div id="gate" class="gate card">
+    <h4>Password</h4>
+    <form id="gate-form"><input type="password" id="gate-pw" autocomplete="current-password" /><button class="btn primary">Unlock</button></form>
+    <p class="muted" id="gate-msg" style="font-size:12.5px;margin-top:8px">Client-side gate only. It keeps casual visitors out; it is not access control.</p>
+  </div>
+  <div id="admin" class="hidden">
+    <div class="banner admin"><b>Admin — editing defaults.</b> Changes go into a working copy of data.json and reach the site only when you export and commit the file.
+      Session experiments from the simulator (URL overrides) are separate and never read or written here. <span id="draft-status"></span></div>
+    <nav class="section-nav" id="admin-nav">
+      <button class="section-tab active" data-tab="titles">Titles</button>
+      <button class="section-tab" data-tab="clubs">Clubs</button>
+      <button class="section-tab" data-tab="investment">Investment</button>
+      <button class="section-tab" data-tab="export">Validate &amp; export</button>
+    </nav>
+    <section class="panel" id="admin-panel"></section>
+  </div>
+</main>
+<footer><div class="wrap-wide">Workbook remains canonical: mirror structural edits back into EWC_Simulator_Data.xlsx.</div></footer>
+<script type="module" src="js/admin.js"></script>
+</body>
+</html>
