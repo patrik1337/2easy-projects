@@ -1,0 +1,4 @@
+# Admin panel is dormant: kept in the repo, not deployed. Data edits go through the
+# workbook -> tools/extract_workbook.py -> commit workflow instead.
+ewc-simulator/admin/
+ewc-simulator/js/admin.js

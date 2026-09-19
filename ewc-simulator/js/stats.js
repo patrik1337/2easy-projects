@@ -13,6 +13,11 @@ export function pRankAtMost(res, c, k) {
   return s / res.runs;
 }
 
+/** P(from <= rank <= to), e.g. ranks 9–16. */
+export function pRankBetween(res, c, from, to) {
+  return pRankAtMost(res, c, to) - pRankAtMost(res, c, from - 1);
+}
+
 export function pRankExact(res, c, r) {
   return r >= 1 && r <= res.nClubs ? rankRow(res, c)[r] / res.runs : 0;
 }
@@ -96,6 +101,8 @@ export function clubSummary(res, c, actual) {
     pTop3: pRankAtMost(res, c, 3),
     pTop8: pRankAtMost(res, c, 8),
     pTop24: pRankAtMost(res, c, res.buckets - 1),
+    p9to16: pRankBetween(res, c, 9, 16),
+    p17to24: pRankBetween(res, c, 17, 24),
     medianRank: medianRank(res, c),
     meanPoints: meanPoints(res, c),
     medianPoints: pointsQuantile(res, c, 0.5),

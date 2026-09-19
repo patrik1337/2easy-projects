@@ -190,9 +190,17 @@ describe('calibration (upstream of the engine)', () => {
     assert.equal(w1, w2);
     assert.equal(baseWeights(oneHigh)[0].base, 3);
   });
+  test('every title runs on its workbook TVI; CS2 stays on its locked approved 52', () => {
+    for (const title of data.titles) {
+      const r = calibrateTitle(title, cal);
+      assert.equal(r.tvi.source, 'approved', title.id);
+      assert.equal(r.tvi.tvi, title.id === 'cs2' ? 52 : title.workbookTvi, title.id);
+    }
+    assert.equal(calibrateTitle(t('chess'), cal).tvi.tvi, 8);
+  });
   test('ranked base is the reciprocal of the seed; TVI 50 leaves it unchanged', () => {
     const r = calibrateTitle(t('val'), cal);
-    assert.equal(r.tvi.source, 'provisional');
+    assert.equal(r.tvi.source, 'approved');
     assert.equal(r.tvi.tvi, 50);
     r.weights.forEach((w, i) => assert.ok(Math.abs(w - 1 / t('val').entries[i].seed) < 1e-12));
   });

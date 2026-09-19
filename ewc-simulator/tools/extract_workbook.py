@@ -41,15 +41,15 @@ KIND_BY_METHOD = {"A": "ranked", "B": "ranked", "C": "ranked", "D": "cohort", "E
 
 SIMULATION_DEFAULTS = {"runs": 20000, "rngSeed": 2026, "payingBracket": 24}
 
-# Calibration inputs. The workbook has no calibration-status field, so approvals
-# live here and are carried across re-extractions from the committed data.json
-# (the admin panel edits them). Only CS2's TVI is approved at v1.
+# Calibration inputs. Every title uses the TVI on its workbook tab (approved
+# 2026-09-19), except titles in LOCKED_TVI, whose approved TVI is final and is
+# never replaced by a workbook value.
+LOCKED_TVI = {"cs2": {"tvi": 52, "note": "Approved TVI; weights final. Do not recalibrate."}}
 CALIBRATION_SEED = {
     "rule": "weight = base ^ (1/T), T = TVI / tviDivisor. base = 1/seed (A/B/C), tier table value (D), 1 (E).",
     "tviDivisor": 50,
     "provisionalTvi": 50,
     "defaultTierTable": {"High": 3.0, "Medium": 1.0, "Low": 0.4},
-    "approved": {"cs2": {"tvi": 52, "note": "Approved TVI; weights final. Do not recalibrate."}},
 }
 
 # Official EWC 2026 Club Championship rules that affect ranking.
@@ -583,16 +583,17 @@ def build(rep: Report):
             rep.warn(f"Club id '{base}' already used; '{c['name']}' stored as '{c['id']}'")
         seen_ids.add(c["id"])
 
-    # Investment and calibration approvals are not in the workbook, so values
-    # exported from the admin panel are carried across re-extractions.
+    # Investment rows are not in the workbook, so they are carried across re-extractions.
     previous = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
     investment = previous.get("investment", [])
     if "Investment" in wb.sheetnames:
         rep.warn("Investment tab found but no reader is implemented yet; keeping data.json investment rows")
     calibration = dict(CALIBRATION_SEED)
-    if "calibration" in previous:
-        calibration["approved"] = previous["calibration"].get("approved", calibration["approved"])
-        calibration["defaultTierTable"] = previous["calibration"].get("defaultTierTable", calibration["defaultTierTable"])
+    calibration["approved"] = {
+        t["id"]: dict(LOCKED_TVI[t["id"]]) if t["id"] in LOCKED_TVI
+        else {"tvi": t["workbookTvi"], "note": "Workbook tab TVI."}
+        for t in titles
+    }
 
     data = {
         "schemaVersion": SCHEMA_VERSION,

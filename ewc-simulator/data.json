@@ -23,6 +23,102 @@
    "cs2": {
     "tvi": 52,
     "note": "Approved TVI; weights final. Do not recalibrate."
+   },
+   "chess": {
+    "tvi": 8,
+    "note": "Workbook tab TVI."
+   },
+   "lol": {
+    "tvi": 40,
+    "note": "Workbook tab TVI."
+   },
+   "pubg-mobile": {
+    "tvi": 78,
+    "note": "Workbook tab TVI."
+   },
+   "fortnite": {
+    "tvi": 80,
+    "note": "Workbook tab TVI."
+   },
+   "trackmania": {
+    "tvi": 22,
+    "note": "Workbook tab TVI."
+   },
+   "dota-2": {
+    "tvi": 55,
+    "note": "Workbook tab TVI."
+   },
+   "tekken-8": {
+    "tvi": 36,
+    "note": "Workbook tab TVI."
+   },
+   "sf6": {
+    "tvi": 58,
+    "note": "Workbook tab TVI."
+   },
+   "cotw": {
+    "tvi": 45,
+    "note": "Workbook tab TVI."
+   },
+   "tft": {
+    "tvi": 65,
+    "note": "Workbook tab TVI."
+   },
+   "r6": {
+    "tvi": 30,
+    "note": "Workbook tab TVI."
+   },
+   "wz": {
+    "tvi": 75,
+    "note": "Workbook tab TVI."
+   },
+   "val": {
+    "tvi": 50,
+    "note": "Workbook tab TVI."
+   },
+   "msc": {
+    "tvi": 60,
+    "note": "Workbook tab TVI."
+   },
+   "apex": {
+    "tvi": 82,
+    "note": "Workbook tab TVI."
+   },
+   "hok": {
+    "tvi": 32,
+    "note": "Workbook tab TVI."
+   },
+   "cf": {
+    "tvi": 38,
+    "note": "Workbook tab TVI."
+   },
+   "ff": {
+    "tvi": 75,
+    "note": "Workbook tab TVI."
+   },
+   "fc26": {
+    "tvi": 65,
+    "note": "Workbook tab TVI."
+   },
+   "bo7": {
+    "tvi": 28,
+    "note": "Workbook tab TVI."
+   },
+   "rl": {
+    "tvi": 26,
+    "note": "Workbook tab TVI."
+   },
+   "ow2": {
+    "tvi": 45,
+    "note": "Workbook tab TVI."
+   },
+   "pubg": {
+    "tvi": 62,
+    "note": "Workbook tab TVI."
+   },
+   "mwi": {
+    "tvi": 34,
+    "note": "Workbook tab TVI."
    }
   }
  },

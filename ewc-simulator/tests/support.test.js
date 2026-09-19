@@ -50,8 +50,8 @@ describe('admin validation', () => {
   });
   test('diff lists changed leaves', () => {
     const w = structuredClone(data);
-    w.calibration.approved.chess = { tvi: 8, note: '' };
-    assert.deepEqual(diffJson(data, w).map(d => d.path), ['calibration.approved.chess']);
+    w.calibration.approved.chess.tvi = 10;
+    assert.deepEqual(diffJson(data, w).map(d => d.path), ['calibration.approved.chess.tvi']);
   });
 });
 

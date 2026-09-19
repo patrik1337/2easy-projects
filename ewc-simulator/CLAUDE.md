@@ -11,13 +11,15 @@ the root `vercel.json`). No build step, no backend. Pages use `<base href="/ewc-
   It exits non-zero unless substituting **actual placements** for the draw reproduces every club's official CC total
   (CC Reconciliation tab, 154 clubs) — that is the integrity check on the extraction.
 - Title tab headers (row 6) are authoritative for seed method and TVI; the Seed Methodology "proposed" table is not.
-- Not in the workbook, so carried across re-extractions from the existing `data.json`: `calibration.approved`
-  (which titles have an approved TVI) and `investment`. Everything else is regenerated.
+- `calibration.approved` is regenerated from each tab's TVI on every extraction, except titles in `LOCKED_TVI`
+  in the extractor (CS2 at 52 — final, never replaced by a workbook value). `investment` is not in the workbook and is
+  carried across re-extractions from the existing `data.json`. Everything else is regenerated.
 - Club names are standardised to the Clubs tab Display Name via `CANONICAL_MERGES` in the extractor (approved list).
   Brands such as Falcons Vega / Riyadh Falcons resolve to their parent club in the tabs' canonical column.
   HavoK by Vitality and Ekletyc are separate, normal clubs (not in official standings; they shift lower published ranks).
-- The admin panel (`/ewc-simulator/admin`) edits a working copy of `data.json` and exports it. Structural edits made
-  there must be mirrored into the workbook or the next extraction overwrites them.
+- Data updates are made here (via Claude): edit the workbook, re-run the extractor, run the tests, commit and push.
+  The admin panel (`admin/`, `js/admin.js`) is **dormant**: kept in the repo but excluded from deploys by the root
+  `.vercelignore`, because its edits only lived in one browser. Don't link to it.
 - `data.json` is immutable at runtime (deep-frozen). Session experiments never mutate it.
 
 ## Architecture (keep these boundaries)
@@ -34,8 +36,9 @@ the root `vercel.json`). No build step, no backend. Pages use `<base href="/ewc-
   default 3 / 1 / 0.4, tab values where the tab defines them), `1` (E and session "Random").
   Tier-only entries in ranked titles (SF6 unranked players) use `1/midpoint` of their tier band, bands tiling after the
   numeric seeds High→Medium→Low. Do not add shared span constants or ladder shapes.
-- **TVI**: only approved titles use their TVI (at v1 only CS2, TVI 52 — final, do not recalibrate). Every other title
-  runs on the provisional TVI 50 and every output shows approved / provisional / session provenance.
+- **TVI**: every title uses its workbook tab TVI (approved 2026-09-19); CS2's TVI 52 is locked and final — do not
+  recalibrate. `provisionalTvi` (50) remains only as the fallback for a title with no approved entry. Calibration status
+  is shown on the Method tab only, not in result tables.
   A session TVI slider re-tempers the supplied base weights; it has no effect on equal weights (Random, method E).
 - `js/stats.js` — read-only views over one result. Main table, summary, club focus and investment all read the same
   run, so they cannot disagree (tested).
@@ -61,4 +64,5 @@ so means and P10/P90 are fine there. Investment figures always carry their confi
 
 - Tests: `node --test tests/*.test.js` (Node may need its full path: `"C:\Program Files\nodejs\node.exe"`).
 - Local preview: repo-root static server (`.claude/launch.json` → `2easy-static`, port 3000) → `/ewc-simulator/`.
-- Admin password: SHA-256 constant in `js/admin.js` (client-side gate only).
+- UI: result tables show P(actual rank), P(1st), P(top 3), P(top 8), P(9–16), P(17–24). The Investment tab is hidden
+  (`viewInvestment` kept in `js/app.js`, not reachable) until spend data exists.

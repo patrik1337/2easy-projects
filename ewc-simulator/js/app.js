@@ -181,14 +181,13 @@ function markMod(sel, on, title) {
 const modMarker = (on, def) => on ? `<span class="mod" title="Modified from default — default: ${esc(def)}">●</span>` : '';
 
 function renderBanner() {
-  const approved = DATA.titles.filter(t => DATA.calibration.approved[t.id]);
-  const list = approved.map(t => `${esc(t.short)} · TVI ${DATA.calibration.approved[t.id].tvi}`).join(', ') || 'none';
+  // Only shown when the session departs from data.json defaults; calibration status lives on the Method tab.
   const nMod = Object.keys(session.sets.a).length + (session.compare ? Object.keys(session.sets.b).length : 0);
-  $('#calibration-banner').innerHTML =
-    `<b>${approved.length} of ${DATA.titles.length} titles calibrated</b> (${list}, approved). ` +
-    `The other ${DATA.titles.length - approved.length} run on a <b>provisional TVI ${DATA.calibration.provisionalTvi}</b>, marked ` +
-    `<span class="badge provisional">provisional</span> wherever they feed a result.` +
-    (nMod ? ` <b>${nMod}</b> session override${nMod > 1 ? 's' : ''} active <span class="badge session">session</span> — defaults in data.json are untouched.` : '');
+  const el = $('#calibration-banner');
+  el.parentElement.classList.toggle('hidden', !nMod);
+  el.innerHTML = nMod
+    ? `<b>${nMod}</b> session override${nMod > 1 ? 's' : ''} active <span class="badge session">session</span> — these change this link only; the defaults are untouched. Use “Reset to defaults” to clear them.`
+    : '';
 }
 
 // ------------------------------------------------------------------ shared helpers
@@ -245,7 +244,8 @@ function render() {
     const stale = results.key !== paramKey(session);
     if (!stale) setStatus(`${fmtInt(results.runs)} runs${results.compare ? ' × 2 sets' : ''} · seed ${results.seed} · ${(results.ms / 1000).toFixed(1)}s`, false);
   }
-  const views = { summary: viewSummary, table: viewTable, titles: viewTitles, focus: viewFocus, investment: viewInvestment, method: viewMethod };
+  // Investment view is hidden for now (viewInvestment kept for later); unknown views fall back to the summary.
+  const views = { summary: viewSummary, table: viewTable, titles: viewTitles, focus: viewFocus, method: viewMethod };
   const panel = $('#panel');
   const scroll = window.scrollY;
   panel.innerHTML = (views[session.view] || viewSummary)();
@@ -265,8 +265,11 @@ function bindPanel(view) {
 
 const COLS = [
   { key: 'pExactActual', label: 'P(actual rank)', fmt: fmtPct, title: 'Simulated probability of finishing in exactly the position actually achieved' },
+  { key: 'pWin', label: 'P(1st)', fmt: fmtPct },
   { key: 'pTop3', label: 'P(top 3)', fmt: fmtPct },
   { key: 'pTop8', label: 'P(top 8)', fmt: fmtPct },
+  { key: 'p9to16', label: 'P(9–16)', fmt: fmtPct, title: 'Finishing 9th to 16th' },
+  { key: 'p17to24', label: 'P(17–24)', fmt: fmtPct, title: 'Finishing 17th to 24th' },
   { key: 'medianRank', label: 'Median rank', fmt: v => fmtInt(v) },
   { key: 'meanPoints', label: 'Mean pts', fmt: fmtInt, title: 'Club totals are sums across titles, so a mean is meaningful here' },
   { key: 'p10p90', label: 'P10–P90 pts', fmt: v => v, raw: (res, c) => { const s = S.clubSummary(res, c, ACTUAL); return `${fmtInt(s.p10)}–${fmtInt(s.p90)}`; } },
@@ -283,10 +286,10 @@ function viewSummary() {
     <p class="lede">The eight clubs that finished top eight in 2026, in order, with how often the pre-event seeds produced exactly that finish. ${results?.b ? 'Blue second lines are parameter set B.' : ''}</p>${TIE_RULE_HTML()}`;
   if (!results) return head + waitingMsg();
   return head + staleNote() + `<div class="table-scroll"><table class="data">
-    <thead><tr><th>Actual</th><th>Club</th><th class="num">Actual pts</th>${COLS.map(c => `<th class="num" title="${esc(c.title || '')}">${c.label}</th>`).join('')}<th>Titles by TVI status</th></tr></thead>
+    <thead><tr><th>Actual</th><th>Club</th><th class="num">Actual pts</th>${COLS.map(c => `<th class="num" title="${esc(c.title || '')}">${c.label}</th>`).join('')}</tr></thead>
     <tbody>${top.map(c => `<tr class="clickable" data-club="${esc(CLUBS[c])}">
       <td class="rank">${actualRankLabel(c)}</td><td class="club">${esc(CLUBS[c])}</td>
-      <td class="num">${fmtInt(ACTUAL.total[c])}</td>${summaryCells(c)}<td>${clubCalibration(c, results.provA)}</td></tr>`).join('')}
+      <td class="num">${fmtInt(ACTUAL.total[c])}</td>${summaryCells(c)}</tr>`).join('')}
     </tbody></table></div>`;
 }
 
@@ -307,16 +310,16 @@ function viewTable() {
   return head + staleNote() + `<div class="ctl" style="margin-bottom:10px"><input type="search" id="table-filter" placeholder="Filter clubs (names and aliases)" value="${esc(tableFilter)}" style="width:300px" /> <span>${shown.length} of ${rows.length}</span></div>
     <div class="table-scroll"><table class="data">
     <thead><tr>${th('actualRank', 'Actual')}${th('name', 'Club', false)}${th('titles', 'Titles')}${th('actualPoints', 'Actual pts')}
-      ${th('pExactActual', 'P(actual rank)', true, COLS[0].title)}${th('pWin', 'P(win)')}${th('pTop3', 'P(top 3)')}${th('pTop8', 'P(top 8)')}${th('pTop24', 'P(top 24)')}
-      ${th('medianRank', 'Median rank')}${th('meanPoints', 'Mean pts')}<th class="num">P10–P90</th><th>TVI status</th></tr></thead>
+      ${th('pExactActual', 'P(actual rank)', true, COLS[0].title)}${th('pWin', 'P(1st)')}${th('pTop3', 'P(top 3)')}${th('pTop8', 'P(top 8)')}${th('p9to16', 'P(9–16)')}${th('p17to24', 'P(17–24)')}
+      ${th('medianRank', 'Median rank')}${th('meanPoints', 'Mean pts')}<th class="num">P10–P90</th></tr></thead>
     <tbody>${shown.map(r => {
       const c = r.c, f = (k, fmt) => ab(res => S.clubSummary(res, c, ACTUAL)[k], fmt);
       return `<tr class="clickable" data-club="${esc(r.name)}">
         <td class="rank">${actualRankLabel(c)}</td><td class="club">${esc(r.name)}</td><td class="num">${r.n}</td><td class="num">${fmtInt(ACTUAL.total[c])}</td>
         <td class="num">${f('pExactActual', fmtPct)}</td><td class="num">${f('pWin', fmtPct)}</td><td class="num">${f('pTop3', fmtPct)}</td>
-        <td class="num">${f('pTop8', fmtPct)}</td><td class="num">${f('pTop24', fmtPct)}</td><td class="num">${f('medianRank', fmtInt)}</td>
+        <td class="num">${f('pTop8', fmtPct)}</td><td class="num">${f('p9to16', fmtPct)}</td><td class="num">${f('p17to24', fmtPct)}</td><td class="num">${f('medianRank', fmtInt)}</td>
         <td class="num">${f('meanPoints', fmtInt)}</td><td class="num">${ab(res => { const s = S.clubSummary(res, c, ACTUAL); return `${fmtInt(s.p10)}–${fmtInt(s.p90)}`; }, v => v)}</td>
-        <td>${clubCalibration(c, results.provA)}</td></tr>`;
+</tr>`;
     }).join('')}</tbody></table></div>`;
 }
 
@@ -396,7 +399,7 @@ function viewTitles() {
       ${tiers.map((tier, k) => `<td class="tier-cell ${k === actualTier ? 'actual' : ''}" ${k === actualTier ? 'title="Actual 2026 result"' : ''}>${probs ? fmtPct(probs[k]) : '…'}${probs ? `<span class="bar" style="width:${Math.round(probs[k] * 100)}%"></span>` : ''}</td>`).join('')}</tr>`;
   }).join('');
 
-  return `<h2>Titles</h2><p class="lede">Session experiments per title. They change the weights sent to the engine for this browser session only; the defaults in data.json never change here (use Admin for that).
+  return `<h2>Titles</h2><p class="lede">Session experiments per title. They change the weights sent to the engine for this browser session only; the defaults in data.json never change here.
     ${session.compare ? `You are editing <b>parameter set ${setKey.toUpperCase()}</b>.` : ''}</p>
     <div class="titles-layout"><ul class="title-list">${list}</ul><div>
       <h3 style="margin-top:0">${esc(t.name)} ${tvBadge(cal)}</h3>
@@ -497,15 +500,16 @@ function viewFocus() {
     ${statRow('Actual 2026', (s, col) => `${actualRankLabel(col.c)} · ${fmtInt(s.actualPoints)} pts`, 'highlight')}
     ${statRow('P(exact actual placement)', s => fmtPct(s.pExactActual))}
     ${statRow('Median rank', s => fmtInt(s.medianRank))}
-    ${statRow('P(win)', s => fmtPct(s.pWin))}
+    ${statRow('P(1st)', s => fmtPct(s.pWin))}
     ${statRow('P(top 3)', s => fmtPct(s.pTop3))}
     ${statRow('P(top 8)', s => fmtPct(s.pTop8))}
-    ${statRow(`P(top ${B - 1})`, s => fmtPct(s.pTop24))}
+    ${statRow('P(9–16)', s => fmtPct(s.p9to16))}
+    ${statRow('P(17–24)', s => fmtPct(s.p17to24))}
     ${statRow('Mean points', s => fmtInt(s.meanPoints))}
     ${statRow('Median points', s => fmtInt(s.medianPoints))}
     ${statRow('P10 – P90 points', s => `${fmtInt(s.p10)} – ${fmtInt(s.p90)}`)}
     ${statRow('P(eligible: 2+ top-8s)', s => fmtPct(s.pEligible))}
-    ${statRow('Titles entered', (s, col) => `${CLUB_TITLES[col.c].length} ${clubCalibration(col.c, col.b ? results.provB : results.provA)}`)}
+    ${statRow('Titles entered', (s, col) => String(CLUB_TITLES[col.c].length))}
     </tbody></table></div>`;
 
   const buckets = S.placementBuckets(res, c);
@@ -598,7 +602,7 @@ function bindFocus() {
 
 function viewInvestment() {
   const head = `<h2>Investment layer</h2><p class="lede">Optional post-processing over the simulation output. Spend figures are estimates; every derived number carries its confidence label. The simulator works fully without this table.</p>`;
-  if (!(DATA.investment || []).length) return head + '<p class="muted">No investment data in data.json yet. Add rows in the admin panel and commit the exported file.</p>';
+  if (!(DATA.investment || []).length) return head + '<p class="muted">No investment data in data.json yet. Add rows to data.json and commit.</p>';
   if (!results) return head + waitingMsg();
   const rows = investmentMetrics(DATA, results.a, ACTUAL, CLUB_INDEX);
   const money = (n, cur) => n == null ? '—' : `${esc(cur)} ${Math.round(n).toLocaleString('en-US')}`;
@@ -627,7 +631,7 @@ function viewMethod() {
   return `<h2>Method</h2>
     <div class="grid2">
     <div class="card"><h4>Engine</h4><p style="font-size:13.5px">For each run and title, a full finishing order is drawn by <b>Plackett-Luce</b>: 1st is picked with probability proportional to weight, removed, then 2nd from the rest, and so on (implemented with the equivalent Gumbel-max trick). Positions score on the title's points curve; voided entries score 0 wherever they finish; each club keeps its <b>best entry per title</b> and sums across titles. The engine receives finished weights and contains no seed or TVI logic.</p></div>
-    <div class="card"><h4>Calibration (upstream of the engine)</h4><p style="font-size:13.5px"><code>${esc(cal.rule)}</code><br>TVI is the title's approved value where calibrated, otherwise the provisional placeholder <b>${cal.provisionalTvi}</b>. Titles can also be switched to Random (equal weights) per session.</p></div>
+    <div class="card"><h4>Calibration (upstream of the engine)</h4><p style="font-size:13.5px"><code>${esc(cal.rule)}</code><br>Each title uses the TVI from its workbook tab; CS2's approved TVI 52 is fixed. Titles can also be switched to Random (equal weights) per session.</p></div>
     <div class="card"><h4>Ranking & ties</h4><p style="font-size:13.5px">${esc(DATA.ccRules.tieRule)}</p><p style="font-size:13px;margin-top:6px" class="muted">${esc(DATA.ccRules.bestResultOnly)} <a href="${esc(DATA.ccRules.source)}" target="_blank" rel="noopener">Source</a>.</p></div>
     <div class="card"><h4>Presentation</h4><p style="font-size:13.5px">Per-title results are shown only as probabilities over <b>attainable tiers</b> (e.g. 1000 / 750 / 500 / 300 / 200 / 0), never as an expected-points figure no team can score. Club totals are sums across titles, so means and percentiles are shown for those.</p></div>
     </div>
