@@ -1,6 +1,51 @@
 {
-  "generatedAt": "2026-09-22T15:54:48.785Z",
+  "generatedAt": "2026-09-23T15:44:14.361Z",
   "transfers": [
+    {
+      "date": "2026-09-23",
+      "player": "Xdll",
+      "playerUrl": "https://liquipedia.net/valorant/Xdll",
+      "from": "ZETA DIVISION",
+      "to": "ZETA DIVISION (Inactive)",
+      "game": "Valorant",
+      "refUrl": "https://x.com/XdllVL/status/2102743093116371313?s=20"
+    },
+    {
+      "date": "2026-09-23",
+      "player": "Theory",
+      "playerUrl": "https://liquipedia.net/valorant/Theory",
+      "from": "Contra",
+      "to": "None",
+      "game": "Valorant",
+      "refUrl": "https://x.com/TheoryFPS_/status/2102111623183995151"
+    },
+    {
+      "date": "2026-09-23",
+      "player": "Mited",
+      "playerUrl": "https://liquipedia.net/valorant/Mited",
+      "from": "LAZER",
+      "to": "None",
+      "game": "Valorant",
+      "refUrl": "https://x.com/Mited19/status/2102523827490001153"
+    },
+    {
+      "date": "2026-09-22",
+      "player": "Nekop4nchan",
+      "playerUrl": "https://liquipedia.net/valorant/Nekop4nchan",
+      "from": "Sasanqua / (Substitute / Loan/Inactive)",
+      "to": "Uwinks GC",
+      "game": "Valorant",
+      "refUrl": "https://x.com/teamSasanqua/status/2102337118752460824"
+    },
+    {
+      "date": "2026-09-22",
+      "player": "Zanatsu",
+      "playerUrl": "https://liquipedia.net/valorant/Zanatsu",
+      "from": "Fluxo W7M",
+      "to": "Fluxo W7M (Inactive)",
+      "game": "Valorant",
+      "refUrl": "https://x.com/Zanatsufps/status/2102445635727196562"
+    },
     {
       "date": "2026-09-22",
       "player": "Nully",
@@ -66,6 +111,15 @@
     },
     {
       "date": "2026-09-21",
+      "player": "Fresht",
+      "playerUrl": "https://liquipedia.net/valorant/Fresht",
+      "from": "LAZER",
+      "to": "None",
+      "game": "Valorant",
+      "refUrl": "https://x.com/Freshtbtw/status/2101837471285682317"
+    },
+    {
+      "date": "2026-09-21",
       "player": "NaturE",
       "playerUrl": "https://liquipedia.net/valorant/NaturE",
       "from": "Shopify Rebellion Black",
@@ -81,60 +135,6 @@
       "to": "None",
       "game": "Valorant",
       "refUrl": "https://x.com/KRUesports/status/2102140908258889780"
-    },
-    {
-      "date": "2026-09-21",
-      "player": "Tex",
-      "playerUrl": "https://liquipedia.net/valorant/Tex",
-      "from": "MIBR",
-      "to": "MIBR (Inactive)",
-      "game": "Valorant",
-      "refUrl": "https://x.com/texerino/status/2102137561628201104"
-    },
-    {
-      "date": "2026-09-21",
-      "player": "Zaj",
-      "playerUrl": "https://liquipedia.net/valorant/Zaj",
-      "from": "SaD Esports",
-      "to": "None",
-      "game": "Valorant",
-      "refUrl": "https://x.com/z01034/status/2102129093474996324"
-    },
-    {
-      "date": "2026-09-21",
-      "player": "Brinks",
-      "playerUrl": "https://liquipedia.net/valorant/Brinks",
-      "from": "2GAME Esports",
-      "to": "None",
-      "game": "Valorant",
-      "refUrl": "https://x.com/2GAMEgg/status/2102125462738899065"
-    },
-    {
-      "date": "2026-09-21",
-      "player": "NegaraL",
-      "playerUrl": "https://liquipedia.net/valorant/NegaraL",
-      "from": "2GAME Esports (Coach)",
-      "to": "None",
-      "game": "Valorant",
-      "refUrl": "https://x.com/2GAMEgg/status/2102125462738899065"
-    },
-    {
-      "date": "2026-09-21",
-      "player": "Shin",
-      "playerUrl": "https://liquipedia.net/valorant/Shin",
-      "from": "Mandatory",
-      "to": "None",
-      "game": "Valorant",
-      "refUrl": "https://x.com/MandatoryGG/status/2102067813313646781"
-    },
-    {
-      "date": "2026-09-21",
-      "player": "HyP",
-      "playerUrl": "https://liquipedia.net/valorant/HyP",
-      "from": "Mandatory (Substitute)",
-      "to": "None",
-      "game": "Valorant",
-      "refUrl": "https://x.com/MandatoryGG/status/2102067813313646781"
     },
     {
       "date": "2026-09-21",
@@ -272,6 +272,87 @@
       "refUrl": "/leagueoflegends/LIT/2026/Summer"
     },
     {
+      "date": "2026-09-22",
+      "player": "Drg",
+      "playerUrl": "https://liquipedia.net/counterstrike/Drg",
+      "from": "UNO MILLE",
+      "to": "Keyd Stars",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/VivoKeyd/status/2102427710199115934"
+    },
+    {
+      "date": "2026-09-22",
+      "player": "KinGui",
+      "playerUrl": "https://liquipedia.net/counterstrike/KinGui",
+      "from": "UNO MILLE (Coach)",
+      "to": "Keyd Stars (Coach)",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/VivoKeyd/status/2102427710199115934"
+    },
+    {
+      "date": "2026-09-22",
+      "player": "Chshekin",
+      "playerUrl": "https://liquipedia.net/counterstrike/Chshekin",
+      "from": "None",
+      "to": "Procyon Team",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/procyonteam/status/2102437314873983331"
+    },
+    {
+      "date": "2026-09-22",
+      "player": "Asap",
+      "playerUrl": "https://liquipedia.net/counterstrike/Asap",
+      "from": "THUNDERdOWNUNDER",
+      "to": "BC.Game Esports",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/BCGameEsports/status/2102457981862285382"
+    },
+    {
+      "date": "2026-09-22",
+      "player": "ElectroNic",
+      "playerUrl": "https://liquipedia.net/counterstrike/ElectroNic",
+      "from": "BC.Game Esports",
+      "to": "BC.Game Esports (Inactive)",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/BCGameEsports/status/2102362787901288932"
+    },
+    {
+      "date": "2026-09-22",
+      "player": "BAXACHA",
+      "playerUrl": "https://liquipedia.net/counterstrike/BAXACHA",
+      "from": "Partizan Esports (Coach/Team Manager)",
+      "to": "None",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/baxacha_/status/2102407534191481107"
+    },
+    {
+      "date": "2026-09-22",
+      "player": "P1ksel",
+      "playerUrl": null,
+      "from": "Sissi State Punks",
+      "to": "None",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/p1kselCS/status/2102174576226550189"
+    },
+    {
+      "date": "2026-09-22",
+      "player": "LkS",
+      "playerUrl": null,
+      "from": "None",
+      "to": "INFINITE Talent",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/infiniteggro/status/2102337223374827844"
+    },
+    {
+      "date": "2026-09-22",
+      "player": "Ciupz",
+      "playerUrl": null,
+      "from": "None",
+      "to": "INFINITE Talent (Coach)",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/infiniteggro/status/2102337223374827844"
+    },
+    {
       "date": "2026-09-21",
       "player": "Jolts",
       "playerUrl": null,
@@ -318,93 +399,48 @@
     },
     {
       "date": "2026-09-21",
-      "player": "H5nu",
+      "player": "Skill3z",
       "playerUrl": null,
-      "from": "None",
-      "to": "HAVU Taimi",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/havugaming/status/2102035123872874840"
-    },
-    {
-      "date": "2026-09-21",
-      "player": "Myzunic",
-      "playerUrl": null,
-      "from": "None",
-      "to": "9INE Academy",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/9INEGG/status/2102020026068795671"
-    },
-    {
-      "date": "2026-09-21",
-      "player": "Rock",
-      "playerUrl": "https://liquipedia.net/counterstrike/Rock",
-      "from": "None",
-      "to": "9INE Academy (Coach)",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/9INEGG/status/2102020026068795671"
-    },
-    {
-      "date": "2026-09-21",
-      "player": "Stalkera",
-      "playerUrl": null,
-      "from": "None",
-      "to": "9INE / (Team Manager/Team Manager)",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/9INEGG/status/2102020026068795671"
-    },
-    {
-      "date": "2026-09-21",
-      "player": "Crax",
-      "playerUrl": null,
-      "from": "None",
-      "to": "MASQ",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/masq_cs2/status/2101948732421906890"
-    },
-    {
-      "date": "2026-09-21",
-      "player": "Sowalio",
-      "playerUrl": "https://liquipedia.net/counterstrike/Sowalio",
-      "from": "Nemiga Gaming (Inactive)",
+      "from": "EXSAD Gaming",
       "to": "None",
       "game": "Counter-Strike",
-      "refUrl": "https://x.com/nemigagg/status/2102061261584269759"
+      "refUrl": "https://x.com/exsadggoficial/status/2102111122195149040"
     },
     {
-      "date": "2026-09-21",
-      "player": "Omeshii",
-      "playerUrl": null,
+      "date": "2026-09-23",
+      "player": "Kaffs",
+      "playerUrl": "https://liquipedia.net/dota2/Kaffs",
       "from": "None",
-      "to": "RAVENS Academy",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/ravens_cs/status/2101977851725742427"
+      "to": "OG (Coach)",
+      "game": "Dota 2",
+      "refUrl": "https://x.com/OGesports/status/2102762599876084135"
     },
     {
-      "date": "2026-09-21",
-      "player": "Dekmezz",
+      "date": "2026-09-23",
+      "player": "SSS",
+      "playerUrl": "https://liquipedia.net/dota2/SSS",
+      "from": "PARIVISION (Inactive)",
+      "to": "OG / (Loan/Inactive)",
+      "game": "Dota 2",
+      "refUrl": "https://x.com/PARIVISIONdota2/status/2102759895602806851"
+    },
+    {
+      "date": "2026-09-23",
+      "player": "Topson",
+      "playerUrl": "https://liquipedia.net/dota2/Topson",
+      "from": "None",
+      "to": "OG",
+      "game": "Dota 2",
+      "refUrl": "https://x.com/OGesports/status/2102762599876084135"
+    },
+    {
+      "date": "2026-09-23",
+      "player": "LANE",
       "playerUrl": null,
-      "from": "RAVENS Academy",
+      "from": "OG (Manager)",
       "to": "None",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/ravens_cs/status/2101977851725742427"
-    },
-    {
-      "date": "2026-09-20",
-      "player": "Weine",
-      "playerUrl": null,
-      "from": "Omen Esports",
-      "to": "None",
-      "game": "Counter-Strike",
-      "refUrl": "https://www.dust2.us/news/78056/omen-seek-new-awper-as-weine-steps-down"
-    },
-    {
-      "date": "2026-09-20",
-      "player": "Obyj",
-      "playerUrl": null,
-      "from": "Misa Esports (Inactive Coach)",
-      "to": "Fire Flux Esports (Coach)",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/misaesports/status/2101688889027010949"
+      "game": "Dota 2",
+      "refUrl": "https://ogs.gg/og-esports-unveils-2027-dota-2-roster/"
     },
     {
       "date": "2026-09-21",
@@ -506,40 +542,31 @@
       "refUrl": "https://x.com/TEAMSYNAPSwxv/status/2100789874534367243"
     },
     {
-      "date": "2026-09-18",
-      "player": "Bengan",
-      "playerUrl": "https://liquipedia.net/dota2/Bengan",
-      "from": "None",
-      "to": "Team Synapse",
-      "game": "Dota 2",
-      "refUrl": "https://x.com/TEAMSYNAPSwxv/status/2100789874534367243"
+      "date": "2026-09-22",
+      "player": "Abdullah",
+      "playerUrl": "https://liquipedia.net/rocketleague/Abdullah",
+      "from": "R8 Esports R8",
+      "to": "R8 Esports R8(Inactive)",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/Ghaazi_rl/status/2102481675959644408"
     },
     {
-      "date": "2026-09-18",
-      "player": "Stoic",
-      "playerUrl": null,
-      "from": "Team Synapse",
-      "to": "Team Synapse (Inactive)",
-      "game": "Dota 2",
-      "refUrl": "https://x.com/TEAMSYNAPSwxv/status/2100789874534367243"
+      "date": "2026-09-22",
+      "player": "Zez0nix",
+      "playerUrl": "https://liquipedia.net/rocketleague/Zez0nix",
+      "from": "R8 Esports R8 (Coach)",
+      "to": "R8 Esports R8(Inactive Coach)",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/Ghaazi_rl/status/2102481675959644408"
     },
     {
-      "date": "2026-09-17",
-      "player": "ATF",
-      "playerUrl": "https://liquipedia.net/dota2/ATF",
-      "from": "None",
-      "to": "Team Yandex",
-      "game": "Dota 2",
-      "refUrl": "https://t.me/team_yandex_dota_2/2573"
-    },
-    {
-      "date": "2026-09-17",
-      "player": "DM",
-      "playerUrl": "https://liquipedia.net/dota2/DM",
-      "from": "Team Yandex",
-      "to": "Team Yandex (Inactive)",
-      "game": "Dota 2",
-      "refUrl": "https://t.me/team_yandex_dota_2/2570"
+      "date": "2026-09-22",
+      "player": "Adot",
+      "playerUrl": "https://liquipedia.net/rocketleague/Adot",
+      "from": "R8 Esports R8 (Manager)",
+      "to": "R8 Esports R8(Inactive Manager)",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/Ghaazi_rl/status/2102481675959644408"
     },
     {
       "date": "2026-09-21",
@@ -585,6 +612,15 @@
       "to": "None",
       "game": "Rocket League",
       "refUrl": "https://x.com/FreaKiiRL/status/2101734130161434953"
+    },
+    {
+      "date": "2026-09-19",
+      "player": "Shadicti",
+      "playerUrl": null,
+      "from": "GHT GHT (Manager)",
+      "to": "None",
+      "game": "Rocket League",
+      "refUrl": null
     },
     {
       "date": "2026-09-19",
@@ -639,180 +675,29 @@
       "to": "Cristobal Colon CRIS",
       "game": "Rocket League",
       "refUrl": "https://x.com/PinGu__RL/status/2099562631078047818"
-    },
-    {
-      "date": "2026-09-14",
-      "player": "EliakimZA",
-      "playerUrl": "https://liquipedia.net/rocketleague/EliakimZA",
-      "from": "Marine Region MRN",
-      "to": "Cristobal Colon CRIS",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/PinGu__RL/status/2099562631078047818"
-    },
-    {
-      "date": "2026-09-14",
-      "player": "Sebastiaan Roza",
-      "playerUrl": null,
-      "from": "Marine Region MRN (Coach/Manager)",
-      "to": "Cristobal Colon CRIS(Coach)",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/PinGu__RL/status/2099562631078047818"
-    },
-    {
-      "date": "2026-09-14",
-      "player": "DaltonZA",
-      "playerUrl": "https://liquipedia.net/rocketleague/DaltonZA",
-      "from": "Marine Region MRN",
-      "to": "None",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/PinGu__RL/status/2099562631078047818"
-    },
-    {
-      "date": "2026-09-14",
-      "player": "Alpha54",
-      "playerUrl": "https://liquipedia.net/rocketleague/Alpha54",
-      "from": "Geekay Esports GK",
-      "to": "None",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/GeekayRL/status/2099513512708206957"
-    },
-    {
-      "date": "2026-09-21",
-      "player": "V1ctory",
-      "playerUrl": "https://liquipedia.net/overwatch/V1ctory",
-      "from": "None",
-      "to": "Amplify",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/amplifyexe/status/2102179388456411597"
-    },
-    {
-      "date": "2026-09-21",
-      "player": "Kuronaa",
-      "playerUrl": null,
-      "from": "None",
-      "to": "Amplify (Manager)",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/amplifyexe/status/2102179388456411597"
-    },
-    {
-      "date": "2026-09-21",
-      "player": "Alfonzo",
-      "playerUrl": null,
-      "from": "None",
-      "to": "Miami University",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/redhawksgg/status/2102119300995633397"
-    },
-    {
-      "date": "2026-09-21",
-      "player": "Trx",
-      "playerUrl": null,
-      "from": "None",
-      "to": "Miami University (Substitute)",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/redhawksgg/status/2102119300995633397"
-    },
-    {
-      "date": "2026-09-21",
-      "player": "Haven (American player)",
-      "playerUrl": "https://liquipedia.net/overwatch/Haven_(American_player)",
-      "from": "Northwood University Blue",
-      "to": "Northwood University Blue (Coach)",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/northwoodesport/status/2102097809377792465"
-    },
-    {
-      "date": "2026-09-21",
-      "player": "Faustus",
-      "playerUrl": "https://liquipedia.net/overwatch/Faustus",
-      "from": "Northwood University Blue (Coach)",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/northwoodesport/status/2102097809377792465"
-    },
-    {
-      "date": "2026-09-21",
-      "player": "PommiTimo",
-      "playerUrl": "https://liquipedia.net/overwatch/PommiTimo",
-      "from": "None",
-      "to": "Vanir Quick",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/vanirquickgg/status/2102071883025797579"
-    },
-    {
-      "date": "2026-09-21",
-      "player": "Linda",
-      "playerUrl": "https://liquipedia.net/overwatch/Linda",
-      "from": "Vanir Quick (Manager)",
-      "to": "Vanir Quick (General Manager)",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/vanirquickgg/status/2102071883025797579"
-    },
-    {
-      "date": "2026-09-21",
-      "player": "Gucci",
-      "playerUrl": "https://liquipedia.net/overwatch/Gucci",
-      "from": "Vanir Quick",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/vanirquickgg/status/2102071883025797579"
-    },
-    {
-      "date": "2026-09-19",
-      "player": "Pdk",
-      "playerUrl": "https://liquipedia.net/overwatch/Pdk",
-      "from": "None",
-      "to": "Team Missing",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/missing_gg/status/2101455829182668924"
-    },
-    {
-      "date": "2026-09-19",
-      "player": "Kero",
-      "playerUrl": null,
-      "from": "Moths (Manager)",
-      "to": "Team Missing (Manager)",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/missing_gg/status/2101455829182668924"
-    },
-    {
-      "date": "2026-09-19",
-      "player": "Eve",
-      "playerUrl": "https://liquipedia.net/overwatch/Eve",
-      "from": "Team Missing",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/missing_gg/status/2101455829182668924"
-    },
-    {
-      "date": "2026-09-19",
-      "player": "Izzy (American manager)",
-      "playerUrl": "https://liquipedia.net/overwatch/Izzy_(American_manager)",
-      "from": "Team Missing (Manager)",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/missing_gg/status/2101455829182668924"
-    },
-    {
-      "date": "2026-09-19",
-      "player": "Kero",
-      "playerUrl": null,
-      "from": "None",
-      "to": "The Kafe (General Manager)",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/thekafeesports/status/2101385891604251082"
-    },
-    {
-      "date": "2026-09-19",
-      "player": "Noy",
-      "playerUrl": "https://liquipedia.net/overwatch/Noy",
-      "from": "Solus Victorem",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://www.bilibili.com/opus/1249681495718625287"
     }
   ],
   "rumours": [
+    {
+      "date": "2026-09-22",
+      "player": "Kaplan",
+      "playerUrl": "https://liquipedia.net/valorant/Kaplan",
+      "from": "M80 (Head Coach)",
+      "to": "Gentle Mates (Head Coach)",
+      "game": "Valorant",
+      "refUrl": "https://www.sheepesports.com/en/articles/sources-kaplan-set-to-join-gentle-mates-for-vct-emea-2027/en",
+      "confidence": "Likely"
+    },
+    {
+      "date": "2026-09-22",
+      "player": "Alfajer",
+      "playerUrl": "https://liquipedia.net/valorant/Alfajer",
+      "from": "Fnatic",
+      "to": "Gentle Mates",
+      "game": "Valorant",
+      "refUrl": "https://www.sheepesports.com/en/articles/sources-alfajer-set-to-join-gentle-mates-for-2027/en",
+      "confidence": "Likely"
+    },
     {
       "date": "2026-09-21",
       "player": "Valyn",
@@ -944,23 +829,13 @@
       "confidence": "Likely"
     },
     {
-      "date": "2026-07-19",
-      "player": "Stk",
-      "playerUrl": "https://liquipedia.net/valorant/Stk",
-      "from": "La Masia (Coach)",
-      "to": "Fluxo W7M (Coach)",
-      "game": "Valorant",
-      "refUrl": "https://x.com/brunopovoleri/status/2078970902444753060",
-      "confidence": "Likely"
-    },
-    {
-      "date": "2026-07-17",
-      "player": "C0M",
-      "playerUrl": "https://liquipedia.net/valorant/C0M",
-      "from": "None",
-      "to": "FURIA",
-      "game": "Valorant",
-      "refUrl": "https://x.com/AkamaruVal/status/2078162870425043235",
+      "date": "2026-09-22",
+      "player": "Jun",
+      "playerUrl": "https://liquipedia.net/leagueoflegends/Jun",
+      "from": "GIANTX GX",
+      "to": "Team Heretics TH",
+      "game": "League of Legends",
+      "refUrl": "https://www.sheepesports.com/en/articles/sources-jun-set-to-join-team-heretics-after-delaying-military-service/en",
       "confidence": "Likely"
     },
     {
@@ -976,73 +851,101 @@
   ],
   "news": [
     {
-      "title": "LoL players are getting reported for saying Trundle’s own voice line",
-      "link": "https://dotesports.com/league-of-legends/news/lol-trundle-troll-voiceline-reported",
-      "pubDate": "2026-09-22T15:34:58.000Z",
+      "title": "A new Silent Hill film is in production following Resident Evil’s success",
+      "link": "https://dotesports.com/silent-hill/news/silent-hill-film-movie-resident-evil-roy-lee",
+      "pubDate": "2026-09-23T15:19:00.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
     {
-      "title": "Best VMP loadout in Warzone for a deadly sniper support",
-      "link": "https://dotesports.com/call-of-duty/guides/best-vmp-loadout-bo7-warzone",
-      "pubDate": "2026-09-22T13:45:09.000Z",
+      "title": "VALORANT Champions 2026 bundle sells $20.7M in 3 hours on Douyin",
+      "link": "https://dotesports.com/general/news/valorant-champions-2026-bundle-sales",
+      "pubDate": "2026-09-23T13:27:47.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
     {
-      "title": "VALORANT Patch 13.06 notes: UI overhaul, Agent Mastery, Warden, and new mode",
-      "link": "https://dotesports.com/valorant/news/valroant-patch-13-6-notes",
-      "pubDate": "2026-09-22T13:00:00.000Z",
+      "title": "Best Starter teams under 10K, 50K, 100K, 250K Coins in EA Sports FC 27",
+      "link": "https://dotesports.com/ea-sports-fc/guides/best-starter-teams-ea-sports-fc-27",
+      "pubDate": "2026-09-23T13:19:46.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
     {
-      "title": "Rockstar’s new mod rules apply to GTA 6, and modders are taking note",
-      "link": "https://dotesports.com/general/news/gta-6-mod-rules",
-      "pubDate": "2026-09-22T10:56:41.000Z",
+      "title": "Japan names 25-strong esports squad for 2026 Asian Games in Nagoya",
+      "link": "https://esports-news.co.uk/2026/09/23/japan-names-25-strong-esports-squad-for-2026-asian-games-in-nagoya/",
+      "pubDate": "2026-09-23T12:11:04.000Z",
+      "source": "Esports News UK",
+      "section": "headlines"
+    },
+    {
+      "title": "Kim Young-chan earns bronze in Gran Turismo 7 for South Korea’s first esports medal",
+      "link": "https://dotesports.com/general/news/gran-turismo-7-asian-games",
+      "pubDate": "2026-09-23T09:14:58.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
     {
-      "title": "Best VMP loadout in Black Ops 7 for low recoil and fast mobility",
-      "link": "https://dotesports.com/call-of-duty/guides/best-vmp-loadout-bo7",
-      "pubDate": "2026-09-22T09:55:33.000Z",
+      "title": "KPL Brings Sleep Tech Into Esports With Serta Partnership",
+      "link": "https://esportsinsider.com/2026/09/serta-kpl-partnership",
+      "pubDate": "2026-09-23T09:00:00.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
+    },
+    {
+      "title": "Genshin Impact banner schedule: Current and upcoming banners",
+      "link": "https://dotesports.com/genshin-impact/guides/genshin-impact-banner-schedule",
+      "pubDate": "2026-09-23T08:35:55.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
     {
-      "title": "How to complete Week 1 challenges in BO7 & Warzone Season 6",
-      "link": "https://dotesports.com/call-of-duty/guides/black-ops-7-warzone-season-6-week-1-challenges",
-      "pubDate": "2026-09-22T07:24:46.000Z",
+      "title": "Alfajer reportedly set to join Gentle Mates for VCT EMEA 2027 after more than four years at Fnatic",
+      "link": "https://dotesports.com/valorant/news/alfajer-joining-gentle-mates-vct-2027",
+      "pubDate": "2026-09-23T08:22:43.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
     {
-      "title": "Maximilian Dood criticizes FGC drama and calls for more support for fighting games",
-      "link": "https://dotesports.com/fgc/news/maximilian-dood-fgc-twitter-drama",
-      "pubDate": "2026-09-22T02:30:33.000Z",
+      "title": "Best free five-star character to pick from Genshin Impact 7.1 event selector",
+      "link": "https://dotesports.com/genshin-impact/news/genshin-impact-7-1-event-selector-best-character",
+      "pubDate": "2026-09-23T07:39:23.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
     {
-      "title": "Red Bull League of Its Own heads to Spain with T1, G2, KOI, and Karmine Corp",
-      "link": "https://dotesports.com/league-of-legends/news/red-bull-league-of-its-own-spain",
-      "pubDate": "2026-09-22T00:26:53.000Z",
+      "title": "League Classic Akali guide: Best build, runes, masteries, and combos",
+      "link": "https://dotesports.com/league-of-legends/guides/league-classic-akali-build-guide",
+      "pubDate": "2026-09-23T03:03:18.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
     {
-      "title": "All current and future banners in Neverness to Everness",
-      "link": "https://dotesports.com/neverness-to-everness/news/all-current-future-banners-in-neverness-to-everness",
-      "pubDate": "2026-09-21T18:43:06.000Z",
+      "title": "Cozy dressmaking indie game goes viral, hits Steam’s top sellers list",
+      "link": "https://dotesports.com/indies/news/dressmaker-indie-cozy-game-sewing-steam-top-seller",
+      "pubDate": "2026-09-23T01:29:21.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
     {
-      "title": "Pikachu goes to space: Pokémon launches ESA collaboration for World Space Week",
-      "link": "https://dotesports.com/pokemon/news/pikachu-goes-to-space-pokemon-launches-esa-collaboration-for-world-space-week",
-      "pubDate": "2026-09-21T17:58:46.000Z",
+      "title": "All CS2 competitive maps and active duty map pool (Updated 2026)",
+      "link": "https://dotesports.com/counter-strike/news/all-cs2-competitive-active-duty-maps",
+      "pubDate": "2026-09-23T01:11:30.000Z",
       "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "LEC Versus Won’t Return for 2027: A chat with the LEC Commissioner",
+      "link": "https://esportsinsider.com/2026/09/lec-versus-wont-return-for-2027-a-chat-with-the-lec-commissioner",
+      "pubDate": "2026-09-22T17:21:38.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
+    },
+    {
+      "title": "BC.Game bench electroNic in push for Asian core status and Major berth",
+      "link": "https://esports-news.co.uk/2026/09/22/bc-game-bench-electronic-in-push-for-asian-core-status-and-major-berth/",
+      "pubDate": "2026-09-22T16:10:53.000Z",
+      "source": "Esports News UK",
       "section": "headlines"
     },
     {
@@ -1158,25 +1061,11 @@
       "section": "headlines"
     },
     {
-      "title": "StarLadder StarSeries Fall 2026 predictions: Which teams can win in Barcelona?",
-      "link": "https://esportsinsider.com/2026/09/starladder-starseries-fall-2026-predictions",
-      "pubDate": "2026-09-14T10:23:44.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
-    },
-    {
       "title": "Legacy Deliver At 4/1 To Win FISSURE Playground 3",
       "link": "https://esports-news.co.uk/2026/09/14/legacy-deliver-at-4-1-to-win-fissure-playground-3/",
       "pubDate": "2026-09-14T09:39:17.000Z",
       "source": "Esports News UK",
       "section": "headlines"
-    },
-    {
-      "title": "ESI business roundup: BLAST’s Mongolian expansion, Riot Games considers prediction market deals, 1xBet extends PGL partnership",
-      "link": "https://esportsinsider.com/2026/09/esi-business-roundup-blast-riot-games-pgl",
-      "pubDate": "2026-09-11T21:36:50.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
     },
     {
       "title": "Sayonara, Cryocells and PatMen headline players to watch at Champions Shanghai",
@@ -1203,20 +1092,6 @@
       "title": "Vitality’s mezii has earned more in 2026 than every other British CS2 player combined",
       "link": "https://esports-news.co.uk/2026/09/10/mezii-british-cs2-prize-money/",
       "pubDate": "2026-09-10T09:56:02.000Z",
-      "source": "Esports News UK",
-      "section": "headlines"
-    },
-    {
-      "title": "Alliance stun FaZe 2-0 in FISSURE Playground 3 opener",
-      "link": "https://esports-news.co.uk/2026/09/08/alliance-stun-faze-2-0-in-fissure-playground-3-opener/",
-      "pubDate": "2026-09-08T17:10:44.000Z",
-      "source": "Esports News UK",
-      "section": "headlines"
-    },
-    {
-      "title": "Esports Prediction Markets Could Come To UK",
-      "link": "https://esports-news.co.uk/2026/09/08/esports-prediction-markets-could-come-to-uk/",
-      "pubDate": "2026-09-08T14:53:04.000Z",
       "source": "Esports News UK",
       "section": "headlines"
     }
