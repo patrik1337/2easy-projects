@@ -1,6 +1,15 @@
 {
-  "generatedAt": "2026-09-26T15:18:24.946Z",
+  "generatedAt": "2026-09-27T15:59:02.933Z",
   "transfers": [
+    {
+      "date": "2026-09-26",
+      "player": "SpY",
+      "playerUrl": "https://liquipedia.net/valorant/SpY",
+      "from": "AlQadsiah Esports",
+      "to": "None",
+      "game": "Valorant",
+      "refUrl": "https://x.com/SpYzera/status/2103107192874209553"
+    },
     {
       "date": "2026-09-25",
       "player": "Koalanoob",
@@ -126,15 +135,6 @@
       "to": "Uwinks GC",
       "game": "Valorant",
       "refUrl": "https://x.com/teamSasanqua/status/2102337118752460824"
-    },
-    {
-      "date": "2026-09-22",
-      "player": "Zanatsu",
-      "playerUrl": "https://liquipedia.net/valorant/Zanatsu",
-      "from": "Fluxo W7M",
-      "to": "Fluxo W7M (Inactive)",
-      "game": "Valorant",
-      "refUrl": "https://x.com/Zanatsufps/status/2102445635727196562"
     },
     {
       "date": "2026-09-25",
@@ -299,6 +299,24 @@
       "refUrl": "https://x.com/heroicgg/status/2103816871422152868"
     },
     {
+      "date": "2026-09-26",
+      "player": "H4SAN4TOR",
+      "playerUrl": "https://liquipedia.net/counterstrike/H4SAN4TOR",
+      "from": "None",
+      "to": "PRIVATE",
+      "game": "Counter-Strike",
+      "refUrl": "https://t.me/private_cs2/21"
+    },
+    {
+      "date": "2026-09-26",
+      "player": "Z1k4",
+      "playerUrl": "https://liquipedia.net/counterstrike/Z1k4",
+      "from": "Nuclear TigeRES (Inactive)",
+      "to": "PRIVATE / (Loan/Inactive)",
+      "game": "Counter-Strike",
+      "refUrl": "https://t.me/nucleartigeres/2040"
+    },
+    {
       "date": "2026-09-25",
       "player": "Joeski",
       "playerUrl": "https://liquipedia.net/counterstrike/Joeski",
@@ -354,6 +372,15 @@
     },
     {
       "date": "2026-09-25",
+      "player": "Mané",
+      "playerUrl": null,
+      "from": "None",
+      "to": "Flame Hard",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/FlameHard/status/2103469754606313797"
+    },
+    {
+      "date": "2026-09-25",
       "player": "Sowalio",
       "playerUrl": "https://liquipedia.net/counterstrike/Sowalio",
       "from": "None",
@@ -372,39 +399,12 @@
     },
     {
       "date": "2026-09-24",
-      "player": "JTR",
-      "playerUrl": "https://liquipedia.net/counterstrike/JTR",
-      "from": "None",
-      "to": "FOKUS (Coach)",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/fokusclancs/status/2103145282318078162"
-    },
-    {
-      "date": "2026-09-24",
-      "player": "Kuben",
-      "playerUrl": "https://liquipedia.net/counterstrike/Kuben",
-      "from": "FOKUS (Coach)",
-      "to": "FOKUS (Inactive Coach)",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/fokusclancs/status/2103129922558734424"
-    },
-    {
-      "date": "2026-09-24",
-      "player": "DeeN",
+      "player": "Dash",
       "playerUrl": null,
-      "from": "None",
-      "to": "MOUZ NXT",
+      "from": "NineFly Esports",
+      "to": "None",
       "game": "Counter-Strike",
-      "refUrl": "https://x.com/mousesports/status/2103153813716635958"
-    },
-    {
-      "date": "2026-09-24",
-      "player": "AdrieN",
-      "playerUrl": "https://liquipedia.net/counterstrike/AdrieN",
-      "from": "Permitta Esports",
-      "to": "Banda LFO",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/1masashii/status/2103003031360979149"
+      "refUrl": "https://x.com/NineFlyeSports/status/2103152212511797381"
     },
     {
       "date": "2026-09-25",
@@ -543,6 +543,15 @@
     },
     {
       "date": "2026-09-26",
+      "player": "AnoriQ",
+      "playerUrl": "https://liquipedia.net/rocketleague/AnoriQ",
+      "from": "L'Antique Esport ANT",
+      "to": "None",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/AnoriQK/status/2103867183407464917"
+    },
+    {
+      "date": "2026-09-26",
       "player": "Hxll0",
       "playerUrl": "https://liquipedia.net/rocketleague/Hxll0",
       "from": "RHHS",
@@ -668,13 +677,40 @@
       "refUrl": "https://x.com/Ghaazi_rl/status/2102481675959644408"
     },
     {
-      "date": "2026-09-22",
-      "player": "Zez0nix",
-      "playerUrl": "https://liquipedia.net/rocketleague/Zez0nix",
-      "from": "R8 Esports R8 (Coach)",
-      "to": "R8 Esports R8(Inactive Coach)",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/Ghaazi_rl/status/2102481675959644408"
+      "date": "2026-09-27",
+      "player": "Deng Shihang",
+      "playerUrl": "https://liquipedia.net/overwatch/Deng_Shihang",
+      "from": "OU Gaming",
+      "to": "HUNENG Gaming",
+      "game": "Overwatch",
+      "refUrl": "https://www.bilibili.com/opus/1252714047583813657"
+    },
+    {
+      "date": "2026-09-27",
+      "player": "Liang Yibin",
+      "playerUrl": "https://liquipedia.net/overwatch/Liang_Yibin",
+      "from": "Naive Piggy",
+      "to": "HUNENG Gaming",
+      "game": "Overwatch",
+      "refUrl": "https://www.bilibili.com/opus/1252714923723587589"
+    },
+    {
+      "date": "2026-09-27",
+      "player": "YangJun",
+      "playerUrl": "https://liquipedia.net/overwatch/YangJun",
+      "from": "None",
+      "to": "HUNENG Gaming",
+      "game": "Overwatch",
+      "refUrl": "https://www.bilibili.com/opus/1252714923723587589"
+    },
+    {
+      "date": "2026-09-27",
+      "player": "D0D0",
+      "playerUrl": "https://liquipedia.net/overwatch/D0D0",
+      "from": "HUNENG Gaming",
+      "to": "None",
+      "game": "Overwatch",
+      "refUrl": "https://www.bilibili.com/opus/1252714047583813657"
     },
     {
       "date": "2026-09-26",
@@ -774,45 +810,19 @@
       "to": "None",
       "game": "Overwatch",
       "refUrl": "https://www.bilibili.com/opus/1251549177298550793"
-    },
-    {
-      "date": "2026-09-24",
-      "player": "Chen Xingyou",
-      "playerUrl": "https://liquipedia.net/overwatch/Chen_Xingyou",
-      "from": "All Gamers (Coach)",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://www.bilibili.com/opus/1251551754222305328"
-    },
-    {
-      "date": "2026-09-23",
-      "player": "Yuu",
-      "playerUrl": null,
-      "from": "None",
-      "to": "University of Missouri",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/mizzouesports/status/2102886948595540013"
-    },
-    {
-      "date": "2026-09-23",
-      "player": "Clairvoyant",
-      "playerUrl": null,
-      "from": "University of Missouri",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/mizzouesports/status/2102886948595540013"
-    },
-    {
-      "date": "2026-09-23",
-      "player": "Tyler (American manager)",
-      "playerUrl": "https://liquipedia.net/overwatch/Tyler_(American_manager)",
-      "from": "University of Missouri (Manager)",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/mizzouesports/status/2102886948595540013"
     }
   ],
   "rumours": [
+    {
+      "date": "2026-09-26",
+      "player": "Chloric",
+      "playerUrl": "https://liquipedia.net/valorant/Chloric",
+      "from": "Natus Vincere (Inactive)",
+      "to": "Team Heretics",
+      "game": "Valorant",
+      "refUrl": "https://www.sheepesports.com/en/articles/sources-chloric-reaches-verbal-agreement-with-team-heretics/en",
+      "confidence": "Likely"
+    },
     {
       "date": "2026-09-26",
       "player": "Kachoww",
@@ -954,16 +964,6 @@
       "confidence": "Likely"
     },
     {
-      "date": "2026-07-22",
-      "player": "Batujnax",
-      "playerUrl": "https://liquipedia.net/valorant/Batujnax",
-      "from": "REBORN",
-      "to": "Fire Flux Esports",
-      "game": "Valorant",
-      "refUrl": "https://www.sheepesports.com/en/all/articles/sources-reborn-lineup-have-reached-a-verbal-agreement-with-fire-flux-esports-ahead-of-vct-emea/en",
-      "confidence": "Likely"
-    },
-    {
       "date": "2026-09-22",
       "player": "Jun",
       "playerUrl": "https://liquipedia.net/leagueoflegends/Jun",
@@ -986,9 +986,86 @@
   ],
   "news": [
     {
-      "title": "Team Vitality hold off Global Esports with a 2-1 win to start Champions 2026 run",
-      "link": "https://dotesports.com/valorant/news/team-vitality-2-1-win-global-esports-champions-2026",
-      "pubDate": "2026-09-26T12:55:32.000Z",
+      "title": "100 Thieves ride Americas Stage 2 form to beat T1 2-0 at VALORANT Champions 2026",
+      "link": "https://dotesports.com/valorant/news/100-thieves-beat-t1-vct-champions-2026",
+      "pubDate": "2026-09-27T12:17:08.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "Delta Force launches beta for its own 5v5 bomb mode, Detonation",
+      "link": "https://dotesports.com/delta-force/news/delta-force-detonation-beta",
+      "pubDate": "2026-09-27T11:23:02.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "vic0 & Malibuca Top Fortnite Global Championship After Day 1",
+      "link": "https://esportsinsider.com/2026/09/fortnite-global-championship-day-1",
+      "pubDate": "2026-09-27T09:00:00.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
+    },
+    {
+      "title": "Discord reportedly developing new Game Mode feature to reduce CPU & GPU usage",
+      "link": "https://dotesports.com/general/news/discord-feature-reduce-cpu-gpu-usage",
+      "pubDate": "2026-09-27T06:55:31.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "LYON ends Shopify Rebellion’s Cinderella run to secure final LCS Worlds spot",
+      "link": "https://dotesports.com/league-of-legends/news/lyon-shopify-rebellion-worlds-2026",
+      "pubDate": "2026-09-27T06:53:57.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "How to get Maxence Lacroix Ones to Watch fast in FC 27",
+      "link": "https://dotesports.com/ea-sports-fc/guides/ea-fc-27-maxence-lacroix-ones-to-watch",
+      "pubDate": "2026-09-27T04:04:47.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "11-year-old Yuki Kurihara wins Asian Games esports gold for Japan",
+      "link": "https://dotesports.com/general/news/yuki-kurihara-asian-games-gold-esports",
+      "pubDate": "2026-09-27T00:29:03.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "78-year-old Fortnite granny makes Guinness World Records history",
+      "link": "https://dotesports.com/fortnite/news/78-year-old-fortnite-gran-world-record",
+      "pubDate": "2026-09-26T23:33:38.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "Microsoft patents system that rewards players with game time for watching ads",
+      "link": "https://dotesports.com/general/news/microsoft-patent-system-ad-game-time",
+      "pubDate": "2026-09-26T22:09:09.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "Minecraft confirms The Sift, its first new Dimension since 2012",
+      "link": "https://dotesports.com/minecraft/news/the-sift-minecraft-live",
+      "pubDate": "2026-09-26T21:09:46.000Z",
+      "source": "Dot Esports",
+      "section": "headlines"
+    },
+    {
+      "title": "Three series reshape the PGL Wallachia Season 9 playoffs",
+      "link": "https://esportsinsider.com/2026/09/pgl-wallachia-season-9-playoffs",
+      "pubDate": "2026-09-26T16:00:00.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
+    },
+    {
+      "title": "How to get a free Costume Coin in Marvel Rivals Galacta’s Gift Vol. 3 event",
+      "link": "https://dotesports.com/marvel/guides/marvel-rivals-galactas-gift-vol-3",
+      "pubDate": "2026-09-26T15:26:29.000Z",
       "source": "Dot Esports",
       "section": "headlines"
     },
@@ -1000,46 +1077,11 @@
       "section": "industry"
     },
     {
-      "title": "MindsEye developer Build A Rocket Boy enters administration after year of layoffs",
-      "link": "https://dotesports.com/general/news/build-a-rocket-boy-administration-mindseye",
-      "pubDate": "2026-09-26T07:53:24.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "Marvel’s Wolverine adds Scent Trails and Audio toggles after massive backlash",
-      "link": "https://dotesports.com/general/news/marvels-wolverine-scent-trails-toggle",
-      "pubDate": "2026-09-25T23:22:23.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "Everything in Marathon Symbiosis update: PvE mode, Bishop, and updated Perimeter",
-      "link": "https://dotesports.com/marathon/news/marathon-symbiosis-update",
-      "pubDate": "2026-09-25T18:37:25.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
       "title": "A 2-2 record sends Paritosh into Puyo Puyo quarter-finals",
       "link": "https://esportsinsider.com/2026/09/puyo-puyo-champions-quarterfinals",
       "pubDate": "2026-09-25T16:00:00.000Z",
       "source": "Esports Insider",
       "section": "industry"
-    },
-    {
-      "title": "Everything we know about Fortnitemares 2026",
-      "link": "https://dotesports.com/fortnite/guides/fortnitemares-release-date-collabs-quests",
-      "pubDate": "2026-09-25T13:20:54.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "LEC Commissioner Artem Bykov on expanding the LEC without changing its core",
-      "link": "https://dotesports.com/league-of-legends/news/lec-commissioner-artem-bykov-on-expanding-the-lec-without-changing-its-core",
-      "pubDate": "2026-09-25T11:08:33.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
     },
     {
       "title": "Call of Duty calls out pro player’s boosting service after he asks to be unbanned",
@@ -1049,39 +1091,11 @@
       "section": "headlines"
     },
     {
-      "title": "How to complete Week 2 challenges in BO7 & Warzone Season 6",
-      "link": "https://dotesports.com/call-of-duty/guides/black-ops-7-warzone-season-6-week-2-challenges",
-      "pubDate": "2026-09-25T09:58:36.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
       "title": "G2 Esports reach Group C winners’ side in Shanghai",
       "link": "https://esportsinsider.com/2026/09/valorant-champions-2026-g2-esports",
       "pubDate": "2026-09-25T09:00:00.000Z",
       "source": "Esports Insider",
       "section": "industry"
-    },
-    {
-      "title": "DOOM Event Pass in Black Ops 7 & Warzone: All rewards and how to unlock them",
-      "link": "https://dotesports.com/call-of-duty/guides/doom-event-pass-bo7-warzone",
-      "pubDate": "2026-09-25T07:25:15.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "Pirates are telling each other to buy Control Resonant to support Remedy",
-      "link": "https://dotesports.com/general/news/control-resonant-pirates-buy-game-support-remedy",
-      "pubDate": "2026-09-25T06:39:06.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
-    },
-    {
-      "title": "PapaSmithy apologizes to Caedrel and costreamers as FlyQuest’s old video fuels LCS ‘hatewatch’",
-      "link": "https://dotesports.com/league-of-legends/news/papasmithy-apologizes-caedrel-flyquest-costreaming-video",
-      "pubDate": "2026-09-25T05:28:15.000Z",
-      "source": "Dot Esports",
-      "section": "headlines"
     },
     {
       "title": "100 Thieves reach Stake Pulse Beat II playoffs with 2-0 group stage",
@@ -1138,20 +1152,6 @@
       "pubDate": "2026-09-22T16:10:53.000Z",
       "source": "Esports News UK",
       "section": "headlines"
-    },
-    {
-      "title": "Wisper takes Team Liquid’s offlane spot for BLAST SLAM VIII",
-      "link": "https://esportsinsider.com/2026/09/team-liquid-signing-wisper",
-      "pubDate": "2026-09-21T16:00:00.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
-    },
-    {
-      "title": "LCP qualification to start at home for every team in 2027",
-      "link": "https://esportsinsider.com/2026/09/lcp-qualification-2027",
-      "pubDate": "2026-09-21T09:00:00.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
     },
     {
       "title": "Vitality beat Aurora to win StarSeries Fall, first title since May",
