@@ -1,6 +1,15 @@
 {
-  "generatedAt": "2026-09-29T17:12:30.285Z",
+  "generatedAt": "2026-09-30T17:11:02.373Z",
   "transfers": [
+    {
+      "date": "2026-09-30",
+      "player": "Noma",
+      "playerUrl": null,
+      "from": "IGZIST (General Manager)",
+      "to": "None",
+      "game": "Valorant",
+      "refUrl": "https://x.com/whoisnoma/status/2097642239086444853"
+    },
     {
       "date": "2026-09-28",
       "player": "Chubi",
@@ -128,15 +137,6 @@
       "refUrl": "https://x.com/RugiNooby/status/2103125323827352022"
     },
     {
-      "date": "2026-09-23",
-      "player": "Mwzera",
-      "playerUrl": "https://liquipedia.net/valorant/Mwzera",
-      "from": "KRÜ Esports",
-      "to": "KRÜ Esports (Inactive)",
-      "game": "Valorant",
-      "refUrl": "https://x.com/mwzera/status/2102802342101827898"
-    },
-    {
       "date": "2026-09-29",
       "player": "Aegis",
       "playerUrl": "https://liquipedia.net/leagueoflegends/Aegis",
@@ -150,9 +150,9 @@
       "player": "Tiphat",
       "playerUrl": "https://liquipedia.net/leagueoflegends/Tiphat",
       "from": "Saigon Dino DINO",
-      "to": "GAM Esports GAM",
+      "to": "GAM Esports GAM / DINO(Loan/Inactive)",
       "game": "League of Legends",
-      "refUrl": "https://www.facebook.com/share/p/1CHBbH71tP/"
+      "refUrl": "https://www.facebook.com/share/p/18jpiy4kBF/"
     },
     {
       "date": "2026-09-28",
@@ -272,6 +272,24 @@
       "refUrl": "https://x.com/CupidEsports/status/2101427601164107800"
     },
     {
+      "date": "2026-09-30",
+      "player": "Patti",
+      "playerUrl": "https://liquipedia.net/counterstrike/Patti",
+      "from": "WOPA Esport (Inactive)",
+      "to": "None",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/PattiCSGO/status/2101723555096354852"
+    },
+    {
+      "date": "2026-09-29",
+      "player": "OrangeZ",
+      "playerUrl": null,
+      "from": "None",
+      "to": "KODEX Esports (Coach)",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/KodexEsports/status/2104988562878009834"
+    },
+    {
       "date": "2026-09-29",
       "player": "SunPayus",
       "playerUrl": "https://liquipedia.net/counterstrike/SunPayus",
@@ -285,7 +303,7 @@
       "player": "Lucky (French player)",
       "playerUrl": "https://liquipedia.net/counterstrike/Lucky_(French_player)",
       "from": "3DMAX",
-      "to": "Team Envy",
+      "to": "ENVY",
       "game": "Counter-Strike",
       "refUrl": "https://x.com/Envy/status/2104905506208784882"
     },
@@ -297,6 +315,24 @@
       "to": "Vitality Academy",
       "game": "Counter-Strike",
       "refUrl": "https://x.com/TeamVitalityCS/status/2104939698754044363"
+    },
+    {
+      "date": "2026-09-28",
+      "player": "Wolffe",
+      "playerUrl": "https://liquipedia.net/counterstrike/Wolffe",
+      "from": "None",
+      "to": "Chicken Coop Esports",
+      "game": "Counter-Strike",
+      "refUrl": "https://chickencoop.gg/new-egg-empty-nest/"
+    },
+    {
+      "date": "2026-09-28",
+      "player": "REKMEISTER",
+      "playerUrl": "https://liquipedia.net/counterstrike/REKMEISTER",
+      "from": "Chicken Coop Esports",
+      "to": "None",
+      "game": "Counter-Strike",
+      "refUrl": "https://chickencoop.gg/new-egg-empty-nest/"
     },
     {
       "date": "2026-09-28",
@@ -324,24 +360,6 @@
       "to": "Copenhagen Wolves (Coach)",
       "game": "Counter-Strike",
       "refUrl": "https://x.com/CPHWolves/status/2104628675908153524"
-    },
-    {
-      "date": "2026-09-28",
-      "player": "Wolffe",
-      "playerUrl": "https://liquipedia.net/counterstrike/Wolffe",
-      "from": "playing for fun",
-      "to": "Chicken Coop Esports",
-      "game": "Counter-Strike",
-      "refUrl": "https://chickencoop.gg/new-egg-empty-nest/"
-    },
-    {
-      "date": "2026-09-28",
-      "player": "REKMEISTER",
-      "playerUrl": "https://liquipedia.net/counterstrike/REKMEISTER",
-      "from": "Chicken Coop Esports",
-      "to": "None",
-      "game": "Counter-Strike",
-      "refUrl": "https://chickencoop.gg/new-egg-empty-nest/"
     },
     {
       "date": "2026-09-28",
@@ -389,22 +407,22 @@
       "refUrl": "https://t.me/team_cybershoke/6343"
     },
     {
-      "date": "2026-09-28",
-      "player": "NMV",
-      "playerUrl": "https://liquipedia.net/counterstrike/NMV",
-      "from": "Team Nemesis (Coach)",
-      "to": "Team Nemesis (Inactive Coach)",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/nmss_gg/status/2104617132080484701"
+      "date": "2026-09-29",
+      "player": "Smoker",
+      "playerUrl": "https://liquipedia.net/dota2/Smoker",
+      "from": "None",
+      "to": "Pacific Esports",
+      "game": "Dota 2",
+      "refUrl": "https://x.com/Pacific_LATAM/status/2105020261699334497"
     },
     {
-      "date": "2026-09-27",
-      "player": "Relax",
-      "playerUrl": null,
-      "from": "None",
-      "to": "Ryvex (Coach)",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/RyvexOrg/status/2104284972060160298"
+      "date": "2026-09-29",
+      "player": "Pamplona",
+      "playerUrl": "https://liquipedia.net/dota2/Pamplona",
+      "from": "Zetta Games",
+      "to": "Pacific Esports",
+      "game": "Dota 2",
+      "refUrl": "https://x.com/Pacific_LATAM/status/2105020261699334497"
     },
     {
       "date": "2026-09-29",
@@ -524,22 +542,58 @@
       "refUrl": "https://x.com/TSpirit_Dota2/status/2101959655945552036"
     },
     {
-      "date": "2026-09-21",
-      "player": "Miposhka",
-      "playerUrl": "https://liquipedia.net/dota2/Miposhka",
-      "from": "Team Spirit (Coach)",
-      "to": "Team Spirit (Inactive)",
-      "game": "Dota 2",
-      "refUrl": "https://x.com/TSpirit_Dota2/status/2101959655945552036"
+      "date": "2026-09-30",
+      "player": "Stizzy",
+      "playerUrl": "https://liquipedia.net/rocketleague/Stizzy",
+      "from": "Team Vitality VIT",
+      "to": "None",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/StizzyRl/status/2105302361107272078"
     },
     {
-      "date": "2026-09-21",
-      "player": "Collapse",
-      "playerUrl": "https://liquipedia.net/dota2/Collapse",
-      "from": "Team Spirit",
-      "to": "Team Spirit (Inactive)",
-      "game": "Dota 2",
-      "refUrl": "https://x.com/TSpirit_Dota2/status/2101959655945552036"
+      "date": "2026-09-30",
+      "player": "Crr",
+      "playerUrl": "https://liquipedia.net/rocketleague/Crr",
+      "from": "Ninjas in Pyjamas NIP",
+      "to": "None",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/NIP_RL/status/2105251727834276248"
+    },
+    {
+      "date": "2026-09-30",
+      "player": "LBP",
+      "playerUrl": "https://liquipedia.net/rocketleague/LBP",
+      "from": "Ninjas in Pyjamas NIP (Coach)",
+      "to": "None",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/NIP_RL/status/2105251727834276248"
+    },
+    {
+      "date": "2026-09-29",
+      "player": "Dreyy",
+      "playerUrl": null,
+      "from": "None",
+      "to": "Esport BERG BERG",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/esportBERG/status/2104873822524715340"
+    },
+    {
+      "date": "2026-09-29",
+      "player": "Snowyyy",
+      "playerUrl": "https://liquipedia.net/rocketleague/Snowyyy",
+      "from": "Esport BERG BERG",
+      "to": "None",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/esportBERG/status/2104873822524715340?s=20"
+    },
+    {
+      "date": "2026-09-29",
+      "player": "Eversax",
+      "playerUrl": "https://liquipedia.net/rocketleague/Eversax",
+      "from": "Team Vitality VIT (Coach)",
+      "to": "None",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/Eversax/status/2104996285195686161"
     },
     {
       "date": "2026-09-29",
@@ -623,58 +677,13 @@
       "refUrl": "https://x.com/diazrll__/status/2103649632928874893"
     },
     {
-      "date": "2026-09-25",
-      "player": "2Piece",
-      "playerUrl": "https://liquipedia.net/rocketleague/2Piece",
-      "from": "Virtus.pro VP",
-      "to": "None",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/WahveyRL/status/2103582822967411035"
-    },
-    {
-      "date": "2026-09-25",
-      "player": "GiuK",
-      "playerUrl": "https://liquipedia.net/rocketleague/GiuK",
-      "from": "NOVO Esports NOVO",
-      "to": "None",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/giu_DL06/status/2103513961735794908"
-    },
-    {
-      "date": "2026-09-25",
-      "player": "Rezears",
-      "playerUrl": "https://liquipedia.net/rocketleague/Rezears",
-      "from": "The LANimals LAN",
-      "to": "None",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/rezears/status/2103442124197048788"
-    },
-    {
-      "date": "2026-09-25",
-      "player": "Pengoli",
-      "playerUrl": "https://liquipedia.net/rocketleague/Pengoli",
-      "from": "NORTHSTAR NSG",
-      "to": "None",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/pengoli/status/2103300337713254637"
-    },
-    {
-      "date": "2026-09-25",
-      "player": "Karion",
-      "playerUrl": "https://liquipedia.net/rocketleague/Karion",
-      "from": "NORTHSTAR NSG (Coach)",
-      "to": "None",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/pengoli/status/2103300337713254637"
-    },
-    {
-      "date": "2026-09-24",
-      "player": "Kofyr",
-      "playerUrl": "https://liquipedia.net/rocketleague/Kofyr",
-      "from": "Shopify Rebellion SR",
-      "to": "None",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/kofyrrl/status/2103262859375567235"
+      "date": "2026-09-29",
+      "player": "Rokit",
+      "playerUrl": "https://liquipedia.net/overwatch/Rokit",
+      "from": "The Fallen",
+      "to": "NTMR",
+      "game": "Overwatch",
+      "refUrl": "https://x.com/ntmrgg/status/2105081456846598297"
     },
     {
       "date": "2026-09-28",
@@ -798,15 +807,6 @@
       "player": "Lampent",
       "playerUrl": "https://liquipedia.net/overwatch/Lampent",
       "from": "None",
-      "to": "Anomaly",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/anomaly_ow/status/2104316732194299990"
-    },
-    {
-      "date": "2026-09-27",
-      "player": "Dreepy",
-      "playerUrl": "https://liquipedia.net/overwatch/Dreepy",
-      "from": "Team Missing x LuneX Academy",
       "to": "Anomaly",
       "game": "Overwatch",
       "refUrl": "https://x.com/anomaly_ow/status/2104316732194299990"
@@ -986,6 +986,41 @@
   ],
   "news": [
     {
+      "title": "Thunderpick Takes Year-Round Role in 2026 Esports Awards",
+      "link": "https://esportsinsider.com/2026/09/thunderpick-esports-awards-2026",
+      "pubDate": "2026-09-30T10:00:00.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
+    },
+    {
+      "title": "A Possible Last Ride Shapes G2’s Shanghai Campaign",
+      "link": "https://esports-news.co.uk/2026/09/30/g2-shanghai-last-ride/",
+      "pubDate": "2026-09-30T10:00:00.000Z",
+      "source": "Esports News UK",
+      "section": "headlines"
+    },
+    {
+      "title": "Envy’s Singapore Major bid starts with a 21st-place ranking",
+      "link": "https://esports-news.co.uk/2026/09/30/envy-cs2-comeback-major/",
+      "pubDate": "2026-09-30T08:21:49.000Z",
+      "source": "Esports News UK",
+      "section": "headlines"
+    },
+    {
+      "title": "ISU Esports Moves Into New Student Union Arena",
+      "link": "https://esportsinsider.com/2026/09/isu-esports-arena",
+      "pubDate": "2026-09-30T08:14:07.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
+    },
+    {
+      "title": "Jinggg’s 61 Kills Power Paper Rex Into Shanghai Playoffs",
+      "link": "https://esports-news.co.uk/2026/09/30/paper-rex-playoffs-shanghai/",
+      "pubDate": "2026-09-30T08:11:49.000Z",
+      "source": "Esports News UK",
+      "section": "headlines"
+    },
+    {
       "title": "11 Teams Chase MLBB’s First Asian Games Gold",
       "link": "https://esportsinsider.com/2026/09/mlbb-asian-games-2026",
       "pubDate": "2026-09-29T08:22:58.000Z",
@@ -1038,20 +1073,6 @@
       "title": "Team Liquid turn to MidOne as Nisha absence raises questions",
       "link": "https://esportsinsider.com/2026/09/team-liquid-midone-roster",
       "pubDate": "2026-09-26T09:00:00.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
-    },
-    {
-      "title": "A 2-2 record sends Paritosh into Puyo Puyo quarter-finals",
-      "link": "https://esportsinsider.com/2026/09/puyo-puyo-champions-quarterfinals",
-      "pubDate": "2026-09-25T16:00:00.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
-    },
-    {
-      "title": "G2 Esports reach Group C winners’ side in Shanghai",
-      "link": "https://esportsinsider.com/2026/09/valorant-champions-2026-g2-esports",
-      "pubDate": "2026-09-25T09:00:00.000Z",
       "source": "Esports Insider",
       "section": "industry"
     },
@@ -1136,27 +1157,6 @@
       "title": "Legacy Deliver At 4/1 To Win FISSURE Playground 3",
       "link": "https://esports-news.co.uk/2026/09/14/legacy-deliver-at-4-1-to-win-fissure-playground-3/",
       "pubDate": "2026-09-14T09:39:17.000Z",
-      "source": "Esports News UK",
-      "section": "headlines"
-    },
-    {
-      "title": "Sayonara, Cryocells and PatMen headline players to watch at Champions Shanghai",
-      "link": "https://esports-news.co.uk/2026/09/11/sayonara-cryocells-and-patmen-headline-players-to-watch-at-champions-shanghai/",
-      "pubDate": "2026-09-11T16:11:10.000Z",
-      "source": "Esports News UK",
-      "section": "headlines"
-    },
-    {
-      "title": "Riot Games In Talks With Polymarket and Kalshi Over Sponsorship Deals",
-      "link": "https://esports-news.co.uk/2026/09/11/riot-games-in-talks-with-polymarket-and-kalshi-over-sponsorship-deals/",
-      "pubDate": "2026-09-11T12:57:54.000Z",
-      "source": "Esports News UK",
-      "section": "headlines"
-    },
-    {
-      "title": "GRID launches GRID Odds to expand further into esports betting",
-      "link": "https://esports-news.co.uk/2026/09/10/grid-launches-grid-odds-to-expand-further-into-esports-betting/",
-      "pubDate": "2026-09-10T10:30:15.000Z",
       "source": "Esports News UK",
       "section": "headlines"
     }
