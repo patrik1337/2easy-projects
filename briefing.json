@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-01T17:40:42.610Z",
+  "generatedAt": "2026-10-02T16:59:34.989Z",
   "transfers": [
     {
       "date": "2026-10-01",
@@ -137,6 +137,33 @@
       "refUrl": "https://x.com/HereticsVal/status/2103129834381586699"
     },
     {
+      "date": "2026-10-01",
+      "player": "Fl4mer",
+      "playerUrl": "https://liquipedia.net/leagueoflegends/Fl4mer",
+      "from": "None",
+      "to": "DKB Diamonds DKB",
+      "game": "League of Legends",
+      "refUrl": "https://x.com/DKB_XPERION_NXT/status/2105689203082481981"
+    },
+    {
+      "date": "2026-10-01",
+      "player": "Techoteco",
+      "playerUrl": "https://liquipedia.net/leagueoflegends/Techoteco",
+      "from": "CITA Kaizen CKZ",
+      "to": "DKB Diamonds DKB",
+      "game": "League of Legends",
+      "refUrl": "https://x.com/DKB_XPERION_NXT/status/2105689203082481981"
+    },
+    {
+      "date": "2026-09-30",
+      "player": "Tayto",
+      "playerUrl": "https://liquipedia.net/leagueoflegends/Tayto",
+      "from": "DKB Diamonds DKB",
+      "to": "None",
+      "game": "League of Legends",
+      "refUrl": "https://x.com/DKB_XPERION_NXT/status/2105326818819723686"
+    },
+    {
       "date": "2026-09-29",
       "player": "Aegis",
       "playerUrl": "https://liquipedia.net/leagueoflegends/Aegis",
@@ -245,31 +272,31 @@
       "refUrl": "https://x.com/GVUEsports/status/2102835394668855442"
     },
     {
-      "date": "2026-09-21",
-      "player": "Insanity",
-      "playerUrl": "https://liquipedia.net/leagueoflegends/Insanity",
-      "from": "Conviction CNV",
+      "date": "2026-10-02",
+      "player": "Siuhy",
+      "playerUrl": "https://liquipedia.net/counterstrike/Siuhy",
+      "from": "Team Liquid (Inactive)",
       "to": "None",
-      "game": "League of Legends",
-      "refUrl": "https://x.com/insanitylol/status/2102050362978869542"
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/siuhycs/status/2106008138180911386"
     },
     {
-      "date": "2026-09-21",
-      "player": "Levy",
-      "playerUrl": "https://liquipedia.net/leagueoflegends/Levy",
+      "date": "2026-10-02",
+      "player": "TiziaN",
+      "playerUrl": "https://liquipedia.net/counterstrike/TiziaN",
       "from": "None",
-      "to": "SOOPers Academy DNS.A",
-      "game": "League of Legends",
-      "refUrl": "https://www.instagram.com/p/DdiejNBk4IF"
+      "to": "Nordic Partners Gaming (Streamer)",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/NPGCS2/status/2105960651072147782"
     },
     {
-      "date": "2026-09-19",
-      "player": "Bonchily",
-      "playerUrl": null,
-      "from": "None",
-      "to": "Cupid eSports CPD(Co-streamer)",
-      "game": "League of Legends",
-      "refUrl": "https://x.com/CupidEsports/status/2101427601164107800"
+      "date": "2026-10-01",
+      "player": "Leomonster",
+      "playerUrl": "https://liquipedia.net/counterstrike/Leomonster",
+      "from": "LargadosyPelados",
+      "to": "None",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/LyPcs2/status/2105734254608949382"
     },
     {
       "date": "2026-10-01",
@@ -302,10 +329,19 @@
       "date": "2026-10-01",
       "player": "Doto",
       "playerUrl": "https://liquipedia.net/counterstrike/Doto",
-      "from": "HEROIC",
+      "from": "HEROIC (Coach)",
       "to": "HEROIC (Inactive Coach)",
       "game": "Counter-Strike",
       "refUrl": "https://heroic.gg/atc/thank-you-doto"
+    },
+    {
+      "date": "2026-10-01",
+      "player": "Tvr4s",
+      "playerUrl": null,
+      "from": "95 Vikings",
+      "to": "None",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/Tvr4s/status/2105764735052627968"
     },
     {
       "date": "2026-10-01",
@@ -369,42 +405,6 @@
       "to": "Bread Eaters Esports",
       "game": "Counter-Strike",
       "refUrl": "https://x.com/breadeaters/status/2105247223097573832"
-    },
-    {
-      "date": "2026-09-30",
-      "player": "Hydro2K",
-      "playerUrl": null,
-      "from": "Eternal Fire Academy",
-      "to": "Eternal Fire Academy / (Inactive)",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/breadeaters/status/2105247223097573832"
-    },
-    {
-      "date": "2026-09-30",
-      "player": "GAYEW",
-      "playerUrl": null,
-      "from": "Eternal Fire Academy",
-      "to": "Bread Eaters Esports",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/breadeaters/status/2105247223097573832"
-    },
-    {
-      "date": "2026-09-30",
-      "player": "Swexsy",
-      "playerUrl": null,
-      "from": "Eternal Fire Academy",
-      "to": "None",
-      "game": "Counter-Strike",
-      "refUrl": null
-    },
-    {
-      "date": "2026-09-30",
-      "player": "Normal0ne",
-      "playerUrl": null,
-      "from": "Eternal Fire Academy (Coach)",
-      "to": "Bread Eaters Esports (Coach)",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/breadeaters/status/2105258175662379034"
     },
     {
       "date": "2026-10-01",
@@ -542,6 +542,15 @@
       "refUrl": "https://x.com/OGesports/status/2102762599876084135"
     },
     {
+      "date": "2026-10-02",
+      "player": "Shila",
+      "playerUrl": "https://liquipedia.net/rocketleague/Shila",
+      "from": "WYLDE WYL (Inactive)",
+      "to": "None",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/shilarll/status/2106027355844264127"
+    },
+    {
       "date": "2026-09-30",
       "player": "Stizzy",
       "playerUrl": "https://liquipedia.net/rocketleague/Stizzy",
@@ -666,150 +675,6 @@
       "to": "None",
       "game": "Rocket League",
       "refUrl": "https://x.com/Mozzarella59/status/2103534645317181530"
-    },
-    {
-      "date": "2026-09-25",
-      "player": "Diaz (Brazilian Player)",
-      "playerUrl": "https://liquipedia.net/rocketleague/Diaz_(Brazilian_Player)",
-      "from": "Spacestation Gaming SSG",
-      "to": "None",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/diazrll__/status/2103649632928874893"
-    },
-    {
-      "date": "2026-09-29",
-      "player": "Cookie084",
-      "playerUrl": "https://liquipedia.net/overwatch/Cookie084",
-      "from": "Hypnos",
-      "to": "Vanir Quick",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/vanirquickgg/status/2105342769849909412"
-    },
-    {
-      "date": "2026-09-29",
-      "player": "Zorrow",
-      "playerUrl": "https://liquipedia.net/overwatch/Zorrow",
-      "from": "Vanir Quick",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/vanirquickgg/status/2105342769849909412"
-    },
-    {
-      "date": "2026-09-29",
-      "player": "Rokit",
-      "playerUrl": "https://liquipedia.net/overwatch/Rokit",
-      "from": "The Fallen",
-      "to": "NTMR",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/ntmrgg/status/2105081456846598297"
-    },
-    {
-      "date": "2026-09-28",
-      "player": "Alex (Canadian player)",
-      "playerUrl": "https://liquipedia.net/overwatch/Alex_(Canadian_player)",
-      "from": "Team Missing",
-      "to": "Disguised (Substitute)",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/disguised/status/2104677530871767357?s=46"
-    },
-    {
-      "date": "2026-09-28",
-      "player": "Ryan (American player)",
-      "playerUrl": "https://liquipedia.net/overwatch/Ryan_(American_player)",
-      "from": "None",
-      "to": "Disguised",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/disguised/status/2104677530871767357?s=46"
-    },
-    {
-      "date": "2026-09-28",
-      "player": "Z4CH",
-      "playerUrl": "https://liquipedia.net/overwatch/Z4CH",
-      "from": "None",
-      "to": "Sovereigns (Substitute)",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/sovereigns_gg/status/2104715352919695672"
-    },
-    {
-      "date": "2026-09-28",
-      "player": "Vex",
-      "playerUrl": "https://liquipedia.net/overwatch/Vex",
-      "from": "None",
-      "to": "Sovereigns",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/sovereigns_gg/status/2104715352919695672"
-    },
-    {
-      "date": "2026-09-28",
-      "player": "Aeroplayne",
-      "playerUrl": "https://liquipedia.net/overwatch/Aeroplayne",
-      "from": "Avidity (Manager)",
-      "to": "Sovereigns (Manager)",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/sovereigns_gg/status/2104715352919695672"
-    },
-    {
-      "date": "2026-09-28",
-      "player": "Peace",
-      "playerUrl": "https://liquipedia.net/overwatch/Peace",
-      "from": "NTMR",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/peace7k/status/2104605202716508629"
-    },
-    {
-      "date": "2026-09-28",
-      "player": "Leo (American player)",
-      "playerUrl": null,
-      "from": "Anomaly",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/employedleo/status/2104485774838345793"
-    },
-    {
-      "date": "2026-09-28",
-      "player": "Rockclimb",
-      "playerUrl": null,
-      "from": "Black Flag",
-      "to": "Black Flag",
-      "game": "Overwatch",
-      "refUrl": "https://www.bilibili.com/opus/1253065440337330181"
-    },
-    {
-      "date": "2026-09-28",
-      "player": "Agony (Chinese player)",
-      "playerUrl": null,
-      "from": "None",
-      "to": "Black Flag",
-      "game": "Overwatch",
-      "refUrl": "https://www.bilibili.com/opus/1253065440337330181"
-    },
-    {
-      "date": "2026-09-28",
-      "player": "Chen Yu",
-      "playerUrl": "https://liquipedia.net/overwatch/Chen_Yu",
-      "from": "Black Flag",
-      "to": "None",
-      "game": "Overwatch",
-      "refUrl": "https://www.bilibili.com/opus/1253065440337330181"
-    },
-    {
-      "date": "2026-09-28",
-      "player": "Crush (Chinese player)",
-      "playerUrl": null,
-      "from": "Naive Piggy",
-      "to": "Solus Victorem",
-      "game": "Overwatch",
-      "refUrl": "https://www.bilibili.com/opus/1253065440337330181"
-    },
-    {
-      "date": "2026-09-27",
-      "player": "Dreepy",
-      "playerUrl": "https://liquipedia.net/overwatch/Dreepy",
-      "from": "Team Missing x LuneX Academy",
-      "to": "Anomaly",
-      "game": "Overwatch",
-      "refUrl": "https://x.com/anomaly_ow/status/2104316732194299990"
     }
   ],
   "rumours": [
@@ -986,6 +851,27 @@
   ],
   "news": [
     {
+      "title": "Astralis Ownership Gains Courtois Backing Amid Liquidity Concerns",
+      "link": "https://esportsinsider.com/2026/10/astralis-investment-liquidity-concerns",
+      "pubDate": "2026-10-02T10:00:00.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
+    },
+    {
+      "title": "League of Legends repeat leads South Korea’s five-medal Asian Games haul",
+      "link": "https://esportsinsider.com/2026/10/south-korea-esports-medals",
+      "pubDate": "2026-10-02T08:15:30.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
+    },
+    {
+      "title": "FaZe beaten 2-0 by Nemiga in Stake Ranked Episode 4 opener",
+      "link": "https://esports-news.co.uk/2026/10/02/faze-beaten-2-0-by-nemiga-in-stake-ranked-episode-4-opener/",
+      "pubDate": "2026-10-02T07:10:58.000Z",
+      "source": "Esports News UK",
+      "section": "headlines"
+    },
+    {
       "title": "Desk Interference Puts Valorant Champions Shanghai Under Scrutiny",
       "link": "https://esportsinsider.com/2026/10/valorant-champions-shanghai",
       "pubDate": "2026-10-01T08:24:34.000Z",
@@ -1077,20 +963,6 @@
       "section": "industry"
     },
     {
-      "title": "All Four Chinese Teams Swept in Champions Shanghai Opener",
-      "link": "https://esportsinsider.com/2026/09/chinese-teams-champions-shanghai",
-      "pubDate": "2026-09-28T09:00:00.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
-    },
-    {
-      "title": "Global Esports Faces Elimination After Champions Shanghai Opener",
-      "link": "https://esportsinsider.com/2026/09/global-esports-elimination",
-      "pubDate": "2026-09-27T16:00:00.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
-    },
-    {
       "title": "100 Thieves reach Stake Pulse Beat II playoffs with 2-0 group stage",
       "link": "https://esports-news.co.uk/2026/09/24/100-thieves-reach-stake-pulse-beat-ii-playoffs-with-2-0-group-stage/",
       "pubDate": "2026-09-24T20:10:49.000Z",
@@ -1164,13 +1036,6 @@
       "title": "Esports Weekend Review: Legacy win FISSURE Playground 3, Movistar KOI survive LEC, Epos triumphs at XPEvo",
       "link": "https://esports-news.co.uk/2026/09/14/esports-weekend-review-sep-14th/",
       "pubDate": "2026-09-14T11:16:04.000Z",
-      "source": "Esports News UK",
-      "section": "headlines"
-    },
-    {
-      "title": "Legacy Deliver At 4/1 To Win FISSURE Playground 3",
-      "link": "https://esports-news.co.uk/2026/09/14/legacy-deliver-at-4-1-to-win-fissure-playground-3/",
-      "pubDate": "2026-09-14T09:39:17.000Z",
       "source": "Esports News UK",
       "section": "headlines"
     }
