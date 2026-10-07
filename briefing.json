@@ -1,6 +1,51 @@
 {
-  "generatedAt": "2026-10-06T17:34:04.670Z",
+  "generatedAt": "2026-10-07T18:06:05.552Z",
   "transfers": [
+    {
+      "date": "2026-10-07",
+      "player": "Frazune",
+      "playerUrl": null,
+      "from": "Sissi State Punks",
+      "to": "None",
+      "game": "Valorant",
+      "refUrl": "https://x.com/sissistatepunks/status/2107773995063943602"
+    },
+    {
+      "date": "2026-10-07",
+      "player": "Lowe",
+      "playerUrl": null,
+      "from": "Sissi State Punks (Head Coach)",
+      "to": "None",
+      "game": "Valorant",
+      "refUrl": "https://x.com/sissistatepunks/status/2107773995063943602"
+    },
+    {
+      "date": "2026-10-07",
+      "player": "Traxii",
+      "playerUrl": null,
+      "from": "Sissi State Punks (Assistant Coach)",
+      "to": "None",
+      "game": "Valorant",
+      "refUrl": "https://x.com/sissistatepunks/status/2107773995063943602"
+    },
+    {
+      "date": "2026-10-07",
+      "player": "Elli",
+      "playerUrl": null,
+      "from": "Sissi State Punks (Analyst)",
+      "to": "None",
+      "game": "Valorant",
+      "refUrl": "https://x.com/sissistatepunks/status/2107773995063943602"
+    },
+    {
+      "date": "2026-10-07",
+      "player": "ThoreBnB",
+      "playerUrl": "https://liquipedia.net/valorant/ThoreBnB",
+      "from": "Sissi State Punks (Manager)",
+      "to": "None",
+      "game": "Valorant",
+      "refUrl": "https://x.com/sissistatepunks/status/2107773995063943602"
+    },
     {
       "date": "2026-10-05",
       "player": "Lmemore",
@@ -92,49 +137,22 @@
       "refUrl": "https://x.com/QT_DIG/status/2105568403356610983"
     },
     {
-      "date": "2026-09-30",
-      "player": "Noma",
-      "playerUrl": null,
-      "from": "IGZIST (General Manager)",
+      "date": "2026-10-07",
+      "player": "Badlulu",
+      "playerUrl": "https://liquipedia.net/leagueoflegends/Badlulu",
+      "from": "Ici Japon Corp. Esport IJC",
       "to": "None",
-      "game": "Valorant",
-      "refUrl": "https://x.com/whoisnoma/status/2097642239086444853"
+      "game": "League of Legends",
+      "refUrl": "https://x.com/icijaponesport/status/2107784842398298254"
     },
     {
-      "date": "2026-09-28",
-      "player": "DisisJohn",
-      "playerUrl": "https://liquipedia.net/valorant/DisisJohn",
-      "from": "ALTERNATE aTTaX",
+      "date": "2026-10-06",
+      "player": "Zekas",
+      "playerUrl": "https://liquipedia.net/leagueoflegends/Zekas",
+      "from": "Keyd Stars VKS",
       "to": "None",
-      "game": "Valorant",
-      "refUrl": "https://x.com/ATNattax/status/2104541642166513944"
-    },
-    {
-      "date": "2026-09-28",
-      "player": "Mo",
-      "playerUrl": "https://liquipedia.net/valorant/Mo",
-      "from": "ALTERNATE aTTaX (Coach)",
-      "to": "None",
-      "game": "Valorant",
-      "refUrl": "https://x.com/ATNattax/status/2104541642166513944"
-    },
-    {
-      "date": "2026-09-28",
-      "player": "BennY",
-      "playerUrl": "https://liquipedia.net/valorant/BennY",
-      "from": "ALTERNATE aTTaX (Assistant Coach)",
-      "to": "None",
-      "game": "Valorant",
-      "refUrl": "https://x.com/ATNattax/status/2104541642166513944"
-    },
-    {
-      "date": "2026-09-28",
-      "player": "Chubi",
-      "playerUrl": "https://liquipedia.net/valorant/Chubi",
-      "from": "BESTIA",
-      "to": "None",
-      "game": "Valorant",
-      "refUrl": "https://x.com/bestia_corp/status/2104734550005826046"
+      "game": "League of Legends",
+      "refUrl": "https://x.com/VivoKeyd/status/2107584921112019293"
     },
     {
       "date": "2026-10-06",
@@ -254,24 +272,6 @@
       "refUrl": "https://www.instagram.com/lckasofficial/p/DdvBDu4k6Eb/"
     },
     {
-      "date": "2026-09-26",
-      "player": "Yeopo",
-      "playerUrl": null,
-      "from": "Nongshim RedForce Academy NS.A",
-      "to": "None",
-      "game": "League of Legends",
-      "refUrl": "https://www.instagram.com/lckasofficial/p/DdvBDu4k6Eb/"
-    },
-    {
-      "date": "2026-09-26",
-      "player": "Comfy",
-      "playerUrl": null,
-      "from": "None",
-      "to": "DRX Academy DRX.A",
-      "game": "League of Legends",
-      "refUrl": "https://www.instagram.com/lckasofficial/p/DdvBDu4k6Eb/"
-    },
-    {
       "date": "2026-10-06",
       "player": "Bymas",
       "playerUrl": "https://liquipedia.net/counterstrike/Bymas",
@@ -279,6 +279,69 @@
       "to": "None",
       "game": "Counter-Strike",
       "refUrl": "https://x.com/bymascs/status/2107434935694836221"
+    },
+    {
+      "date": "2026-10-06",
+      "player": "Mol011",
+      "playerUrl": "https://liquipedia.net/counterstrike/Mol011",
+      "from": "None",
+      "to": "ECSTATIC",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/ecstaticCS/status/2107491344906125716"
+    },
+    {
+      "date": "2026-10-06",
+      "player": "TMKj",
+      "playerUrl": "https://liquipedia.net/counterstrike/TMKj",
+      "from": "Rebels Gaming (Inactive)",
+      "to": "G2 Ares",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/G2CSGO/status/2107523397458747580"
+    },
+    {
+      "date": "2026-10-06",
+      "player": "ERSIN",
+      "playerUrl": "https://liquipedia.net/counterstrike/ERSIN",
+      "from": "Aimclub",
+      "to": "None",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/Aimclub_/status/2107511346778489192"
+    },
+    {
+      "date": "2026-10-06",
+      "player": "D1ntrIXxX",
+      "playerUrl": null,
+      "from": "None",
+      "to": "B8 Youngsters",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/B8esportsGG/status/2107490271642423485"
+    },
+    {
+      "date": "2026-10-06",
+      "player": "M4ngust",
+      "playerUrl": null,
+      "from": "None",
+      "to": "B8 Youngsters (Coach)",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/B8esportsGG/status/2107490271642423485"
+    },
+    {
+      "date": "2026-10-06",
+      "player": "Lattykk",
+      "playerUrl": "https://liquipedia.net/counterstrike/Lattykk",
+      "from": "Color",
+      "to": "magic",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/teammagic_CS2/status/2107508482924536123"
+    },
+    {
+      "date": "2026-10-06",
+      "player": "Mo0N",
+      "playerUrl": "https://liquipedia.net/counterstrike/Mo0N",
+      "from": "magic",
+      "to": "magic (Inactive)",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/teammagic_CS2/status/2107503366490198328"
     },
     {
       "date": "2026-10-05",
@@ -342,69 +405,6 @@
       "to": "los kogutos (Team Manager)",
       "game": "Counter-Strike",
       "refUrl": "https://x.com/LosKogutos/status/2107193327300833726"
-    },
-    {
-      "date": "2026-10-05",
-      "player": "SwerzieN",
-      "playerUrl": "https://liquipedia.net/counterstrike/SwerzieN",
-      "from": "None",
-      "to": "Chaos Enforcers",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/chaosenforcers/status/2107138756650148051"
-    },
-    {
-      "date": "2026-10-05",
-      "player": "PoKe",
-      "playerUrl": null,
-      "from": "None",
-      "to": "Galaxy Gaming",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/GalaxyGamingGG/status/2107142389437522276"
-    },
-    {
-      "date": "2026-10-05",
-      "player": "K3RQ",
-      "playerUrl": null,
-      "from": "None",
-      "to": "FANG Esport",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/esportfang/status/2107132023366197464"
-    },
-    {
-      "date": "2026-10-05",
-      "player": "Brain",
-      "playerUrl": "https://liquipedia.net/counterstrike/Brain",
-      "from": "None",
-      "to": "Team Nemesis (Coach)",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/nmss_gg/status/2107093492812103751"
-    },
-    {
-      "date": "2026-10-05",
-      "player": "Cobrazera",
-      "playerUrl": "https://liquipedia.net/counterstrike/Cobrazera",
-      "from": "The MongolZ (Inactive)",
-      "to": "The MongolZ",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/1mongolz/status/2107002854292468137"
-    },
-    {
-      "date": "2026-10-05",
-      "player": "Nin9",
-      "playerUrl": "https://liquipedia.net/counterstrike/Nin9",
-      "from": "The Huns Esports",
-      "to": "The MongolZ",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/thehunsesports/status/2107003612291584489"
-    },
-    {
-      "date": "2026-10-04",
-      "player": "LUKE4k",
-      "playerUrl": null,
-      "from": "None",
-      "to": "Wanted Goons",
-      "game": "Counter-Strike",
-      "refUrl": "https://www.dust2.us/news/78552/wanted-goons-return-to-full-strength-with-luke4k"
     },
     {
       "date": "2026-10-05",
@@ -851,6 +851,20 @@
   ],
   "news": [
     {
+      "title": "Call of Duty caster Maven quits after admitting relationship with co-commentator’s ex-wife",
+      "link": "https://www.dexerto.com/call-of-duty/call-of-duty-caster-maven-quits-after-admitting-relationship-with-co-commentators-ex-wife-3416394/",
+      "pubDate": "2026-10-07T15:38:47.000Z",
+      "source": "Dexerto",
+      "section": "headlines"
+    },
+    {
+      "title": "Sony gives INZONE gaming audio a Fnatic-inspired makeover",
+      "link": "https://esportsinsider.com/2026/10/sony-inzone-fnatic-finishes",
+      "pubDate": "2026-10-07T10:00:00.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
+    },
+    {
       "title": "Eight teams enter VALORANT Champions Shanghai title race",
       "link": "https://esportsinsider.com/2026/10/valorant-champions-shanghai-playoffs-2",
       "pubDate": "2026-10-06T08:24:33.000Z",
@@ -938,13 +952,6 @@
       "title": "Astralis Ownership Gains Courtois Backing Amid Liquidity Concerns",
       "link": "https://esportsinsider.com/2026/10/astralis-investment-liquidity-concerns",
       "pubDate": "2026-10-02T10:00:00.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
-    },
-    {
-      "title": "League of Legends repeat leads South Korea’s five-medal Asian Games haul",
-      "link": "https://esportsinsider.com/2026/10/south-korea-esports-medals",
-      "pubDate": "2026-10-02T08:15:30.000Z",
       "source": "Esports Insider",
       "section": "industry"
     },
