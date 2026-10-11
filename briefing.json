@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-10T16:32:30.372Z",
+  "generatedAt": "2026-10-11T16:57:27.562Z",
   "transfers": [
     {
       "date": "2026-10-09",
@@ -272,6 +272,15 @@
       "refUrl": "https://x.com/hazel1euw/status/2107259631592772020"
     },
     {
+      "date": "2026-10-11",
+      "player": "Jolts",
+      "playerUrl": null,
+      "from": "Villainous",
+      "to": "None",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/JOLTSCS/status/2109178130531311674"
+    },
+    {
       "date": "2026-10-10",
       "player": "Kreaz",
       "playerUrl": "https://liquipedia.net/counterstrike/Kreaz",
@@ -297,6 +306,42 @@
       "to": "BBL Esports (Inactive)",
       "game": "Counter-Strike",
       "refUrl": "https://x.com/BBL_esports/status/2108875789819425151"
+    },
+    {
+      "date": "2026-10-10",
+      "player": "St1xsy",
+      "playerUrl": null,
+      "from": "Prestige Academy",
+      "to": "Four Magic",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/st1xsy/status/2108966243588014414"
+    },
+    {
+      "date": "2026-10-10",
+      "player": "Kaide",
+      "playerUrl": "https://liquipedia.net/counterstrike/Kaide",
+      "from": "FORZE Reload",
+      "to": "FORZE Reload (Inactive)",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/forzegg/status/2108904241536582055"
+    },
+    {
+      "date": "2026-10-10",
+      "player": "C0ldzy",
+      "playerUrl": null,
+      "from": "None",
+      "to": "Young TigeRES",
+      "game": "Counter-Strike",
+      "refUrl": "https://t.me/nucleartigeres/2147"
+    },
+    {
+      "date": "2026-10-10",
+      "player": "Sol",
+      "playerUrl": "https://liquipedia.net/counterstrike/Sol",
+      "from": "lavked",
+      "to": "Young TigeRES",
+      "game": "Counter-Strike",
+      "refUrl": "https://t.me/nucleartigeres/2147"
     },
     {
       "date": "2026-10-10",
@@ -353,58 +398,22 @@
       "refUrl": "https://www.bilibili.com/opus/1257350022357319682"
     },
     {
-      "date": "2026-10-09",
-      "player": "Jabbi",
-      "playerUrl": "https://liquipedia.net/counterstrike/Jabbi",
-      "from": "Astralis",
-      "to": "Astralis (Inactive)",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/AstralisCS/status/2108616267393601943"
-    },
-    {
-      "date": "2026-10-09",
-      "player": "Maden",
-      "playerUrl": "https://liquipedia.net/counterstrike/Maden",
-      "from": "None",
-      "to": "BIG Academy",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/BIGCLANgg/status/2108559138716266692"
-    },
-    {
-      "date": "2026-10-09",
-      "player": "Myltsi",
-      "playerUrl": "https://liquipedia.net/counterstrike/Myltsi",
-      "from": "Nordic Partners Gaming",
+      "date": "2026-10-10",
+      "player": "Chelleos",
+      "playerUrl": "https://liquipedia.net/counterstrike/Chelleos",
+      "from": "Sashi Esport",
       "to": "None",
       "game": "Counter-Strike",
-      "refUrl": "https://x.com/NPGCS2/status/2108618458405503355"
+      "refUrl": "https://x.com/ChevChelleos/status/2109027488374591636"
     },
     {
-      "date": "2026-10-09",
-      "player": "Wecles",
-      "playerUrl": "https://liquipedia.net/counterstrike/Wecles",
-      "from": "None",
-      "to": "Royal Foxes Stars (Coach)",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/royalfoxesgg/status/2108592206659686770"
-    },
-    {
-      "date": "2026-10-09",
-      "player": "Damyo",
-      "playerUrl": "https://liquipedia.net/counterstrike/Damyo",
-      "from": "Rooster",
-      "to": "None",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/damyocs/status/2108442704283890079"
-    },
-    {
-      "date": "2026-10-08",
-      "player": "RUGO",
-      "playerUrl": "https://liquipedia.net/counterstrike/RUGO",
-      "from": "None",
-      "to": "9z Academy (Coach)",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/9zTeam/status/2108301409967882682"
+      "date": "2026-10-11",
+      "player": "Bottega",
+      "playerUrl": "https://liquipedia.net/dota2/Bottega",
+      "from": "BetBoom Team (Inactive)",
+      "to": "PlayTime / (Loan/Inactive)",
+      "game": "Dota 2",
+      "refUrl": "https://www.facebook.com/61587580225453/posts/122133057747252674"
     },
     {
       "date": "2026-10-10",
@@ -533,47 +542,11 @@
       "refUrl": "https://t.me/woezzq/689"
     },
     {
-      "date": "2026-09-30",
-      "player": "WoE",
-      "playerUrl": "https://liquipedia.net/dota2/WoE",
-      "from": "Level UP",
-      "to": "None",
-      "game": "Dota 2",
-      "refUrl": "https://t.me/woezzq/689"
-    },
-    {
       "date": "2026-10-10",
-      "player": "Sikerino",
-      "playerUrl": "https://liquipedia.net/rocketleague/Sikerino",
+      "player": "Sythoka",
+      "playerUrl": null,
       "from": "None",
       "to": "Lilmix LMIX",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/Lilmixgg/status/2108936070960414731"
-    },
-    {
-      "date": "2026-10-10",
-      "player": "DaSnake",
-      "playerUrl": "https://liquipedia.net/rocketleague/DaSnake",
-      "from": "Lilmix LMIX (Inactive)",
-      "to": "Lilmix LMIX(Substitute)",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/Lilmixgg/status/2108936070960414731"
-    },
-    {
-      "date": "2026-10-10",
-      "player": "Hopeless",
-      "playerUrl": "https://liquipedia.net/rocketleague/Hopeless",
-      "from": "Lilmix LMIX",
-      "to": "None",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/Lilmixgg/status/2108936070960414731"
-    },
-    {
-      "date": "2026-10-10",
-      "player": "Ignaa",
-      "playerUrl": null,
-      "from": "Lilmix LMIX (Coach)",
-      "to": "None",
       "game": "Rocket League",
       "refUrl": "https://x.com/Lilmixgg/status/2108936070960414731"
     },
@@ -675,6 +648,33 @@
       "to": "None",
       "game": "Rocket League",
       "refUrl": "https://x.com/MonkiAero/status/2106737183415783477"
+    },
+    {
+      "date": "2026-10-03",
+      "player": "Chronic",
+      "playerUrl": "https://liquipedia.net/rocketleague/Chronic",
+      "from": "FUT Esports FUT",
+      "to": "None",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/FUTesportsgg/status/2106436699983110363"
+    },
+    {
+      "date": "2026-10-03",
+      "player": "Seikoo",
+      "playerUrl": "https://liquipedia.net/rocketleague/Seikoo",
+      "from": "Manchester City Esports MCI",
+      "to": "Man City Esports MCI(Inactive)",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/seikoo/status/2106429882762764438"
+    },
+    {
+      "date": "2026-10-03",
+      "player": "Sikerino",
+      "playerUrl": "https://liquipedia.net/rocketleague/Sikerino",
+      "from": "None",
+      "to": "Lilmix LMIX",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/darkrai_rl/status/2106349004434915534"
     },
     {
       "date": "2026-10-09",
@@ -986,6 +986,34 @@
   ],
   "news": [
     {
+      "title": "Tidebound Reunites Four TI 2025 Players for 2026-2027 Return",
+      "link": "https://esportsinsider.com/2026/10/tidebound-roster-return",
+      "pubDate": "2026-10-11T10:00:00.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
+    },
+    {
+      "title": "Vitality.Bee Closure Puts LFL’s 2027 Plans Under Pressure",
+      "link": "https://esportsinsider.com/2026/10/lfl-2027-vitality-bee",
+      "pubDate": "2026-10-11T08:15:55.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
+    },
+    {
+      "title": "LOUD edge NRG 2-1 at VCT Champions 2026 to set up Team Vitality rematch",
+      "link": "https://esports-news.co.uk/2026/10/11/loud-edge-nrg-2-1-at-vct-champions-2026-to-set-up-team-vitality-rematch/",
+      "pubDate": "2026-10-11T08:01:06.000Z",
+      "source": "Esports News UK",
+      "section": "headlines"
+    },
+    {
+      "title": "T1 survive Paper Rex comeback as 100 Thieves crush Nongshim",
+      "link": "https://esportsinsider.com/2026/10/valorant-champions-shanghai-lower-bracket",
+      "pubDate": "2026-10-10T20:00:00.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
+    },
+    {
       "title": "MOUZ sweep FURIA again to set up ESL Pro League Season 24 rematch with Spirit",
       "link": "https://esports-news.co.uk/2026/10/10/mouz-sweep-furia-again-to-set-up-esl-pro-league-season-24-rematch-with-spirit/",
       "pubDate": "2026-10-10T10:00:46.000Z",
@@ -1056,32 +1084,11 @@
       "section": "industry"
     },
     {
-      "title": "Eight teams enter VALORANT Champions Shanghai title race",
-      "link": "https://esportsinsider.com/2026/10/valorant-champions-shanghai-playoffs-2",
-      "pubDate": "2026-10-06T08:24:33.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
-    },
-    {
-      "title": "Wildcard Has Two LANs Left in Major Qualification Race",
-      "link": "https://esportsinsider.com/2026/10/wildcard-major-qualification",
-      "pubDate": "2026-10-06T08:14:33.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
-    },
-    {
       "title": "Wildcard’s PGL Singapore Major hopes slip after 5th-6th finish at FOX Legacy",
       "link": "https://esports-news.co.uk/2026/10/06/wildcards-pgl-singapore-major-hopes-slip-after-5th-6th-finish-at-fox-legacy/",
       "pubDate": "2026-10-06T07:10:54.000Z",
       "source": "Esports News UK",
       "section": "headlines"
-    },
-    {
-      "title": "Used CPU Report Raises Questions Over VALORANT Hardware Bans",
-      "link": "https://esportsinsider.com/2026/10/valorant-hardware-ban-used-cpu",
-      "pubDate": "2026-10-05T10:00:00.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
     },
     {
       "title": "Wanted Goons sign LUKE4k as IGL to complete North American roster",
@@ -1150,13 +1157,6 @@
       "title": "BC.Game bench electroNic in push for Asian core status and Major berth",
       "link": "https://esports-news.co.uk/2026/09/22/bc-game-bench-electronic-in-push-for-asian-core-status-and-major-berth/",
       "pubDate": "2026-09-22T16:10:53.000Z",
-      "source": "Esports News UK",
-      "section": "headlines"
-    },
-    {
-      "title": "Vitality beat Aurora to win StarSeries Fall, first title since May",
-      "link": "https://esports-news.co.uk/2026/09/20/vitality-beat-aurora-to-win-starseries-fall-first-title-since-may/",
-      "pubDate": "2026-09-20T20:10:52.000Z",
       "source": "Esports News UK",
       "section": "headlines"
     }
