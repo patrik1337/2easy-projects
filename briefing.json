@@ -1,6 +1,15 @@
 {
-  "generatedAt": "2026-10-16T15:44:12.217Z",
+  "generatedAt": "2026-10-17T14:35:56.656Z",
   "transfers": [
+    {
+      "date": "2026-10-16",
+      "player": "D3ffo",
+      "playerUrl": "https://liquipedia.net/valorant/D3ffo",
+      "from": "BOOM Esports",
+      "to": "None",
+      "game": "Valorant",
+      "refUrl": "https://x.com/d3ffo111/status/2111132147948081179"
+    },
     {
       "date": "2026-10-16",
       "player": "Yamahamu",
@@ -128,13 +137,13 @@
       "refUrl": "https://www.facebook.com/sharperthai/posts/pfbid0hjdPPaVcvD8ZnRuuKZSX5xBoETrmGcfS29vvNJaAUafRUywoxXBRCpio3BTvX5ZCl"
     },
     {
-      "date": "2026-10-07",
-      "player": "Pakko",
-      "playerUrl": "https://liquipedia.net/valorant/Pakko",
-      "from": "None",
-      "to": "Joblife (Head Coach)",
-      "game": "Valorant",
-      "refUrl": "https://x.com/JoblifeEsport/status/2107918690674954296"
+      "date": "2026-10-16",
+      "player": "Virtuso",
+      "playerUrl": null,
+      "from": "Deer Gaming DEER",
+      "to": "None",
+      "game": "League of Legends",
+      "refUrl": "https://x.com/DumbsYT/status/2111209343198593119"
     },
     {
       "date": "2026-10-16",
@@ -263,13 +272,40 @@
       "refUrl": "https://x.com/esclubgg/status/2107647617693884434"
     },
     {
-      "date": "2026-10-06",
-      "player": "Arbrio",
-      "playerUrl": "https://liquipedia.net/leagueoflegends/Arbrio",
-      "from": "Apex Mission Impossible AMI",
-      "to": "Blue Otter BLUE",
-      "game": "League of Legends",
-      "refUrl": "https://x.com/esclubgg/status/2107647617693884434"
+      "date": "2026-10-16",
+      "player": "CoolComs",
+      "playerUrl": "https://liquipedia.net/counterstrike/CoolComs",
+      "from": "Zomblers",
+      "to": "None",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/CAJUN_CS/status/2111207829101236342"
+    },
+    {
+      "date": "2026-10-16",
+      "player": "Nightlie",
+      "playerUrl": null,
+      "from": "Zomblers (Coach)",
+      "to": "None",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/CAJUN_CS/status/2111207829101236342"
+    },
+    {
+      "date": "2026-10-16",
+      "player": "GKaay",
+      "playerUrl": null,
+      "from": "None",
+      "to": "NorthForge Esports (Coach)",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/gkaayyy/status/2111200465190793568"
+    },
+    {
+      "date": "2026-10-16",
+      "player": "JR",
+      "playerUrl": "https://liquipedia.net/counterstrike/JR",
+      "from": "IC Esports (Coach)",
+      "to": "IC Esports (Manager)",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/InCircleEsports/status/2111077380190064711"
     },
     {
       "date": "2026-10-16",
@@ -299,42 +335,6 @@
       "refUrl": "https://x.com/RbNn08/status/2110882025158693008"
     },
     {
-      "date": "2026-10-16",
-      "player": "Currant",
-      "playerUrl": null,
-      "from": "None",
-      "to": "Wept Xyloid Melancholy",
-      "game": "Counter-Strike",
-      "refUrl": "https://www.bilibili.com/opus/1259602240946044933"
-    },
-    {
-      "date": "2026-10-16",
-      "player": "Madness (Chinese plyaer)",
-      "playerUrl": null,
-      "from": "Wept Xyloid Melancholy",
-      "to": "None",
-      "game": "Counter-Strike",
-      "refUrl": "https://www.bilibili.com/opus/1259602240946044933"
-    },
-    {
-      "date": "2026-10-16",
-      "player": "Zxy",
-      "playerUrl": null,
-      "from": "None",
-      "to": "Wept Xyloid Melancholy (Coach)",
-      "game": "Counter-Strike",
-      "refUrl": "https://www.bilibili.com/opus/1259602240946044933"
-    },
-    {
-      "date": "2026-10-16",
-      "player": "MingSir",
-      "playerUrl": "https://liquipedia.net/counterstrike/MingSir",
-      "from": "Wept Xyloid Melancholy",
-      "to": "Wept Xyloid Melancholy (Assistant Coach)",
-      "game": "Counter-Strike",
-      "refUrl": "https://www.bilibili.com/opus/1259602240946044933"
-    },
-    {
       "date": "2026-10-15",
       "player": "Lucid",
       "playerUrl": "https://liquipedia.net/counterstrike/Lucid",
@@ -342,6 +342,15 @@
       "to": "None",
       "game": "Counter-Strike",
       "refUrl": "https://x.com/LucidCS2/status/2110795024606642650"
+    },
+    {
+      "date": "2026-10-15",
+      "player": "Br4tkO",
+      "playerUrl": "https://liquipedia.net/counterstrike/Br4tkO",
+      "from": "Fnatic (Inactive)",
+      "to": "None",
+      "game": "Counter-Strike",
+      "refUrl": "https://x.com/FNATICCS2/status/2110702267221365112"
     },
     {
       "date": "2026-10-15",
@@ -354,12 +363,12 @@
     },
     {
       "date": "2026-10-15",
-      "player": "Br4tkO",
-      "playerUrl": "https://liquipedia.net/counterstrike/Br4tkO",
-      "from": "Fnatic (Inactive)",
-      "to": "None",
+      "player": "Frøg",
+      "playerUrl": "https://liquipedia.net/counterstrike/Fr%C3%B8g",
+      "from": "None",
+      "to": "FOKUS (Scout & Development Manager)",
       "game": "Counter-Strike",
-      "refUrl": "https://x.com/FNATICCS2/status/2110702267221365112"
+      "refUrl": "https://x.com/fokusclancs/status/2110777775179313369"
     },
     {
       "date": "2026-10-15",
@@ -396,15 +405,6 @@
       "to": "ROUNDS (Coach)",
       "game": "Counter-Strike",
       "refUrl": "https://x.com/RoundsGG/status/2110751311234760909"
-    },
-    {
-      "date": "2026-10-15",
-      "player": "Zwe",
-      "playerUrl": null,
-      "from": "None",
-      "to": "Prestige Academy",
-      "game": "Counter-Strike",
-      "refUrl": "https://x.com/Team__Prestige/status/2110733935449608670"
     },
     {
       "date": "2026-10-15",
@@ -542,6 +542,105 @@
       "refUrl": "https://t.me/balu_esports/434"
     },
     {
+      "date": "2026-10-17",
+      "player": "Mikan",
+      "playerUrl": "https://liquipedia.net/rocketleague/Mikan",
+      "from": "None",
+      "to": "Nimmt55 N55",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/mikanRL_/status/2111291121498517780"
+    },
+    {
+      "date": "2026-10-17",
+      "player": "Maru",
+      "playerUrl": "https://liquipedia.net/rocketleague/Maru",
+      "from": "None",
+      "to": "Nimmt55 N55(Substitute)",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/mikanRL_/status/2111291121498517780"
+    },
+    {
+      "date": "2026-10-16",
+      "player": "Lucas06",
+      "playerUrl": "https://liquipedia.net/rocketleague/Lucas06",
+      "from": "None",
+      "to": "Falcons de SAM FLSM",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/Lucas06rl_/status/2111172344479678534?s=20"
+    },
+    {
+      "date": "2026-10-16",
+      "player": "Laucha",
+      "playerUrl": "https://liquipedia.net/rocketleague/Laucha",
+      "from": "Bandoleiros BDR",
+      "to": "Falcons de SAM FLSM",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/Lucas06rl_/status/2111172344479678534?s=20"
+    },
+    {
+      "date": "2026-10-16",
+      "player": "LeoDkn",
+      "playerUrl": "https://liquipedia.net/rocketleague/LeoDkn",
+      "from": "Disasterclass DIS",
+      "to": "BrumBrum BB",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/Kaoshii_/status/2111140111102722270?s=20"
+    },
+    {
+      "date": "2026-10-16",
+      "player": "Pan",
+      "playerUrl": "https://liquipedia.net/rocketleague/Pan",
+      "from": "None",
+      "to": "BrumBrum BB",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/Kaoshii_/status/2111140111102722270?s=20"
+    },
+    {
+      "date": "2026-10-16",
+      "player": "Klaus",
+      "playerUrl": "https://liquipedia.net/rocketleague/Klaus",
+      "from": "NuTorious NUT",
+      "to": "BrumBrum BB",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/Kaoshii_/status/2111140111102722270?s=20"
+    },
+    {
+      "date": "2026-10-16",
+      "player": "Kaoshi",
+      "playerUrl": "https://liquipedia.net/rocketleague/Kaoshi",
+      "from": "Bigodes BIGO (Coach)",
+      "to": "BrumBrum BB(Coach)",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/Kaoshii_/status/2111140111102722270?s=20"
+    },
+    {
+      "date": "2026-10-16",
+      "player": "Atomic",
+      "playerUrl": "https://liquipedia.net/rocketleague/Atomic",
+      "from": "NRG",
+      "to": "None",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/NRGgg/status/2111192959840632875"
+    },
+    {
+      "date": "2026-10-16",
+      "player": "Satthew",
+      "playerUrl": "https://liquipedia.net/rocketleague/Satthew",
+      "from": "NRG NRG (Coach)",
+      "to": "None",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/NRGgg/status/2111192959840632875"
+    },
+    {
+      "date": "2026-10-16",
+      "player": "Saizen",
+      "playerUrl": "https://liquipedia.net/rocketleague/Saizen",
+      "from": "None",
+      "to": "CALIENTE CLNT",
+      "game": "Rocket League",
+      "refUrl": "https://x.com/17saizen/status/2111173378673361366"
+    },
+    {
       "date": "2026-10-15",
       "player": "Pan",
       "playerUrl": "https://liquipedia.net/rocketleague/Pan",
@@ -576,105 +675,6 @@
       "to": "Hope HOPE(Manager)",
       "game": "Rocket League",
       "refUrl": "https://x.com/oxonomyrll/status/2110517751043297294?s=20"
-    },
-    {
-      "date": "2026-10-14",
-      "player": "Oxonomy",
-      "playerUrl": "https://liquipedia.net/rocketleague/Oxonomy",
-      "from": "None",
-      "to": "Hope HOPE(Coach)",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/oxonomyrll/status/2110517751043297294?s=20"
-    },
-    {
-      "date": "2026-10-14",
-      "player": "Zett",
-      "playerUrl": "https://liquipedia.net/rocketleague/Zett",
-      "from": "None",
-      "to": "Hope HOPE",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/oxonomyrll/status/2110517751043297294?s=20"
-    },
-    {
-      "date": "2026-10-14",
-      "player": "Thunder",
-      "playerUrl": "https://liquipedia.net/rocketleague/Thunder",
-      "from": "Sangres SANG",
-      "to": "Hope HOPE",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/oxonomyrll/status/2110517751043297294?s=20"
-    },
-    {
-      "date": "2026-10-14",
-      "player": "Aguz",
-      "playerUrl": "https://liquipedia.net/rocketleague/Aguz",
-      "from": "W key WKEY",
-      "to": "Hope HOPE",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/oxonomyrll/status/2110517751043297294?s=20"
-    },
-    {
-      "date": "2026-10-14",
-      "player": "Solar",
-      "playerUrl": "https://liquipedia.net/rocketleague/Solar",
-      "from": "9Lives 9L",
-      "to": "Spacestation Gaming SSG",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/Spacestation/status/2110491977766801537?s=20"
-    },
-    {
-      "date": "2026-10-14",
-      "player": "Lj",
-      "playerUrl": "https://liquipedia.net/rocketleague/Lj",
-      "from": "Shopify Rebellion SR",
-      "to": "None",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/ShopifyRebels/status/2110423308797612459?s=20"
-    },
-    {
-      "date": "2026-10-14",
-      "player": "ViolentPanda",
-      "playerUrl": "https://liquipedia.net/rocketleague/ViolentPanda",
-      "from": "Shopify Rebellion SR (Coach)",
-      "to": "None",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/ShopifyRebels/status/2110418062155677882?s=20"
-    },
-    {
-      "date": "2026-10-13",
-      "player": "Somber",
-      "playerUrl": "https://liquipedia.net/rocketleague/Somber",
-      "from": "Chrome Esports CHRM (Coach)",
-      "to": "None",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/SomberRL_/status/2110148633379434825"
-    },
-    {
-      "date": "2026-10-11",
-      "player": "Pedrokanicastro",
-      "playerUrl": "https://liquipedia.net/rocketleague/Pedrokanicastro",
-      "from": "Novadrift NOVA (Coach)",
-      "to": "None",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/knsmoonster/status/2109384703027356063"
-    },
-    {
-      "date": "2026-10-11",
-      "player": "Yukeo",
-      "playerUrl": "https://liquipedia.net/rocketleague/Yukeo",
-      "from": "None",
-      "to": "Novadrift NOVA(Coach)",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/knsmoonster/status/2109384703027356063"
-    },
-    {
-      "date": "2026-10-11",
-      "player": "GarrettG",
-      "playerUrl": "https://liquipedia.net/rocketleague/GarrettG",
-      "from": "None",
-      "to": "Lil Step Bros STEP",
-      "game": "Rocket League",
-      "refUrl": "https://x.com/AlphaKep/status/2109326322560368795"
     },
     {
       "date": "2026-10-15",
@@ -814,6 +814,26 @@
   ],
   "rumours": [
     {
+      "date": "2026-10-17",
+      "player": "Desmo",
+      "playerUrl": "https://liquipedia.net/valorant/Desmo",
+      "from": "Fnatic (Assistant Coach)",
+      "to": "Gentle Mates (Assistant Coach)",
+      "game": "Valorant",
+      "refUrl": "https://www.sheepesports.com/en/articles/sources-desmo-set-to-join-gentle-mates-as-assistant-coach-for-2027/en",
+      "confidence": "Likely"
+    },
+    {
+      "date": "2026-10-16",
+      "player": "ANGE1",
+      "playerUrl": "https://liquipedia.net/valorant/ANGE1",
+      "from": "Natus Vincere (Head Coach)",
+      "to": "Fnatic (Head Coach)",
+      "game": "Valorant",
+      "refUrl": "https://www.sheepesports.com/fr/articles/sources-ange1-set-to-join-fnatic-as-head-coach-for-the-2027-vct-season/en",
+      "confidence": "Likely"
+    },
+    {
       "date": "2026-10-14",
       "player": "Mavera",
       "playerUrl": "https://liquipedia.net/valorant/Mavera",
@@ -944,26 +964,6 @@
       "confidence": "Likely"
     },
     {
-      "date": "2026-09-26",
-      "player": "Kachoww",
-      "playerUrl": "https://liquipedia.net/valorant/Kachoww",
-      "from": "Fire Flux Esports",
-      "to": "Team Liquid",
-      "game": "Valorant",
-      "refUrl": "https://www.sheepesports.com/en/articles/sources-kachoww-set-to-join-team-liquid-ahead-of-2027-season/en",
-      "confidence": "Likely"
-    },
-    {
-      "date": "2026-09-25",
-      "player": "Kozzy",
-      "playerUrl": "https://liquipedia.net/valorant/Kozzy",
-      "from": "Enterprise Esports",
-      "to": "Gentle Mates",
-      "game": "Valorant",
-      "refUrl": "https://www.sheepesports.com/us/articles/sources-kozzy-set-to-join-gentle-mates-for-vct-emea-2027/en",
-      "confidence": "Likely"
-    },
-    {
       "date": "2026-10-10",
       "player": "Deft",
       "playerUrl": "https://liquipedia.net/leagueoflegends/Deft",
@@ -1005,6 +1005,41 @@
     }
   ],
   "news": [
+    {
+      "title": "BBL sweep EYEBALLERS 2-0 to set up ex-RUSTEC clash in PGL Bucharest qualifier",
+      "link": "https://esports-news.co.uk/2026/10/17/bbl-sweep-eyeballers-2-0-to-set-up-ex-rustec-clash-in-pgl-bucharest-qualifier/",
+      "pubDate": "2026-10-17T13:00:47.000Z",
+      "source": "Esports News UK",
+      "section": "headlines"
+    },
+    {
+      "title": "Suspension posts make 2xplayN’s ESIC competition ban permanent",
+      "link": "https://esportsinsider.com/2026/10/2xplayn-lifetime-ban",
+      "pubDate": "2026-10-17T10:00:00.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
+    },
+    {
+      "title": "Malr1ne joins Liquid as Nisha steps away from Dota 2",
+      "link": "https://esportsinsider.com/2026/10/team-liquid-roster-malr1ne",
+      "pubDate": "2026-10-16T20:00:00.000Z",
+      "source": "Esports Insider",
+      "section": "industry"
+    },
+    {
+      "title": "CS2 pro banned for life & reported to police after flexing cash while suspended for matchfixing",
+      "link": "https://www.dexerto.com/counter-strike-2/cs2-pro-banned-for-life-reported-to-police-after-flexing-cash-while-suspended-for-matchfixing-3419458/",
+      "pubDate": "2026-10-16T18:21:53.000Z",
+      "source": "Dexerto",
+      "section": "headlines"
+    },
+    {
+      "title": "Smash pro Mew2King banned from Melee event over bed bug concerns after flying to Texas with swelling hands",
+      "link": "https://www.dexerto.com/smash/smash-pro-mew2king-responds-to-bed-bug-concerns-after-flying-to-melee-event-with-swelling-hands-3419422/",
+      "pubDate": "2026-10-16T15:52:12.000Z",
+      "source": "Dexerto",
+      "section": "headlines"
+    },
     {
       "title": "Team Resilience extend winning run to five with 2-0 over Zenith in BLAST Slam qualifier",
       "link": "https://esports-news.co.uk/2026/10/16/team-resilience-extend-winning-run-to-five-with-2-0-over-zenith-in-blast-slam-qualifier/",
@@ -1111,20 +1146,6 @@
       "section": "headlines"
     },
     {
-      "title": "Watson powers Yandex to BLAST Slam VIII grand final win",
-      "link": "https://esportsinsider.com/2026/10/blast-slam-viii-yandex-win",
-      "pubDate": "2026-10-12T10:00:00.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
-    },
-    {
-      "title": "Tidebound Reunites Four TI 2025 Players for 2026-2027 Return",
-      "link": "https://esportsinsider.com/2026/10/tidebound-roster-return",
-      "pubDate": "2026-10-11T10:00:00.000Z",
-      "source": "Esports Insider",
-      "section": "industry"
-    },
-    {
       "title": "LOUD edge NRG 2-1 at VCT Champions 2026 to set up Team Vitality rematch",
       "link": "https://esports-news.co.uk/2026/10/11/loud-edge-nrg-2-1-at-vct-champions-2026-to-set-up-team-vitality-rematch/",
       "pubDate": "2026-10-11T08:01:06.000Z",
@@ -1184,13 +1205,6 @@
       "title": "FaZe beaten 2-0 by Nemiga in Stake Ranked Episode 4 opener",
       "link": "https://esports-news.co.uk/2026/10/02/faze-beaten-2-0-by-nemiga-in-stake-ranked-episode-4-opener/",
       "pubDate": "2026-10-02T07:10:58.000Z",
-      "source": "Esports News UK",
-      "section": "headlines"
-    },
-    {
-      "title": "A Possible Last Ride Shapes G2’s Shanghai Campaign",
-      "link": "https://esports-news.co.uk/2026/09/30/g2-shanghai-last-ride/",
-      "pubDate": "2026-09-30T10:00:00.000Z",
       "source": "Esports News UK",
       "section": "headlines"
     }
